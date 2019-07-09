@@ -1,0 +1,143 @@
+
+/*寮瑰嚭寮忕獥鍙�*/
+.popup .popupBtn{width:87px;height:28px;background:#33FFFF url(/content/personal/images/img_popup.gif) 0px 0px no-repeat;border:0;font:12px/22px "鏂板畫浣�";cursor:pointer;color:#FFF;font-weight:bold}
+.popup .popupBtnCancel{width:87px;height:28px;background:#33FFFF url(/content/personal/images/img_popup.gif) 0px -69px no-repeat;border:0;font:12px/22px "鏂板畫浣�";cursor:pointer;color:#000;font-weight:bold}
+.popup .popuphead{background:#f16100;height:31px;padding-top:2px}
+.popup .popuphead hh1{background:url(/Content/Company/images/popdivicon.gif) no-repeat left;font:bold 12px "鏂板畫浣�";color:#fff;float:left;margin:6px 0 0 5px;cursor:move;padding-left:10px}
+.popup .popuphead h1{font:bold 14px "鏂板畫浣�";color:#fff;float:left;margin:1px 0 0 10px;cursor:move;padding-left:6px;font-weight:normal;line-height:24px}
+.popup .popuphead h1 input.search{width:136px;color:#888;height:22px;border-radius:30px;padding-left:30px;border:0;background:url(/content/homepage/images/popupbg.png) no-repeat 0px -84px;background-color:#fff}
+.popup .popuphead img{float:right;margin:4px 5px 0 0;cursor:pointer}
+.popup .popupfooter{padding:8px 0;text-align:center;}
+.popup .popupBody .popupbodyContent{padding:3px;}
+.popup .popupBody{clear:both;}
+/*鏂扮増寮瑰嚭灞傛牱寮�*/
+.popup{border:1px solid #d2d2d2;background:#fff;}
+.popupDivProvince{padding:5px 0;font-size:12px}
+.popupDivProvince ul{list-style-type:none;margin:0px;padding:0px;clear:both;line-height:31px}
+.popupDivProvince ul li{list-style-type:none;margin:0px;padding:0px;clear:both;line-height:27px;border:2px solid #fff;height:27px}
+.pink{background-color:#fff6f1;border-bottom:1px solid #fff6f1}
+.popupDivProvince ul li span.provincePinyin{display:-moz-inline-box;display:inline-block;width:50px;float:left;padding:0 30px;font-weight:bold;color:#f7610c;font-size:14px}
+.popupDivProvince ul li b{display:-moz-inline-box;cursor:pointer;display:inline-block;width:60px;float:left;line-height:16px;margin-top:5px;font-weight:normal}
+.popupDivProvince ul li span{padding:4px 0 0;width:auto;float:left; margin-top:5px}
+.popupDivProvinceNav{font:12px "鏂板畫浣�";color:#DF4017;clear:both;height:1%;border-bottom:1px dotted #cacaca;margin:8px 0 5px 13px;height:30px;}
+.popupDivProvinceNav .popupDivProvinceHot{float:right;margin-top:3px;margin-right:30px}
+.popupDivProvinceNav .popupDivProvinceHot span{vertical-align:-2px;}
+.popupDivProvinceNav .popupDivProvinceHot b{font-weight:normal;color:#000;cursor:pointer}
+.popupDivArrowDown{background:url(/content/homepage/images/popupbg.png) no-repeat -141px -41px;width:15px;height:9px;display:inline-block}
+.popupDivArrowUp{background:url(/images/popuparrow.png) no-repeat 0px -17px;width:15px;height:9px;display:inline-block}
+.showSelectedLi{margin:5px 13px;margin-top:5px;padding-right:0px}
+.showSelectedLi ul{list-style-type:none;margin:0px;padding:0px;line-height:25px}
+.showSelectedLi li{cursor:pointer;float:left;min-width:89px ;width:89px;overflow:hidden;  height:19px;line-height:19px;vertical-align:top;padding-top:3px;padding-bottom:3px; border:2px solid #fff}
+.showSelectedLi li span{margin:0px;padding:0px;line-height:19px;vertical-align:-3px;}
+
+.DivShow{padding:1px;height:1%;background:#fff;}
+.DivShowT{background:url(/personal/images/DivShowH.jpg) repeat-x;color:#fff;padding-top:6px;height:16px;}
+.DivShowT h5{font:12px "鏂板畫浣�";float:left;}
+.DivShowT h5 img{margin:1px 8px 0;vertical-align:top;}
+.DivShowT span{float:right;margin-right:6px;cursor:pointer;}
+.DivShowB{background:#fff;}
+.DivShowB div.ThisBg{background:#FEF8F1;}
+.DivShowB p{background:url(/personal/images/BgAX.gif) repeat-x bottom;line-height:20px;padding:5px 0 3px 5px;clear:both;float:left;width:100%;}
+.DivShowB span.Anauto{font:12px/24px "鏂板畫浣�";margin-top:12px;display:block;float:left;clear:both;width:100%;height:24px;}
+.DivShowB h6{margin-bottom:10px;font:12px/24px "鏂板畫浣�";color:#DF4017;border-bottom:1px dotted #fc5d01;margin-top:4px;clear:both;display:block;padding:0 0 0 15px;}
+.DivShowB h6 li{margin-right:6px;}
+.DivShowB ul{clear:both;}
+.DivShowB li{float:left;line-height:22px;height:22px;padding-left:0px;margin-left:4px;display:inline;overflow:hidden}
+.DivShowB li input{margin-top:0px;vertical-align:middle;padding:0;height:13px;margin-right:3px;width:13px;}
+div.BgIcon li,ul.BgIcon li,p.BgIcon{}
+.DivShowLi{float:left;clear:both;width:100%;padding-top:8px;}
+.DivShowB .DivShowLi h6{background:url(/personal/images/BgAX.gif) repeat-x top;font:12px/24px "鏂板畫浣�";}
+.DivShowLi li{position:relative;}
+.LiAbsoDiv{position:absolute;top:0px;left:0px;z-index:998;filter:alpha(opacity=90);opacity:0.9;background:#FFFDFB;border:1px solid #FFECD7;padding-left:6px;height:100px;}
+.DivShowBT{font:12px "鏂板畫浣�";color:#DF4017;clear:both;height:1%;border-bottom:1px dotted #cacaca;margin:8px 13px 5px 13px}
+.DivShowBT li{border:1px solid #d2d2d2;color:#000;padding-left:5px ;white-space:nowrap;overflow:hidden}
+.DivShowBT li input{display:none }
+.DivShowBT b{float:left;display:block;padding:14px 0 0 6px;}
+.DivShowBT li b{padding:0px 4px;height:20px;line-height:20px;vertical-align:middle;display:inline-block;float:right;display:inline}
+.DivShowBT li b img{margin-top:5px;}
+.DivShowBT span{float:right;margin:6px 0px 6px 0px;}
+.DivShowBT span a{display:block;line-height:11px;margin-right:6px;}
+.DivShowBT span a img{margin-right:4px;vertical-align:top;}
+.DivShowBT span input.btnTopOk{cursor:pointer;height:24px;width:50px;margin-left:4px;background:url(/content/homepage/images/Popupbg.png) no-repeat -100px -152px;text-align:center;line-height:24px;border:0;color:#fff;padding-top:1px;}
+.DivShowBT span input.btnTopClear{cursor:pointer;height:24px;width:50px;background:url(/content/homepage/images/Popupbg.png) no-repeat -1px -151px;text-align:center;line-height:24px;border:0;color:#000;padding-top:1px;}
+.ThisLiInput{font:12px "鏂板畫浣�";color:#DF4017;background-color:#ffffff;clear:both;width:100%;overflow:visible;padding-left:5px}
+.ThisLiInput li{margin-top:3px;margin-right:8px;line-height:18px;height:18px;float:left;white-space:nowrap;overflow:hidden;text-align:left;width:145px;}
+.ThisLiInput li i{font-weight:normal;font-style:normal;padding:0px 2px;float:left;width:120px;overflow:hidden;color:#626262;}
+.ThisLiInputRegion{font:12px "鏂板畫浣�";color:#DF4017;background-color:#ffffff;clear:both;overflow:hidden;padding-left:5px;}
+.ThisLiInputRegion li{margin-right:8px;line-height:20px;height:20px;float:left;white-space:nowrap;overflow:hidden;width:99px;}
+.ThisLiInputRegion li i{font-weight:normal;font-style:normal;margin:2px auto;padding:0px 2px;float:left;width:67px;overflow:hidden;text-align:center;}
+
+.DivShowB span ul.ThisLi li{font:12px/24px "鏂板畫浣�";margin-right:8px;display:inline;}
+.DivShowB li input{vertical-align:-3px;}
+
+.NDivCl{clear:both;float:left;width:100%;background-color:#f3f5f8}
+.NDivCl1{clear:both;float:left;width:100%;}
+.NDivClind{width:146px;margin-top:-6px;text-align:right;color:#434343;font:bold 12px "鏂板畫浣�";z-index:1;left:5px;}
+.NDivClind30{width:146px;margin-top:-6px;text-align:right;color:#434343;font:bold 12px "鏂板畫浣�";z-index:1;left:5px;}
+.NDivCl li{cursor:pointer;list-style-type:none}
+.NDivCl .NDivClBig{width:150px;text-align:right;color:#434343;z-index:1;float:left;height:100%;padding-right:4px}
+.NDivCl .NDivClSmall{float:left;width:600px;height:100%;}
+.NDivCl .NDivClSmall li{padding-left:5px;height:24px;overflow:hidden;color:#1A5AA8}
+.NDivCl .NDivClSmall li input{padding-bottom:2px;}
+.NDivCl ul.indUL{display:block;padding-left:154px;height:1%;list-style-type:none;}
+.indUL li{padding-left:8px;height:20px;overflow:hidden;padding:2px 0px;}
+.indUL li.nobg{padding-left:0px;height:18px;padding:2px 0px;overflow:hidden;background:none;}
+.showDivsub{cursor:pointer;padding:0px;position:absolute;display:none}
+.showDivsub p.BgIcon{padding-left:12px;height:20px;line-height:20px;}
+.showDivsub ul{border:2px solid #c8c8c8;position:relative;margin-top:-2px;z-index:0;background:#fff;padding:0px;float:left}
+.showDivsub li{float:left;display:block;padding:0 0 0 4px;height:20px;line-height:20px;overflow:hidden;background:#fff;}
+.showDivsub li input{padding:0;height:13px;width:13px;margin:0 3px 0 0;vertical-align:middle;}
+.showDivsub p{font-weight:bold;height:14px;line-height:14px;overflow:hidden;background:#fff;border:2px solid #c8c8c8;border-bottom:none;position:relative;z-index:999;padding:4px 2px 4px 4px;white-space:nowrap;}
+.showDivsub p input{padding:0;height:13px;width:13px;margin:0 3px 0 0;vertical-align:top;}
+.Bgc{background:#fff6e5}
+.JobTypeSearch{position:absolute;width:165px;height:auto;max-height:300px;overflow:hidden;position:absolute;margin-left:478px;margin-top:0px;display:none;color:#1c4dcd;background-color:#fff;font-size:12px;border:1px solid rgb(50, 50, 50);font-weight:normal;}
+.JobTypeSearch li{cursor:pointer;width:155px;height:25px;overflow:hidden;line-height:25px;padding:0 5px}
+
+#SelectedLi{height: auto;float: left;padding-bottom: 0px;}
+/*********************涓撲笟寮瑰眰**********************/
+.popupmajor{background:#fff;border:1px solid #c8c8c8;font-size:12px;z-index:1000;}
+.popupmajor dd .tabnav{padding:0;height:auto;}
+.popupmajor ul{overflow:hidden;padding:10px;}
+.popupmajor li{float:left;display:inline;width:35px;overflow:hidden;}
+.popupmajor li span{line-height:30px;display:block;padding:0 3px;white-space:nowrap;}
+.popupmajor dd .tabnav{overflow:hidden;border-bottom:1px solid #ddd;margin:8px 10px 0;}
+.popupmajor dd .tabnav li{width:auto;height:18px;line-height:18px;border:1px solid #ddd;border-bottom:none;padding:0 12px;margin-right:10px;color:#2255DD;cursor:pointer;white-space:nowrap;}
+.popupmajor dd .tabnav li.tnon{background:#EDEDED;color:#404040;}
+.popupmajor dd .tabcon .tcwrap{display:none;}
+.popupmajor dd .tabcon{position:relative;top:-1px;padding-bottom:10px;z-index:1;background:#fff;border-top:1px solid #DDDDDD;clear:both;padding-bottom:0;}
+.popupmajor dd .tabcon li{width:120px;margin:0 5px;overflow:hidden;cursor:pointer;}
+.popupmajor dd .tabnav{position:relative;z-index:2;margin:0;padding:5px 0 0 28px;border:0;}
+.popupmajor dd .tabnav li{height:28px;line-height:28px;margin-right:5px;background:#fff;}
+.popupmajor dd .tabnav li.tnon{height:29px;background:#fff;font-weight:bold;}
+.popupmajor dl{padding:0;background:#FAFAFA;overflow:hidden;}
+.popupmajor dd{position:relative;}
+.popupRegionList{margin-left:50px; padding:20px 0; font-size:14px; font-family:"寰蒋闆呴粦"; color:#004c91;}
+.popupRegionList ul{list-style-type:none; margin:0px; padding:0px;clear:both; line-height:36px}
+.popupRegionList ul li{float:left; width:95px;}
+.pink{background-color:#fff6f1;border-bottom:1px solid #fff6f1}
+.popupRegionList ul li span.provincePinyin{display:-moz-inline-box; display:inline-block; width:50px; float:left; padding:0 30px; font-weight:bold;color:#f7610c; font-size:14px}
+.popupRegionList ul li b{cursor:pointer; display:inline-block; font-weight:normal }
+.SelectedMenu{padding-top:10px; padding-left:20px; font-size:14px; font-family:"寰蒋闆呴粦"; background-color:#fafafa; height:30px; border-bottom:1px solid #e1e1e1;}
+.SelectedMenu span{display:inline-block; min-width:70px; padding:0 5px; height:30px; line-height:30px; cursor:pointer; text-align:center; border:1px solid #e1e1e1; border-bottom:none;}
+.SelectedMenu span.Selected{background-color:#fff; cursor:default;}
+.SelectedMenu span.selected{background-color:#fff; cursor:default;}
+.yearPicker {float:left; width:100%; padding-left:25px; padding:10px 0px 10px 25px;}
+.yearPicker span{float:left; display:inline-block; width:45px; height:30px; line-height:30px; margin:0px 5px; text-align:center; color:#004C91; cursor:pointer; font-size:14px;}
+.yearPicker span.Selected {color:#f86e01; font-weight:bold;}
+.monthPicker {float:left;margin:0px 30px; border-top:1px solid #E3E3E3; padding:10px 0px;}
+.monthPicker span{float:left; display:inline-block; width:50px; height:20px; line-height:20px; margin:5px 15px; text-align:center; color:#004C91; cursor:pointer;}
+.birthday span {margin:5px 20px;}
+.monthPicker span.Selected {border-radius:4px; background:#f86e01; color:#FFF;}
+.popuphead .datePickerSwitch{background: url(/content/Personal/Images/ico_jm.png) 10px -1375px no-repeat; width:30px; height:30px; display:inline-block; border:none; cursor:pointer;}
+.popuphead .Prev{float:left;background-position:10px -1918px;}
+.popuphead .Next{float:right;background-position:10px -1960px;}
+.popuphead .datePickerTitle{float:left; margin-top:10px; width:80%; text-align:center;}
+
+.JPTanChuangDiv{position: fixed;z-index: 99;left: 0;right: 0;margin: 0 auto;width: 366px;top: 50%;margin-top: -222px;}
+.JPTanChuangDiv	.JPTanChuangSp{width: 36px;height: 36px;display: inline-block;position: absolute;top: 27px;right: 4px;}
+
+.SITanChuangDiv{position: fixed;z-index: 99;left: 0;right: 0;margin: 0 auto;width: 366px;top: 50%;margin-top: -222px;}
+.SITanChuangDiv	.SITanChuangSp{width: 40px;height: 40px;display: inline-block;position: absolute;top: 20px;right: 29px;}
+
+.LLKTanChuangDiv{position: fixed;z-index: 99;left: 0;right: 0;margin: 0 auto;width: 366px;top: 50%;margin-top: -222px;}
+.LLKTanChuangDiv .LLKTanChuangSp{width: 40px;height: 40px;display: inline-block;position: absolute;top: 2px;right: 54px;}

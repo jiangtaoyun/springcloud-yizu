@@ -1,0 +1,237 @@
+
+.BoxA{
+    width:100%;
+    margin:0px auto;
+    overflow:hidden;
+    background-color:#f7f7f7;
+    padding:40px 0 60px 0;
+    line-height:44px;text-shadow: 1px 1px #FFF;
+}
+.BoxA_main{
+    width:983px;
+    margin:0px auto;
+    padding:0 0 0 20px;
+}
+.bj01{background:url(../images/app/imgA_01.jpg) no-repeat 609px 0;}
+.bj02{background:url(../images/app/imgB_01.gif) no-repeat 0 0;}
+.hone{
+    height:375px;
+}
+.BoxA_m_l{
+    width:710px;
+    float:left;
+    padding: 0 0 62px;
+}
+.BoxA_m_l2{
+    width:709px;
+    height:210px;
+    float:left;
+}
+.box_x{
+    width:196px;
+    height:110px;
+    float:left;
+    padding:85px 40px 0 0;
+}
+.tb_bj01{
+
+    background:url(../images/app/iconA_01.gif) no-repeat 15px 0;
+}
+.tb_bj02{
+    background:url(../images/app/iconA_02.gif) no-repeat 0 0;
+}
+.tb_bj03{
+    background:url(../images/app/iconA_03.gif) no-repeat 0 0;
+}
+.box_x h3{
+    font-size:20px;
+    color:#333333;
+    font-weight:100;
+    line-height:45px;
+}
+.box_x p{
+    font-size:14px;
+    line-height:22px;
+    color:#535353;
+}
+
+
+
+
+.BoxB{
+    width:100%;
+    margin:0px auto;
+    overflow:hidden;
+    background-image:url(../images/app/bj_01.gif);
+    background-repeat:repeat;
+    padding:40px 0 60px 0;line-height:44px;text-shadow: 1px 1px #FFF;
+}
+.BoxB h1{
+    float:right;
+    width:180px;
+}
+.BoxB p.two{
+    float:right;
+    width:530px;
+    text-align: right;
+
+}
+
+.BoxB_m_r{
+    width:697px;
+    float: right;
+    padding: 0 0 62px;
+}
+
+.BoxB_m_r_1{
+    width:697px;
+    float: right;
+    padding: 0 0 62px;
+    position: relative;
+    top: 50%;
+}
+
+.BoxB_m_r2{
+    width:709px;
+    height:210px;
+    float: right;
+}
+.tb_bj04{
+    background:url(../images/app/iconB_1.gif) no-repeat 0 0;
+}
+.tb_bj05{
+    background:url(../images/app/iconB_2.gif) no-repeat 0 0;
+}
+.tb_bj06{
+    background:url(../images/app/iconB_3.gif) no-repeat 10px 0;
+}
+
+
+
+.BoxC{
+    width:100%;
+    margin:0px auto;
+    overflow:hidden;
+    background-color:#f7f7f7;line-height:44px;text-shadow: 1px 1px #FFF;
+
+}
+.BoxC_m_l{
+    width:697px;
+    float:left;
+    padding:55PX 0 62px 0;
+}
+
+.bj03{background:url(../images/app/imgC_01.gif) no-repeat 691px 0; height:501PX;}
+.tb_bj07{
+    background:url(../images/app/iconC_01.gif) no-repeat 0 0;
+}
+.tb_bj08{
+    background:url(../images/app/iconC_02.gif) no-repeat 0 0;
+}
+.box_x2{
+    width:220px;
+    height:110px;
+    float:left;
+    padding:85px 40px 0 0;
+}
+
+.box_x2 h3{
+    font-size:20px;
+    color:#333333;
+    font-weight:100;
+    line-height:45px;
+}
+.box_x2 p{
+    font-size:14px;
+    line-height:22px;
+    color:#535353;
+}
+
+
+
+
+.bj04{background:url(../images/app/imgD_01.gif) no-repeat 60px 0; height:396PX;}
+.BoxB p.three{
+    float:right;
+    width:575px;
+    text-align: right;
+
+}
+.box_x3{
+    width:157px;
+    height:70px;
+    float:left;
+    padding:85px 0px 0 0;
+}
+
+.box_x3 h3{
+    font-size:20px;
+    color:#333333;
+    font-weight:100;
+    line-height:45px;
+}
+.tb_bj09{
+    background:url(../images/app/iconD_01.gif) no-repeat 5PX 0;
+}
+.tb_bj10{
+    background:url(../images/app/iconD_02.gif) no-repeat 5PX 0;
+}
+.tb_bj11{
+    background:url(../images/app/iconD_03.gif) no-repeat 15PX 0;
+}
+.tb_bj12{
+    background:url(../images/app/iconD_04.gif) no-repeat 15PX 0;
+}
+.BoxB_m_r3{
+    width:660px;
+    height:160px;
+    float: right;
+    padding:50px 0 0 0;
+}
+.BoxE{
+    width:100%;
+    margin:0px auto;
+    overflow:hidden;
+    height:325PX;
+    background-color:#f7f7f7;line-height:44px;text-shadow: 1px 1px #FFF;
+
+}
+.BoxE_main{
+    width:613px;
+    margin:0px auto;
+    padding:77px 0 0 380px;
+    font-size:31px;
+}
+.BoxE_main p{
+    padding:0 0 45px 0 ;
+}
+
+
+
+
+
+/**********************************************/
+#slides_one .slides_container {
+    width:213px;
+    height:355px;
+
+}
+#slides_one .slides_container .con_xw_nr_k {
+    display:block;
+}
+#slides_one .prev {
+    display:none;
+}
+
+#slides_one .next {
+    display:none;
+}
+#slides_one .pagination	{
+    display:none;
+}
+.ob1_title H3{
+    font-size:24px;
+    line-height:35px;
+    padding-left:35px;
+
+}

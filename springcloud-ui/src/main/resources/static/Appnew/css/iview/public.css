@@ -1,0 +1,61 @@
+@charset "utf-8";
+
+@import url('jquery.onebyone-min.css');
+
+#onebyone_slider {
+    position:relative;
+    height:495px;
+    float:left;
+}
+
+
+#onebyone_slider .oneByOne_item {
+    width:991px;
+    overflow:visible;
+    height:495px;
+}
+#onebyone_slider .oneByOne_item span {
+    font-family:"Helvetica Neue", Helvetica, verdana, arial, sans-serif
+}
+
+#onebyone_slider .oneByOne_item a {
+    text-decoration:none
+}
+#onebyone_slider .oneByOne_item .ob1_title {
+    clear:left;
+    position: absolute;
+    float:left;
+    left:445px;
+    top:108px;
+    padding:0;
+    color:#FFF;
+    z-index:50
+}
+#onebyone_slider .oneByOne_item .ob1_title a {
+    color:#fff
+}
+#onebyone_slider .oneByOne_item .ob1_description {
+    clear: left;
+    position: absolute;
+    left:549px;
+    top: 282px;
+    z-index: 50
+}
+#onebyone_slider .oneByOne_item .ob1_button {
+    clear: left;
+    position: absolute;
+    left:708px;
+    top:285px;
+    z-index: 50
+}
+
+#onebyone_slider .ob1_img_device1 {
+    position:absolute;
+    width:227px;
+    height:413px;
+    padding:54px 0 0 145px;
+    top:24px;
+    left:50px;
+    z-index:40;
+    background: url(../../images/app/nav_img_1.png) left top no-repeat;
+}

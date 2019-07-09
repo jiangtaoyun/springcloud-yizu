@@ -19,5 +19,5 @@ server:
   port: 8766
 mybatis:
   config-locations: classpath:mybatis/confg.xml
-  mapper-locations: classpath:mybatis/mapper/*.xml
+  mapper-locations: classpath:mybatis/dao/*.xml
   type-aliases-package: com.jk.model
