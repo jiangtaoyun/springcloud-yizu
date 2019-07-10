@@ -1,14 +1,12 @@
 package com.jk.service;
 
-import com.jk.model.Qiuser;
+import com.jk.model.UserModel;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
 public interface UserService {
-
+    //测试
 @GetMapping("findmysql")
-    List<Qiuser> findmysql();
+    List<UserModel> findmysql();
 }

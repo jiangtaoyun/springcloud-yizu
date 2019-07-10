@@ -9,16 +9,10 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://192.168.1.140:3306/zhaopin?serverTimezone=Hongkong
     username: root
-  #cloud:
-    #config:
-      #label: master
-      #profile: dev
-      #discovery:
-        #enabled: true
-        #service-id: springcloud-config
+
 
   redis:
-      host: localhost
+      host: 192.168.1.135
       jedis:
         pool:
           max-active: 8

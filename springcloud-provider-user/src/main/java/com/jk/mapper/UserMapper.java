@@ -1,17 +1,16 @@
 package com.jk.mapper;
 
-import com.jk.model.Qiuser;
+import com.jk.model.UserModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
-/**
- * @Author:slm
- * @Date：
- **/
+
 @Mapper
 public interface UserMapper {
-   @Select("select * from t_qiuser")
-    List<Qiuser> findmysql();
+
+    //测试
+    @Select("select * from t_user")
+    List<UserModel> findmysql();
 }
