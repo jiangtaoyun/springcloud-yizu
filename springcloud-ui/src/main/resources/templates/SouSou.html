@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/Content/2018/Public/Scripts/jquery-1.12.4.min.js"></script>
+
+    <script type="text/javascript" src="js/Content/2018/Public/Scripts/jquery.popup.js"></script>
+    <link href="js/Content/2018/Public/Styles/popup.css" rel="stylesheet" type="text/css" />
+    <script>    var _site_provinceID = '10' </script>
+    <script type="text/javascript" src="js/content/homepage/js/c.js?v=4.3"></script>
+    <link href="js/content/chat/style/chat.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="js/script/validate.js"></script>
+
+    <link href="js/Content/NewsNew/style.css?v=22" rel="stylesheet" type="text/css" />
+    <link href="js/content/personal/style/Jv.css?v=6" rel="stylesheet" type="text/css" />
+    <link href="/content/Personal/style/Cv.css?v=1" rel="stylesheet" type="text/css" />
+    <link href="js/content/personal/style/jobapplycv.css" rel="stylesheet" type="text/css" />
+    <link href="js/content/personal/style/p.css" rel="stylesheet" type="text/css" />
+    <script language="javascript" type="text/javascript" src="js/content/personal/script/jobmatch.js?v=1"></script>
+    <script type="text/javascript" src="js/content/Personal/script/attention.js?v=1"></script>
+    <link href="js/content/personal/style/JsUnLogin.css" rel="stylesheet" type="text/css" />
+    <!-- 引入bootstrap的css -->
+    <link  href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
+
+    <!-- 引入bootstrap-treeview的css -->
+    <link  href="js/treeview/bootstrap-treeview.min.css" rel="stylesheet" >
+
+    <!-- 引入bootstrap-addTabs的css -->
+    <link  href="js/addTabs/addTabs.css" rel="stylesheet" >
+
+    <!-- 引入jquery -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="js/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/table/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="js/table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="js/treeview/bootstrap-treeview.min.js"></script>
+    <script type="text/javascript" src="js/bootbox/bootbox.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="js/addTabs/addTabs.js"></script>
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+</head>
+<body>
+
+<div class="Header">
+    <input type="hidden" id="hdnIsShowSina" value="1" />
+    <input type="hidden" id="hdnIsShowRenRen" value="1" />
+    <div class="Logo" onclick="location.href='/'" style="width: 225px;">
+        <img src="/content/homepage/201612/images/LOGO.png" width="63" height="41" />
+        <img src="/content/homepage/201612/images/logo/view_logo10.gif"  height="auto" style="margin-top: 7px;vertical-align: middle;"/>
+    </div>
+    <div style="float:left; width:200px;margin-top: 2px; height:39px;background: url(/Content/homepage/images/imgSpirit/spirit_10.png);">
+    </div>
+    <div class="Right">
+        <div class="HomePage" onclick="location.href='/'">
+            返回首页</div>
+        <div class="LoginStatus">
+            您好，<a href="/personal/sys/index" style="color: #3364cb">刘江涛                    [29482653]</a>&nbsp;&nbsp;<a href="/personal/sys/logout?Redir=/personal/js/search/?" style="color:#3364cb">[退出]</a></div>
+        <div class="MobileSite">
+            <a href="/appnew/chuping.asp" target="_blank">手机找工作</a></div>
+    </div>
+</div>
+<script type="text/javascript" src="/Content/news/script/headerLogin.js?v=110918"></script>
+<link type="text/css" rel="stylesheet" href="/content/personal/style/LoginPop.css?v=1" />
+<script type="text/javascript" src="/script/common.js"></script>
+<script>
+    var MobileVerifyDate = '2019/7/8 17:05:00';
+    var mobile='13467156639'
+</script>
+
+
+
+<div class="NavTop">
+    <div class="NavMain">
+        <div class="NavItems">
+            <a href="/" target="_self">首页</a>
+            <a id="NavTop_MemberCenter" href="/personal/sys/index/" target="_self">个人中心</a>
+            <a id="NavTop_JobSearch" href="/personal/js/search/" target="_self">职位搜索</a>
+            <a id="NavTop_Recruitment" href="/zhaopinhui/" target="_self">招聘会</a>
+            <a id="NavTop_Salary" href="/news/salaryanalysisjob/" target="_self">查工资</a>
+            <a id="NavTop_JobNews" href="/news/jobnews/" target="_self">就业资讯</a>
+            <a id="NavTop_DocDown" href="/padownload/" target="_self">文档下载</a>
+            <a id="NavTop_Help" href="/ask/" target="_self">求职互助</a>
+            <a id="NavTop_Topics" href="/topic/careerplanning/" target="_self">职业规划</a>
+        </div>
+        <div class="CursorLine"></div>
+    </div>
+</div>
+<div class="NavBottom" id="NavTop_JobSearch_All">
+    <div id="NavBottom_Search" class="NavBottomUnSelect" style="margin-left: 95px">
+        <a href="/personal/js/search/">高级搜索</a>
+    </div>
+    <div id="NavBottom_MapSearch" class="NavBottomUnSelect"> <a href="/personal/js/mapsearch/">地图搜索</a></div>
+    <div id="NavBottom_NewJob" class="NavBottomUnSelect"> <a href="/newjob/">最新职位</a></div>
+    <div id="NavBottom_NewJobHtml" class="NavBottomUnSelect"> <a href="/newjob.html">热门搜索</a></div>
+    <div id="NavBottom_jianzhi" class="NavBottomUnSelect"> <a href="/jianzhi/">兼职招聘</a></div>
+    <div style="clear: both;"></div>
+</div>
+<div class="NavBottom" id="NavTop_Comment_All">
+    <div style="clear: both;"></div>
+    <div id="NavBottom_Comment" class="NavBottomUnSelect" style="margin-left:420px"><a href="/personal/comment/commentcompany/">公司点评</a></div>
+    <div id="NavBottom_Interview" class="NavBottomUnSelect"><a href="/personal/comment/interviewcompany/">面试经历</a></div>
+    <div style="clear: both;"></div>
+</div>
+<script language="javascript" type="text/javascript" src="/Content/Personal/script/sysNav.js?v=1"></script>
+<style>
+    .fix_toolbar {position: fixed;bottom: 100px;right: 0px;z-index: 9999;}
+    .fix_toolbar ul li {height: 43px;width: 43px;margin-top: 5px;list-style: none;}
+    .fix_toolbar ul li.Contentus a {background: url(/content/Homepage/images/img_index_ico.png) -1045px -1180px;}
+    .fix_toolbar ul li.ContentusA a {background: url(/content/Homepage/images/img_index_ico.png) -1100px -1180px;}
+    .fix_toolbar ul li a {height: 43px;width: 43px;display: block;}
+    .fix_toolbar ul li.Returntop a {background: url(/content/Homepage/images/img_index_ico.png) -1045px -1084px;}
+</style>
+<script type="text/javascript" src="/content/ShareMain/Script/fxRight.js?v=133333"></script>
+<link href="/content/ShareMain/style/fxMain.css" rel="stylesheet" type="text/css" />
+<div class="fix_toolbar">
+    <ul>
+        <li class="Returntop"> <a href='#' onclick='this.style.display="none"' target='_self' title="回顶部" style='display:none;' id="goTopBtn"></a> </li>
+        <li class="Rightshare" onmouseover="this.className='RightshareA'" onmouseout="this.className='Rightshare'">
+            <div id="fxMainRight"> <a class="bds_more"  title="分享" ></a> </div>
+            <script>
+                shareRight.erweima = "Http://www.shoudurc.com/common/shareqrcode?strdata=" + window.location;
+                shareRight.title = "首都人才网，咱北京市自己的招聘网站！网络招聘--我们更专业！";
+                shareRight.summary = "首都人才网，咱北京市自己的招聘网站！网络招聘--我们更专业！";
+                shareRight.pic = "Http://www.shoudurc.com/homepage/NewIndex/images/view_logo10.gif";
+            </script>
+        </li>
+        <li class="Contentus" onmouseover="this.className='ContentusA'" onmouseout="this.className='Contentus'"> <a href='/main/feedback/' title="反馈" target='_blank'></a> </li>
+    </ul>
+</div>
+<script>var subsiteID=10;</script>
+<script language="javascript" type="text/javascript" src="/content/personal/script/newsnewnavtop.js?v=4"></script>
+<script language="javascript" type="text/javascript" src="/script/p.js?v=1"></script>
+
+
+
+
+
+
+
+<a href="" id="lnkJobApply" style="display: none">&nbsp;</a>
+<div class="BodyMain">
+    <div style="clear: both">
+    </div>
+    <div class="HightSearchMain">
+        <form action="/personal/js/search" id="frmSearch" method="post" onsubmit="CheckForm()">
+            <div class="QuickSearch">
+                <div class="KeyWords">
+                    <input type="hidden" id="hidKeyType" name="hidKeyType" value="1" />
+                    <input type="hidden" id="TempKey" />
+                    <input type="hidden" name="SearchFormID" value="1300" />
+                    <span>
+          <input type="text"  placeholder="会计/财务/人力/客服/设计"  value="" id="txtKeyWord" name="txtKeyWord" onpropertychange="checkAndShow();" onkeyup="checkKeyCode(event);" oninput="checkAndShow();" onfocus="isAjax = true;textBoxFocus(this,'');checkAndShow()" onblur="isAjax = false;textBoxBlur(this,'');popup.ibClose();" autocomplete="off" style="color:black;" /></span>
+                    <input type="hidden" id="iddcJobTypeID" name="iddcJobTypeID" value="" />
+                    <input type="hidden" id="hidJobType" name="hidJobType" value="" />
+                    <input class="btnRegionSelect" type="button" id="txtdcJobTypeID" name="txtdcJobTypeID" onclick="PopupSelect(JobTypeSelect.newSelect(1),this,445,'','SetSearch()')" />
+                </div>
+                <input type="hidden" id="iddcRegionID" name="iddcRegionID" value="10" />
+                <input class="btnRegionSelect" type="button" id="txtdcRegionID" name="txtdcRegionID" value="北京市 " onclick="PopupSelect(RegionSelect.newSelect(55,1,1,1,0),this,445,'请选择工作地点','SetRegionSearch()')" style="vertical-align: middle" />
+                <input type="hidden" id="iddcIndustryID" name="iddcIndustryID" value="" />
+                <input class="btnIndustrySelect" type="button" id="txtdcIndustryID" name="txtdcIndustryID" value="请选择行业" onclick="PopupSelect(IndustrySelect.newSelect(180,1),this,700,'请选择行业','SetIndustrySearch()')" />
+
+                <input type="submit" class="btnSearchConfirm" value="搜工作" />
+
+            </div>
+        </form>
+        <div id="divJobInfo">
+            <div class="SearchFilter">
+                <div class="FilterTop" id="FilterTop">
+
+                    <div class="FilterReset" onclick="ClearFilter()" id="FilterReset" style="display: none;">
+                        清空筛选条件</div>
+                    <div class="FilterReset" onclick="history.go(-1);" id="GoBack" style="display: none;">
+                        返回上一级</div>
+                    <div class="SearchHistoryPopup" id="SearchHistoryPopup" style="display: none;left: 590px;">
+                        <div class="SearchHistoryPopupMain">
+                            <ul>
+                                <li onclick="LastSearch(0)">软件工程师 +北京市 </li>
+                                <li onclick="LastSearch(1)">计算机软件 +北京市 </li>
+                                <li onclick="LastSearch(2)">Java开发工程师 +计算机软件...</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="clear: both">
+                    </div>
+                </div>
+                <script>
+                    var LastSearch0 = "ckName=软件工程师 +北京市 &JobType=2410&Industry=&WorkPlace=10&KeyType=1&KeyWord=&Salary=&Negotiable=&EmployType=&Education=&Experience=&CompanySize=";
+                    var LastSearch1 = "ckName=计算机软件 +北京市 &JobType=&Industry=31&WorkPlace=10&KeyType=1&KeyWord=&Salary=&Negotiable=&EmployType=&Education=&Experience=&CompanySize=";
+                    var LastSearch2 = "ckName=Java开发工程师 +计算机软件 +北京市 &JobType=2422&Industry=31&WorkPlace=10&KeyType=1&KeyWord=&Salary=&Negotiable=&EmployType=&Education=&Experience=&CompanySize=";
+
+                </script>
+                <div style="clear: both">
+                </div>
+                <div class="FilterMain">
+                    <table id="FilterMainTable" width="100%" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th>
+                                工作地点：
+                            </th>
+                            <td style="padding-left:15px;">
+                                <div class="tdFilterCondition" id="divWorkPlaceFilter">
+                                    <div class="btnReturn">
+                                    </div>
+                                    <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1005')">朝阳区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1006')">海淀区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1007')">丰台区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1001')">东城区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1014')">大兴区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1002')">西城区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1010')">昌平区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1013')">房山区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1009')">顺义区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1012')">通州区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1008')">石景山区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1019')">亦庄开发区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1016')">怀柔区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1018')">密云县</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1011')">门头沟区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1017')">平谷区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1020')">密云区</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcRegionID','1015')">延庆区</span>                     </div>
+                            </td>
+                            <td class="tdMore">
+                                <input type="button" class="btnFilterMore" onclick="FilterToggle('divWorkPlaceFilter',this)" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                职位类别：
+                            </th>
+                            <td style="padding-left:15px;">
+                                <div class="tdFilterCondition" id="divJobTypeFilter">
+                                    <div class="btnReturn">
+                                    </div>
+                                    <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','11')">销售人员</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','10')">销售管理</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','21')">行政/后勤</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','41')">教育/培训</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','29')">财务/审计/税务</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','32')">建筑</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','18')">技工/普工</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','53')">餐饮/娱乐/旅游</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','14')">客服/技术支持</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','12')">销售行政/商务</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','24')">软硬件开发/系统集</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','55')">物流/交通/仓储</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','42')">法律</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','33')">房地产</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','13')">市场/策划/公关</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','23')">IT产品/运营/设</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','19')">经营管理</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','30')">证券/期货/投资/</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','15')">贸易/采购</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','20')">人力资源</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','56')">其他</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','49')">艺术设计</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','52')">保安/家政</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','16')">生产制造/运营</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','43')">咨询</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','50')">新闻/出版</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','26')">IT品质/运维/技</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','36')">电气/电力/能源</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','47')">广告</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','58')">实习生/社工/科研</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','31')">保险</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','17')">质量/安全管理</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','39')">机械</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','27')">电子/半导体/电器</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','37')">化工</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','45')">医院/医疗</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','48')">影视/媒体</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','34')">物业管理</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','46')">制药/医疗器械</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','44')">翻译</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','51')">百货/零售</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','54')">美容/健身</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','59')">农/林/牧/渔业</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','57')">环保</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','25')">IT管理</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcJobTypeID','40')">服装/纺织品</span>                     </div>
+                            </td>
+                            <td class="tdMore">
+                                <input type="button" class="btnFilterMore" onclick="FilterToggle('divJobTypeFilter',this)" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                月薪范围：
+                            </th>
+                            <td colspan="2" style="padding-left:15px;">
+                                <div class="tdFilterCondition" id="divSalaryFilter">
+                                    <!--<span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','10')">6K-8K(177)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','100')">面议(25)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','11')">8K-10K(183)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','12')">10K-15K(91)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','13')">15K-20K(25)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','14')">20K以上(9)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','15')">(2)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','16')">(4)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','2')">1K-2K(14)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','3')">(4)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','4')">2K-3K(28)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','5')">(20)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','6')">3K-4K(189)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','7')">(81)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','8')">4K-5K(313)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','9')">5K-6K(245)</span> -->
+                                    <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','2')">1K-2K</span>
+                                    <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','4')">2K-3K</span>
+                                    <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','6')">3K-4K</span>
+                                    <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','8')">4K-5K</span>
+                                    <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','9')">5K-6K</span>
+                                    <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','10')">6K-8K</span>
+                                    <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','11')">8K-10K</span>
+                                    <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','12')">10K-15K</span>
+                                    <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','13')">15K-20K</span>
+                                    <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','14')">20K以上</span>
+                                    <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcSalaryID','100')">面议</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr name="trHidden" style="display: none">
+                            <th>
+                                学历要求：
+                            </th>
+                            <td colspan="2" style="padding-left:15px;">
+                                <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcEducationID','1')">初中(104)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcEducationID','100')">不限(222)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcEducationID','2')">高中、中技、中专(244)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcEducationID','5')">大专(527)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcEducationID','6')">本科(277)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcEducationID','7')">硕士(32)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcEducationID','8')">博士(4)</span>                 </td>
+
+                        </tr>
+                        <tr name="trHidden" style="display: none">
+                            <th>
+                                工作年限：
+                            </th>
+                            <td colspan="2" style="padding-left:15px;">
+                                <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcExperienceID','0')">不限(776)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcExperienceID','1')">1~2年(357)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcExperienceID','2')">3~5年(194)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcExperienceID','3')">6~10年(29)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcExperienceID','4')">10年以上(5)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcExperienceID','5')">应届毕业生(49)</span>                 </td>
+                        </tr>
+                        <tr name="trHidden" style="display: none">
+                            <th>
+                                工作性质：
+                            </th>
+                            <td colspan="2" style="padding-left:15px;">
+                                <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('idEmployType','1')">全职(1348)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('idEmployType','3')">兼职(40)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('idEmployType','4')">实习(22)</span>                 </td>
+                        </tr>
+                        <tr name="trHidden" style="display: none">
+                            <th>
+                                企业规模：
+                            </th>
+                            <td colspan="2" style="padding-left:15px;">
+                                <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcCompanySizeID','1')">少于50人(541)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcCompanySizeID','2')">50~100人(446)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcCompanySizeID','3')">101~200人(117)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcCompanySizeID','4')">201~500人(79)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcCompanySizeID','5')">501~1000人(53)</span> <span onMouseOver='$(this).addClass("Select")' onMouseOut='$(this).removeClass("Select")' onclick="FilterSearch('iddcCompanySizeID','6')">1000人以上(174)</span>                 </td>
+                        </tr>
+                        <tr>
+                            <th nowrap="nowrap">
+                                企业答复率：
+                            </th>
+                            <td colspan="2" style="padding-left:15px;">
+                  <span onmouseover="$(this).addClass('Select')" onmouseout="$(this).removeClass('Select')"
+                        onclick="FilterSearch('replyPercent','0.6')">60%以上</span> <span onmouseover="$(this).addClass('Select')"
+                                                                                        onmouseout="$(this).removeClass('Select')" onclick="FilterSearch('replyPercent','0.7')">
+                      70%以上</span> <span onmouseover="$(this).addClass('Select')" onmouseout="$(this).removeClass('Select')"
+                                         onclick="FilterSearch('replyPercent','0.8')">80%以上</span> <span onmouseover="$(this).addClass('Select')"
+                                                                                                         onmouseout="$(this).removeClass('Select')" onclick="FilterSearch('replyPercent','0.9')">
+                          90%以上</span> <span onmouseover="$(this).addClass('Select')" onmouseout="$(this).removeClass('Select')"
+                                             onclick="FilterSearch('replyPercent','1.0')">100%</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                福利待遇：
+                            </th>
+                            <td colspan="2" style="padding-left:15px;">
+                                <div id="divWelfareFilter" class="TdWelfareContent">
+                                    <div onmouseover="$(this).addClass('Select')" onmouseout="$(this).removeClass('Select')">
+                                        <input onclick="FilterSearch('Welfare','',this)" type="checkbox" name="Welfare" value="1" /><span>社会保险</span></div>
+                                    <div onmouseover="$(this).addClass('Select')" onmouseout="$(this).removeClass('Select')">
+                                        <input onclick="FilterSearch('Welfare','',this)" type="checkbox" name="Welfare" value="2" /><span>公积金</span></div>
+                                    <div onmouseover="$(this).addClass('Select')" onmouseout="$(this).removeClass('Select')">
+                                        <input onclick="FilterSearch('Welfare','',this)" type="checkbox" name="Welfare" value="13" /><span>奖金提成</span></div>
+                                    <div onmouseover="$(this).addClass('Select')" onmouseout="$(this).removeClass('Select')">
+                                        <input onclick="FilterSearch('Welfare','',this)" type="checkbox" name="Welfare" value="3" /><span>双休</span></div>
+                                    <div onmouseover="$(this).addClass('Select')" onmouseout="$(this).removeClass('Select')">
+                                        <input onclick="FilterSearch('Welfare','',this)" type="checkbox" name="Welfare" value="9" /><span>8小时工作制</span></div>
+                                    <div onmouseover="$(this).addClass('Select')" onmouseout="$(this).removeClass('Select')">
+                                        <input onclick="FilterSearch('Welfare','',this)" type="checkbox" name="Welfare" value="10" /><span>提供住宿</span></div>
+                                </div>
+                                <input type="hidden" value="1" name="isWelfareShow" id="isWelfareShow" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="ViewMore">
+                <span class="ViewPointerDown" id="ViewPointer" onclick="ChangeViewFilter()">更多选项</span>
+            </div>
+            <div class="JobList" id="divJobList">
+                <div class="ListTop">
+                    <div class="ViewByList" id="divExpand">
+                        <span class="List" onclick="ListView()">列表</span>
+                        <span class="Content" onclick="BreifView()">摘要</span>
+                    </div>
+                    <input type="checkbox" style="vertical-align: middle; float:none;margin: 0; margin-left:36px;" id="chkOnline" onclick="ChangeOnline(this);return false" />
+                    <span style="vertical-align: middle;float:none">只显示在线</span>
+                    <input type="checkbox" style="vertical-align: middle; float:none;margin: 0; margin-left:24px;" id="chkEnvironment" onclick="ChangeEnvironment(this);return false" />
+                    <span style="vertical-align: middle;float:none">只显示有环境照片</span>
+                    <span class="JobPageNum">
+共1410条  第1/47页           </span>
+                </div>
+                <div style="clear: both">
+                </div>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" onmouseleave="hiddenAllBox()"
+                       id="tblCpList">
+                </table>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" onmouseleave="hiddenAllBox()"
+                       id="tblJobList">
+                    <tr>
+                        <th width="24%" style=" padding-left:17px;">
+                            职位名称
+                        </th>
+                        <th width="30%">
+                            企业名称
+                        </th>
+                        <th width="8%" style="text-align: center">
+                            企业答复率
+                        </th>
+                        <th width="16%" style="text-align: center">
+                            工作地点
+                        </th>
+                        <th width="8%">
+                            薪水
+                        </th>
+                        <th nowrap="nowrap" style="text-align: center" width="6%">
+                            <span id="JobMatchHead">匹配度</span>
+                        </th>
+                        <th width="10%">
+                            刷新时间
+                        </th>
+                    </tr>
+                    <tr style="" onmouseover='this.style.background="#fef8e6"' onmouseout='this.style.background=""'>
+                        <td class="tdJobName" onmouseover="display(event,'box0',6195931,0,'北京思睿峰知识产权代理有限公司')" onmouseleave="">
+                            <input type="checkbox" id="chkChecked0" name="chkChecked" value="1" />
+                            <div id="box0"  class="box" onmouseover="" onmouseleave="disappear('box0')">
+                            </div>
+                            <a target="_blank" class="JobName" href="/personal/jbB0E1A6775F.html">
+                                <img src="/Content/personal/js/images/Top.gif" />专利代理人<div class="icoFuliLevel FuliLevel7" name="保险、公积金、年终奖、奖金提成、节日福利、双休、带薪年假">
+                            </div>                </a>
+                            <input type="button" class="PointerDown" onclick="TriggleDetail(this,0)" style="display:none" />
+                        </td>
+                        <td>
+                            <div title="普通认证会员，招聘人身份认证" class="cpVerify"><a target="_blank" onclick="cancelBubble(event)" href="/personal/cpjob2269D12AE5.html">北京思睿峰知识产权代理有限公司</a><span></span></div>              </td>
+                        <td style="text-align: center">
+                        </td>
+                        <td style="text-align: center">
+                            北京市东城区              </td>
+                        <td nowrap="nowrap">
+                            <span>10K-20K</span>
+                        </td>
+                        <td style="text-align: center;">
+                            <span id="JobMatch6195931"></span>
+                        </td>
+                        <td>
+                            昨天              </td>
+                    </tr>
+                    <tr id="trDetail0" style="display:none;">
+                        <td colspan="5" style="padding-left:15px;">
+                            学历要求：本科                | 工作经验：不限                | 公司规模：少于50人                | 招聘方式：全职                <br />
+                            岗位职责：1、与客户沟通，完成国内专利申请文件的撰写、审查意见的转达和答复；    2、为客户提供专项技术专利的文献检索、分析、咨询服务；    3、完成专利检...                <br />
+                            岗位要求：1、学历：本科，硕士优先；     2、专业：电子、计算机、通信、数学、机械等     3、英语水平：大学英语六级以上；    4、有在专利代理机构或企业中从...              </td>
+                        <td style="text-align: center" colspan="2">
+                            <input type="button" class="btnApplyNow Disable" value="已申请" />
+                            <br />
+                            <a href="javascript:void(0)" class="aAttention" onclick="JobFavourite(this,0)" id="lnkFavourite0">收藏</a>
+                            <input type="hidden" id="JobID0" value="6195931" />
+                            <input type="hidden" id="JobHidID0" value="B0E1A6775F" />
+                            <input type="hidden" id="CpName0" value="北京思睿峰知识产权代理有限公司" />
+                            <input type="hidden" id="JobName0" value="专利代理人" />
+                            <input type="hidden" id="JobRefresh0" value="2019-07-09 09:51" />
+                        </td>
+                    </tr>
+                    <tr style="background: #f7f8fa;" onmouseover='this.style.background="#fef8e6"' onmouseout='this.style.background="#f7f8fa"'>
+                        <td class="tdJobName" onmouseover="display(event,'box1',6447169,1,'北京泓元教育科技有限公司')" onmouseleave="">
+                            <input type="checkbox" id="chkChecked1" name="chkChecked" value="1" />
+                            <div id="box1"  class="box" onmouseover="" onmouseleave="disappear('box1')">
+                            </div>
+                            <a target="_blank" class="JobName" href="/personal/jb4429181563.html">
+                                平面设计                </a>
+                            <input type="button" class="PointerDown" onclick="TriggleDetail(this,1)" style="display:none" />
+                        </td>
+                        <td>
+                            <div title="未经过网站证实，求职有风险" class="cpUnVerify"><a target="_blank" onclick="cancelBubble(event)" href="/personal/cpjob9FB4D6E9FE.html">北京泓元教育科技有限公司</a><span></span></div>              </td>
+                        <td style="text-align: center">
+                        </td>
+                        <td style="text-align: center">
+                            北京市昌平区              </td>
+                        <td nowrap="nowrap">
+                            <span>4K-6K</span>
+                        </td>
+                        <td style="text-align: center;">
+                            <span id="JobMatch6447169"></span>
+                        </td>
+                        <td>
+                            2019-06-24              </td>
+                    </tr>
+                    <tr id="trDetail1" style="display:none;background: #f7f8fa;">
+                        <td colspan="5" style="padding-left:15px;">
+                            学历要求：不限                | 工作经验：1~2年                | 公司规模：少于50人                | 招聘方式：全职                <br />
+                            岗位职责：1、负责公司网站的设计、改版、更新；  2、负责公司产品的界面进行设计、编辑、美化等工作；  3、对公司的宣传产品进行美工设计；  4、负责客户及系统...                <br />
+                            岗位要求：1、美术、平面设计相关专业，专科及以上学历；  2、两年以上网页设计及平面设计工作经验；  3、有扎实的美术功底、良好的创意思维和理解能力，能及时...              </td>
+                        <td style="text-align: center" colspan="2">
+                            <input type="button" class="btnApplyNow" onClick="JobApply('6447169','SubTemp','')" value="立即申请" />
+                            <br />
+                            <a href="javascript:void(0)" class="aAttention" onclick="JobFavourite(this,1)" id="lnkFavourite1">收藏</a>
+                            <input type="hidden" id="JobID1" value="6447169" />
+                            <input type="hidden" id="JobHidID1" value="4429181563" />
+                            <input type="hidden" id="CpName1" value="北京泓元教育科技有限公司" />
+                            <input type="hidden" id="JobName1" value="平面设计" />
+                            <input type="hidden" id="JobRefresh1" value="2019-06-24 17:10" />
+                        </td>
+                    </tr>
+
+                </table>
+                <div class="ListBottom">
+                    <input id="chkAll" type="checkbox" name="chkAll" value="1" onclick="CheckAll(this,0)" />
+                    <label for="chkAll">全选</label>
+                    <div class="ViewSelect" onclick="JobView()">浏览职位</div>
+                    <div class="ApplySelect" onclick="JobApplyNew()">申请职位</div>
+                    <div class="FavouriteSelect" onclick="JobFavourite(this)">收藏职位</div>
+                    <span class="JobPageNum">
+共1410条  第1/47页             </span>
+                </div>
+                <div>
+                    <div class="spPageRight" id="spPage">共<i>1410</i>条&nbsp;第<i>1</i>/<i>47</i>页</div><div class='pagerNum'><a href="javascript:void(0)" class='normal_noSelect'>首页</a><a href="javascript:void(0)" class='normal_noSelect'>上一页</a><a href="javascript:void(0)" class='PageNo_select'>1</a><a href="/personal/js/ajaxpager?page=2&iddcJobTypeID=&iddcRegionID=&iddcIndustryID=" class="PageNo_noSelect" onclick="return ChangePager(2)">2</a><a href="/personal/js/ajaxpager?page=3&iddcJobTypeID=&iddcRegionID=&iddcIndustryID=" class="PageNo_noSelect" onclick="return ChangePager(3)">3</a><a href="/personal/js/ajaxpager?page=4&iddcJobTypeID=&iddcRegionID=&iddcIndustryID=" class="PageNo_noSelect" onclick="return ChangePager(4)">4</a><a href="/personal/js/ajaxpager?page=5&iddcJobTypeID=&iddcRegionID=&iddcIndustryID=" class="PageNo_noSelect" onclick="return ChangePager(5)">5</a><a href="/personal/js/ajaxpager?page=6&iddcJobTypeID=&iddcRegionID=&iddcIndustryID=" class="PageNo_noSelect" onclick="return ChangePager(6)">6</a><a href="/personal/js/ajaxpager?page=7&iddcJobTypeID=&iddcRegionID=&iddcIndustryID=" class="PageNo_noSelect" onclick="return ChangePager(7)">7</a><a href="/personal/js/ajaxpager?page=8&iddcJobTypeID=&iddcRegionID=&iddcIndustryID=" class="PageNo_noSelect" onclick="return ChangePager(8)">8</a><a href="/personal/js/ajaxpager?page=9&iddcJobTypeID=&iddcRegionID=&iddcIndustryID=" class="PageNo_noSelect" onclick="return ChangePager(9)">9</a><a href="/personal/js/ajaxpager?page=10&iddcJobTypeID=&iddcRegionID=&iddcIndustryID=" class="PageNo_noSelect" onclick="return ChangePager(10)">10</a><a href="/personal/js/ajaxpager?page=2&iddcJobTypeID=&iddcRegionID=&iddcIndustryID=" class="normal_Select" onclick="return ChangePager(2)">下一页</a><a href="/personal/js/ajaxpager?page=47&iddcJobTypeID=&iddcRegionID=&iddcIndustryID=" class="normal_Select" onclick="return ChangePager(47)">尾页</a> </div>          </div>
+                <script>
+                    var arrJsJobID = ['6195931','6447169','6447150','6347395','6457071','6450621','3382204','2163453','6456597','5546361','6452799','6416085','6420064','6425029','6414162','6450068','4852146','6355399','6080649','6080653','6437624','6214111','6148662','6370935','6370926','6446182','6446181','6451404','6434286','6434285'];
+                    var arrJsJobTypeID = ['4213','2310','2313','2112','4713','1122','1110','3714','5912','1018','1110','56','2920','1112','1016','1617','1118','1617','2724','2724','56','3212','3213','2112','3228','1110','4125','1110','4813','2016'];
+                    var arrJsdcSalaryID =['12','8','8','6','2','10','8','9','10','10','9','9','8','11','11','6','9','6','7','6','7','8','8','8','10','11','11','5','9','6'];
+                    var arrJsdcRegionID =['1001','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010','1010'];
+                    var arrJsdcEducationID = ['6','100','5','5','6','100','4','6','7','5','5','100','6','100','4','5','6','2','1','1','4','5','5','5','5','5','5','100','1','2'];
+                    var arrJsMinExperience = ['0','1','0','0','0','0','0','2','1','2','0','0','0','0','0','2','0','1','0','0','0','0','0','0','2','0','0','0','0','1'];
+                    var arrJsMinAge = ['99','99','99','22','20','22','22','23','20','24','21','18','99','99','99','20','18','25','18','18','22','99','99','99','99','20','20','99','16','18'];
+                    var arrJsMaxAge = ['99','99','99','30','25','38','32','45','40','40','40','48','99','99','99','40','38','35','45','45','42','99','99','99','99','30','30','99','36','35'];
+                    var arrJsIndustry = ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''];
+                    GenJobMatch();</script>
+            </div>
+        </div>
+
+        <div class="RegionSearch">
+            <div class="Title">
+                <div>你也许还对这些感兴趣</div>
+            </div>
+            <div class="RegionList">
+                <a href="/dongcheng_job/">
+                    东城招聘</a>
+                <a href="/xicheng_job/">
+                    西城招聘</a>
+                <a href="/chaoyang_job/">
+                    朝阳招聘</a>
+                <a href="/haidian_job/">
+                    海淀招聘</a>
+                <a href="/fengtai_job/">
+                    丰台招聘</a>
+                <a href="/shijingshan_job/">
+                    石景山招聘</a>
+                <a href="/shunyi_job/">
+                    顺义招聘</a>
+                <a href="/changping_job/">
+                    昌平招聘</a>
+                <a href="/mentougou_job/">
+                    门头沟招聘</a>
+                <a href="/tongzhou_job/">
+                    通州招聘</a>
+                <a href="/fangshan_job/">
+                    房山招聘</a>
+                <a href="/daxing_job/">
+                    大兴招聘</a>
+                <a href="/yanqing_job/">
+                    延庆招聘</a>
+                <a href="/huairou_job/">
+                    怀柔招聘</a>
+                <a href="/pinggu_job/">
+                    平谷招聘</a>
+                <a href="/miyun_job/">
+                    密云招聘</a>
+                <a href="/yizhuang_job/">
+                    亦庄开发招聘</a>
+                <a href="/miyun_job/">
+                    密云招聘</a>
+            </div>
+        </div>
+
+    </div>
+    <div style="clear: both">
+    </div>
+</div>
+<input type="hidden" id="orgdcJobTypeID" name="orgdcJobTypeID"  value=""  />
+<input type="hidden" id="orgdcRegionID" name="orgdcRegionID" value="10"  />
+<input type="hidden" id="orgdcIndustryID" name="orgdcIndustryID" value="" />
+<input type="hidden" id="orgKeyWord" name="orgKeyWord" value="" />
+<input type="hidden" id="hidExpand" value="0" />
+<input type="hidden" id="hidIsOnline" value="" />
+<input type="hidden" id="hidSFrom" value="1300" />
+<form id="frmJob" action="/personal/jv/JobView" method="post" name="frmJob">
+    <input type="hidden" id="hidId" name="JobId" />
+    <input type="hidden" id="hidId2" name="JobId2" />
+    <input type="hidden" id="hidName" name="JobName" />
+    <input type="hidden" id="hidCpName" name="cpName" />
+    <input type="hidden" id="hidRefresh" name="Refresh" />
+    <input type="hidden" id="hidRegionUrl" name="hidRegionUrl" value="" />
+</form>
+<form id="jobApplyForm" action="/personal/jv/JobView" method="post" name="jobApplyForm"
+      target="_blank">
+    <input type="hidden" id="hidJobApplyResult" name="type" value="29482653" />
+</form>
+<form action="/personal/vi/StepOne" method="post" target="_blank" id="VIForm">
+    <input type="hidden" name='ViRoomID' id="ViForm_ViRoomID">
+    <input type="hidden" name='cvMainID' id="ViForm_cvMainID">
+    <input type="hidden" name='cpName' id="ViForm_cpName">
+</form>
+
+<div id="divAjaxMask">
+    <img src="/images/ajaxloading.gif" /></div>
+<script>
+    var h = document.body.offsetHeight > document.documentElement.offsetHeight ? document.body.offsetHeight : document.documentElement.offsetHeight;
+    _("divAjaxMask").style.height = document.body.offsetWidth + "px";
+    _("divAjaxMask").style.height = h + "px";
+</script>
+
+<div style="display:none"><script > var _bdhmProtocol = (("https:"== document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1aec9bfb0a53233b84296ee52b3efecb' type='text/javascript'%3E%3C/script%3E"));</script></div>
+<div class="Footer">
+    <p>
+        <a href="http://www.51rc.com" target="_blank">伍亿人才</a>旗下
+        <img src="/Content/main/images/mainNew/logo_foot.gif"style="vertical-align: middle;    margin-bottom: 1px;margin-right: 3px;" />首都人才网版权所有 <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow">京ICP证050289号</a>
+        <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow">ICP沪B-20110079</a>
+        本网站所有招聘信息，未经书面授权不得转载 投诉电话：400-626-5151
+    </p>
+</div>
+
+<div name="HelpStep" id="HelpStep" style="width: 498px; height: 257px; position: absolute;
+    background-image: url(/content/personal/js/images/searchtip.png); z-index: 110;
+    top: 410px; left: 38%; background-position: initial; background-repeat: initial initial;
+    display: none;">
+    <img src="/content/Homepage/NewIndex/PopupNew/p2.gif" style="float: right; cursor: pointer;"
+         onclick="$('#HelpStep').hide()">
+</div>
+<script language="javascript" src="/content/company/script/SafePass.js"></script>
+<script type="text/javascript" src="/content/chat/script/jquery-1.6.4.min.js?v=20170321"></script>
+<script language="javascript" type="text/javascript" src="/content/personal/script/sysNav.js?v=1"></script>
+<script language="javascript" type="text/javascript" src="/content/personal/script/js.js?v=20160324"></script>
+<script language="javascript" type="text/javascript" src="/content/personal/script/jm.js?v=1"></script>
+
+<script language="javascript" type="text/javascript" src="/content/personal/script/list.js?v=1"></script>
+<script language="javascript" type="text/javascript" src="/content/personal/script/tooltip.js?v=1"></script>
+<script language="javascript" type="text/javascript" src="/script/BodyHtmlClass.js?v=1"></script>
+<script language="javascript" type="text/javascript" src="/script/p.js?v=1"></script>
+<script type="text/javascript" src="/content/personal/Script/JsVarAll.js?v=1"></script>
+<script type="text/javascript" src="/Script/Region/chs10.js?v=1"></script>
+<script type="text/javascript" src="/Script/varJobType.js?v=2018"></script>
+<script type="text/javascript" src="/Script/IndustrySelect.js?v=1"></script>
+<script type="text/javascript" src="/Script/JobTypeSelect.js?v=2"></script>
+<script type="text/javascript" src="/Script/RegionSelect.js?v=1"></script>
+<script type="text/javascript" src="/Script/CommonSelect.js?v=1"></script>
+<script type="text/javascript" src="/Script/ajax.js?v=1"></script>
+<script type="text/javascript">      var isFirstKeyWords = 1;</script>
+<script type="text/javascript" src="/Script/GetKeyWord.js?v=1"></script>
+<script type="text/javascript" src="/script/popupOnline.js?v=1"></script>
+<script type="text/javascript" src="/content/personal/js/script/jobpop.js?v=1"></script>
+<script type="text/javascript" src="/content/personal/script/jv.js?v=2019/7/10 9:45:56"></script>
+<script type="text/javascript" src="/content/personal/script/jobapplycv.js?v=2019/7/10 9:45:56"></script>
+<script type="text/javascript" src="/Content/Personal/Script/p2.js"></script>
+<script type="text/javascript" src="/content/Personal/script/cv.js?v=2019/7/10 9:45:56"></script>
+<script type="text/javascript" src="/content/Personal/script/datePicker.js"></script>
+<script type="text/javascript" src="/script/MajorSelect.js"></script>
+<script>
+    (function () {
+        $(".BtnGender").live("click", function () {
+            if ($(this).hasClass("Active")) return;
+            $(this).addClass("Active");
+            $(this).siblings(".BtnGender").removeClass("Active");
+        });
+
+        var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?16dc007c702809fde3b4e59b7e70939d" : "https://jspassport.ssl.qhimg.com/11.0.1.js?16dc007c702809fde3b4e59b7e70939d";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+    })();
+</script>
+<script>
+    window.onload = function () {
+        if(getCookie("searchPetShow")!="1"){
+            setCookie("searchPetShow","1");
+            document.getElementById('HelpStep').style.display = 'none';
+
+            setTimeout(function () { document.getElementById('HelpStep').style.display = 'none'; }, 5000);
+        }
+        if (document.getElementById('hidRegionUrl').value == "1") {
+            document.getElementById('GoBack').style.display = "";
+        }
+        if(GetQueryString("iddcSalaryID").length>0){
+            FilterSearch('iddcSalaryID',GetQueryString("iddcSalaryID"))
+        }
+        //人才夜市
+        //refreshYsChat();
+        //window.setInterval(refreshYsChat, 5000);
+        //$("#divYsChat").perfectScrollbar();
+    }
+    //JS操作cookies方法!
+    //写cookies
+    function setCookie(name,value)
+    {
+        var Days = 30;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days*24*60*60*1000);
+        document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    }
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+    }
+    function GetQueryString(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return "";
+    }
+
+    //jv.js  与 js.js(主要的)
+    function TriggleDetail(obj, row) {
+
+        if ($('#trDetail' + row).css("display") == "none") {
+            addViewLog(row);
+            $(obj).attr("class", "PointerUp");
+            $('#trDetail' + row).css("display", "table-row");
+        }
+        else {
+            $(obj).attr("class", "PointerDown");
+            $('#trDetail' + row).css("display", "none");
+        }
+    }
+    function ChangePager(page) {
+        if (document.getElementById("hidSFrom")) {
+            strSFrom = "";
+            var objSFrom = document.getElementById("hidSFrom");
+            strSFrom = objSFrom.value.substr(0, 2) + "1" + objSFrom.value.substr(3, 1);
+            objSFrom.value = strSFrom;
+        }
+        SearchAgain("0", page);
+        return false;
+    }
+</script>
+<script> var CvDegree, CvRelatedWorkYears,CvDcSalaryID, CvIsNegotiable, PaAge, CvJobTypeID, CvRegionID, CvIndustryID;
+CvDegree = '6'
+CvRelatedWorkYears = '0'
+CvDcSalaryID = '12'
+CvIsNegotiable = 'True'
+PaAge = '21'
+CvJobTypeID = '23'
+CvRegionID = '1010'
+CvIndustryID = ''
+var ArrJobTypeSimilar = {0:'0'}
+</script>
+<script>
+    var isSearchUnLogin = 1;
+    var strNavTopID = "NavTop_JobSearch";
+    var strNavBottomID = "NavBottom_Search";
+    var IsLogin = "";
+    var IsLogin = 'True';    </script>
+<style>
+    .NavBottomSelect a:visited {
+        color: rgb(248,90,0);
+        font-weight: bold;
+    }
+    a:visited.cpNameANew{color:#551a8b;font-family: 微软雅黑;font-size: 16px;}
+    a:visited{color:#551a8b;}
+    .popupOnline
+    {
+        width: 426px;
+        height: 188px;
+        background: url(/content/company/images/Online_05.gif) repeat-x;
+    }
+    .popupBtnCancel
+    {
+        width: 87px;
+        height: 28px;
+        background: #33FFFF url(/content/personal/images/img_popup.gif) 0px -69px no-repeat;
+        border: 0;
+        font: 12px/22px "新宋体";
+        cursor: pointer;
+        color: #000;
+        font-weight: bold;
+    }
+    .popupJobApply
+    {
+        background: #F7F7F7;
+    }
+    .VIpopupBtn
+    {
+        width: 87px;
+        height: 28px;
+        background: #33FFFF url(/content/personal/images/img_popup.gif) 0px 0px no-repeat;
+        border: 0;
+        font: 12px/22px "新宋体";
+        cursor: pointer;
+        color: #FFF;
+        font-weight: bold;
+    }
+
+    #spPage
+    {
+        display: none;
+    }
+    #divAjaxMask
+    {
+        background: #ccc;
+        filter: alpha(opacity=40);
+        opacity: 0.7;
+        width: 1200px;
+        height: 800px;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        display: none;
+        z-index: 3;
+    }
+    #divAjaxMask img
+    {
+        margin-top: 300px;
+        margin-left: 50%;
+    }
+    .fix_bottom{
+        width: 100%;
+        height: 100px;
+        position: fixed;
+        bottom: 0;
+        font-family: '微软雅黑';
+    }
+    .bottom_Bg{
+        background: url("/content/personal/js/images/bottomImg.png") no-repeat;
+
+    }
+    .bottom_BtnLogin{
+        background: url("/content/personal/js/images/bottomImg.png") no-repeat -9px -146px;
+        cursor: pointer;
+    }
+    .bottom_BtnRegister{
+        background: url("/content/personal/js/images/bottomImg.png") no-repeat -9px -191px;
+        cursor: pointer;
+    }
+    .bottom_BtnCV{
+        background: url("/content/personal/js/images/bottomImg.png") no-repeat -9px -235px;
+        cursor: pointer;
+    }
+    .bottom_close{
+        background: url("/content/personal/js/images/bottomImg.png") no-repeat 10px -112px;
+        cursor: pointer;
+    }
+    .cpSpanCla {
+        display: inline-block;
+        vertical-align: middle;
+        width: 20px;
+        height: 30px;
+    }
+    .cpSpanCla.regCpSerch {
+        background: url(/Content/Personal/Images/pic_serchcp.png) 0px -90px no-repeat;
+    }
+    .cpSpanCla.indCpSerch{
+        background: url(/Content/Personal/Images/pic_serchcp.png) 0px -125px no-repeat;
+    }
+    .cpSpanCla.numCpSerch{
+        background: url(/Content/Personal/Images/pic_serchcp.png) 0px -159px no-repeat;
+    }
+    .cpAttSpanCla{
+        display: inline-block;
+        vertical-align: middle;
+        width: 30px;
+        height: 30px;
+        background: url(/Content/Personal/Images/pic_serchcp.png) 0px -49px no-repeat;
+    }
+    .cpAttSpanCla.attCpSerch{
+        background: url(/Content/Personal/Images/pic_serchcp.png) 0px 3px no-repeat;
+    }
+    .cpshowserch {
+        display: inline-block;
+        vertical-align: text-top;
+        width: 15px;
+        height: 26px;
+        background: url(/Content/Personal/Images/pic_serchcp.png) 5px -187px no-repeat;
+        background-color: #F5F9F1;
+        padding-right: 26px;
+    }
+</style>
+<script>
+    function showSearchHistory(obj) {
+        popup.clearData();
+        popup.isHeader = 0;
+        popup.mask = 3;
+        popup.divClass = "SearchHistoryPopup";
+        popup.dockObj = obj;
+        popup.dockTop = -25;
+        popup.dockLeft = -210;
+        popup.bodyHtml = $('#SearchHistoryPopup').html();
+        popup.creatDiv();
+    }
+    function HideSearchHistory() {
+        popup.ibClose();
+    }
+    function LastSearch(No) {
+        var strLast = eval("LastSearch" + No);
+        document.getElementById("iddcJobTypeID").value = URL_Request(strLast, "JobType");
+        document.getElementById("iddcRegionID").value = URL_Request(strLast, "WorkPlace");
+        if (document.getElementById("iddcIndustryID"))
+            document.getElementById("iddcIndustryID").value = URL_Request(strLast, "Industry");
+        document.getElementById("txtKeyWord").value = URL_Request(strLast, "KeyWord");
+        document.getElementById("frmSearch").submit();
+    }
+
+    function showLogin() {
+        $("#tab_Word").hide();
+        $("#hidIsJobApply").val("0");
+
+        RefreshQrImage();
+        $("#divApplyLogin").css("top", $(document).scrollTop() + 69).show();
+        $("#divApplyLogin").css("left", $(document).width() / 2 - 268).show();
+        $("#divApplyLogin_filter").css("top", $(document).scrollTop() + 58).show();
+        $("#divApplyLogin_filter").css("left", $(document).width() / 2 - 278).show();
+
+    }
+
+    function JobApplyNew(row) {
+        var ids = "";
+        if (row || row == 0)
+            ids = $("#JobID" + row).val();
+        else {
+            var _cb = $("[name='chkChecked']");
+            var strCpName = "";
+            var intApplyCount = 0;
+            for (i = 0; i < _cb.length; i++) {
+                intApplyCount = 0;
+                if (_cb[i].checked) {
+                    var no = _cb[i].id.substr(10);
+                    strCpName = $("#CpName" + no).val();
+                }
+                for (j = 0; j < _cb.length; j++) {
+                    if (_cb[j].checked) {
+                        var no = _cb[j].id.substr(10);
+                        if (strCpName == $("#CpName" + no).val())
+                            intApplyCount++;
+                    }
+                }
+                if (intApplyCount > 3) {
+                    alert("一次申请不可以同时申请同一公司的3个以上的职位");
+                    return false;
+                }
+            }
+            for (i = 0; i < _cb.length; i++) {
+                if (_cb[i].checked) {
+                    var no = _cb[i].id.substr(10);
+                    ids = ids + $("#JobID" + no).val() + ",";
+                }
+            }
+            if (ids)
+                ids = ids.substr(0, ids.length - 1);
+            else
+                alert("请选择您要申请的职位！");
+        }
+        //idsTemp=ids;
+        if (IsLogin.length > 0 && IsLogin != 'False') {
+            if (ids) {
+                _("jobApplyForm").action = "/personal/jm/JobApplyBatch?id=" + ids;
+                _("jobApplyForm").target = "_blank";
+                _("jobApplyForm").submit();
+            }
+        }
+        else {
+            if (ids) {
+                //infoboxs("", 650, 1, "", -100, -350, '<iframe frameborder="0" scrolling="no" id="ifmJobApplyNoLogin" style="width:650px;height:310px;background-color: #F7F7F7;padding-top:0px;" src="/personal/jv/JobApplyByNoLogin?id=' + ids + '"></iframe>', "popupJobApply");
+                showJobApplyLogin(ids);
+            }
+        }
+        //Ajax("post","/personal/jv/ajaxCheckLogin","radom=" + new Date(),JobApplySubmit,false)
+    }
+    function CheckSerchAttention(objthis,cpid, type,text) {
+        if($("#cpAttention").length>0){
+            if($.trim($(objthis).html())=="已关注" || $.trim($(objthis).next().html())=="已关注"){
+                return ;
+            }
+        }
+        if (IsLogin.length > 0) {
+            $.post("/Personal/jv/AjaxPaAttentionProc", {
+                    ID: cpid,
+                    type: type
+                },
+                function (obj) {
+                    var vText = obj.responseText;
+                    ShowBindLove();
+                    if (vText != "-101") {//成功
+                        if (text == 1) {
+                            $(objthis).html("已关注");
+                            $(objthis).prev().addClass("attCpSerch");
+                        } else {
+                            $(objthis).addClass("attCpSerch");
+                            $(objthis).next().html("已关注");
+                        }
+                    }
+                });
+        }
+        else {
+            if (cpid) {
+                showJobApplyLogin('', 1);
+            }
+        }
+    }
+
+</script>
+<script type="text/javascript" src="/content/Personal/script/JobApplyByNoLogin.js?v=2018/5/4 16:06:26"></script>
+
+<link href="/content/chat/style/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/content/chat/script/perfect-scrollbar.js"></script>
+<script type="text/javascript" src="/content/chat/script/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="/content/chat/script/chat.js"></script>
+<script type="text/javascript" src="/content/chat/script/chatprivi.js"></script>
+<script type="text/javascript">
+    var senderType = 2;
+    var chatCaMainId = "";
+    var chatCvMainId = "29256212";
+</script>
+<div class="ChatForm">
+    <div class="ChatTitle">
+        <span id="spShowName"></span>
+        <input type="button" onclick="toggleChat()" />
+    </div>
+    <div class="ChatLeft" id="divChatBody">
+        <div class="ChatLog">
+            <div></div>
+        </div>
+        <div class="ChatEdit">
+            <div class="ChatItem">
+                <input type="button" class="Item1" title="发送表情" onclick="showChatEmotion()" />
+                <input type="button" class="Item2" title="发送图片" onclick="showChatUpload()" />
+            </div>
+            <textarea id="txtMessage"></textarea>
+        </div>
+        <div class="ChatSend">
+            <input type="button" id="btnSend" class="ChatSendButton" onclick="sendChatText()" />
+        </div>
+    </div>
+    <div class="ChatRight">
+        <div class="ChatUser" onclick="toggleChatList()">
+            <input type="button" value="" />
+            <span>我的联系人</span>
+        </div>
+        <div class="ChatUserList">
+            <div></div>
+        </div>
+    </div>
+</div>
+<div class="ChatStart" id="divChatStart" onclick="toggleChat()">
+    <span id="spChatInfo">联系人[ <label id="lbOnlineCount">0</label> / <label id="lbChatCount">0</label> ]</span>
+</div>
+<iframe id="frmChatUpload" src="/chatonline/upload" style="display: none"></iframe>
+<style>
+    #cnzz_stat_icon_1261797594 {display: none;}
+    #cnzz_stat_icon_1277787175 {display: none;}
+</style>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261797594'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1261797594' type='text/javascript'%3E%3C/script%3E"));</script>
+</body>
+</html>
