@@ -10,4 +10,4 @@ feign:
   hystrix:
     enabled: true
 server:
-  port: 8095
+  port: 8091
