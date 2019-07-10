@@ -1,0 +1,21 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+server:
+  port: 8085
+spring:
+  application:
+    name: springcloud-consumer-sy-fairs
+  main:
+    allow-bean-definition-overriding: true
+  thymeleaf:
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+ribbon:
+  eureka:
+    enabled: true
+feign:
+  hystrix:
+    enabled: true
