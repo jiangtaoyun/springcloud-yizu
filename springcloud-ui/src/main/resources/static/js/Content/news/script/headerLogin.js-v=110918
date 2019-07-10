@@ -1,0 +1,335 @@
+function changeLoginType(type) {
+  //type 1为个人登录 2为企业登录
+}
+
+function addCookie(objName, objValue, objHours) { //添加cookie
+  var str = objName + "=" + escape(objValue);
+  if (objHours > 0) { //为0时不设定过期时间，浏览器关闭时cookie自动消失
+    var date = new Date();
+    var ms = objHours * 3600 * 1000;
+    date.setTime(date.getTime() + ms);
+    str += "; expires=" + date.toGMTString();
+  }
+  document.cookie = str;
+}
+
+function GoLoinRedirect(type) {
+  addCookie("urlfile", location.href, 0);
+  if (type == 1) {
+    window.open("http://www.shoudurc.com/personal/sys/QQLoginRediret");
+  } else if (type == 2) {
+    window.open("http://www.shoudurc.com/personal/sys/SinaLoginRediret");
+  } else if (type == 3) {
+    window.open("http://www.shoudurc.com/personal/sys/RenRenLoginRediret");
+  }
+}
+
+function PageHeadShowLogin(urlfile, IsDownLoad) {
+  var str = GenLoginHtml(urlfile);
+  popup.clearData();
+  popup.isHeader = 0;
+  popup.isMessageTip = 0;
+  popup.drag = 1;
+  popup.mask = 3;
+  popup.headerTitle = "";
+  popup.W = 600;
+  popup.H = 286;
+  popup.isFilter = 1;
+  popup.dockObj = "";
+  popup.dockLeft = 0;
+  popup.dockTop = -130;
+  popup.bodyHtml = str;
+  popup.creatDiv();
+}
+
+function GenLoginHtml(urlfile) {
+  var str = "";
+  str = str + '<div class="ContentLogin" style=" width:600px; padding-bottom:0px; height:286px">';
+  //    str = str + '  <div style="height:53px; margin-bottom:-15px;"><div class="Qr" id="divPopLoginQr" onclick="RefreshQrImagePopLogin()"></div>'
+  str = str + '  <div style="height:35px; margin-bottom:10px;">'
+  str = str + '<div class="LoginTopAll">'
+  str = str + '<div style="clear: both;"></div>'
+  str = str + '<span onclick="NormalLogin()" id="NormalTop" class="LoginTop Yes">账号登录</span>'
+  str = str + '<span onclick="WeixinLogin()" id="WeixinTop" class="LoginTop">微信登录</span>'
+  str = str + '<span onclick="DuanxinLogin()" id="DuanxinTop" class="LoginTop">短信登录</span>'
+  str = str + '<div style="clear: both;"></div>'
+  str = str + '</div>'
+  str = str + '<span class="closeWin" onclick="parent.popup.ibClose()"></span></div>';
+  str = str + '  <div style="display:none; text-align:center;" id="divPopLoginWx" class="ContentLoginForm"><img id="imgWeChatQr" style="width:150px; height:150px;" /><p>使用微信扫描上方二维码</p></div>';
+  str = str + '  <div id="divPopLogin" class="ContentLoginForm">';
+  str = str + '    <form action="/personal2018/sys/loginproc" method="post" name="frm" id="frm" onsubmit="return HeadLoginCheckSubmit()">';
+  str = str + '      <input name="UserName" id="LoginAreaUserName" type="text" onkeyup="CtoH(this);" onfocus="HeadUserNameOnClick()" onblur="HeadUserNameOnBlur()" class="Input_login_text_unfocus" maxlength="50" tabindex="1" value="用户名/邮箱/手机号" />';
+	
+  str = str + '      <input  id="LoginAreaPasswordjiade" maxlength="20" type="text"  class="Input_login_password_unfocus" tabindex="2" onfocus="LoginAreaPasswordjiadehide()" onclick="LoginAreaPasswordjiadehide()"  style="display: block;" value="请输入密码" />';
+	
+	str = str + '      <input name="Password" id="LoginAreaPassword" maxlength="20" type="password" onfocus="HeadPasswordOnClick()" onblur="HeadPasswordOnBlur()" class="Input_login_password_unfocus" tabindex="2" value="" style="display: none;" />';
+	
+  str = str + '	   <input type="hidden" name="urlfile" id="urlfile" value="' + urlfile + '" />';
+  str = str + '      <div class="Login_setting">';
+  str = str + '        <input id="AutoLogin" checked="checked" tabindex="4" value="1" type="checkbox" name="AutoLogin" class="chkAutoLogin" style="vertical-align: middle;margin-left: 34px;" />';
+  str = str + '        <span class="autoLogin" style="line-height: normal;">自动登录</span>';
+  str = str + '        <a class="getPwd" href="http://www.shoudurc.com/personal/sys/getpassword/" target="_blank">忘记密码？</a><div style="clear: both;padding-left: 34px;"><input type="checkbox" checked="checked" id="chkAgreement" style="width: 15px;height: 20px;vertical-align: middle;margin-right: 5px;"><span>我已阅读并同意<a href="http://www.shoudurc.com/Personal/sys/registeragreement" target="_blank" style="text-decoration: none;">用户协议</a></span></div>';
+  str = str + '      </div>';
+  str = str + '      <input class="LoginButton" tabindex="4" value="登  录" type="submit" name="btnLogin" style="margin-top: 2px;" />';
+  str = str + '    </form>';
+  str = str + '  </div>';
+
+  str = str + '<div class="DuanxinLogin" style="display:none;">'
+  str = str + '  	 <form action="/personal2018/sys/loginproc" method="post" name="frm" id="frm" onsubmit="return checkloginbyuserMobile()" target="_self">'
+  str = str + '    <div class="UserMobile">'
+  str = str + '      <span></span>'
+  str = str + '      <input name="UserName" id="UserMobile" type="text" onKeyUp="CtoH(this);TrimSpace(this)" onblur="UserMoblieOnBlur()" onFocus="UserMoblieOnClick()" class="Input_login_text_unfocus" style="IME-MODE: disabled" maxlength="50" tabindex="1" value="已认证手机号" />'
+  str = str + '    </div>'
+  str = str + '    <div class="TxtInputBg Cer">'
+  str = str + '          <span></span>'
+  str = str + '          <input type="text" tabindex="3" default="验证码" value="验证码" id="txtVeriyCodeDuanXin" name="MobileCerCode" maxlength="6" onafterpaste="if(isNaN(this.value)){this.value=this.value.replace(/\D/g,\'\')};" onkeyup="if(isNaN(this.value)){this.value=this.value.replace(/\D/g,\'\')};document.getElementById(\'spVerifyCodeTip\').innerHTML=\'\';$(\'#spVerifyCodeTip\').removeClass(\'Error\');" onblur="UserVeriyOnBlur()" onFocus="UserVeriyOnClick()" />'
+  str = str + '          <input type="button" class="BtnReGet" value="获取短信验证码" onclick="SendVerifyCodeDuanXin()" name="btnSendCode" id="btnSendCodeDuanXin" />'
+  str = str + '        </div>'
+  str = str + '    <div class="NoticeTd">'
+  str = str + '      <span class="Notice" id="spVerifyCodeTip"></span>'
+  str = str + '    </div>'
+  str = str + '    <div class="Login_setting">';
+  str = str + '        <input id="AutoLogin" checked="checked" tabindex="4" value="1" type="checkbox" name="AutoLogin" class="chkAutoLogin" style="vertical-align: middle;" />';
+  str = str + '        <span class="autoLogin" style="line-height: normal;">自动登录</span>';
+  str = str + '        <div style="clear: both;padding-left: 30px;"><input type="checkbox" checked="checked" id="chkAgreement" style="width: 15px;height: 20px;vertical-align: middle;margin-right: 5px;"><span>我已阅读并同意<a href="http://www.shoudurc.com/Personal/sys/registeragreement" target="_blank" style="text-decoration: none;">用户协议</a></span></div>';
+  str = str + '      </div>';
+  str = str + '      <input class="LoginButton" tabindex="4" value="登  录" type="submit" name="btnLogin" style="margin-top: 2px;" />';
+  str = str + '    </form>';
+  str = str + '  </div>'
+  str = str + '  <div style="float:left;margin:10px 20px 20px 20px;font-family:微软雅黑;">';
+  str = str + '    <span style="font-size:14px;color:#888">您还没有账号？</span><br />';
+  str = str + '    <a href="http://www.shoudurc.com/personal/sys/register" target="_blank" style="display:inline-block;margin-top:10px;text-decoration:none;">';
+  str = str + '      <span style="font-size:14px;color:#fd893c">立即注册</span>';
+  str = str + '      <span class="goRegister"></span>';
+  str = str + '    </a><br />';
+  str = str + '    <a href="http://www.shoudurc.com/personal/sys/oneminute" target="_blank" style="display:inline-block;margin-top:10px;text-decoration:none;">';
+  str = str + '      <span style="font-size:14px;color:#105aa1">一分钟填写简历</span>';
+  str = str + '      <span class="goOneMinute"></span>';
+  str = str + '    </a><br />';
+//  str = str + '    <span style="display:inline-block;font-size:14px;color:#888;margin-top:20px;">使用以下账号直接登录：</span><br />';
+//  str = str + '    <a href="javascript:void(0)" onclick="GoLoinRedirect(1)" title="QQ账号登录" ><span class="Input_Qq"></span></a>';
+//  if (_("hdnIsShowSina").value == "1") {
+//    str = str + '    <a href="javascript:void(0)" onclick="GoLoinRedirect(2)" title="新浪微博账号登录" ><span class="Input_Sina"></span></a>';
+//  }
+//  if (_("hdnIsShowRenRen").value == "1") {
+//    str = str + '    <a href="javascript:void(0)" onclick="GoLoinRedirect(3)" title="人人网账号登录" ><span class="Input_Rr"></span></a>';
+//  }
+  str = str + '  </div>';
+  str = str + '</div>';
+  return str;
+}
+
+function NormalLogin() {
+  $("#divPopLogin").show();
+  $("#divPopLoginWx").hide();
+  $(".DuanxinLogin").hide();
+  $("#WeixinTop").removeClass("Yes");
+  $("#DuanxinTop").removeClass("Yes");
+  $("#NormalTop").addClass("Yes");
+}
+
+function WeixinLogin() {
+  //    $("#divPopLoginWx").show();
+  RefreshQrImagePopLogin()
+    //    $("#divPopLogin").hide();
+  $(".DuanxinLogin").hide();
+  $("#NormalTop").removeClass("Yes");
+  $("#DuanxinTop").removeClass("Yes");
+  $("#WeixinTop").addClass("Yes");
+}
+function LoginAreaPasswordjiadehide(){
+	$("#LoginAreaPasswordjiade").hide();
+	$("#LoginAreaPassword").show();
+	$("#LoginAreaPassword").focus();
+}
+
+function DuanxinLogin() {
+$("#divPopLoginWx").hide();
+  $("#divPopLogin").hide();
+  $(".DuanxinLogin").show();
+  
+  $("#NormalTop").removeClass("Yes");
+  $("#WeixinTop").removeClass("Yes");
+  $("#DuanxinTop").addClass("Yes");
+}
+
+function UserMoblieOnClick() {
+  if ($("#UserMobile").val() == "已认证手机号") {
+    $("#UserMobile").val("");
+  }
+  $(".UserMobile").addClass("Active");
+}
+
+function UserMoblieOnBlur() {
+  if ($("#UserMobile").val() == "") {
+    $("#UserMobile").val("已认证手机号");
+    $(".UserMobile").removeClass("Active");
+  }
+}
+
+function UserVeriyOnClick() {
+  if ($("#txtVeriyCodeDuanXin").val() == "验证码") {
+    $("#txtVeriyCodeDuanXin").val("");
+  }
+  $(".TxtInputBg").addClass("Active");
+}
+
+function UserVeriyOnBlur() {
+  if ($("#txtVeriyCodeDuanXin").val() == "") {
+    $("#txtVeriyCodeDuanXin").val("验证码");
+    $(".TxtInputBg").removeClass("Active");
+  }
+}
+
+function SendVerifyCodeDuanXin() {
+  if (document.getElementById("UserMobile").value == "") {
+    alert("请输入手机号");
+    document.getElementById("UserMobile").focus();
+    return;
+  }
+  if (!CheckRule("mobile", document.getElementById("UserMobile").value)) {
+    alert("请输入正确格式的手机号");
+    return;
+  }
+  $.post("/Personal2018/Sys/ajaxGetMobileLoginCode", {
+    mobile: $("#UserMobile").val()
+  }, function (data) {
+    if (isNaN(data)) {
+      alert(data);
+    } else {
+      if (data == 200) {
+        second = 179;
+      } else {
+        second = data;
+      }
+      document.getElementById("btnSendCodeDuanXin").disabled = "true";
+      $("#spVerifyCodeTip").removeClass("Error");
+      funcInterval = window.setInterval(CountdownDuanXin, 1000);
+    }
+  })
+}
+
+function CountdownDuanXin() {
+  document.getElementById("btnSendCodeDuanXin").value = second + "秒后重新获取";
+  if (second == 0) {
+    document.getElementById("btnSendCodeDuanXin").value = "发送验证码";
+    CheckMobile(document.getElementById("UserMobile"));
+    document.getElementById("spVerifyCodeTip").innerHTML = '短信有可能延迟，请耐心等待，如果您一直没有收到短信，建议您使用<a href="javascript:" onclick="$(\'.TabSwitcher div\').eq(0).click()">邮箱注册</a>';
+    $("#spVerifyCodeTip").removeClass("Error");
+    window.clearInterval(funcInterval);
+  }
+  second--;
+}
+
+function TrimSpace(obj) {
+  if (obj.value != obj.value.replace(/ /g, "")) obj.value = obj.value.replace(/ /g, "");
+  if (obj.value != obj.value.replace(/　/g, "")) obj.value = obj.value.replace(/　/g, "");
+}
+
+function closeLoginArea() {
+  if (document.getElementById("pageHeadLogin")) {
+    document.body.removeChild(document.getElementById("pageHeadLogin"));
+  }
+  if (document.getElementById("LoginMask")) document.body.removeChild(document.getElementById("LoginMask"));
+}
+
+function HeadUserNameOnClick() {
+  var txtUserName = _("LoginAreaUserName");
+  if (txtUserName.value == "用户名/邮箱/手机号") {
+    txtUserName.value = "";
+  }
+  txtUserName.className = "Input_login_text";
+}
+
+function HeadUserNameOnBlur() {
+  var txtUserName = _("LoginAreaUserName");
+  if (txtUserName.value == "") {
+    txtUserName.value = "用户名/邮箱/手机号";
+    txtUserName.className = "Input_login_text_unfocus";
+  }
+}
+
+function HeadPasswordOnClick() {
+  var txtPassword = _("LoginAreaPassword");
+  if (txtPassword.className == "Input_login_password_unfocus") {
+    txtPassword.value = "";
+  }
+  txtPassword.className = "Input_login_password";
+}
+
+function HeadPasswordOnBlur() {
+  var txtPassword = _("LoginAreaPassword");
+  if (txtPassword.value == "") {
+    txtPassword.className = "Input_login_password_unfocus";
+  }
+}
+
+function HeadLoginCheckSubmit() {
+  if (_("LoginAreaUserName").value == "" || _("LoginAreaUserName").value == "用户名/邮箱/手机号") {
+    alert("请输入用户名");
+    _("LoginAreaUserName").focus();
+    return false;
+  }
+  if (_("LoginAreaPassword").value == "") {
+    alert("请输入密码");
+    _("LoginAreaPassword").focus();
+    return false;
+  }
+  if (!_("chkAgreement").checked) {
+    alert("您需要接受用户协议，才可以继续使用网站！");
+    _("LoginAreaPassword").focus();
+    return false;
+  }
+  _("LoginAreaUserName").value = escape(_("LoginAreaUserName").value);
+  _("LoginAreaPassword").value = escape(_("LoginAreaPassword").value);
+  return true;
+}
+
+function RefreshQrImagePopLogin() {
+  if ($("#divPopLoginWx").is(":hidden")) {
+    if (document.getElementById("imgWeChatQr").src.length == 0) {
+      $.post("/Personal2018/sys/ajaxGetPaTicket?t=" + new Date().getTime(), {
+       ticketType : 1 
+      }, function (data) {
+        document.getElementById("imgWeChatQr").src = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + data;
+        intExpireSeconds = 1780;
+        setTimeout('RefreshQrImagePopLogin()', intExpireSeconds * 1000);
+        setInterval('CheckWeChatLogin()', 5000);
+      });
+    }
+    $("#divPopLoginWx").show();
+    $("#divPopLogin").hide();
+    $("#divPopLoginQr").addClass("PC");
+  } else {
+    $("#divPopLogin").show();
+    $("#divPopLoginWx").hide();
+    $("#divPopLoginQr").removeClass("PC");
+  }
+}
+
+function CheckWeChatLogin() {
+  $.post("/Personal2018/sys/ajaxCheckWeChatStatus?t=" + new Date().getTime(), {
+    ticketType : 1
+  }, function (data) {
+    if (data == "1") {
+      location.reload();
+    } else if (data.length > 0) {
+      if (location.href.indexOf())
+        location.href = data;
+    }
+  });
+}
+
+function ZHShowZN() {
+  $("#DuanxinLogin").hide();
+  $("#divPopLogin").show();
+  $("#DXShowZN").addClass("No");
+  $("#ZHShowZN").removeClass("No");
+}
+
+function DXShowZN() {
+  $("#divPopLogin").hide();
+  $("#DuanxinLogin").show();
+  $("#ZHShowZN").addClass("No");
+  $("#DXShowZN").removeClass("No");
+}

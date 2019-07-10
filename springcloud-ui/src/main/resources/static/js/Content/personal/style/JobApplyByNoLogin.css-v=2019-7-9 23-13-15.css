@@ -1,0 +1,146 @@
+.fileover{opacity:0;display:block;height:42px;width:84px;margin-left:205px;position:absolute;z-index:2;overflow:hidden}
+.fileover1{display:block;height:42px;width:84px;margin-left:225px;position:absolute;z-index:2;overflow:hidden;border:0}
+.fileover2{display:block;height:42px;width:78px;margin-left:86px;position:absolute;z-index:2;border:0}
+.file1{display:block;background:0 0;width:308px;height:42px}
+.file2{display:block;background:0 0;width:67px;height:42px;border:1px solid #d5d5d5}
+.OmMain{width:562px}
+.OmMain table{margin-top:10px;font-size:12px;width:100%}
+.OmMain table th{text-align:right;padding-right:20px;font-weight:400;width:65px}
+.OmMain table td{padding:5px 0;white-space:nowrap}
+.OmMain table td .txtInput{padding:0;width:180px;height:28px;border:1px #DBDBDB solid;padding-left:10px;line-height:28px;background:0 0;vertical-align:middle;padding-right:10px;font-family:"微软雅黑";font-size:12px}
+.OmMain table td .ItemSelect{background:url("../images/ico_jm-1.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_jm.png*/ 230px -1341px no-repeat;cursor:pointer;font-family:"微软雅黑";font-size:12px;text-align:left;overflow:hidden;text-overflow:ellipsis}
+.OmMain table td input{vertical-align:middle}
+.OmMain table td span{vertical-align:middle}
+.OmMain table td .Short.ItemSelect{background-position:114px -1341px;width:140px;height:30px}
+.OmMain table td .Shorter.ItemSelect{background-position:74px -1341px;width:100px;height:30px}
+.OmMain table td .txtInput.required{border-color:red;background-color:#FFFFED}
+.OmMain table td .BtnGender{width:47px;height:30px;line-height:30px;text-align:center;border:1px solid #D9DBD8;background:#FFF;font-family:"微软雅黑";border-radius:2px;cursor:pointer;margin-right:5px}
+.OmMain table td .BtnGender.Active{color:#0BC10A;background:url("../Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat 0 -1276px;border:none;width:47px;height:31px}
+.OmMain table td .btnSubmit{margin-top:10px;width:255px;height:38px;background:#FF7A4D;border:none;cursor:pointer;color:#FFF;font-size:16px;font-family:"微软雅黑";line-height:38px}
+.OmMain table td .TipsError{margin-left:2px;padding-left:18px;background:url("../Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat;display:inline-block;line-height:16px;color:#FD713E;background-position:0 -512px;font-size:12px;font-family:"宋体";vertical-align:middle;width:252px;overflow:hidden}
+.OmMain table td .TipsError.Right{color:#FD713E;background-position:0 -594px;width:20px;height:20px}
+.OmMain table td .TipsError b{font-weight:400}
+.OmMain .OmPopheader{height:42px;background:#F5F5F5;line-height:42px;font-size:14px}
+.OmMain .OmPopheader span{font-family:"微软雅黑";color:#7F7F7F;margin-left:20px;padding-left:30px;background:url("../Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat 0 0}
+.OmMain .OmPopheader input{background:url("../../../Homepage/NewIndex/PopupNew/p2.gif")/*tpa=http://www.shoudurc.com/Homepage/NewIndex/PopupNew/p2.gif*/ no-repeat;cursor:pointer;float:right;margin-right:20px;width:20px;height:19px;border:none;margin-top:13px}
+.ContentLogin{width:555px;padding-bottom:20px; height:auto;background-color:#FFF;}
+.SwitchTab{width:555px}
+.ContentLogin .ApplyLogin{width:510px;margin:0 auto;border-bottom:1px solid #000;padding:15px 0px;padding-left:15px;}
+.ContentLogin .ApplyLogin .btnSubmit{width:80px;height:30px;background:#FF7A4D;border:none;cursor:pointer;color:#FFF;font-size:14px;font-family:"微软雅黑";line-height:30px;margin:0 5px}
+.ContentLogin .ApplyLogin .Info{line-height:35px;width:330px;float:left;margin-left:30px}
+.ContentLogin .ApplyLogin .Qr{float:left;width:80px;border:1px solid #DBDBDB; height:80px;position: relative;}
+
+.CheckBox {background:url("../Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat;width:16px;height:16px;border:none;cursor:pointer;vertical-align:middle;}
+.CheckBox.No{background-position:0 -266px}
+.CheckBox.No:hover{background-position:0 -225px}
+.CheckBox.Yes{background-position:0 -185px}
+.CheckBox.UnAble{background-position:0 -307px}
+.trStyle{
+		margin-top: 10px;
+	}
+	.labelStyle{
+    	width: 65px;
+		font-family: "微软雅黑";
+		font-size: 14px;
+		display: inline-block;
+		text-align: right;
+		font-weight: 400;
+	}
+	.OmMain div .txtInput {
+		padding: 0;
+		width: 120px;
+		height: 28px;
+		border: 1px #DBDBDB solid;
+		padding-left: 10px;
+		line-height: 28px;
+		background: 0 0;
+		vertical-align: middle;
+		padding-right: 10px;
+		font-family: "微软雅黑";
+		font-size: 12px;
+	}
+	.OmMain div .BtnGender {
+		width: 47px;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		border: 1px solid #D9DBD8;
+		background: #FFF;
+		font-family: "微软雅黑";
+		border-radius: 2px;
+		cursor: pointer;
+		margin-right: 5px;
+	}
+
+	.OmMain div .ItemSelect {
+		background: url("../images/ico_jm-1.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_jm.png*/ 230px -1341px no-repeat;
+		cursor: pointer;
+		font-family: "微软雅黑";
+		font-size: 12px;
+		text-align: left;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.OmMain div .middle.ItemSelect {
+		background-position: 136px -1341px;
+		width: 162px;
+		height: 30px;
+	}
+	.OmMain div .Shorter.ItemSelect {
+		background-position: 96px -1341px;
+		width: 122px;
+		height: 30px;
+	}
+	.OmMain table th {
+		padding-right: 3px;
+		font-family: '微软雅黑';
+		font-size: 14px;
+	}
+	.OmMain div .txtInput.required {
+		border-color: red;
+		background-color: #FFFFED;
+	}
+	.OmMain div .BtnGender {
+		width: 47px;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		border: 1px solid #D9DBD8;
+		background: #FFF;
+		font-family: "微软雅黑";
+		border-radius: 2px;
+		cursor: pointer;
+		margin-right: 5px;
+	}
+	.OmMain div .BtnGender.Active {
+		color: #0BC10A;
+		background: url("../Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat 0 -1276px;
+		border: none;
+		width: 47px;
+		height: 31px;
+	}
+	.OmMain div .TipsError {
+		margin-left: 2px;
+		padding-left: 18px;
+		background: url("../Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat;
+		display: inline-block;
+		line-height: 16px;
+		color: #FD713E;
+		background-position: 0 -512px;
+		font-size: 12px;
+		font-family: "宋体";
+		vertical-align: middle;
+		width: 252px;
+		overflow: hidden;
+	}
+#divCvInfoModify{width:583px;}
+#Mobile{width:270px;}
+.MobileError{margin-left: 2px;padding-left: 18px;display: inline-block;line-height: 16px;color: rgb(253, 113, 62);font-size: 12px;font-family: 宋体;vertical-align: middle;width: 252px;background: url("../Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ 0px -512px no-repeat;background-position: 0px -512px;overflow: hidden;}
+ul {
+    list-style: none;
+}
+.Over {
+    background: #FFCC00;
+    color: #000000;
+    cursor: pointer;
+}

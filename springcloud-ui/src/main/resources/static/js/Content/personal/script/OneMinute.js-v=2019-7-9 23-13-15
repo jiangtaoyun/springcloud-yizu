@@ -1,0 +1,343 @@
+var intErrCount = 0;
+$(function () {
+    $("#divLeft input[type='text']").blur(function () {
+        if ($(this).val().length == 0) {
+            $(this).addClass("required");
+            intErrCount++;
+        }
+    }).focus(function () {
+        $(this).removeClass('required');
+    });
+
+    $("#divLeft input[type='password']").blur(function () {
+        if ($(this).val().length == 0) {
+            $(this).addClass("required");
+            intErrCount++;
+        }
+    });
+    $('.ItemSelect').click(
+    function () {
+        if ($(this).hasClass("required")) {
+            $(this).removeClass('required');
+        } else {
+            $(this).parents(".required").removeClass('required');
+        }
+    }
+  );
+    $('input[type="text"].txtInput').focus(
+    function () {
+        if ($(this).hasClass("required")) {
+            $(this).removeClass('required');
+        }
+    }
+  ).blur(
+    function () {
+        if ($(this).val().length == 0) {
+            $(this).addClass("required");
+            intErrCount++;
+        }
+    }
+  );
+	$('input[type="password"].txtInput').focus(
+    function () {
+        if ($(this).hasClass("required")) {
+            $(this).removeClass('required');
+        }
+    }
+  ).blur(
+    function () {
+        if ($(this).val().length == 0) {
+            $(this).addClass("required");
+            intErrCount++;
+        }
+    }
+  );
+    $("#PwdNotice").click(function () {
+        $(this).hide();
+        $("#txtPassword").show();
+        $("#txtPassword").focus();
+    });
+    $("#PwdNotice").focus(function () {
+        $(this).hide();
+        $("#txtPassword").show();
+        $("#txtPassword").focus();
+    });
+
+    $(".BtnGender").click(
+    function () {
+        $("#spGender").html("").hide();
+    }
+  );
+    $("#txtPassword").keydown(function () {
+        $("#txtPasswordConfirm").val('');
+        $("#spPasswordConfirm").html('').hide();
+    });
+    $("#txtPassword").keyup(function () {
+        TrimSpace(this);
+    });
+});
+
+function CheckFormCv() {
+    var Birthday = $(".OmMain #txtBirthMonth").val();
+    $(".OmMain #idBirthDayYear").val(Birthday.substring(0, Birthday.indexOf("年")));
+    $(".OmMain #idBirthDayMonth").val(Birthday.substring(Birthday.indexOf("年") + 1, Birthday.indexOf("月")));
+    intErrCount = 0;
+    if ($("#txtVeriyCode").val() == "") {
+        $("#spVerifyCodeTip").html("请输入短信验证码").show();
+		//$("#spVerifyCodeTip").html("").hide();
+        intErrCount++;
+    }
+    if ($("#Mobile").is(":visible")) {
+        if ($("#Mobile").html().indexOf("已注册过") > 0) {
+            $("#Mobile").html("");
+            $("#Mobile").hide();
+        }
+    }
+	
+	
+    $(".OmMain input[type='text']:visible").blur();
+    $(".OmMain input[type='password']:visible").blur();
+    $(".OmMain span.TipsError:visible").each(function () {
+        if ($.trim($(this).html()).length > 0) {
+            intErrCount++;
+        }
+    });
+    
+    $(".OmMain input[type='button'][id^='txt']").each(function () {
+        if ($.trim($("#" + $(this).attr("id").replace("txt", "id")).val()).length == 0) {
+            if ($(this).hasClass("txtInput")) {
+                $(this).addClass("required");
+            } else {
+                $(this).parents(".txtInput").addClass("required");
+            }
+            intErrCount++;
+        }
+    });
+
+    
+}
+
+function agreecheck() {
+    $('#chkMobileAgree').unbind('click').click(
+ 	function () {
+ 	    if ($(this).hasClass("No")) {
+ 	        $(this).removeClass('No');
+ 	        $(this).addClass('Yes');
+ 	    } else {
+ 	        $(this).removeClass('Yes');
+ 	        $(this).addClass('No');
+ 	    }
+ 	}
+ );
+}
+function CheckFormAll() {
+    CheckFormCv();
+	
+	if ($("#txtName").val().length == 0) {
+            $("#Name").html("").hide();
+			
+        }
+        else {
+            if ($("#txtName").val().length > 1) {
+                if (!CheckRule("chinese", $("#txtName").val())) {
+                    $("#Name").html("请填写中文姓名！").hide();
+					alert("请填写中文姓名！");
+					intErrCount++;
+					return false;
+                }
+                else {
+                    $("#Name").html("").hide();
+					
+                }
+            }
+            else {
+                $("#Name").html("至少2个汉字！").hide();
+				alert("至少2个汉字！");
+				intErrCount++;
+				return false;
+				
+            }
+        }
+	
+	var Gender = $(".OmMain [gender]").filter(".Active").attr("gender");
+    $(".OmMain #Gender").val(Gender);
+    if (Gender == undefined) {
+        intErrCount++;
+        //$(".OmMain #spGender").html("请选择性别！").show();
+		alert('请选择性别！');
+		return false;
+    }
+	
+    //var strConfirm = $("#txtPasswordConfirm").val().toLowerCase();
+    var strPassword = $("#txtPassword").val().toLowerCase();
+    if (strPassword == "") {
+        alert("请输入密码！");
+		$("#PwdNotice").addClass("required");
+        intErrCount++;
+		return false;
+    } else if (strPassword.length < 6) {
+        alert("密码请输入6-20个字符");
+		$("#PwdNotice").addClass("required");
+        intErrCount++;
+		return false;
+    } else if (!CheckRule("account", strPassword)) {
+        alert("密码只能使用字母、数字、横线、下划线、点符");
+		$("#PwdNotice").addClass("required");
+        intErrCount++;
+		return false;
+    } else if (!CheckRule("account", strPassword)) {
+        alert("密码只能使用字母、数字、横线、下划线、点符");
+		$("#PwdNotice").addClass("required");
+        intErrCount++;
+		return false;
+    }
+	
+	/*else if (strPassword != strConfirm) {
+        alert("两次输入的密码不相同，请重新输入");
+        intErrCount++;
+    } */
+	/*else if (strConfirm == "") {
+        alert("请确认您的密码");
+        intErrCount++;
+    } */
+	else if ($("#chkMobileAgree").hasClass("No")) {
+        alert("您没有接受用户协议！");
+        intErrCount++;
+		return false;
+    }
+	
+	if (intErrCount == 0) {
+        //$("#spShowEmail").html($("#txtEmail").val());
+        //$("#divPasswordSet").show();
+        //agreecheck();
+        /*if ($("#divCvInfoModify").length > 0) {
+            $("#divCvInfoModify").hide();
+            $("#divApplyLoginAndQr").hide();
+            $("#divApplyLogin_filter").height($("#divApplyLogin").height() + 22);
+			$("#divApplyLogin").hide();
+			$("#divApplyLogin_filter").hide();
+        }*/
+    }
+    else {
+        alert("您有项目未按要求填写，请检查！");
+		return false;
+    }
+	
+    if (intErrCount > 0) return false;
+	
+	//验证验证码
+	if ($("#txtVeriyCode").val().length == 0) {
+            $("#spVerifyCodeTip").html("请输入验证码！").show();
+
+        }
+        else {
+            $.post("/personal/sys/AjaxVerifyCodeCheck", { Mobile: $("#txtMobile").val(),VerifyCode:$("#txtVeriyCode").val() }, function (data) {
+                //alert(data)
+				if(data>0){
+					if($("#divApplyLogin").is(':visible')){
+						$("#divApplyLogin").hide();
+						$("#divApplyLogin_filter").hide();
+					}
+					$("#frm").submit();
+				}else if(data==-1){
+					$("#spVerifyCodeTip").html("请先填入手机号再获取验证码！").show();
+				}else if(data==-5){
+					$("#spVerifyCodeTip").html("验证码错误！").show();
+				}
+            })
+        }
+	
+}
+
+function UserNameOnClick() {
+
+}
+
+function PasswordOnClick() {
+
+}
+
+function SendVerifyCode() {
+    if (document.getElementById("txtVerifyCode").value.length == 0) {
+      return;
+    }
+  $.post("/personal2018/sys/ajaxGetMobileRegCode?t=" + new Date().getTime(), {
+    mobile : $("#txtMobile").val(),
+    VerifyCode : document.getElementById("txtVerifyCode").value
+  }, function(data) {
+    popup.ibClose();
+    if (isNaN(data)) {
+      document.getElementById("spVerifyCodeTip").innerHTML = data;
+      $("#spVerifyCodeTip").show().addClass("Error");
+    }
+    else if (data == 200) {
+      document.getElementById("btnSendCode").disabled = true;
+      second = 179;
+      document.getElementById("spVerifyCodeTip").innerHTML = "已发送成功，180秒后可重新获取";
+      $("#spVerifyCodeTip").removeClass("Error");
+      funcInterval = window.setInterval(CountOneMinutedown, 1000);
+    }
+    else {
+      document.getElementById("btnSendCode").disabled = true;
+      second = data;
+      document.getElementById("spVerifyCodeTip").innerHTML = "已发送成功，180秒后可重新获取";
+      $("#spVerifyCodeTip").removeClass("Error");
+      funcInterval = window.setInterval(CountOneMinutedown, 1000);
+    }
+  });
+}
+
+function showVerifyCode(obj) {
+  if (document.getElementById("txtMobile").value == "") {
+        alert("请输入手机号");
+        document.getElementById("txtMobile").focus();
+        return;
+    }
+    if (!CheckRule("mobile", document.getElementById("txtMobile").value)) {
+        return;
+    }
+    if ($("#Mobile").html().length != 0) {
+      if ($("#Mobile").html().indexOf("注册一个新的账号") == -1) {
+        return;
+      }
+    }
+    var str = '<p style="text-align:center; padding:16px 0;">';
+    str = str + '   输入右侧图片中的数字：';
+    str = str + '    <input type="text" id="txtVerifyCode" maxlength="4" style="width:80px;    vertical-align: middle;"  /> <img style="vertical-align: middle;" src="/common/VerifyCode?time=' + (new Date()).getTime() + '" id="valiCode">';
+    str = str + '  </p>';
+    str = str + '  <p class="popupfooter">';
+    str = str + '     <input type="button" value="确 认" onClick="SendVerifyCode()" class="popupBtn" />';
+    str = str + '  </p>';
+    popup.clearData();
+    popup.isHeader = 1;
+    popup.isMessageTip = 0;
+    popup.drag = 1;
+    popup.mask = 2;
+    popup.headerTitle = "输入右侧图片中的数字";
+    popup.W = 320;
+    popup.H = 1;
+    popup.isFilter = 1;
+    popup.dockObj = obj;
+    popup.dockLeft = 0;
+    popup.dockTop = -130;
+    popup.bodyHtml = str;
+    popup.creatDiv();
+    $(function () {
+        $("#valiCode").bind("click",
+    function () {
+        this.src = "/common/VerifyCode?time=" + (new Date()).getTime();
+    });
+    });
+}
+
+function CountOneMinutedown() {
+    document.getElementById("btnSendCode").value = second + "秒";
+    if (second == 0) {
+        document.getElementById("btnSendCode").value = "发送验证码";
+        CheckMobile(document.getElementById("txtUsername"));
+        document.getElementById("spVerifyCodeTip").innerHTML = '短信有可能延迟，请耐心等待，如果您一直没有收到短信，建议您使用<a href="javascript:" onclick="$(\'.TabSwitcher div\').eq(0).click()">邮箱注册</a>';
+        $("#spVerifyCodeTip").removeClass("Error");
+        window.clearInterval(funcInterval);
+    }
+    second--;
+}

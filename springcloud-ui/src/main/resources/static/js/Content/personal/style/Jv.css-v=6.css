@@ -1,0 +1,404 @@
+@charset "utf-8";
+/* CSS Document */
+.ContentLogin .DuanxinLogin{border-right: 1px dashed #d5d5d5;width: 350px;padding-right: 25px;padding-top: 10px;float: left;}
+.ContentLogin .DuanxinLogin .UserMobile{height:40px;display: inline-block;margin-left: 30px;width: 307px;border: 1px solid #d5d5d5;}
+.ContentLogin .DuanxinLogin .UserMobile.Active{background-position:0px 0px;}
+.ContentLogin .DuanxinLogin .UserMobile span{background:url("../Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat 10px -665px;width:33px;height:40px;float:left;margin-top:1px;}
+.ContentLogin .DuanxinLogin .UserMobile.Active span{background-position:9px -967px;}
+.ContentLogin .DuanxinLogin .UserMobile input{float:left;background:none;border:none;width:227px;margin-top:1px;color:#757776;font-family:"微软雅黑";font-size:14px;padding-left:10px;line-height:40px;height:40px;margin-left:0;}
+.ContentLogin .DuanxinLogin .BtnLoginConfirm{margin-top:10px;width:288px;height:42px;background:#FF7A4D;border:none;cursor:pointer;color:#FFF;font-size:20px;font-family:"微软雅黑";border-radius:4px;line-height:42px;}
+.ContentLogin .DuanxinLogin .BtnLoginConfirm:hover{background:#FD5E29;}
+.ContentLogin .DuanxinLogin .TxtInputBg{height:40px;margin-top:15px;display: inline-block;margin-left: 30px;width: 307px;border: 1px solid #d5d5d5;background: none;}
+.ContentLogin .DuanxinLogin .TxtInputBg span{width: 33px;margin-left: -6px;}
+.ContentLogin .DuanxinLogin .TxtInputBg input{float:left;background:none;border:none;width:159px;margin-top:1px;color:#757776;font-family:"微软雅黑";font-size:14px;padding-left:15px;line-height:40px;outline:none;height:40px;}
+.ContentLogin .DuanxinLogin .TxtInputBg input.BtnReGet{vertical-align:middle;height:40px;line-height:35px;color:#F38351;background:#FFE5D4;border:1px solid #F3CEB4;border-radius:4px;width:105px;font-size:12px;padding:0px;cursor:pointer;margin-top:0;}
+.ContentLogin .DuanxinLogin .NoticeTd{height:25px;display: inline-block;}
+.ContentLogin .DuanxinLogin .AutoLogin{font-size:14px;font-family:"微软雅黑";}
+.ContentLogin .DuanxinLogin .AutoLogin span{vertical-align:middle;font-size:12px;}
+.ContentLogin .DuanxinLogin .AutoLogin a{vertical-align:middle;float:right;color:#0485C7;}
+.ContentLogin .LoginTopAll{margin-top: 12px;text-align: center;margin-left: 30px;width: 307px;border-bottom: 1px #F2F2F2 solid;display: inline-block;}
+.ContentLogin .LoginTop{float:left;width: 102px;height: 24px;color: #B7B7B7;font-family: "微软雅黑";font-size: 16px;cursor:pointer;}
+.ContentLogin .LoginTop.Yes{float:left;width: 102px;height: 24px;color:Black;border-bottom: 3px #fa6d01 solid;font-family: "微软雅黑";font-size: 16px;cursor:pointer;}
+.ContentLogin .SmartResumeTop span.No{border:none;color:#B7B7B7;}
+.DXSpan{background:url("../../Homepage/NewIndex/images/in_Bg01.gif")/*tpa=http://www.shoudurc.com/content/Homepage/NewIndex/images/in_Bg01.gif*/ no-repeat -3px -120px;}
+.TxtInputBg span{background:url("../Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat;width:51px;height:40px;float:left;margin-top:1px;margin-left:5px;}
+.TxtInputBg.Cer span{background-position:15px -732px;}
+
+
+* {padding-bottom: 0px;margin: 0px;padding-left: 0px;padding-right: 0px;padding-top: 0px;}
+body{margin:0px;padding:0px;background:#FFF;font-family:"宋体";font-size:12px;}
+.Head{width:100%;z-index:9;background:#F95E0E;overflow:hidden;height:47px;padding:0px;}
+.Head .HeadBox{width:1100px;margin:0px auto;color:#FFFFFF;height: 47px;}
+.Head .HeadBox .HeadLogo {float: left;margin-top: 5px;}
+.Head .HeadBox .HeadLogo a {}
+.Head .HeadBox .HeadLogo span {vertical-align: middle;font-size: 16px;font-family: "微软雅黑";}
+.Head .HeadBox .HeadLogo img {vertical-align: middle;}
+.Head .HeadBox .AreaSearch{width:252px;background:url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat 0px -15px;height:28px;*display:inline;float: left;margin-left: 50px;margin-top: 10px;}
+.Head .HeadBox .AreaSearch .btnSearchConfirm{width:82px;height:26px;line-height: 26px;cursor:pointer;display:inline-block;border:none;vertical-align:middle;background:none;font-family: "微软雅黑";font-size: 14px;}
+.Head .HeadBox .AreaSearch .inputSearch{color:#B9B9B9;border:none;line-height: 28px;width: 160px;height:28px;vertical-align:middle;padding-left: 10px;background:none;}
+.Head .HeadBox .AreaSearch .inputSearch:focus{outline: none;}
+.Head .HeadBox .AreaLogin{background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat -370px -20px;padding-left: 19px;float: right;margin-top: 10px;}
+.Head .HeadBox .AreaLogin a{color: #FFF; text-decoration: none;}
+.Head .HeadBox .AreaLogin span{cursor:pointer;color: #FFF; font-weight: bold; line-height: 26px;}
+.CpTop .CpMain {width: 100%; height: 225px; background-image: url("../images/bg_company_top.jpg")/*tpa=http://www.shoudurc.com/content/personal/images/bg_company_top.jpg*/; background-repeat: no-repeat; background-position: center; background-color: #e6f0f9;}
+.CpTop .CpMain .Head{background-color: rgba(249,94,14,0.85);position: fixed;}
+@media \0screen\,screen\9 {
+  .CpTop .CpMain .Head{ background-color:#F95E0E; filter:Alpha(opacity=50); position:static; *zoom:1;}
+  .CpTop .CpMain .Head .HeadBox{position: relative;}
+}
+.CpTop .CpMain .CpInfo {width: 1100px;margin: 0px auto;padding-top: 47px;*padding-top: 0px;}
+.CpTop .CpMain .CpInfo .CpLogo {float: left;width: 140px;height: 140px;border: 3px solid #CBD1D7;margin-top: 15px;margin-left: 10px;}
+.CpTop .CpMain .CpInfo .CpDetail {float: left;width: 600px;margin-left: 20px;margin-top: 10px;    max-height: 168px;}
+.CpTop .CpMain .CpInfo .CpDetail p {font-size: 14px;line-height: 28px;font-family: "微软雅黑";}
+.CpTop .CpMain .CpInfo .CpDetail p span {vertical-align: middle; display: inline-block;}
+.CpTop .CpMain .CpInfo .CpDetail .CompanyName {padding: 10px 0px 10px 0px; font-size: 24px; color: #333333;}
+.CpTop .CpMain .CpInfo .CpDetail .CompanyName .CpAttention {font-size: 12px;width: 65px;height: 22px;color: #FFF;text-align: center;line-height: 21px;background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat 0px -264px; cursor: pointer; margin-left: 3px;}
+.CpTop .CpMain .CpInfo .CpDetail .HomePage{cursor: pointer; color: #0068B7;}
+.Map {width: 65px;height: 22px;color: #0068B7;text-align: center;line-height: 21px;background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat 0px -86px;cursor: pointer;margin-left: 3px;font-size: 12px;padding-left: 12px; display: inline-block; font-family: "宋体";}
+.CpTop .CpMain .CpInfo .CpStatus {float: right;margin-top: 40px;}
+.CpTop .CpMain .CpInfo .CpStatus div {background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat 0px -155px;width: 70px;height: 100px;float: left;margin-right: 10px;text-align: center;}
+.CpTop .CpMain .CpInfo .CpStatus div span {display: inline-block;width: 100%;font-size: 14px;height: 30px;line-height: 30px;font-family: "微软雅黑";}
+.CpTop .CpMain .CpInfo .CpStatus div span.Number {font-size: 18px;height: 67px;line-height: 68px;}
+.CpTop .CpMain .CpInfo .CpStatus div.JobCount {background-position: 1px -155px;cursor: pointer;}
+
+.CpTop .CpMain .CpInfo .CpStatus div.Environment {background-position: -404px -155px;cursor: pointer;}
+.CpTop .CpMain .CpInfo .CpStatus div.ReplyPercent {background-position: -101px -155px;}
+.CpTop .CpMain .CpInfo .CpStatus div.CommentScore {background-position: -403px -155px;}
+.CpTop .CpMain .CpInfo .CpStatus div.OnlineStatus {background-position: -201px -155px;}
+.CpTop .CpMain .CpInfo .CpStatus div.OfflineStatus {background-position: -302px -155px;}
+.CpTop .CpMain .CpInfo .CpStatus div.JobCount span.Number {color: #C22B00;}
+.CpTop .CpMain .CpInfo .CpStatus div.Environment span.Number {color: #f5b03e;}
+.CpTop .CpMain .CpInfo .CpStatus div.ReplyPercent span.Number {color: #3D8DD9;}
+.CpTop .CpMain .CpInfo .CpStatus div.CommentScore span.Number {color: #DEAF33;}
+.CpTop .CpMain .CpInfo .CpStatus div.OnlineStatus span.Number {color: #009F00;}
+.CpTop .CpMain .CpInfo .CpStatus div.OfflineStatus span.Number {color: #666666;font-size: 16px;font-family: "微软雅黑";}
+.CpTop .CpGuide {width: 1100px; height: 45px; margin: 0 auto;}
+.CpTop .CpGuide .CpNav {float: left;}
+.CpTop .CpGuide .CpNav a {float: left;padding: 0 10px;line-height: 45px;font-size: 16px;font-family: "微软雅黑";cursor: pointer;text-decoration: none;color: #000;margin: 0 20px;}
+.CpTop .CpGuide .CpNav a.Active {color: #F95E0E; border-bottom: 2px solid #F95E0E; font-weight: bold;}
+.CpLink {float: right;line-height: 20px;margin-top: 15px;}
+.CpLink a{text-decoration: none;color: #898989;}
+.CpLink a:hover {color: #004694;}
+.CpLink span {color: #898989;}
+.CpContent {width: 1100px; margin: 0 auto; margin-bottom: 30px;}
+.CpContent .CpBrief {width: 830px; border-top: 1px solid #E2E5E9; float: left;}
+.CpContent .CpBrief .Environment
+    {
+      margin: 0 auto;
+      width: 830px;
+      height: auto;
+      border: 1px solid #f6f6f6;
+      margin-top: 20px;
+		overflow: hidden;
+		padding-bottom: 25px;
+    }
+.CpContent .CpBrief .Environment .bannerbox
+    {
+      width: 622px;
+      padding: 28px;
+      height: 415px;
+      padding-bottom: 10px;
+	  margin-left: 80px;
+    }
+.CpContent .CpBrief .Environment .usefulIcon{display: inline-block;cursor:pointer;vertical-align: middle;width:17px;height:20px;background: url("../images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ -315px -79px no-repeat;}
+.CpContent .CpBrief .Description {line-height: 30px; font-size: 14px;font-family: "宋体"; padding: 20px;}
+.CpContent .CpBrief .Description p{ text-indent: 2em;}
+.CpContent .CpOther {width: 240px; float: right;}
+.CpContent .CpOther .CpShare {width: 100%;height: 200px;border: 1px solid #EEEEF0;text-align: center;padding: 5px 0;position: relative;}
+.CpContent .CpOther .CpShare p {line-height: 30px; font-size: 14px;font-family: "微软雅黑";}
+.CpContent .CpOther .CpShare img {width: 105px; height: 105px;}
+.CpContent .CpOther .CpShare .ShareItem input {width: 28px;height: 28px;background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat;border: none; outline: none; cursor: pointer;}
+.CpContent .CpOther .CpShare .ShareItem input.Weibo {background-position: -3px -335px;}
+.CpContent .CpOther .CpShare .ShareItem input.Renren {background-position: -36px -335px;}
+.CpContent .CpOther .CpShare .ShareItem input.QZone {background-position: -69px -335px;}
+.CpContent .CpOther .CpShare .ShareItem input.TecentWeibo {background-position: -101px -335px;}
+.CpContent .CpOther .CpShare .ShareItem input.QQ {background-position: -134px -335px;}
+.CpContent .CpOther .CpShare .WechatIcon {width: 28px;height: 28px;background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat -166px -335px;position: absolute;top: 73px;left: 103px;}
+.CpContent .CpOther .CpSimilar {width: 100%;border: 1px solid #EEEEF0;padding: 20px 0px;margin-top: 5px;}
+.CpContent .CpOther .CpSimilar .Title {text-align: center; font-size: 14px;font-family: "微软雅黑";}
+.CpContent .CpOther .CpSimilar .OneItem {width: 200px;margin-top: 13px;background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ 15px -2097px;padding-left: 30px;height: 15px;overflow: hidden;}
+.CpContent .CpOther .CpSimilar .OneItem a{color: #004694; text-decoration: none;}
+.CpContent .CpOther .CpSimilar .OneItem a:hover {color: red;}
+.CpContent .CpOther .CpTips {width: 100%;border: 1px solid #EEEEF0;padding: 10px 0px;margin-top: 5px;}
+.CpContent .CpOther .CpTips h2{margin: 0;margin-left: 10px;font-size: 14px;font-family: '微软雅黑';color: #fa5909;height:22px;padding-left:25px;background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ -270px -341px no-repeat;}
+.CpContent .CpOther .CpTips b{float:left;padding-top:2px;padding-left:8px;}
+.CpContent .CpOther .CpTips span{color:#fb550c;}
+.CpContent .CpOther .CpTips p{line-height:25px;width: 222px;padding:0px 10px;}
+.CpContent .CpOther .CpTips a{margin-left:5px; color: #004694; vertical-align: middle; text-decoration: none;}
+.CpContent .CpOther .CpTips a:hover {color: red;}
+.Footer{width:100%;margin: 0px auto;border-top:1px solid #e4e4e4;overflow:hidden;padding:20px 0px;text-align:center;}
+
+.JobTableList {width: 100%;}
+.JobTableList table tr {height: 140px;}
+.JobTableList table td {border-bottom: 1px solid #E2E5E9;height: 155px;}
+.JobTableList div {line-height: 35px; height: 35px;}
+.JobTableList p {line-height: 30px;overflow: hidden;height: 30px;text-overflow: ellipsis;white-space: nowrap;}
+.JobTableList .JobName {font-size: 18px;font-family: "微软雅黑";vertical-align: middle;color: #004694;text-decoration: none;}
+.JobTableList .JobName:hover {color: red;}
+.JobTableList .JobRegion {margin: 0px 5px;vertical-align: middle;font-size: 14px;font-family: "微软雅黑";}
+.JobTableList .trHover{background:#FFF4C9;}
+.JobApply{background:#50BA8C;width:100px;height:36px; cursor:pointer;border:none;color:#fff;font-size:14px;font-family: "微软雅黑";font-weight:bold;border-radius:5px;}
+.JobTableList .Chat {width: 90px;height: 30px;line-height: 30px;background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat 0 -1645px;border: none;outline: none; text-align: left; padding-left: 25px; margin-top: 15px; font-size: 12px; color: #666666; cursor: pointer; font-family: "宋体"}
+.JobTableList .Chat.Offline {background-position: -220px -1645px;}
+.JobTableList .NoData {text-align: center; height: 50px; border-bottom: none;}
+.JobTableList .NoData .Warning {background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat 0 -900px; width: 200px; height: 100px; display: inline-block; margin-top: 80px; margin-bottom: 20px;}
+.JobTableList .NoData p {font-size: 14px;font-family: "微软雅黑";}
+.JobTableList .NoData ul {width: 100%; padding: 20px;}
+.JobTableList .NoData li {float: left;width: 33%;text-align: left;line-height: 30px;}
+.JobTableList .NoData li a {text-decoration: none; color: #004694;}
+.JobTableList .NoData li a:hover {color: red;}
+.JobPage {clear: both;text-align: center;color: #313131;padding: 10px 0;}
+.JobPage a {display: inline-block;text-align: center;width: 25px;height: 25px;margin-right: 5px;line-height: 25px;vertical-align: top;font-size: 14px;font-family: "微软雅黑";text-decoration: none;border-radius: 5px;}
+.JobPage .page_selected {background: #F95E0E; color: #FFF; border: 1px solid #F95E0E;}
+.JobPage .page_noselected {background: #FFF; color: #000; border: 1px solid #CBD1D7;}
+.Welfare label {float: left;padding: 0px 10px;color: #898989;background: #edf9ff;border: 1px solid #BFE7D5;margin-right: 5px;margin-bottom: 8px;line-height: 21px;font-size: 12px;font-family: "宋体";}
+.DivMain{width:1100px;margin: 0 auto;z-index: 9;position: relative;}
+.DivBody{width: 100%;}
+.DivBody .LeftBg {position: absolute; width: 50%; left: 0; background: #F3F5F8;}
+.Contanier{width:100%;}
+.DivLeft{width: 310px;float:left; background: #F3F5F8;}
+.DivLeft input{vertical-align:middle;margin:0;cursor: pointer;}
+.DivLeft a{ vertical-align:middle;text-decoration:none;} 
+.DivLeft a:link, .DivLeft a:visited, .DivLeft a:active{text-align:left;vertical-align:middle;color: #004694;font-size: 12px;}
+.DivLeft a:hover{color:red;}
+.DivJob{width: 765px;margin-left: 25px;}
+.DivJob .JobDetail{width: 570px;float: left;}
+.DivJob .JobDetail td{margin:0px;line-height: 40px;padding-left: 5px;white-space: nowrap;font-size: 14px;font-family: "微软雅黑";}
+.DivJob .JobDetail td h2 {font-size: 25px;font-weight: normal;white-space: normal;margin-bottom: 15px;}
+.DivJob .JobDetail td a {color: #000; text-decoration: none;}
+.DivJob .JobDetail td a:hover {color: #1a5aa8;}
+.DivJob .JobDetail td a.SalaryCheck {margin-left:5px;color:#004694; font-size: 12px; font-family: '宋体'}
+.DivJob .JobDetail td a.SalaryCheck:hover{color: #fa6d01;}
+.DivJob .JobDetail td.Welfare {padding: 10px 0px;}
+.DivJob .JobDetail .JobApply {background: #F96B2D;font-size: 16px;font-family: "微软雅黑";width: 130px;height: 40px;line-height: 40px;}
+
+.DivJob .JobContact .JobApply{background: #F96B2D;font-size: 12px;width: 150px;border-radius: 5px;
+    height: 24px;font-weight: normal;}
+
+.DivJob .JobDetail .Disable {background: #E0DEDF; color: #6A6A6A; cursor: default;}
+.DivJob .JobDetail .Chat {background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat -2px -1718px;display: inline-block;width: 81px;height: 30px;font-size: 14px;font-family: "微软雅黑";line-height: 30px;padding-left: 35px;vertical-align: middle;color: #F95E0E; cursor: pointer;}
+.DivJob .JobDetail .Chat:hover{color: #1a5aa8;}
+.DivJob .JobDetail .Chat.Offline {background-position: -240px -1718px;}
+
+.DivJob .JobContent{line-height: 25px;width: 100%;margin-bottom: 15px;}
+.DivJob .JobContent b {font-size: 14px; font-family: "微软雅黑"; font-weight: normal; line-height: 35px;}
+.DivJob .JobContact{background: #F6F8FA;border-radius: 5px;width: 680px;padding: 5px 0px;}
+.DivJob .JobContact td{margin:0px;line-height: 30px;white-space: nowrap;}
+.DivJob .JobContact td .ContactPhoto {width: 40px;height: 40px;background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat -0px -1807px;}
+.DivJob .JobContact td .ShowContact {color: #F95E0E; text-decoration: none;}
+.DivJob .JobContact td .ShowContact:hover {color: #004694;}
+.JobPoint{width:550px;background:#ffeec4;border:1px solid #faa469;margin-left:30px;height:auto;margin-top:10px;line-height:22px;padding-left:20px;padding-top:10px;padding-bottom:10px;float:left}
+.DivJob .JobContact td img {vertical-align: middle;}
+.DivJob .DivOtherList {width: 680px;}
+.DivJob .DivOtherList p {line-height: 45px;font-size: 14px;font-family: "微软雅黑";color: #666666;font-weight: bold;}
+.DivJob .DivOtherList table {width: 100%;}
+.DivJob .DivOtherList table td {height: 30px;line-height: 30px;}
+.DivJob .DivOtherList table td a {color: #004694;font-size: 16px;font-family: "微软雅黑";text-decoration: none;}
+.DivJob .DivOtherList table td a:hover {color: red;}
+.DivJob .DivOtherList table td hr {border: none;border-top: 1px dashed #E2E2E2;background-color: white;height: 1px;}
+.DivJob .DivOtherList .MoreJob {
+    display: inline-block;
+    width: 450px;
+    margin-left: 130px;
+    text-align: center;
+    margin-top: 20px;
+    background: #F5F5FA;
+    height: 35px;
+    line-height: 35px;
+    color: #666666;
+    text-decoration: none;
+    font-size: 14px;
+		font-family: "微软雅黑";
+}
+.DivJob .DivOtherList .MoreJob:hover {color: #004694;}
+.DivJob .JobSimilar {border: 1px solid #E8E6E6;padding: 20px 20px 10px 20px;margin: 30px 0px 0px 0px;width: 680px;}
+.DivJob .JobSimilar p.SimilarTitle {width: 175px;text-align: center;margin: 0 auto;margin-top: -30px;background: #FFF; font-size: 16px;font-family: "微软雅黑";}
+.DivJob .JobSimilar .OneJob {width: 33%;float: left;margin-top: 15px;}
+.DivJob .JobSimilar .OneJob p {line-height: 25px;}
+.DivJob .JobSimilar .OneJob p a {color: #000; text-decoration: none;}
+.DivJob .JobSimilar .OneJob p a:hover {color: #004694;}
+.JobPoint img{margin:0px;padding:2px 4px 0px 0px;float:left;}
+.DivJob .JobSimilar .OneJob .JobName {color: #004694;font-size: 16px;font-family: "微软雅黑";height: 30px;display: inline-block;overflow: hidden;width: 220px;}
+.DivJob .JobSimilar .OneJob .JobName:hover {color: red;}
+.DivJob .JobShare {width: 170px;height: 170px;text-align: center;padding: 5px 0;float: left;position: relative;}
+.DivJob .JobShare img {width: 105px;height: 105px;margin: 10px 0px;}
+.DivJob .JobShare .ShareItem input {width: 28px;height: 28px;background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat;border: none; outline: none; cursor: pointer;}
+.DivJob .JobShare .ShareItem input.Weibo {background-position: -3px -335px;}
+.DivJob .JobShare .ShareItem input.Renren {background-position: -36px -335px;}
+.DivJob .JobShare .ShareItem input.QZone {background-position: -69px -335px;}
+.DivJob .JobShare .ShareItem input.TecentWeibo {background-position: -101px -335px;}
+.DivJob .JobShare .ShareItem input.QQ {background-position: -134px -335px;}
+.DivJob .JobShare .WechatIcon {width: 28px;height: 28px;background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat -166px -335px;position: absolute;top: 55px;left: 70px;}
+.DivJob .CompanyMulti {width: 100%; margin-top: 15px;}
+.DivJob .CompanyMulti img {width: 115px; height: 115px;}
+.DivJob .CompanyMulti .CpAttention {
+    border: 1px solid #50BA8C;
+    background: #FFF;
+    color: #50BA8C;
+    width: 50px;
+    height: 22px;
+    line-height: 20px;
+	font-size: 12px;
+	cursor: pointer;
+}
+.DivJob .CompanyMulti a {text-decoration: none; font-size: 12px;}
+.DivJob .CompanyMulti .cpName {font-size: 16px;font-family: "微软雅黑";}
+.DivJob .CpIntroducrion{width: 680px;margin: 10px 0;}
+.DivJob .CpIntroducrion span{margin-bottom:10px;font-size: 14px;font-family: "微软雅黑";color:#000;float:none;padding:0;display:block;margin-top:20px;}
+.DivJob .CpIntroducrion p{line-height: 25px;}
+
+.DivLeft .DivJobList {margin-top: 10px;}
+.DivLeft .DivJobList .ulUnSelect{background: #F3F5F8;border-top: 1px solid #D6D6D6;padding-left: 4px;height: 55px;clear:both;cursor:pointer;}
+.DivLeft .DivJobList .ulSelect{background: #FFF;border-left: 3px #f6b163 solid;height: 55px;clear:both;cursor:pointer;border-top: 1px solid #D6D6D6;}
+.DivLeft .DivJobList ul{list-style:none; padding-left:0; padding-top:8px; padding-bottom:5px}
+.DivLeft .DivJobList ul li{float:left;width: 268px;padding-left: 10px;line-height: 25px;}
+.DivLeft .DivJobList ul li a{ font-weight:normal;}
+.DivLeft .DivJobList ul li .DivCheck {float: left;width: 30px;margin-top: 18px;margin-left: 5px;}
+.DivLeft .DivJobList ul li .CompanyInfo {float: left;}
+.DivLeft .DivAll {border-top: 1px solid #D6D6D6;padding-left: 19px;line-height: 45px;}
+.DivLeft .DivAll label {vertical-align: middle; margin-left: 3px;}
+.DivLeft .DivAll .JobApplyMulti {
+    background: #50BA8C;
+    border: none;
+    width: 100px;
+    height: 25px;
+    line-height: 25px;
+    color: #FFF;
+    margin: 0 5px;
+}
+.DivLeft .DivAll .AttentionMulti {
+    width: 100px;
+    height: 25px;
+    line-height: 25px;
+    border: 1px solid #D6D6D6;
+    background: #FFF;
+}
+.DivLeft .pagerNum {clear: both;text-align: center;color:#313131;padding-top: 10px;width: 100%; height: 40px;}
+.DivLeft .pagerNum span{width:auto;margin-right:5px;cursor:pointer;padding:3px 7px;margin-bottom:3px;border-radius: 3px;}
+.DivLeft .pagerNum a{width:auto; margin-right:5px; cursor:pointer;padding:3px 7px; margin-bottom:3px;line-height:30px;color: #313131; text-decoration:none;}
+.DivLeft .pagerNum .PageNo_select{border: 1px #F85A01 solid;background-color: #F85A01;color: #FFF;cursor:default;font-family:Arial, Helvetica, sans-serif;font-weight:bold;font-size:14px;font-family: "微软雅黑";}
+.DivLeft .pagerNum .PageNo_noSelect{border:1px #C4C7D1 solid;color:#313131;background-color: #FFF;font-family:Arial, Helvetica, sans-serif;font-weight:bold;font-size:14px;font-family: "微软雅黑";}
+.DivLeft .pagerNum .normal_noSelect{cursor:default;}
+
+.DivCompany{padding: 15px 30px;}
+.DivCompany .DivCompany_Img {text-align: center;height: 180px;margin-bottom: 15px;}
+.DivCompany .DivCompany_Img img {border: 3px solid #DADCDF}
+.DivCompany h1{font-family:"微软雅黑";font-size:20px;color:#000;font-weight:normal;line-height:26px;padding-bottom:10px;width: 100%;text-align: center;}
+.DivLeft .DivCompany h1 a{text-decoration: none;color: #000;font-size: 18px;font-family: '微软雅黑';}
+.DivCompany h1 a:hover{color: #1a5aa8;}
+.Licence{width:34px; height:23px;background: url("../../Company/Order/Images/pic_realname.png")/*tpa=http://www.shoudurc.com/Content/Company/Order/Images/pic_realname.png*/ 0px -67px no-repeat;display: inline-block;margin-left: 2px;zoom:1;*display:inline; vertical-align:middle;}
+.RealName{width:32px; height:18px;background: url("../../Company/Order/Images/pic_realname.png")/*tpa=http://www.shoudurc.com/Content/Company/Order/Images/pic_realname.png*/ 0px -98px no-repeat;display: inline-block;margin-left: 2px;zoom:1;*display:inline; vertical-align:middle;}
+.DivCompany .CpStatus {width: 225px;float: left;margin-left: 10px;}
+.DivCompany .CpStatus a {color: #000;}
+.DivCompany .CpStatus div {background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat 0px -155px;width: 70px;height: 100px;float: left;margin-right: 5px;text-align: center;cursor: pointer;}
+.DivCompany .CpStatus div span {display: inline-block;width: 100%;font-size: 14px;font-family: "微软雅黑";height: 30px;line-height: 18px;}
+.DivCompany .CpStatus div:hover span{color: #1a5aa8;}
+.DivCompany .CpStatus div span.Number {font-size: 18px;height: 67px;line-height: 68px;}
+.DivCompany .CpStatus div.JobCount {background-position: -1px -1316px;}
+.DivCompany .CpStatus div.Comment {background-position: -78px -1316px;}
+.DivCompany .CpStatus div.Interview {background-position: -155px -1316px;}
+.DivCompany .CpStatus div.JobCount span.Number {color: #FF59A7;}
+.DivCompany .CpStatus div.Comment span.Number {color: #9AD27F;}
+.DivCompany .CpStatus div.Interview span.Number {color: #ACCCE2;}
+.DivCompany .CpOther {width: 100%;text-align: center;margin-top: 10px;}
+.DivCompany .CpOther div {display: inline-block; font-size: 14px;font-family: "微软雅黑";}
+.DivCompany .CpOther .CpAttention {
+    width: 110px;
+    height: 25px;
+    line-height: 25px;
+    background: #50BA8C;
+    color: #FFF;
+    text-align: center;
+	cursor: pointer;
+}
+.DivCompany .CpOther .CpReply {
+    width: 120px;
+    height: 25px;
+    line-height: 25px;
+    border: 1px solid #E7E7E7;
+    margin-left: 5px;
+}
+.DivCompany .CpOther .CpReply span {color: #F96B2D;}
+.DivCompany .CpDetail {width: 100%;margin-top: 15px;}
+.DivCompany .CpDetail p {
+    line-height: 25px;
+}
+.DivCompany .CpDetail p.Desc {margin-top: 5px;}
+.DivCompany .DivTips {
+    margin-top: 25px;
+    border-top: 1px solid #E8E6E6;
+}
+.DivCompany .DivTips h2 {font-size: 14px;font-family: "微软雅黑";font-weight: normal;width: 85px;margin: 0 auto;margin-top: -12px;background: #F3F5F8;padding: 0px 10px;}
+.DivCompany .DivTips h2 input {background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat -246px -1242px;width: 25px;height: 25px;border: none;outline: none;}
+.DivCompany .DivTips p {line-height: 25px;}
+
+.DivCompany .DivInteresting {
+    margin-top: 25px;
+    border-top: 1px solid #E8E6E6;
+}
+.DivCompany .DivInteresting h2 {font-size: 14px;font-family: "微软雅黑";font-weight: normal;width: 98px;margin: 0 auto;margin-top: -12px;background: #F3F5F8;padding: 0px 10px;}
+.DivCompany .DivInteresting h2 input {background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ no-repeat -320px -1242px;width: 25px;height: 25px;border: none;outline: none;}
+.DivCompany .DivInteresting p {line-height: 30px;width: 220px;height: 30px;text-align: center;border: 1px solid #E8E6E6;margin: 0 auto;margin-top: 15px;}
+.DivCompany .DivInteresting p a {color: #000;}
+.DivCompany .DivInteresting p a:hover {color: #004694;}
+.JobPoint a{color:#1635ed;font-weight:bold;}
+.JobPoint span{float:left;color:#000000;font-size:12px;margin:0px;padding:0px;}
+.DivRight{width:790px;float:right;background: #FFF;}
+.JobAttention{font-size:14px;font-family: "微软雅黑";display:inline-block;height:20px;line-height: 20px;background: url("../images/img_jv.png")/*tpa=http://www.shoudurc.com/content/personal/images/img_jv.png*/ -239px -1201px;padding-left:27px;width: 45px;cursor:pointer;color: #707070;margin-left: 20px;text-align: left;}
+.JobAttention:hover{color: #1a5aa8;}
+.JobAttention.Yes {background-position: -172px -1201px;    cursor: default;}
+.JobComplaints{font-size:14px;font-family: "微软雅黑";display:inline-block;height:20px;line-height: 20px;background: url("../Jv/images/bg_complaints.png")/*tpa=http://www.shoudurc.com/content/personal/Jv/images/bg_complaints.png*/ no-repeat 5px;padding-left:27px;width: 45px;cursor:pointer;color: #707070;margin-left: 20px;text-align: left;}
+.contedit{position:relative;float:left;display:inline;vertical-align:middle;}
+.IcoListMin{background:url("../images/img_JobViewTop.gif")/*tpa=http://www.shoudurc.com/Content/personal/images/img_JobViewTop.gif*/ no-repeat 0 -413px; border:none; padding:0; margin:0; margin-right:3px; width:15px; height:15px; cursor:pointer; vertical-align:middle;margin-top: -4px;}
+.IcoListPlus{background:url("../images/img_JobViewTop.gif")/*tpa=http://www.shoudurc.com/Content/personal/images/img_JobViewTop.gif*/ no-repeat -185px -413px; border:none; padding:0; margin:0; margin-right:3px; width:15px; height:15px;cursor:pointer; vertical-align:middle;margin-top: -4px;}
+.textstyle{text-align:center;float:left;display:inline;height:22px;line-height:22px;padding:5px;vertical-align:middle;background:url("../images/img_JobView.gif")/*tpa=http://www.shoudurc.com/Content/personal/images/img_JobView.gif*/ no-repeat 0 -207px;}
+.textstyleNew{text-align:center;float:left;display:inline;display: table-cell;height:32px;line-height:14px;vertical-align:middle;background:url("../images/img_JobViewNew.gif")/*tpa=http://www.shoudurc.com/Content/personal/images/img_JobViewNew.gif*/ no-repeat; padding-top:3px;}
+.inpprom{width:76px;padding-left:7px;padding-right:7px; cursor:default!important}
+.inppromNew{width: 87px;cursor:default!important;}
+.parr{float:left;display:inline;width:13px;height:12px;margin: 10px 3px 0 6px;background:url("../images/img_JobView.gif")/*tpa=http://www.shoudurc.com/Content/personal/images/img_JobView.gif*/ no-repeat 0 -289px;}
+.parr2{float:left;display:inline;width:13px;height:15px;margin:5px 0 5px 36px;background:url("../images/img_JobView.gif")/*tpa=http://www.shoudurc.com/Content/personal/images/img_JobView.gif*/ no-repeat 0 -256px;clear:both;}
+.promsub{position:absolute;top:28px;left:0;zoom:1;}
+.promsub .psubline{width:700px;float:left;clear:both;}
+.pdb70/*,#AsseProm .infoview .pdb70*/{padding-bottom:35px!important;margin:0!important;/*height:90px;vertical-align:top!important;*/overflow: hidden;}
+
+.BottomApply {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    background: #FFF;
+    background-color: rgba(255,255,255,0.8);
+    z-index: 9;
+    padding-top: 12px;
+    border-top: 1px solid #E9EAEB;
+    display: none;
+}
+
+.BottomApply .JobApply {background: #F96B2D;font-size: 16px;font-family: "微软雅黑";width: 130px;height: 40px;line-height: 40px;}
+.BottomApply .Disable {background: #E0DEDF; color: #6A6A6A; cursor: default;}
+.popup{border: 1px solid #a7aab3;background:#fff;}
+.popup .popupBtn{width:87px;height:28px;background:#33FFFF url("../images/img_popup.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_popup.gif*/ 0px 0px no-repeat;border:0;font:12px/22px "新宋体";cursor:pointer; color:#FFF; font-weight:bold} 
+.popup .popupBtnCancel{width:87px;height:28px;background:#33FFFF url("../images/img_popup.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_popup.gif*/ 0px -69px no-repeat;border:0;font:12px/22px "新宋体";cursor:pointer; color:#000; font-weight:bold} 
+.popup .popuphead{background:#f4f4f4;height:33px;}
+.popup .popuphead hh1{background:url("../../Company/images/popdivicon.gif")/*tpa=http://www.shoudurc.com/Content/Company/images/popdivicon.gif*/ no-repeat left;font:bold 12px "新宋体";color:#fff;float:left;margin:6px 0 0 5px;cursor:move; padding-left:10px}
+.popup .popuphead h1{font:bold 14px "新宋体";color:#000;float:left;margin:6px 0 0 10px;cursor:move;padding-left:6px}
+.popup .popuphead img{float:right;margin:4px 5px 0 0;cursor:pointer}
+.popup .popupfooter{padding:8px 0;text-align:center;}
+.popup .popupBody .popupbodyContent{padding:3px;}
+.popup .popupBody{clear:both;}
+
+.IntentionReg {position: fixed;right: 70px;bottom: 20px; z-index: 999;}
+.IntentionReg div {position: relative}
+.IntentionReg div span {position: absolute; font-family: "微软雅黑";}
+.IntentionReg div span.Title {right: 70px;top: 15px;font-size: 16px;}
+.IntentionReg div span.Button {bottom: 13px;right: 105px;font-size: 14px;font-weight: bold;color: #ef5402;display: inline-block;width: 92px;height: 30px;text-align: center;line-height: 30px;cursor: pointer;}
+.IntentionReg div span.Close {display: inline-block;width: 50px;height: 50px;top: 0px;right: 0px;cursor: pointer;}
+/*关注心形效果*/
+.love-bg{display:none;position:fixed;z-index:999;left:50%;top:100%;width:70px;height:70px;margin-left:-35px;margin-top:0;background:url("../images/love.png")/*tpa=http://www.shoudurc.com/content/personal/images/love.png*/ no-repeat 0 0}
+.love-anim{display:block;-webkit-transition:.6s;-moz-transition:.6s;-ms-transition:.6s;-o-transition:.6s;transition:.6s;-webkit-animation:bubble 2s ease-in-out 1;-moz-animation:bubble 2s ease-in-out 1;-ms-animation:bubble 2s ease-in-out 1;-o-animation:bubble 2s ease-in-out 1;animation:bubble 2s ease-in-out 1}
+@-webkit-keyframes bubble{0%{-webkit-transform:scale(1);top:100%}10%{-webkit-transform:scale(1);top:50%;margin-top:-35px;opacity:1}20%{-webkit-transform:scale(1);top:50%;margin-top:0;opacity:1}100%{-webkit-transform:scale(8);top:50%;margin-top:-35px;opacity:0}}
+@-moz-keyframes bubble{0%{-moz-transform:scale(1);top:100%}10%{-moz-transform:scale(1);top:50%;margin-top:-35px;opacity:1}20%{-moz-transform:scale(1);top:50%;margin-top:0;opacity:1}100%{-moz-transform:scale(8);top:50%;margin-top:-35px;opacity:0}}
+@-ms-keyframes bubble{0%{-ms-transform:scale(1);top:100%}10%{-ms-transform:scale(1);top:50%;margin-top:-35px;opacity:1}20%{-ms-transform:scale(1);top:50%;margin-top:0;opacity:1}100%{-ms-transform:scale(8);top:50%;margin-top:-35px;opacity:0}}
+@-o-keyframes bubble{0%{-o-transform:scale(1);top:100%}10%{-o-transform:scale(1);top:50%;margin-top:-35px;opacity:1}20%{-o-transform:scale(1);top:50%;margin-top:0;opacity:1}100%{-o-transform:scale(8);top:50%;margin-top:-35px;opacity:0}}
+@keyframes bubble{0%{transform:scale(1);top:100%}10%{transform:scale(1);top:50%;margin-top:-35px;opacity:1}20%{transform:scale(1);top:50%;margin-top:0;opacity:1}100%{transform:scale(8);top:50%;margin-top:-35px;opacity:0}}

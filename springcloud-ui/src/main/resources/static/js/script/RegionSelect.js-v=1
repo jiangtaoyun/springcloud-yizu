@@ -1,0 +1,446 @@
+var RegionSelect = {
+  newSelect: function (width, isMulti, ShowLv3, isNecessary, doubleClickSave) {
+    var regionSelect = {};
+    regionSelect._RegionMulti = isMulti;
+    regionSelect._ShowLv3 = ShowLv3;
+    regionSelect._arrID = "region1id";
+    regionSelect._aNa = "region1";
+    RegionSelect.doubleClickSave = doubleClickSave;
+    var aId = eval("region1id");
+    var aNa = eval("region1");
+    regionSelect.GenBodyHtml = function () {
+      var objId = BodyClass.objId;
+      var strWidth = '', bh = '';
+      var objId = BodyClass.objId;
+      var strWidth = '', bh = '';
+      var subareaids = region2id[0];
+      var subareanames = region2[0];
+      var aId = region1id;
+      var aNa = region1;
+      var moveColor = "ffe9d3", borderColor = "";
+      if (location.pathname.indexOf("/Company") == 0) {
+        moveColor = "d3e9ff";
+        borderColor = "";
+      }
+      if (isMulti == 1) {
+        bh += BodyClass.MutiHeadHtml(objId);
+        bh += '<input type="hidden" id="' + objId + 'ProvisionalData">';
+      }
+      bh += '<div class="popupDivProvinceNav" id="NavDiv">\
+			         <div style="float:left; cursor:pointer;margin-top:6px" onclick="RegionSelect.ReturnP()">&nbsp;返回省一级 >></div>\
+					 <div class="popupDivProvinceHot">热门城市：';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="10" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="_(\'liReg10\').click()" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'10\',\'北京\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liRegHot10>北京</b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="30" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="_(\'liReg30\').click()" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'30\',\'上海\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liRegHot30>上海</b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="11" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="_(\'liReg11\').click()" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'11\',\'天津\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liRegHot11>天津</b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="60" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="_(\'liReg60\').click()" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'60\',\'重庆\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liRegHot60>重庆</b>\
+				     </div>\
+				   </div>';
+      bh += '<div id="SelectedDiv">';
+      bh += '<div id="SelectedLi">';
+      bh += '<div id="showSelectedLi" class="showSelectedLi">';
+      //if(aNa[0].indexOf("重庆")>-1)
+      //			{
+      //				if(doubleClickSave==2 || isMulti==1)		
+      //					bh += '<ul style="height:200px;">';	   
+      //				else
+      //					bh += '<ul style="height:220px;">';	   
+      //			}
+      //			else
+      //			{
+      //					bh += '<ul style="height:115px;">';	   
+      //			}
+      bh += '<ul>';
+      if (doubleClickSave == 2 || isMulti == 1) {
+        if (isMulti == 1)
+          bh += '<li style="cursor:pointer; display:block; font-weight:bold ; float:none" id="Li' + aId[0] + '" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\';" onMouseOut="this.style.backgroundColor=\'\';" ><span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');BodyClass.hideSub()"><input name="' + aId[0] + '" value="' + aNa[0] + '" type="checkbox" onclick="this.checked=!this.checked;">' + aNa[0] + '全部</span></li>';
+        else
+          bh += '<li style="cursor:pointer; display:block; font-weight:bold ; float:none"  id="Li' + aId[0] + '" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\';" onMouseOut="this.style.backgroundColor=\'\';" onClick="BodyClass.saveInt(\'' + aId[0] + '\',\'' + aNa[0] + '\',\'' + objId + '\');">' + aNa[0] + '全部</li>';
+        bh += '<span style="clear:both"></span>'
+      }
+      for (var m = 0; m < subareaids.length; m++) {
+        var strDblClick = "";
+        if (ShowLv3 == 0) {
+          var strOnClick = 'BodyClass.saveInt(\'' + subareaids[m] + '\',\'' + subareanames[m] + '\',\'' + objId + '\');';
+        }
+        else {
+          var strOnClick = 'RegionSelect.rdsl3(event,this ,\'' + 0 + '\',\'' + objId + '\',\'' + m + '\', ' + isMulti + ');';
+          if (doubleClickSave > 0) {
+            strDblClick = ' ondblclick="BodyClass.saveInt(\'' + subareaids[m] + '\',\'' + subareanames[m] + '\',\'' + objId + '\');"';
+          }
+        }
+        if (isMulti == 0) {
+          bh += '<li id="Li' + subareaids[m] + '" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\';" onMouseOut="this.style.backgroundColor=\'\';" onClick="' + strOnClick + '"' + strDblClick + '>' + subareanames[m] + '<span class="popupDivArrowDown"></span></li>';
+        }
+        else {
+          bh += '<li id="Li' + subareaids[m] + '" onMouseOver="this.style.background=\'#' + moveColor + '\';" onMouseOut="this.style.background=\'\';"'
+          if (ShowLv3 == 1) {
+            bh += ' onClick="RegionSelect.rdsl3(event,this ,\'' + 0 + '\',\'' + objId + '\',\'' + m + '\', ' + isMulti + ')"';
+          }
+          bh += '><span onClick="BodyClass.bcb(this, \'' + objId + '\', \'region2id\', \'region2\');"><input name="' + subareaids[m] + '" value="' + subareanames[m] + '" type="checkbox" onclick="this.checked=!this.checked;" />';
+          if (ShowLv3 == 1) {
+            bh += '</span>' + subareanames[m];
+          }
+          else {
+            bh += subareanames[m] + '</span>';
+          }
+          if (aId[0].substr(0, 2) == "10" || aId[0].substr(0, 2) == "11" || aId[0].substr(0, 2) == "30" || aId[0].substr(0, 2) == "60") {
+            bh += '</li>';
+          }
+          else {
+            bh += '<span class="popupDivArrowDown"></span></li>';
+          }
+        }
+      }
+      bh += '</ul>';
+      bh += '</div>';
+      bh += '<div id="popDivSub" class="showDivsub" style="float:left; position:absolute; width:0px"   onMouseOut="BodyClass.HideSub(event,this)"></div></div>';
+      bh += '<div class="popupDivProvince" style="display:none" id="ProvinceDiv">';
+      bh += '  <ul>';
+      bh += '    <li>';
+      bh += '      <span class="provincePinyin">A.B.C.F</span>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="33" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'13\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this)  ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'33\',\'安徽\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg33>安徽<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="10" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'1\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'10\',\'北京\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg10>北京<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="60" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'4\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'60\',\'重庆\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg60>重庆<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="34" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'14\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'34\',\'福建\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg34>福建<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="91" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'32\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'91\',\'澳门\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg91>澳门</b>';
+      bh += '      <div style="clear:both"></div>';
+      bh += '    </li>';
+      bh += '    <li>';
+      bh += '      <span class="provincePinyin">G</span>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="40" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'17\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'40\',\'广东\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg40>广东<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="41" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'18\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this)  ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'41\',\'广西\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg41>广西<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="84" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'30\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'84\',\'甘肃\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg84>甘肃<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="63" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'22\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'63\',\'贵州\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg63>贵州<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="93" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'34\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'93\',\'国外\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg93><input name="93" value="国外" style="display:none" type="checkbox" onclick="this.checked=!this.checked;" />国外</b>';
+      bh += '      <div style="clear:both"></div>';
+      bh += '    </li>';
+      bh += '    <li>';
+      bh += '      <span class="provincePinyin">H</span>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="72" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'26\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'72\',\'湖南\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg72>湖南<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="71" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'25\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'71\',\'湖北\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg71>湖北<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="70" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'24\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'70\',\'河南\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg70>河南<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="12" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'5\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'12\',\'河北\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg12>河北<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="22" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'10\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'22\',\'黑龙江\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg22>黑龙江<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="42" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'19\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'42\',\'海南\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg42>海南<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += '      <div style="clear:both"></div>';
+      bh += '    </li>';
+      bh += '    <li>';
+      bh += '      <span class="provincePinyin">J.L.N.Q</span>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="21" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'9\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'21\',\'吉林\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg21>吉林<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="31" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'11\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'31\',\'江苏\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg31>江苏<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="36" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'16\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'36\',\'江西\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg36>江西<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="20" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'8\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'20\',\'辽宁\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg20>辽宁<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="13" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'6\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'13\',\'内蒙古\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg13>内蒙古<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="82" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'29\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'82\',\'宁夏\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg82>宁夏<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="81" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'28\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'81\',\'青海\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg81>青海<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += '      <div style="clear:both"></div>';
+      bh += '    </li>';
+      bh += '    <li>';
+      bh += '      <span class="provincePinyin">S</span>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="30" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'2\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'30\',\'上海\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg30>上海<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="32" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'12\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'32\',\'山东\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg32>山东<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="14" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'7\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'14\',\'山西\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg14>山西<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="80" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'27\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'80\',\'陕西\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg80>陕西<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="61" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'20\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'61\',\'四川\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg61>四川<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += '      <div style="clear:both"></div>';
+      bh += '    </li>';
+      bh += '    <li>';
+      bh += '      <span class="provincePinyin">T.X.Y.Z</span>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="11" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'3\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'11\',\'天津\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg11>天津<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="64" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'23\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'64\',\'西藏\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg64>西藏<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="83" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'0\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'83\',\'新疆\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg83>新疆<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="62" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'21\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'62\',\'云南\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg62>云南<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="35" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'15\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'35\',\'浙江\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg35>浙江<span class="popupDivArrowDown" style="float:none; padding:0; width:15px"></span></b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="90" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'31\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this)  ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'90\',\'香港\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg90 >香港</b>';
+      bh += isMulti == 1 ? '      <span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input type="checkbox" onclick="this.checked=!this.checked;" name="92" /></span>' : "";
+      bh += '      <b' + (isMulti == 1 ? '' : ' style="margin-left:7px"') + ' onClick="RegionSelect.Lv1Checked(this, \'33\',\'' + BodyClass.objId + '\', ' + isMulti + ', ' + ShowLv3 + ', ' + doubleClickSave + ');" onmouseover=RegionSelect.Lv1Move(this) ' + (doubleClickSave == 2 ? ' onDblClick="BodyClass.saveInt(\'92\',\'台湾\')" ' : '') + ' onmouseout=RegionSelect.Lv1Move(this) id=liReg92>台湾</b>';
+      bh += '      <div style="clear:both"></div>';
+      bh += '    </li>';
+      bh += '    <div style="clear:both"></div>';
+      bh += '  </ul>';
+      bh += '</div>';
+      bh += '</div>';
+      return bh;
+    };
+    return regionSelect;
+  },
+  Lv1Checked: function (obj, Arraya, objId, isMulti, ShowLv3, doubleClickSave) {
+    for (var i = 0; i < region1id.length; i++) {
+      if (obj.id.substring(5) == region1id[i])
+        Arraya = i;
+    }
+    this.rdsl2(Arraya, objId, isMulti, ShowLv3, doubleClickSave);
+    if (document.getElementById("NavDiv")) {
+      document.getElementById("NavDiv").style.display = "";
+      document.getElementById("SelectedLi").style.display = "";
+      document.getElementById("ProvinceDiv").style.display = "none";
+    }
+  },
+  Lv1Move: function (obj) {
+    var moveColor = "ffe9d3", borderColor = "";
+    if (location.pathname.indexOf("/Company") == 0) {
+      moveColor = "d3e9ff";
+      borderColor = "";
+    }
+    if (obj.style.backgroundColor == '#f05502' || obj.style.backgroundColor == 'rgb(240, 85, 2)') {
+      return;
+    }
+    if (obj.style.backgroundColor == '#' + moveColor || obj.style.backgroundColor == 'rgb(255, 233, 211)' || obj.style.backgroundColor == 'rgb(211, 233, 255)') {
+      obj.style.backgroundColor = '';
+    }
+    else {
+      obj.style.backgroundColor = '#' + moveColor;
+    }
+  },
+  rdsl2: function (Arraya, objId, isMulti, ShowLv3, doubleClickSave) {
+    BodyClass.hideSub();
+    var subareaids = region2id[Arraya];
+    var subareanames = region2[Arraya];
+    var aId = region1id;
+    var aNa = region1;
+    if (subareaids == undefined) {
+      if (isMulti == 0) {
+        BodyClass.saveInt(aId[Arraya], aNa[Arraya], objId);
+      }
+      if (isMulti == 1) {
+        if (aNa[Arraya].indexOf("香港") >= 0)
+          BodyClass.bcb(document.getElementById("liReg90"), '' + objId + '', 'region2id', 'region2', Arraya)
+        else if (aNa[Arraya].indexOf("澳门") >= 0)
+          BodyClass.bcb(document.getElementById("liReg91"), '' + objId + '', 'region2id', 'region2', Arraya)
+        else if (aNa[Arraya].indexOf("台湾") >= 0)
+          BodyClass.bcb(document.getElementById("liReg92"), '' + objId + '', 'region2id', 'region2', Arraya)
+        else if (aNa[Arraya].indexOf("国外") >= 0)
+          BodyClass.bcb(document.getElementById("liReg93"), '' + objId + '', 'region2id', 'region2', Arraya)
+      }
+      return false;
+    }
+    var moveColor = "ffe9d3", borderColor = "";
+    if (location.pathname.indexOf("/Company") == 0) {
+      moveColor = "d3e9ff";
+      borderColor = "";
+    }
+    if (ShowLv3 == 0 && (aNa[Arraya].indexOf("北京") >= 0 || aNa[Arraya].indexOf("天津") >= 0 || aNa[Arraya].indexOf("上海") >= 0 || aNa[Arraya].indexOf("重庆") >= 0) && objId!="RmListRegionID") {
+      if (isMulti == 0) {
+        BodyClass.saveInt(aId[Arraya], aNa[Arraya], objId);
+      } else {
+        _("showSelectedLi").innerHTML = "";
+      }
+      return false;
+    }
+    var iWidth = 50;
+    var mLen = 2;
+    for (var m = 0; m < subareaids.length; m++) {
+      if (subareanames[m].length > mLen) mLen = subareanames[m].length;
+    }
+    charWidth = 16;
+    if (mLen * charWidth > iWidth) {
+      iWidth = mLen * (charWidth - 3);
+    }
+    if (isMulti > 0) {
+      iWidth += 12;
+    }
+    if (aNa[Arraya].indexOf("重庆") > -1) {
+      if (doubleClickSave == 2 || isMulti == 1)
+        hDiv = '<ul style="height:200px;">';
+      else
+        hDiv = '<ul style="height:220px;">';
+    }
+    else {
+      hDiv = '<ul style="height:115px;">';
+    }
+    hDiv = '<ul>';
+    if (objId == "MapPlace" || doubleClickSave == 2 || isMulti == 1 || (doubleClickSave == 1 && (aId[Arraya] == "10" || aId[Arraya] == "30" || aId[Arraya] == "11" || aId[Arraya] == "60"))) {
+      if (isMulti == 1)
+        hDiv += '<li style="cursor:pointer; display:block; font-weight:bold ; float:none" id="Li' + aId[Arraya] + '" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\';" onMouseOut="this.style.backgroundColor=\'\';" ><span onclick="BodyClass.bcb(this, \'' + objId + '\', \'region1id\', \'region1\');"><input name="' + aId[Arraya] + '" value="' + aNa[Arraya] + '" type="checkbox" onclick="this.checked=!this.checked;BodyClass.hideSub()">' + aNa[Arraya] + '全部</span></li>';
+      else
+        hDiv += '<li style="cursor:pointer; display:block; font-weight:bold ; float:none" id="Li' + aId[Arraya] + '" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\';" onMouseOut="this.style.backgroundColor=\'\';" onClick="BodyClass.saveInt(\'' + aId[Arraya] + '\',\'' + aNa[Arraya] + '\',\'' + objId + '\');">' + aNa[Arraya] + '全部</li>';
+    }
+    for (var m = 0; m < subareaids.length; m++) {
+      var strDblClick = "";
+      if (ShowLv3 == 0) {
+        var strOnClick = 'BodyClass.saveInt(\'' + subareaids[m] + '\',\'' + subareanames[m] + '\',\'' + objId + '\');';
+      }
+      else {
+        var strOnClick = 'RegionSelect.rdsl3(event,this ,\'' + Arraya + '\',\'' + objId + '\',\'' + m + '\', ' + isMulti + ');';
+        if (doubleClickSave > 0) {
+          strDblClick = ' ondblclick="BodyClass.saveInt(\'' + subareaids[m] + '\',\'' + subareanames[m] + '\',\'' + objId + '\');"';
+        }
+      }
+      if (isMulti == 0) {
+        hDiv += '<li style="cursor:pointer;" id="Li' + subareaids[m] + '" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\';" onMouseOut="this.style.backgroundColor=\'\';" onClick="' + strOnClick + '"' + strDblClick + '>' + subareanames[m] + '<span class="popupDivArrowDown"></span></li>';
+      }
+      else {
+        hDiv += '<li id="Li' + subareaids[m] + '" style="cursor:pointer;" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\';" onMouseOut="this.style.backgroundColor=\'\';"'
+        if (ShowLv3 == 1) {
+          hDiv += ' onClick="RegionSelect.rdsl3(event,this ,\'' + Arraya + '\',\'' + objId + '\',\'' + m + '\', ' + isMulti + ')"';
+        }
+        hDiv += '><span onClick="BodyClass.bcb(this, \'' + objId + '\', \'region2id\', \'region2\',' + Arraya + ');"><input name="' + subareaids[m] + '" value="' + subareanames[m] + '" type="checkbox" onclick="this.checked=!this.checked;" />';
+        if (ShowLv3 == 1) {
+          hDiv += '</span>' + subareanames[m];
+        }
+        else {
+          hDiv += subareanames[m] + '</span>';
+        }
+        if (aId[Arraya].substr(0, 2) == "10" || aId[Arraya].substr(0, 2) == "11" || aId[Arraya].substr(0, 2) == "30" || aId[Arraya].substr(0, 2) == "60") {
+          hDiv += '</li>';
+        }
+        else {
+          hDiv += '<span class="popupDivArrowDown"></span></li>';
+        }
+      }
+
+    }
+    hDiv += '<div style="clear:both"></div>';
+    hDiv += '</ul>';
+    _("showSelectedLi").innerHTML = hDiv;
+    var clientHeight = _("msg1").clientHeight;
+    var styleTop = parseInt(_("msg1").style.top.substring(0, _("msg1").style.top.length - 2));
+    var curScrollHeight = document.documentElement.scrollTop + document.body.scrollTop + document.documentElement.clientHeight;
+    if (clientHeight + styleTop > curScrollHeight) {
+      _("msg1").style.top = (curScrollHeight - clientHeight - 5) + 'px';
+    }
+    if (isMulti == 1) {
+      BodyClass.changeChecked(objId);
+    }
+  },
+  cancelEvent: function (e) {
+    if (e && e.stopPropagation)
+      e.stopPropagation();
+    else
+      window.event.cancelBubble = true;
+    return false;
+  },
+  rdsl3: function (event, subId, Arraya, objId, Arrayb, isMulti) {
+    BodyClass.hideSub();
+    event = event ? event : window.event
+    var tarObj = event.srcElement ? event.srcElement : event.target
+    var _subId = subId.id.replace("Li", "");
+    var aId = region3id;
+    var aNa = region3;
+    var _Divsub = _("popDivSub");
+    var pos = subid2[Arraya][Arrayb]
+    var subareaid = region3id[pos];
+    var subarea = region3[pos];
+    if (subareaid == undefined) {
+      if (isMulti == 0) {
+        BodyClass.saveInt(_subId, subId.innerHTML.toLowerCase().replace(/<span class=\"popupdivarrowdown\"><\/span>/g, '').replace(/<span class=popupdivarrowdown><\/span>/g, ''), objId);
+      }
+      return false;
+    }		
+    var moveColor = "ffe9d3", borderColor = "f44d09";
+    if (location.pathname.indexOf("/Company") == 0) {
+      moveColor = "d3e9ff";
+      borderColor = "0095d7";
+    }
+    hDiv = '';
+    //if (objId == "MapPlace" || isMulti==1  || RegionSelect.doubleClickSave>=1) {
+    if (isMulti == 0) {
+      if (RegionSelect.doubleClickSave >= 1) {
+        hDiv += '<p style="cursor:pointer;width:83px;font-weight:bold;float:left" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\'" onMouseOut="this.style.backgroundColor=\'\'" onClick="BodyClass.saveInt(\'' + region2id[Arraya][Arrayb] + '\',\'' + region2[Arraya][Arrayb] + '\',\'' + objId + '\');">' + region2[Arraya][Arrayb] + (objId == "MapPlace" ? "全部" : "") + '<span class="popupDivArrowUp" onclick="BodyClass.hideSub();BodyClass.cancelEvent()"></span></p>';
+      }
+      else {
+        hDiv += '<p style="cursor:pointer;width:83px;font-weight:bold;float:left" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\'" onMouseOut="this.style.backgroundColor=\'\'" onclick="BodyClass.hideSub();BodyClass.cancelEvent()">' + region2[Arraya][Arrayb] + (objId == "MapPlace" ? "全部" : "") + '<span class="popupDivArrowUp"></span></p>';
+      }
+    }
+    else {
+      hDiv += '<p style="cursor:pointer;width:83px;font-weight:bold;float:left" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\'" onMouseOut="this.style.backgroundColor=\'\'" onClick="BodyClass.bcb(this, \'' + objId + '\', \'region2id\', \'region2\',' + Arraya + ');" ><input name="' + region2id[Arraya][Arrayb] + '" value="' + region2[Arraya][Arrayb] + '" type="checkbox" onclick="this.checked=!this.checked;" />' + region2[Arraya][Arrayb] + '<span class="popupDivArrowUp" onclick="BodyClass.hideSub();BodyClass.cancelEvent()"></span></p>';
+    }
+
+    //}	
+
+    hDiv += '<ul style="clear:both;width:178px;float:left">';
+
+    for (var m = 0; m < subareaid.length; m++) {
+      var strStyle = "";
+      if (isMulti == 0) {
+        hDiv += '<li style="cursor:pointer;width:85px;' + strStyle + '" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\'" onMouseOut="this.style.backgroundColor=\'#fff\'" onClick="BodyClass.saveInt(\'' + subareaid[m] + '\',\'' + subarea[m] + '\',\'' + objId + '\');">' + subarea[m] + '</li>';
+      }
+      else {
+        hDiv += '<li style="cursor:pointer;width:85px;' + strStyle + '" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\';" onMouseOut="this.style.backgroundColor=\'#fff\';" onClick="BodyClass.bcb(this, \'' + objId + '\', \'region3id\', \'region3\',' + Arraya + ');"><input name="' + subareaid[m] + '" value="' + subarea[m] + '" type="checkbox" onclick="this.checked=!this.checked;" />' + subarea[m] + '</li>';
+      }
+    }
+    hDiv += '<div style="clear:both"></div>';
+    hDiv += '</ul>';
+    _Divsub.innerHTML = hDiv;
+    var _DivsubTop = BodyClass.gaot(subId) - BodyClass.gaot(_("msg1"));
+    var _DivsubLeft = BodyClass.gaol(subId) - BodyClass.gaol(_("msg1"));
+    if (isMulti == 1) {
+      BodyClass.scb(objId, 'region3id', 'region3');
+    }
+    var parentObj = tarObj;
+    var parentOffTop = tarObj.offsetTop;
+    while (parentObj = parentObj.offsetParent) {
+      parentOffTop += parentObj.offsetTop;
+    }
+    _DivsubTop = _DivsubTop + 2;
+    _Divsub.style.top = _DivsubTop + "px";
+    _Divsub.style.left = _DivsubLeft + "px";
+    BodyClass.showSub();
+    var arrSubLi = _Divsub.getElementsByTagName("li");
+    if ((this.GetLeft(_Divsub) + _Divsub.offsetWidth) > (this.GetLeft(_("msg1")) + _("msg1").offsetWidth)) {
+      var arrSubP = _("popDivSub").getElementsByTagName("p");
+      if (arrSubP.length > 0) {
+        arrSubP[0].style.marginLeft = "87px"
+        arrSubP[0].style.paddingRight = "4px"
+      }
+      arrSubLi[1].style.borderTop = "none";
+      arrSubLi[1].style.height = "20px"
+      _Divsub.style.left = _DivsubLeft - 89 + "px";
+    }
+    if (isMulti == 1) {
+      BodyClass.changeChecked(objId);
+    }
+    return;
+  },
+  GetLeft: function (obj) {
+    var l = obj.offsetLeft;
+    while (obj = obj.offsetParent) {
+      l += obj.offsetLeft;
+    }
+    return l;
+  },
+  ReturnP: function () {
+    document.getElementById("NavDiv").style.display = "none";
+    document.getElementById("SelectedLi").style.display = "none";
+    document.getElementById("ProvinceDiv").style.display = "";
+  }
+  , doubleClickSave: 0
+}

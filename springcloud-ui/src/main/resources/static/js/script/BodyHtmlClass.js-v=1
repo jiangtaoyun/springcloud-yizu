@@ -1,0 +1,650 @@
+var BodyClass = {
+    objID: "",
+    MultiNumber: "",
+    isShortSelect: "",
+    strExec: "",
+    saveInt: function (hiddenValue, buttonValue) {
+        var _hiddenId = "id" + this.objId;
+        var _buttonId = "txt" + this.objId;
+        var strDisplay = buttonValue;
+        _(_hiddenId).value = hiddenValue;
+        _(_buttonId).value = strDisplay;
+
+        if (_hiddenId == "idLivePlace") {
+
+            if (beforeLivePlaceId != hiddenValue) {
+
+                $("#txtPlace").val("居住地大概位置");
+                $("#idPlace").val("");
+                $("#spMapPlace").text("");
+                beforeLivePlaceId = hiddenValue;
+
+            }
+        }
+
+
+        if (_(_buttonId).tagName.toLowerCase() == "div")
+            _(_buttonId).setAttribute("pValue", strDisplay);
+
+        BodyClass.SaveLast(_buttonId);
+    },
+    showSub: function () {
+        var _Divsub = _("popDivSub");
+        _Divsub.style.display = "block";
+    },
+    CheckColor: function () {
+        if (location.pathname.indexOf("/Company") == 0)
+            return "0095d7";
+        else
+            return "f00";
+    },
+    hideSub: function () {
+        var _Divsub = _("popDivSub");
+        _Divsub.style.display = "none";
+        setTimeout("BodyClass.hidLi()", "200")
+    },
+    hidLi: function () {
+        if (_("popDivSub")) {
+            if (_("popDivSub").style.display == "none") {
+                var _li = _("SelectedDiv").getElementsByTagName("li");
+                for (var i = 0; i < _li.length; i++) {
+                    _li[i].style.border = "2px solid #fff";
+                }
+            }
+        }
+    },
+    gaot: function (obj) {
+        var y = obj.offsetTop;
+        while (obj = obj.offsetParent) {
+            y += obj.offsetTop;
+        }
+        return y;
+    },
+    gaol: function (obj) {
+        var x = obj.offsetLeft;
+        while (obj = obj.offsetParent) {
+            x += obj.offsetLeft;
+        }
+        return x;
+    },
+    bcb: function (thisId, objId, aId, aNa, arrIndex) {
+        if (thisId != null) {
+            if (document.getElementById(objId + arrIndex))
+                _(objId + arrIndex).style.color = "#" + BodyClass.CheckColor();
+            var _thisId = thisId.getElementsByTagName("input")[0];
+            thisId.style.color = "#" + BodyClass.CheckColor()
+            var _thisName = _thisId.name;
+            if (!_thisId.checked) {
+                if (addCheckbox())
+                    _thisId.checked = true;
+                else {
+                    if (objId.toLowerCase().indexOf('jobtype') > -1)
+                        _(objId + arrIndex).style.color = "#1c4dcd";
+                }
+            }
+            else {
+                _thisId.checked = false;
+                if (objId.toLowerCase().indexOf('jobtype') == -1)
+                    thisId.style.color = "#000";
+                else
+                    thisId.style.color = "#1c4dcd";
+
+                BodyClass.removeCheckbox(_thisName, objId, aId, aNa);
+            }
+            if (objId.indexOf('dcRegion') > -1) {
+                if (document.getElementById("popDivSub")) {
+                    if (document.getElementById("popDivSub").style.display == "block") {
+                        if (document.getElementById('Li' + _thisId.name.substr(0, 4))) {
+                            var _DivsubTop = BodyClass.gaot(document.getElementById('Li' + _thisId.name.substr(0, 4))) - BodyClass.gaot(_("msg1"));
+                            var parentObj = document.getElementById("popDivSub");
+                            var parentOffTop = document.getElementById("popDivSub").offsetTop;
+                            while (parentObj = parentObj.offsetParent) {
+                                parentOffTop += parentObj.offsetTop;
+                            }
+                            document.getElementById("popDivSub").style.top = _DivsubTop + "px";
+                        }
+                    }
+                }
+            }
+        }
+        function addCheckbox() {
+            var addData = _(objId + "ProvisionalData").value;
+            var saveAddData = '';
+            if (addData.length > 0) {
+                var arr = addData.split(' ');
+                for (var i = 0; i < arr.length; i++) {
+                    if (_thisName == arr[i])
+                        return true;
+
+                    if (!(_thisName.indexOf(arr[i]) == 0 || arr[i].indexOf(_thisName) == 0) || objId.indexOf("Industry") > -1) {
+                        if (arrIndex) {
+                            if (_thisName.length == 4 && objId.indexOf("Region") == 0 && arr[i] == jsJobTypeL1ID[arrIndex])
+                                continue;
+                            else if (_thisName.length == 2) {
+                                var arrjt = jsJobTypeL2ID[arrIndex];
+                                var isEqual = 0;
+                                for (var j = 0; j < arrjt.length; j++) {
+                                    if (arrjt[j] == arr[i]) {
+                                        isEqual = 1;
+                                        break;
+                                    }
+                                }
+                                if (isEqual == 1)
+                                    continue;
+                            }
+                        }
+                        if (saveAddData.length == 0)
+                            saveAddData = arr[i];
+                        else
+                            saveAddData += ' ' + arr[i];
+                    }
+                }
+                if (saveAddData.length == 0)
+                    saveAddData = _thisName;
+                else
+                    saveAddData += ' ' + _thisName;
+
+                arr = saveAddData.split(' ');
+                var num = BodyClass.MultiNumber;
+                if (arr.length > num) {
+                    if (objId.toLowerCase().indexOf('jobtype') > -1) {
+                        thisId.style.color = "#1c4dcd";
+                    }
+                    alert('您选择的数据已经超过' + num + '个，请先删除再选择！');
+                    return false;
+                }
+                _(objId + "ProvisionalData").value = saveAddData;
+            }
+            else {
+                saveAddData = _thisName;
+                _(objId + "ProvisionalData").value = saveAddData;
+            }
+            BodyClass.scb(objId, aId, aNa);
+            return true;
+        }
+    },
+    LiMove: function (id) {
+        if (location.pathname.indexOf("/Company") == 0) {
+            _("PliBID" + id).style.backgroundColor = '#0095d7';
+            //_("PliBID" + id).style.borderLeft = '1px solid #0095d7';
+            _("pliImgID" + id).src = '../Content/Company/Images/PopupNew/p5.gif'/*tpa=http://www.shoudurc.com/Content/Company/Images/PopupNew/p5.gif*/;
+        }
+        else {
+            _("PliBID" + id).style.backgroundColor = '#f44d09';
+            //_("PliBID" + id).style.borderLeft = '1px solid #f44d09';
+            _("pliImgID" + id).src = '../content/homepage/NewIndex/PopupNew/p5.gif'/*tpa=http://www.shoudurc.com/content/homepage/NewIndex/PopupNew/p5.gif*/;
+        }
+    },
+    LiOut: function (id) {
+        if (location.pathname.indexOf("/Company") == 0) {
+            _("PliBID" + id).style.backgroundColor = '#fff';
+            //_("PliBID" + id).style.borderLeft = '1px solid #d2d2d2';
+            _("pliImgID" + id).src = '../content/homepage/NewIndex/PopupNew/p6-1.gif'/*tpa=http://www.shoudurc.com/content/homepage/NewIndex/PopupNew/p6.gif*/;
+        }
+        else {
+            _("PliBID" + id).style.backgroundColor = '#fff';
+            //_("PliBID" + id).style.borderLeft = '1px solid #d2d2d2';
+            _("pliImgID" + id).src = '../content/homepage/NewIndex/PopupNew/p6-1.gif'/*tpa=http://www.shoudurc.com/content/homepage/NewIndex/PopupNew/p6.gif*/;
+        }
+    },
+    scb: function (objId, aId, aNa) {
+        if (_(objId + "ProvisionalData").value.length == 0) {
+            _(objId + "Selected").innerHTML = '';
+            _(objId + "ProvisionalData").name = '';
+            BodyClass.changeChecked(objId);
+            return;
+        }
+
+        var arr = _(objId + "ProvisionalData").value.split(' ');
+        var sn = '';
+        var regname = '';
+        var sns = ''
+        for (var i = 0; i < arr.length; i++) {
+            if (i > 0) {
+                sn += ' ';
+            }
+            if (document.getElementById("liReg" + arr[i].substr(0, 2)))
+                document.getElementById("liReg" + arr[i].substr(0, 2)).style.color = "#" + BodyClass.CheckColor();
+            if (document.getElementById("liRegHot" + arr[i].substr(0, 2)))
+                document.getElementById("liRegHot" + arr[i].substr(0, 2)).style.color = "#" + BodyClass.CheckColor();
+            if (document.getElementById("Li" + arr[i].substr(0, 4)))
+                document.getElementById("Li" + arr[i].substr(0, 4)).style.color = "#" + BodyClass.CheckColor()
+
+            regname = BodyClass.seekValueId(arr[i], aId, aNa);
+            if (arr[i].length == 2 && aId.indexOf("Job") > 0) {
+                regname = "全部" + regname;
+            }
+            if (location.pathname.indexOf("/Company") == 0) {
+                sns += '<li id="pli' + arr[i] + '"  onMouseOver="this.style.borderColor=\'#' + BodyClass.CheckColor() + '\'" onMouseOut="this.style.borderColor=\'#d2d2d2\'"  ><input onclick="this.checked=!this.checked;" type=\'checkbox\' value=\'' + arr[i] + '\' checked=\'checked\' /><i>' + regname + '</i><b id="PliBID' + arr[i] + '" onMouseOver="BodyClass.LiMove(\'' + arr[i] + '\'); " onMouseOut="BodyClass.LiOut(\'' + arr[i] + '\'); "  onclick="BodyClass.getThisValue(_(\'pli' + arr[i] + '\'),\'' + objId + '\', \'' + aId + '\', \'' + aNa + '\')"  ><img  id="pliImgID' + arr[i] + '"  src="../content/homepage/NewIndex/PopupNew/p6-1.gif"/*tpa=http://www.shoudurc.com/content/homepage/NewIndex/PopupNew/p6.gif*/ ></b></li>';
+            }
+            else
+                sns += '<li id="pli' + arr[i] + '"  onMouseOver="this.style.borderColor=\'#' + BodyClass.CheckColor() + '\'" onMouseOut="this.style.borderColor=\'#d2d2d2\'"  ><input onclick="this.checked=!this.checked;" type=\'checkbox\' value=\'' + arr[i] + '\' checked=\'checked\' /><i>' + regname + '</i><b id="PliBID' + arr[i] + '" onMouseOver="BodyClass.LiMove(\'' + arr[i] + '\'); " onMouseOut="BodyClass.LiOut(\'' + arr[i] + '\'); "  onclick="BodyClass.getThisValue(_(\'pli' + arr[i] + '\'),\'' + objId + '\', \'' + aId + '\', \'' + aNa + '\')"  ><img  id="pliImgID' + arr[i] + '"  src="../content/homepage/NewIndex/PopupNew/p6-1.gif"/*tpa=http://www.shoudurc.com/content/homepage/NewIndex/PopupNew/p6.gif*/ ></b></li>';
+            sn += regname;
+        }
+        if (objId.indexOf("dcRegion") > -1 || objId.indexOf("Place") > -1)
+            sns = '<ul class="ThisLiInputRegion">' + sns + '</ul>';
+        else
+            sns = '<ul class="ThisLiInput">' + sns + '</ul>';
+        _(objId + "Selected").innerHTML = sns;
+        _(objId + "ProvisionalData").name = sn;
+        BodyClass.changeChecked(objId);
+        if (popup.isFilter == 1) {
+            _('msg1_filter').style.width = _('msg1').offsetWidth + 10 + 'px';
+            _('msg1_filter').style.height = _('msg1').offsetHeight + 10 + 'px';
+            _('msg1_filter').style.left = _('msg1').offsetLeft - 5 + 'px';
+            _('msg1_filter').style.top = _('msg1').offsetTop - 5 + 'px';
+        }
+    },
+    changeChecked: function (objId) {
+        var arr = _(objId + "ProvisionalData").value.split(' ');
+        var _inputs = _("SelectedDiv").getElementsByTagName("input");
+        for (var i = 0; i < _inputs.length; i++) {
+            var obj = _inputs[i];
+            obj.checked = false;
+            for (var j = 0; j < arr.length; j++) {
+                if (obj.name == arr[j]) {
+                    obj.checked = true;
+                    obj.parentNode.style.color = "#" + BodyClass.CheckColor();
+                }
+                else {
+                    if (!obj.checked) {
+                        if (objId.toLowerCase().indexOf("region") == -1 && objId.toLowerCase().indexOf("jobplace") == -1) {
+                            obj.parentNode.style.color = "#1c4dcd";
+                        }
+                        else {
+                            obj.parentNode.style.color = "#000";
+                        }
+                    }
+                }
+            }
+        }
+
+        if (_("NavDiv")) {
+            _inputs = _("NavDiv").getElementsByTagName("input");
+            for (var i = 0; i < _inputs.length; i++) {
+                var obj = _inputs[i];
+                obj.checked = false;
+                for (var j = 0; j < arr.length; j++) {
+                    if (obj.name == arr[j]) {
+                        obj.checked = true;
+                    }
+                }
+            }
+        }
+
+        if (_("popDivSearch")) {
+            var _inputs = _("popDivSearch").getElementsByTagName("input");
+            for (var i = 0; i < _inputs.length; i++) {
+                var obj = _inputs[i];
+                obj.checked = false;
+                for (var j = 0; j < arr.length; j++) {
+                    if (obj.name == arr[j]) {
+                        obj.checked = true;
+                        obj.parentNode.style.color = "#" + BodyClass.CheckColor();
+                    }
+                    else {
+                        if (!obj.checked) {
+                            if (objId.toLowerCase().indexOf("region") == -1 && objId.toLowerCase().indexOf("jobplace") == -1) {
+                                obj.parentNode.style.color = "#1c4dcd";
+                            }
+                            else {
+                                obj.parentNode.style.color = "#000";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (objId.toLowerCase().indexOf("region") > -1 || objId.toLowerCase() == "jobplace") {
+            var arrRegionLi = _("showSelectedLi").getElementsByTagName("li");
+            for (var j = 0; j < arrRegionLi.length; j++) {
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i].indexOf(arrRegionLi[j].id.substr(2)) == 0 && arrRegionLi[j].id.substr(2).length > 2) {
+                        arrRegionLi[j].style.color = "#" + BodyClass.CheckColor();
+                        break;
+                    }
+                    else
+                        arrRegionLi[j].style.color = "#000";
+                }
+            }
+        }
+        if (objId.toLowerCase().indexOf("jobtype") > -1) {
+            var arrJobTypeLi = _("msg1").getElementsByTagName("li");
+            for (var j = 0; j < arrJobTypeLi.length; j++) {
+                if (arrJobTypeLi[j].getAttribute("name")) {
+                    for (var i = 0; i < arr.length; i++) {
+
+                        if (arr[i].indexOf(arrJobTypeLi[j].getAttribute("name")) == 0) {
+                            if (arr[i] == arrJobTypeLi[j].getAttribute("name")) {
+                                var thisCheckbox = arrJobTypeLi[j].getElementsByTagName("input")[0];
+                                thisCheckbox.checked = true;
+                            }
+                            arrJobTypeLi[j].style.color = "#" + BodyClass.CheckColor();
+                            break;
+                        }
+                        else
+                            arrJobTypeLi[j].style.color = "#1c4dcd";
+                    }
+                }
+            }
+        }
+    },
+    seekValueId: function (regid, aId, aNa) {
+        if (regid.length <= 2 || aId.indexOf("Industry") > -1) {
+            var _aId = eval(aId);
+            var _aNa = eval(aNa);
+            if (aNa.toLowerCase().indexOf("region") >= 0) {
+                _aId = region1id;
+                _aNa = region1;
+            } else if (aNa.toLowerCase().indexOf("job") >= 0) {
+                _aId = jsJobTypeL1ID;
+                _aNa = jsJobTypeL1;
+            }
+            for (var i = 0; i < _aId.length; i++) {
+                if (_aId[i] == regid)
+                    return _aNa[i];
+            }
+        }
+        if (regid.length == 4) {
+            if (aNa.toLowerCase().indexOf("region") >= 0) {
+                subaId = region2id;
+                subaNa = region2;
+            }
+            else {
+                subaId = jsJobTypeL2ID;
+                subaNa = jsJobTypeL2;
+            }
+            for (var i = 0; i < subaId.length; i++) {
+                if (subaId[i] != null) {
+                    for (var j = 0; j < subaId[i].length; j++) {
+                        if (subaId[i][j] == regid)
+                            return subaNa[i][j];
+                    }
+                }
+            }
+        }
+        if (regid.length == 6) {
+            for (var i = 0; i < region3id.length; i++) {
+                if (region3id[i] != null) {
+                    for (var j = 0; j < region3id[i].length; j++) {
+                        if (region3id[i][j] == regid)
+                            return region3[i][j];
+                    }
+                }
+            }
+        }
+        return '';
+    },
+    cancelEvent: function (e) {
+        if (e && e.stopPropagation)
+            e.stopPropagation();
+        else
+            window.event.cancelBubble = true;
+        return false;
+    },
+    btnOK_OnClick: function (objId) {
+        var _hiddenId = "id" + objId;
+        var _buttonId = "txt" + objId;
+        _(_hiddenId).value = _(objId + "ProvisionalData").value;
+        var IsChinese = false;
+        var arrCheck = _(objId + "ProvisionalData").name.split("");
+        for (var i = 0; i < arrCheck.length; i++) {
+            regValidator = /^[\u4E00-\u9FFF]+$/;
+            if (regValidator.exec(arrCheck[i])) {
+                IsChinese = true;
+                break;
+            }
+        }
+        var num = 26;
+        if (BodyClass.isShortSelect == 1) {
+            num = 15;
+        }
+        if (BodyClass.isShortSelect == 2) {
+            num = 18;
+        }
+        if (BodyClass.isShortSelect == 3) {
+            num = 12;
+        }
+        if (BodyClass.isShortSelect == 4) {
+            num = 16;
+        }
+        if (objId == "dcRegionID") {
+            num = 7;
+        }
+        if (IsChinese) {
+            if (_(objId + "ProvisionalData").name.length > num) {
+                _(_buttonId).value = _(objId + "ProvisionalData").name.substr(0, num - 1) + "...";
+            }
+            else {
+                _(_buttonId).value = _(objId + "ProvisionalData").name;
+            }
+        }
+        else {
+            if (_(objId + "ProvisionalData").name.length > 48) {
+                _(_buttonId).value = _(objId + "ProvisionalData").name.substr(0, 48) + "...";
+            }
+            else {
+                _(_buttonId).value = _(objId + "ProvisionalData").name;
+            }
+        }
+        if (_(_buttonId).value.length == 0) {
+            _(_buttonId).value = "请选择";
+        }
+        if (_(_buttonId).tagName.toLowerCase() == "div") {
+            _(_buttonId).setAttribute("pValue", (_(objId + "ProvisionalData").name.length == 0 ? "请选择" : _(objId + "ProvisionalData").name));
+        }
+        BodyClass.SaveLast(_buttonId);
+    },
+
+    getHiddenFormsData: function (objId, aId, aNa) {
+        var _hiddenId = "id" + objId;
+        if (_(objId + "ProvisionalData")) {
+            _(objId + "ProvisionalData").value = _(_hiddenId).value;
+            BodyClass.scb(objId, aId, aNa);
+        }
+        else if (_(_hiddenId).value.length > 0) {
+            $(".NDivCl1 li").filter("[idvalue='" + _(_hiddenId).value + "']").css("color", "#fc7f33");
+        }
+    },
+    getThisValue: function (chk, objId, aId, aNa) {
+        var removeid = chk.getElementsByTagName("input")[0].value;
+        BodyClass.removeCheckbox(removeid, objId, aId, aNa);
+    },
+    removeCheckbox: function (removeId, objId, aId, aNa) {
+        var removeData = _(objId + "ProvisionalData").value;
+        removeData = " " + removeData;
+        removeData = removeData.replace(' ' + removeId, '');
+        if (removeData == removeId) {
+            removeData = '';
+        }
+        if (removeData.substring(0, 1) == " ") {
+            removeData = removeData.substring(1);
+        }
+        var arr = removeData.split(' ')
+        var i = 0, has = 0;
+        for (i = 0; i < arr.length; i++) {
+            if (arr[i].substring(0, 2) == removeId.substring(0, 2)) {
+                has = 1;
+                break;
+            }
+        }
+        if (has == 0) {
+            if (aId.indexOf("JobType") > -1) {
+                for (i = 0; i < jsJobTypeL1ID.length; i++) {
+                    if (jsJobTypeL1ID[i] == removeId.substring(0, 2)) {
+                        _(objId + i).getElementsByTagName("input")[0].checked = false;
+                        _(objId + i).style.color = "#1c4dcd";
+                        break;
+                    }
+                }
+            }
+            if (aId.toLowerCase().indexOf("region") > -1) {
+                for (i = 0; i < region1id.length; i++) {
+                    if (region1id[i] == removeId.substring(0, 2)) {
+                        if (document.getElementById("liReg" + region1id[i]))
+                            document.getElementById("liReg" + region1id[i]).style.color = "#000";
+                        if (document.getElementById("liRegHot" + region1id[i]))
+                            document.getElementById("liRegHot" + region1id[i]).style.color = "#000";
+                        break;
+                    }
+                }
+            }
+        }
+        _(objId + "ProvisionalData").value = removeData;
+        BodyClass.scb(objId, aId, aNa);
+    },
+    emptyData: function (objId, aId, aNa) {
+        var arr = _(objId + "ProvisionalData").value.split(' ');
+        var i = 0, has = 0;
+        for (i = 0; i < arr.length; i++) {
+            if (objId.indexOf("JobType") > -1) {
+                for (var j = 0; j < jsJobTypeL1ID.length; j++) {
+                    if (arr[i]) {
+                        if (jsJobTypeL1ID[j] == arr[i].substring(0, 2)) {
+                            _(objId + j).getElementsByTagName("input")[0].checked = false;
+                            _(objId + j).style.color = "#1c4dcd";
+                            var arrChk = _(objId + j).getElementsByTagName("input");
+                            for (var m = 0; m < arrChk.length; m++) {
+                                if (arrChk[m].type == "checkbox") {
+                                    arrChk[m].checked = false;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            if (objId.toLowerCase().indexOf("region") > -1 || objId.toLowerCase() == "jobplace") {
+                for (var j = 0; j < region1id.length; j++) {
+                    if (region1id[j] == arr[i].substring(0, 2)) {
+                        if (document.getElementById("liReg" + region1id[j]))
+                            document.getElementById("liReg" + region1id[j]).style.color = "#000";
+                        if (document.getElementById("liRegHot" + region1id[j]))
+                            document.getElementById("liRegHot" + region1id[j]).style.color = "#000";
+
+                        break;
+                    }
+                }
+            }
+        }
+        _(objId + "ProvisionalData").value = '';
+        BodyClass.scb(objId, aId, aNa);
+    },
+    MutiHeadHtml: function (objId, type) {
+        var bh = '';
+        bh += '<div class="DivShowBT"';
+        if (type) {
+            bh += ' style="border-bottom:none"';
+        }
+        bh += '><div style="float:left;width:52px;color:#000;padding-top:5px">已选择：</div><div id="' + objId + 'Selected" style="width:' + (popup.W - 200) + 'px;float:left; margin-bottom:4px" class="chkList"></div><div style="float:right; margin-top:-5px; margin-right:5px"><span><input type="button" class="btnTopClear" value="清空" onClick="BodyClass.emptyData(\'' + objId + '\');" /><input type="button" class="btnTopOk" value="确 定" onClick="BodyClass.btnOK_OnClick(\'' + objId + '\' );" /></span></div><div style="clear:both;"></div></div>';
+        return bh;
+    },
+    SaveLast: function (buttonId) {
+        popup.ibClose();
+        if (_(buttonId).className) {
+            var ThisInClass = _(buttonId);
+            ThisInClass.className = ThisInClass.className.replace("N", "").replace(" Required", "");
+        }
+        if (BodyClass.strExec == "jobregion") {
+            BodyClass.strExec = "";
+        }
+        if (BodyClass.strExec != "") {
+            eval(BodyClass.strExec);
+            BodyClass.strExec = "";
+        }
+    },
+    HideSub: function (ae, handler) {
+        var e = window.event || ae;
+        var s = e.toElement || e.relatedTarget;
+        if (document.all) {
+            if (!handler.contains(s)) {
+                BodyClass.hideSub();
+            }
+        }
+        else {
+            var res = handler.compareDocumentPosition(s);
+            if (!(res == 20 || res == 0)) {
+                BodyClass.hideSub();
+            }
+        }
+    }
+}
+function _(id) { return document.getElementById(id); }
+function PopupSelect(classSelect, obj, popupW, HeaderTitle, strExec, MultiNumber, isShortSelect) {
+    popup.clearData()
+    popup.drag = 1;
+    popup.mask = 0;
+    popup.isMessageTip = 1;
+    popup.H = 1;
+    popup.W = popupW;
+    popup.Overstep = 0;
+    popup.dockObj = obj;
+    if (!HeaderTitle) {
+        popup.headerTitle = "";
+        popup.isHeader = 0;
+    } else {
+        popup.headerTitle = HeaderTitle;
+        popup.isHeader = 1;
+    }
+    if (HeaderTitle) {
+        if (HeaderTitle.indexOf("双击选择") > -1) {
+            popup.dockTop = -190;
+        }
+        popup.dockLeft = -50;
+    }
+    BodyClass.objId = obj.id.replace("txt", "");
+    BodyClass.MultiNumber = MultiNumber ? MultiNumber : 5;
+    BodyClass.isShortSelect = isShortSelect ? isShortSelect : 0;
+    BodyClass.strExec = strExec ? strExec : "";
+    var ClassSelect = classSelect;
+    if (ClassSelect._arrID.toLowerCase().indexOf("major") > -1) {
+        popup.W = 740;
+        popup.headerTitle = "请选择所学专业";
+        popup.headerTitle += '<span style="margin-left:20px" onmousedown="BodyClass.cancelEvent();"><input type="text" class="search" onfocus="JobTypeSelect.textBoxFocus(this,\'快速查找...\')" value="快速查找..." onblur="JobTypeSelect.textBoxBlur(this,\'快速查找...\');" onkeyup="MajorSelect.GetSearchItems(this)" id="txtJobTypeKeyword" /></span><br /><div class="JobTypeSearch" id="popDivSearch"></div>';
+        popup.isHeader = 1;
+    }
+    if (ClassSelect._arrID.toLowerCase().indexOf("jobtype") > -1 || ClassSelect._arrID.toLowerCase().indexOf("industry") > -1) {
+        popup.isMessageTip = 0;
+        popup.W = 758;
+        if (ClassSelect._arrID.toLowerCase().indexOf("industry") > -1) {
+			popup.drag = 0;
+            popup.W = 770;
+            if (popup.headerTitle == "请选择现从事行业") {
+                popup.headerTitle += '<span style="margin-left:35px" onmousedown="BodyClass.cancelEvent();"><input type="text" class="search" onfocus="IndustrySelect.textBoxFocus(this,\'快速查找...\')" value="快速查找..." onblur="IndustrySelect.textBoxBlur(this,\'快速查找...\');" onkeyup="IndustrySelect.GetSearchItems(this)" id="txtJobTypeKeyword" /></span><br /><div class="JobTypeSearch" id="popDivSearch"></div>';
+            } else {
+            popup.headerTitle += '<span style="margin-left:20px" onmousedown="BodyClass.cancelEvent();"><input type="text" class="search" onfocus="IndustrySelect.textBoxFocus(this,\'快速查找...\')" value="快速查找..." onblur="IndustrySelect.textBoxBlur(this,\'快速查找...\');" onkeyup="IndustrySelect.GetSearchItems(this)" id="txtJobTypeKeyword" /></span><br /><div class="JobTypeSearch" id="popDivSearch"></div>';
+            }
+            popup.isHeader = 1;
+        }
+        popup.mask = 2;
+        if (ClassSelect._arrID.toLowerCase().indexOf("industry") > -1) {
+            if (popup.headerTitle.length == 0) {
+                popup.headerTitle = "请选择行业类别";
+                popup.isHeader = 1;
+            }
+        }
+        else {
+            popup.headerTitle = "请选择职位类别";
+            popup.headerTitle += '<span style="margin-left:20px" onmousedown="BodyClass.cancelEvent();"><input type="text" class="search" onfocus="JobTypeSelect.textBoxFocus(this,\'快速查找...\')" value="快速查找..." onblur="JobTypeSelect.textBoxBlur(this,\'快速查找...\');" onkeyup="JobTypeSelect.GetSearchItems(this)" id="txtJobTypeKeyword" /></span><br /><div class="JobTypeSearch" id="popDivSearch"></div>';
+            popup.isHeader = 1;
+        }
+    }
+    else if (ClassSelect._arrID.toLowerCase().indexOf("region") > -1) {
+        popup.isMessageTip = 0;
+        popup.mask = 2;
+        if (ClassSelect._RegionMulti == "1") {
+            popup.W = 680;
+        }
+        else {
+        }
+    }
+    else if (ClassSelect._arrID.toLowerCase().indexOf("major") > -1) {
+        popup.isMessageTip = 0;
+        popup.mask = 2;
+    }
+    popup.bodyHtml = ClassSelect.GenBodyHtml();
+    popup.creatDiv();
+    BodyClass.getHiddenFormsData(BodyClass.objId, ClassSelect._arrID, ClassSelect._aNa);
+    if (document.getElementById("msg1").scrollWidth > document.getElementById("msg1").style.width.replace('px', ''))
+        document.getElementById("msg1").style.width = (document.getElementById("msg1").scrollWidth + 3) + 'px';
+}

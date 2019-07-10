@@ -1,0 +1,134 @@
+window.onload = function () { SetSelect(); }
+function ChangeColor(row) {
+    var oldclass = document.getElementById('trTitle' + row).className.replace('trHover', '').replace(' trHover', '');
+    var newclass = oldclass ? oldclass + ' trHover' : 'trHover';
+    document.getElementById('trTitle' + row).className = newclass;
+    document.getElementById('trTitle' + row).onmouseout = function () { this.className = oldclass; if (document.getElementById('trDetail' + row)) document.getElementById('trDetail' + row).className = oldclass; }
+    if (document.getElementById('trDetail' + row)) {
+        document.getElementById('trDetail' + row).className = newclass;
+        document.getElementById('trDetail' + row).onmouseout = function () { this.className = oldclass; document.getElementById('trTitle' + row).className = oldclass; }
+    }
+}
+function CheckAll(obj) {
+    var _cb = document.getElementsByName("chkChecked");
+    if (obj.checked)
+        for (i = 0; i < _cb.length; i++) {
+            if (!_cb[i].disabled)
+                _cb[i].checked = true;
+        }
+    else
+        for (i = 0; i < _cb.length; i++) {
+            if (!_cb[i].disabled)
+                _cb[i].checked = false;
+        }
+}
+function Goto(key, obj) {
+    var url = document.location.toString();
+    var param = URL_Request(url, key);
+    if (key == "pid") {
+        var oldParam = URL_Request(url, "placeid");
+        if (oldParam != "") {
+            url = url.replace("placeid=" + oldParam, "");
+            url = url.replace("&", "");
+        }
+    }
+    if (url.indexOf("page=") > 0)
+        url = url.replace("page=" + URL_Request(url, "page"), "page=1");
+    if (obj) {
+        if (param) {
+            if (obj.value == 0) {
+                window.location.href = RemoveParam(url, key, param)
+            }
+            else
+                window.location.href = url.replace(key + "=" + param, key + "=" + escape(obj.value));
+        }
+        else if (url.indexOf("?") > 0) {
+            if (key == "pid") {
+                window.location.href = url + "" + key + "=" + obj.value;
+            } else {
+                window.location.href = url + "&" + key + "=" + escape(obj.value);
+            }
+        }
+        else
+            window.location.href = url + "?" + key + "=" + escape(obj.value);
+    }
+    else {
+        var tmpParam;
+        if (key != "age") {
+            tmpParam = URL_Request(url, "age");
+            url = RemoveParam(url, "age", tmpParam);
+        }
+        if (key != "exp") {
+            tmpParam = URL_Request(url, "exp");
+            url = RemoveParam(url, "exp", tmpParam);
+        }
+        if (key != "adddate") {
+            tmpParam = URL_Request(url, "adddate");
+            url = RemoveParam(url, "adddate", tmpParam);
+        }
+        if (key != "salary") {
+            tmpParam = URL_Request(url, "salary");
+            url = RemoveParam(url, "salary", tmpParam);
+        }
+
+        if (param) {
+            var newparam = param == 1 ? 0 : 1;
+            window.location.href = url.replace(key + "=" + param, key + "=" + newparam);
+        }
+        else if (url.indexOf("?") > 0) {
+            if (key == "adddate" && !(document.location.toString().indexOf("&salary") < 0 && document.location.toString().indexOf("?salary") < 0 && document.location.toString().indexOf("&age") < 0 && document.location.toString().indexOf("?age") < 0 && document.location.toString().indexOf("adddate") < 0 && document.location.toString().indexOf("&exp") < 0 && document.location.toString().indexOf("?exp") < 0)) window.location.href = url + "&" + key + "=0"
+            else window.location.href = url + "&" + key + "=1";
+        }
+        else {
+            if (key == "adddate" && !(document.location.toString().indexOf("&salary") < 0 && document.location.toString().indexOf("?salary") < 0 && document.location.toString().indexOf("&age") < 0 && document.location.toString().indexOf("?age") < 0 && document.location.toString().indexOf("adddate") < 0 && document.location.toString().indexOf("&exp") < 0 && document.location.toString().indexOf("?exp") < 0)) window.location.href = url + "?" + key + "=0"
+            else window.location.href = url + "?" + key + "=1";
+        }
+    }
+}
+
+function URL_Request(strHref, strName) {
+    var intPos = strHref.indexOf("?");
+    var strRight = strHref.substr(intPos + 1);
+    var arrTmp = strRight.split("&");
+    for (var i = 0; i < arrTmp.length; i++) {
+        var dIntPos = arrTmp[i].indexOf("=");
+        var paraName = arrTmp[i].substr(0, dIntPos);
+        var paraData = arrTmp[i].substr(dIntPos + 1);
+        if (paraName.toUpperCase() == strName.toUpperCase())
+            return paraData;
+    }
+    return "";
+}
+function RemoveParam(url, key, param) {
+    if (url.indexOf("?") < 1) return url; var arr = url.split("?")[1].split("&");
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i].indexOf(key) == 0) {
+            if (i == 0)
+                url = url.replace(key + "=" + param + "&", "").replace("?" + key + "=" + param, "");
+            else
+                url = url.replace("&" + key + "=" + param, "");
+        }
+    }
+    return url;
+}
+function SetSelect() {
+    var _select = document.getElementsByTagName("select");
+    var url = document.location.toString();
+    for (var i = 0; i < _select.length; i++) {
+        var key = _select[i].getAttribute("id");
+        if (!key) continue;
+        if (key.indexOf("list") == -1) continue;
+        key = key.replace("list", "");
+        param = URL_Request(url, key);
+        for (var j = 0; j < _select[i].options.length; j++) {
+            if (_select[i].options[j].value == param) {
+                _select[i].options[j].selected = "true";
+                continue;
+            }
+        }
+    }
+}
+function cancelBubble(e) {
+    if (e.stopPropagation) e.stopPropagation();
+    else e.cancelBubble = true;
+}

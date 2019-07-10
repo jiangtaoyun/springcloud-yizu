@@ -1,0 +1,13 @@
+.CheckBox {background: url("../Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat; width:16px; height:16px; border:none; cursor:pointer; vertical-align:middle;}
+.CheckBox.No{ background-position:0px -266px;}
+.CheckBox.No:hover{ background-position:0px -225px;}
+.CheckBox.Yes{ background-position:0px -185px}
+.CheckBox.UnAble{ background-position:0px -307px; cursor:auto;}
+
+.RadioButton{background: url("../Images/ico_pub.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub.png*/ no-repeat 0px -1951px; width:14px; height:14px; border:none; cursor:pointer; vertical-align:middle; margin-right:3px;}
+.RadioButton.Yes{ background-position:-1px -1994px; cursor:auto;}
+#msg2closeBtn{cursor:pointer;background: url("../../Homepage/images/Popupbg-2.png")/*tpa=http://www.shoudurc.com/content/Homepage/images/Popupbg.png*/ no-repeat 8px -40px;float:right;margin-right:10px;width:20px; height:19px;margin-top: 7p x;}
+
+.ContentRight{padding:10px 30px;}
+.ContentRight .CvMainPart h1 div { width: 465px;}
+.ContentRight .btnConfirm{ margin-top:10px; width:120px; height:35px; background:#FF7A4D;border:none; cursor:pointer;color:#FFF; font-size:14px; font-family:"微软雅黑"; border-radius:4px; line-height:35px; margin-left:157px;}

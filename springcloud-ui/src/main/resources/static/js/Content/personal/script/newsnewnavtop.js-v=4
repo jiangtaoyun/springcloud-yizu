@@ -1,0 +1,213 @@
+lastScrollY = 0;
+function heartBeat() {
+    var diffY, percent = 0;
+    if (document.documentElement && document.documentElement.scrollTop) diffY = document.documentElement.scrollTop;
+    else if (document.body) diffY = document.body.scrollTop;
+    percent = 0.1 * (diffY - lastScrollY);
+    if (percent > 0) percent = Math.ceil(percent);
+    else percent = Math.floor(percent);
+    _("goTopBtn").style.top = parseInt(_("goTopBtn").style.top) + percent + "px";
+    lastScrollY = lastScrollY + percent;
+}
+function goTopEx() {
+    var obj = document.getElementById("goTopBtn");
+    function getScrollTop() {
+        return Math.max($(document).scrollTop(), document.body.scrollTop);
+    }
+    window.onscroll = function () {
+        getScrollTop() > 0 ? obj.style.display = "" : obj.style.display = "none";
+    }
+    if (window.ActiveXObject) {
+        var ua = navigator.userAgent.toLowerCase();
+        var ie = ua.match(/msie ([\d.]+)/)[1]
+        if (ie == 6.0) {
+            window.setInterval("heartBeat()", 1);
+        }
+    }
+}
+goTopEx();
+function changeLocation(moveHeight) {
+    var t = document.documentElement.scrollTop || document.body.scrollTop;
+    $("#msg1").css({
+        "top": t + moveHeight + "px"
+    });
+}
+
+function Init() {
+    shareRightPop.arrShare = [1, 2, 3, 4, 5, 6, 7, 8];
+    shareRightPop.showType = 2;
+    shareRightPop.dockObj = document.getElementById("fxMainRight");
+    shareRightPop.className = "fxRight";
+    shareRightPop.showText = 1;
+    shareRight.subsiteID = subsiteID;
+    //重新生成Url信息
+    var myDate = new Date();
+    var paraAnd = "&";
+    if (window.location.href.indexOf("?") < 0) {
+        paraAnd = "?";
+    }
+    shareRight.erweima += paraAnd + "fxid=" + myDate.getYear() + "" + myDate.getMonth() + "" + myDate.getDate() + "" + myDate.getHours() + "" + myDate.getMinutes() + "" + myDate.getSeconds() + "" + myDate.getMilliseconds();
+    shareRightPop.Show();
+}
+
+if (window.attachEvent) {
+    window.attachEvent("onload", Init);
+} else if (window.addEventListener) {
+    window.addEventListener("load", Init, false);
+}
+$(function () {
+    $(".templateblock").mouseenter(function () {
+        $(".templateblock").children(".divmask").css("display", "none");
+        $(this).children(".divmask").css("display", "block");
+    }).mouseleave(function () { $(".templateblock").children(".divmask").css("display", "none"); });
+    $(".btndown").mouseenter(function () { $(this).addClass("overtext") }).mouseleave(function () { $(this).removeClass("overtext") });
+    $(".btnview").mouseenter(function () { $(this).addClass("overtext") }).mouseleave(function () { $(this).removeClass("overtext") });
+    if (location.href.indexOf("docid") > -1 && location.href.indexOf("cvid")==-1) {
+        $(".dwncnt")[0].click();
+    }
+});
+function showRegisterSuccess(cvid, docid) {
+    var str = '<div style="position:relative;padding:8px;"><img style="right:0px;position: absolute;margin-top: 9px;margin-right: 20px;cursor: pointer;" onclick="popup.ibClose()" src="../../homepage/NewIndex/PopupNew/p6-1.gif"/*tpa=http://www.shoudurc.com/content/homepage/NewIndex/PopupNew/p6.gif*/></div>';
+    str += '  <div style="width: 420px; margin: 0 auto;">';
+    str += '  <div style="padding:16px 0px;line-height:25px;text-align: center;font-size: 22px;font-weight: bold;color:#FF7A4D;position:relative;"><div class="downok"></div>恭喜您！可以下载模板啦</div>';
+    str += '<p style="text-align:left;padding-top: 16px;line-height:25px;font-weight:bold;color:#000;">下载后，您在本站填写的简历信息，会自动嵌套显示在您下载的word文档里。</p>';
+    str += '<p style="text-align:left;line-height:25px;color:#000;font-weight: bold;">如果感觉简历内容不够完美，可以先<a style="text-decoration:none;color:#FA6D01;" href="http://www.shoudurc.com/personal/cv/DocResume/' + cvid + '">完善简历</a>后再进行下载！</p>';
+    str += '</div>';
+    str += '  <div class="popupfooter" style="padding-top: 35px;margin-bottom:15px;position: relative;width: 280px;margin: 0 auto;height: 50px;">';
+    str += '    <div class="btnGreen" style="float:left;top:auto;" onClick="location.href=\'/personal/cv/DocResume/' + cvid + '\'" >进一步完善简历</div>'
+    str += '<div class="dwncnt" style="float:right;top:auto;" onclick="downloadTemplate(' + docid + ',' + cvid + ')"><span>下载</span></div>'
+    str += '  </div>';
+    popup.clearData();
+    popup.isHeader = 0;
+    popup.isMessageTip = 0;
+    popup.drag = 0;
+    popup.mask = 3;
+    popup.W = 600;
+    popup.H = 260;
+    popup.isFilter = 1;
+    popup.dockObj = "";
+    popup.dockLeft = 0;
+    popup.bodyHtml = str;
+    popup.creatDiv();
+}
+function downloadTemplate(docid, cvid) {
+    var code = $("#code").val();
+    var pamainid = $("#pamainid").val();
+	var provinceId = $("#provinceId").val();
+    window.open('http://www.51rc.com/Tools/DownDocTemplate?id=' + docid + '&cvMainId=' + cvid +'&provinceId='+provinceId+'&paMainId=' + pamainid + '&code=' + code + "&ts=" + new Date().format('MMsshhddyyyymm'));
+    popup.ibClose();
+}
+Date.prototype.format = function(format) {
+       var date = {
+              "M+": this.getMonth() + 1,
+              "d+": this.getDate(),
+              "h+": this.getHours(),
+              "m+": this.getMinutes(),
+              "s+": this.getSeconds(),
+              "q+": Math.floor((this.getMonth() + 3) / 3),
+              "S+": this.getMilliseconds()
+       };
+       if (/(y+)/i.test(format)) {
+              format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+       }
+       for (var k in date) {
+              if (new RegExp("(" + k + ")").test(format)) {
+                     format = format.replace(RegExp.$1, RegExp.$1.length == 1
+                            ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
+              }
+       }
+       return format;
+}
+function downloadNoLogin(docid) {
+    RefreshQrImage();
+    logjobpara(docid, 'cvtemplate');
+    $("#tab_Word").hide();
+    $("#divApplyLogin").css("top", $(document).scrollTop() + 69).show();
+    $("#divApplyLogin").css("left", $(document).width() / 2 - 268).show();
+    $("#divApplyLogin_filter").css("top", $(document).scrollTop() + 58).show();
+    $("#divApplyLogin_filter").css("left", $(document).width() / 2 - 278).show();
+    $("#btnApplyLogin").unbind("click").bind("click", function () {
+        var navUrl = "";
+        navUrl = window.location.href;
+        if (navUrl.indexOf("?") > -1) {
+            navUrl = navUrl + "&docid=" + docid
+        } else {
+            navUrl = navUrl + "?docid=" + docid
+        }
+        window.location.href = 'http://www.shoudurc.com/personal/sys/login?urlfile=' + escape(navUrl);
+    });
+}
+function showcantdownload() {
+    var str = '<div style="position:relative;padding:8px;"><img style="right:0px;position: absolute;margin-top: 9px;margin-right: 20px;cursor: pointer;" onclick="popup.ibClose()" src="../../homepage/NewIndex/PopupNew/p6-1.gif"/*tpa=http://www.shoudurc.com/content/homepage/NewIndex/PopupNew/p6.gif*/></div>';
+    str += '  <div style="width: 420px; margin: 0 auto;">';
+    str += '  <p style="padding:16px 0px;line-height:25px;text-align: center;font-size: 16px;font-weight: bold;">下载提示</p>';
+    str += '<p style="text-align:left;padding-top: 16px;line-height:25px;">下载后，您在本站填写的简历信息，会自动嵌套显示在您下载的word文档里。</p>';
+    str += '<p style="text-align:left;line-height:25px;color:#FA6D01;font-weight: bold;">您的简历不完整，请先完善您的简历再进行下载！</p>';
+    str += '</div>';
+    str += '  <p class="popupfooter" style="margin-top:15px;margin-bottom:15px;">';
+    str += '     <input type="button"  value="先看看再说" onClick="popup.ibClose()" class="havealook" />'
+    str += '    <input type="button" class="gotocomplete" onclick="location.href=\'http://www.shoudurc.com/Personal/cvm/cvlist\'" value="去填写简历"/>'
+    str += '  </p>';
+    popup.clearData();
+    popup.isHeader = 0;
+    popup.isMessageTip = 0;
+    popup.drag = 0;
+    popup.mask = 3;
+    popup.W = 600;
+    popup.H = 260;
+    popup.isFilter = 1;
+    popup.dockObj = "";
+    popup.dockLeft = 0;
+    popup.bodyHtml = str;
+    popup.creatDiv();
+}
+function downloadTemplateList(docid, cvstr, code) {
+    var str = '<div style="position:relative;padding:8px;"><img style="right:0px;position: absolute;margin-top: 9px;margin-right: 20px;cursor: pointer;" onclick="popup.ibClose()" src="../../homepage/NewIndex/PopupNew/p6-1.gif"/*tpa=http://www.shoudurc.com/content/homepage/NewIndex/PopupNew/p6.gif*/></div>';
+    str += '  <div style="width:415px; margin: 0 auto;">';
+    str += '  <p style="line-height:60px;text-align: center;font-size: 20px;font-weight: bold;color:#FA6D01">请选择您的一份简历</p>';
+    str += '<p style="text-align:left;line-height:25px;">下载后，您在本站填写的简历信息，会自动嵌套显示在您下载的word文档里。</p>';
+    str += '<p style="text-align:left;line-height:25px;font-weight:bold;color:#000;">您目前有多份简历，请选择您要嵌套的简历</p>';
+    str += '</div>';
+    var tempstr = "";
+    var cvlist = cvstr.split(",");
+    cvlist.sort(function (a, b) { return b.split('|')[2] - a.split('|')[2] });
+    for (var i = 0; i < cvlist.length; i++) {
+        var cv = cvlist[i];
+        var cvarr = cv.split('|');
+        if (cvarr[2] == 1) {
+            tempstr += '<div class="radiocanselect" id="' + cvarr[0] + '">' + cvarr[1] + '</div>';
+        } else {
+            tempstr += '<div class="radiocantselect" id="' + cvarr[0] + '">' + cvarr[1] + '(简历不完善)</div>';
+        }
+    }
+    str += '<div style="width:415px;margin:0 auto;line-height:30px;">' + tempstr + '<div>';
+    str += '  <div class="popupfooter" style="margin-top:15px;margin-bottom:15px;">';
+    str += '<div class="dwncnt" style="top:auto;" onclick="templatelistdown(' + docid + ')"><span>下载</span></div>'
+    str += '  </div>';
+    popup.clearData();
+    popup.isHeader = 0;
+    popup.isMessageTip = 0;
+    popup.drag = 0;
+    popup.mask = 3;
+    popup.W = 585;
+    popup.height = 300;
+    popup.isFilter = 1;
+    popup.dockObj = "";
+    popup.dockLeft = 0;
+    popup.bodyHtml = str;
+    popup.creatDiv();
+    bindclick();
+}
+function templatelistdown(docid) {
+    if ($('.radioselected').length == 0) {
+        ShowNoticeTip("请选择您要嵌套的简历");
+    } else {
+        downloadTemplate(docid, $('.radioselected').attr("id"))
+    }
+}
+function bindclick() {
+    $(".radiocanselect").unbind("click").bind("click", function () {
+        $(".radioselected").attr("class", "radiocanselect");
+        $(this).attr("class", "radioselected");
+    });
+}

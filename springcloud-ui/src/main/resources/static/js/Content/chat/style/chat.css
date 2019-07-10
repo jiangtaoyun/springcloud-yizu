@@ -1,0 +1,87 @@
+.ChatStart{ position:fixed; bottom:0px; right:0px; background:url("../images/bgChatBody.png")/*tpa=http://www.shoudurc.com/content/chat/images/bgChatBody.png*/ -5px -402px; width:148px; height:28px; border:1px solid #CCC; cursor:pointer; z-index:99}
+.ChatStart span{margin-left:35px;float:left;line-height: 30px;}
+.ChatStart.Warning {background-position: -5px -362px;}
+.ChatForm { width:500px; height:420px; border:1px solid #aebec7; background:#FFF; z-index:20; position: fixed; bottom: 0px; right: 0px; display: none;}
+.ChatForm.Active {display: block;}
+.ChatForm .ChatTitle { background:#ebebe7; height:30px}
+.ChatForm .ChatTitle span { float:left; margin-left:10px; margin-top:8px}
+.ChatForm .ChatTitle input { background:url("../images/bgChatBody.png")/*tpa=http://www.shoudurc.com/content/chat/images/bgChatBody.png*/ -70px -305px; width:20px; height:20px; border:0; float:right; margin-right:5px; margin-top:3px; width:20px; height:20px; cursor:pointer; outline: none;}
+.ChatForm .ChatLeft { float:left; width:350px;}
+.ChatForm .ChatLeft .ChatLog { width: 100%; height:250px; display:block; position: relative; overflow: hidden; padding: 5px 0px;overflow-y: scroll;}
+.ChatForm .ChatLeft .ChatLog .Chat {width: 330px;height: 90px; float: left;padding: 0px 10px; margin-bottom: 5px;}
+.ChatForm .ChatLeft .ChatLog .Chat > div {float: left;}
+.ChatForm .ChatLeft .ChatLog .Chat .Photo {width: 35px;height: 35px; cursor: pointer;}
+.ChatForm .ChatLeft .ChatLog .Chat .Photo img {width: 100%; height: 100%;}
+.ChatForm .ChatLeft .ChatLog .Chat .Photo.Offline {-webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: grayscale(100%); filter: gray;}
+
+.ChatForm .ChatLeft .ChatLog .Chat .Message {background: #D7E8F8;border-radius: 3px;line-height: 25px;max-width: 250px;position: relative;padding: 0px 10px;margin: 5px 0 0 10px;}
+.ChatForm .ChatLeft .ChatLog .Chat .Message .ChatWarning {    position: absolute;    width: 255px;background: #DADADA;    padding-left: 13px;    border-radius: 5px;    margin-top: 10px;color: white;    line-height: 20px;    margin-left: -10px;}
+.ChatForm .ChatLeft .ChatLog .Chat .Message .Arrow {width: 10px;height: 10px;position: absolute;left: -10px;top: 5px;background: url("../images/bgChatBody.png")/*tpa=http://www.shoudurc.com/content/chat/images/bgChatBody.png*/ -1px -475px;}
+.ChatForm .ChatLeft .ChatLog .Chat .Message .Interview {text-align: center; font-size: 14px; cursor: pointer;}
+.ChatForm .ChatLeft .ChatLog .Chat .Message .EmotionImg {max-width: 60px; height: auto; float: left;}
+.ChatForm .ChatLeft .ChatLog .Chat .Message .UploadImg {max-width: 220px; height: auto; float: left; margin: 10px 0; cursor: pointer;}
+.ChatForm .ChatLeft .ChatLog .Chat.Sender > div {float: right;}
+.ChatForm .ChatLeft .ChatLog .Chat.Sender .Photo {cursor: default;}
+.ChatForm .ChatLeft .ChatLog .Chat.Sender .Message {background: #F0F0F0;color: #000;margin: 5px 10px 0 0;}
+.ChatForm .ChatLeft .ChatLog .Chat.Sender .Message .ChatWarning{position: absolute; width: 266px; right: 0; background: #DADADA; padding-left: 5px;padding-right: 5px; border-radius: 5px; margin-top: 10px;  color: white; line-height: 20px;}
+.ChatForm .ChatLeft .ChatLog .Chat.Sender .Message .Arrow {right: -10px;left: auto; background: url("../images/bgChatBody.png")/*tpa=http://www.shoudurc.com/content/chat/images/bgChatBody.png*/ -6px -495px;}
+.ChatForm .ChatLeft .ChatLog .Timeline {text-align: center;color: #888888;clear: both;}
+
+.ChatForm .ChatLeft .ChatLog .PaInfo, .ChatForm .ChatLeft .ChatLog .JobInfo {margin: 0 15px;padding: 0 10px;border-radius: 0.1rem;margin-bottom: 10px;width: 290px;float: left;border: 1px solid #EAEAEA;}
+.ChatForm .ChatLeft .ChatLog .PaInfo p {line-height: 20px;}
+.ChatForm .ChatLeft .ChatLog .PaInfo p span {margin: 0 5px;}
+.ChatForm .ChatLeft .ChatLog .PaInfo p:first-child {font-size: 14px;padding-top: 10px;}
+.ChatForm .ChatLeft .ChatLog .PaInfo p:last-child {border-top: 1px solid #EAEAEA;line-height: 30px;margin-top: 5px;}
+.ChatForm .ChatLeft .ChatLog .JobInfo {position: relative;padding-top: 5px;}
+.ChatForm .ChatLeft .ChatLog .JobInfo > div {float: left;}
+.ChatForm .ChatLeft .ChatLog .JobInfo > p {clear: both;width: 100%;display: inline-block;border-top: 1px solid #EAEAEA;margin-top: 0.1rem;line-height: 25px;height: 25px;}
+.ChatForm .ChatLeft .ChatLog .JobInfo .InfoLeft {width: 80%;}
+.ChatForm .ChatLeft .ChatLog .JobInfo .InfoLeft p {line-height: 20px;}
+.ChatForm .ChatLeft .ChatLog .JobInfo .InfoLeft p span {margin: 0 5px;}
+.ChatForm .ChatLeft .ChatLog .JobInfo .InfoLeft p:first-child {font-size: 14px;}
+.ChatForm .ChatLeft .ChatLog .JobInfo .InfoRight {width: 20%;}
+.ChatForm .ChatLeft .ChatLog .JobInfo .InfoRight p {color: red;text-align: right;font-size: 14px;}
+.ChatForm .ChatLeft .ChatLog .JobInfo .InfoRight input {position: absolute;right: 10px;top: 37px;color: #FFF;background: #50BA8C;width: 60px;height: 25px;font-size: 12px;cursor: pointer;border: none;}
+
+.ChatForm .ChatLeft .ChatEdit {width: 100%; height:100px;}
+.ChatForm .ChatLeft .ChatEdit .ChatItem {width: 100%; background:#F5F5F5; height: 30px;}
+.ChatForm .ChatLeft .ChatEdit .ChatItem input {width: 30px;height: 30px;float: left;background: url("../images/bgChatBody.png")/*tpa=http://www.shoudurc.com/content/chat/images/bgChatBody.png*/ 0 -227px;border: none;margin-left: 5px;cursor: pointer; outline: none;}
+.ChatForm .ChatLeft .ChatEdit .ChatItem .Item1 {background-position: 0 -227px;}
+.ChatForm .ChatLeft .ChatEdit .ChatItem .Item2 {background-position: -35px -227px;}
+.ChatForm .ChatLeft .ChatEdit .ChatItem .Item3 {background-position: -67px -227px;}
+.ChatForm .ChatLeft .ChatEdit .ChatItem .Item4 {background-position: -102px -227px;}
+.ChatForm .ChatLeft .ChatEdit .ChatItem .Item5 {background-position: -136px -227px;}
+.ChatForm .ChatLeft .ChatEdit .ChatItem .Item6 {background-position: -169px -227px;}
+.ChatForm .ChatLeft .ChatEdit .ChatItem .Item7 {float: right; cursor: pointer;}
+.ChatForm .ChatLeft .ChatEdit .ChatItem .Item7 input {background-position: -204px -227px;}
+.ChatForm .ChatLeft .ChatEdit .ChatItem .Item7 span {margin-right: 5px; line-height: 30px;}
+.ChatForm .ChatLeft .ChatEdit textarea {width: 346px; height: 66px; border: none; outline: none; padding: 2px; resize: none;}
+.ChatForm .ChatLeft .ChatSend { background:#F5F5F5; height:30px;}
+.ChatForm .ChatLeft .ChatSend .ChatSendButton{ background:url("../images/bgChatBody.png")/*tpa=http://www.shoudurc.com/content/chat/images/bgChatBody.png*/ 0 -297px; width:60px; height:26px; border:0; float:right; margin-top:3px; margin-right:2px;}
+.ChatForm .ChatRight {float: left;width: 149px; height: 360px; border-left: 1px solid #D4D4D4;}
+.ChatForm .ChatRight .ChatUser {line-height: 30px;cursor: pointer;padding-left: 10px;}
+.ChatForm .ChatRight .ChatUser input {background: url("../images/bgChatBody.png")/*tpa=http://www.shoudurc.com/content/chat/images/bgChatBody.png*/ -5px -340px;width: 15px;height: 15px;border: none;padding: 0;vertical-align: middle;}
+.ChatForm .ChatRight .ChatUser span {vertical-align: middle;}
+.ChatForm .ChatRight .ChatUser.Hide input {background-position: -20px -338px;}
+
+.ChatForm .ChatRight .ChatUserList {position: relative; height: 320px; overflow: hidden;}
+.ChatForm .ChatRight .ChatUserList li {list-style: none;height: 25px; line-height: 25px; overflow: hidden;color: #858585;padding-left: 10px;background: #FFF;width: 139px;border-top: 1px solid #FFF;border-bottom: 1px solid #FFF;position: relative;left: -1px; border-left: 1px solid #D4D4D4; text-overflow:ellipsis; white-space: nowrap; cursor: pointer;}
+.ChatForm .ChatRight .ChatUserList li.Selected {border-color: #D4D4D4;z-index: 999; border-left-color: #FFF;}
+.ChatForm .ChatRight .ChatUserList li input {background: url("../images/bgChatBody.png")/*tpa=http://www.shoudurc.com/content/chat/images/bgChatBody.png*/ -26px -269px;width: 15px;height: 15px;vertical-align: middle;border: none;}
+.ChatForm .ChatRight .ChatUserList li.Online input {background: url("../images/bgChatBody.png")/*tpa=http://www.shoudurc.com/content/chat/images/bgChatBody.png*/ -45px -269px;}
+.ChatForm .ChatRight .ChatUserList li span {vertical-align: middle;}
+.ChatForm .ChatRight .ChatUserList li .NoViewed {position: absolute;top: 5px;right: 5px;display: inline-block;width: 15px;height: 15px;color: #FFF;background: red;text-align: center;line-height: 15px;font-size: 10px; vertical-align: middle;}
+
+.ChatPopBg {position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 998;}
+.SelectPop {background: #F0F0F0;width: 380px;height: 103px;border: 1px solid #D6D6D6;position: fixed;right: 120px;bottom: 135px;z-index: 999;}
+.SelectPop li {list-style: none;width: 100%;line-height: 25px;text-align: center;border-bottom: 1px solid #D6D6D6;cursor: pointer;}
+.SelectPop li.Active {background: #FFF;}
+.EmotionPop {background: #F0F0F0;width: 390px;height: 300px;border: 1px solid #D6D6D6;position: fixed;right: 110px;bottom: 135px;z-index: 999;}
+.EmotionPop .EmotionArea {width: 100%;height: 260px;}
+.EmotionPop .EmotionArea div {width: 65px;height: 65px;float: left;}
+.EmotionPop .EmotionArea div img {width: 100%; height: 100%;}
+.EmotionPop .EmotionItem {width: 100%;height: 40px;border-top: 1px solid #D6D6D6;}
+.EmotionPop .EmotionItem div {float: left;width: 60px;height: 40px;border-right: 1px solid #D6D6D6;}
+.EmotionPop .EmotionItem div img {width: 30px;height: 30px;margin-left: 15px;margin-top: 5px;}
+.EmotionPop div.Active {background-color: #FFF;}
+.ico_online{background:url("../images/OnlineSmall.gif")/*tpa=http://www.shoudurc.com/content/chat/images/OnlineSmall.gif*/ no-repeat !important; width:45px !important; height:24px !important; border:0 !important; cursor:pointer !important; margin-top:-4px;}

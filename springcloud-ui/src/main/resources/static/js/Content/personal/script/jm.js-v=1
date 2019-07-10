@@ -1,0 +1,505 @@
+function _(name) { return document.getElementById(name); }
+
+Date.prototype.Format = function (fmt) { //author: meizz 
+  var o = {
+    "M+": this.getMonth() + 1, //月份 
+    "d+": this.getDate(), //日 
+    "h+": this.getHours(), //小时 
+    "m+": this.getMinutes(), //分 
+    "s+": this.getSeconds(), //秒 
+    "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+    "S": this.getMilliseconds() //毫秒 
+  };
+  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+  return fmt;
+}
+
+//页面跳转
+function ApplyReplyRedir(replytype) {
+  if (replytype == "0") {
+    location.href = "http://www.shoudurc.com/Personal/jm/JobApply?reply=";
+  }
+  else {
+    location.href = "http://www.shoudurc.com/Personal/jm/JobApply?reply=" + replytype;
+  }
+}
+
+//申请的职位批量提醒
+function JobApplyBatchNotice() {
+  var ids = GetAllCheckBoxValue();
+  if (ids.length == 0) {
+    alert("请选择您要提醒的职位!!");
+  }
+  else {
+    if (ids) {
+      //ids = ids.substr(0, ids.length - 1);
+      //            if (confirm("您确定要删除选中的申请的职位吗？"))
+      //                window.location.href = "http://www.shoudurc.com/personal/jm/JobApplyDelete?id=" + jobids;
+      $.post("/Personal/jm/AjaxJobApplyNoticeProc", {
+        ID: ids
+      }, function (obj) {
+        var vText = obj;
+        if (vText != "-101") {
+          //成功
+          var array = new Array();
+          array = ids.split(",");
+          var vDate = new Date();
+          var time2 = new Date().Format("MM-dd hh:mm");
+
+          for (i = 0; i < array.length; i++) {
+            if (_("td" + array[i]).innerHTML.indexOf("已经提醒过这个企业了") <= 0) {
+              _("td" + array[i]).innerHTML = "<span class='NoticeYes' title='" + vDate + "'></span><span style='display:none' class='NoticeTxt'>" + time2 + " 已经提醒过这个企业了</span>";
+            }
+          }
+          ShowNoticeTip("提醒成功，请耐心等待...");
+        }
+      });
+    }
+  }
+}
+
+//提醒弹层
+function JobApplyNoticeTip(obj) {
+  var str, objSpan;
+  objSpan = $(obj).parent().find("span:last");
+  $(obj).parent().mouseleave(function () {
+    objSpan.hide();
+  }
+	)
+  objSpan.css('display', 'inline'); ;
+}
+
+
+//申请的职位单个提醒
+function JobApplyNotice(id) {
+  $.post("/Personal/jm/AjaxJobApplyNoticeProc", {
+    ID: id
+  }, function (obj) {
+    var vText = obj;
+    if (vText != "-101") {
+      //成功
+      var vDate = new Date();
+      var time2 = new Date().Format("MM-dd hh:mm");
+      if (_("td" + id).innerHTML.indexOf("已经提醒过这个企业了") <= 0) {
+        _("td" + id).innerHTML = "<span class='NoticeYes' onmouseover='JobApplyNoticeTip(this)'></span><span style='display:none' class='NoticeTxt'>" + time2 + " 已经提醒过这个企业了</span>";
+      }
+      ShowNoticeTip("提醒成功，请耐心等待...");
+    }
+  });
+}
+
+//申请的职位删除还原
+function JobApplyHuanYuan(id) {
+  $.post("/Personal/jm/AjaxJobApplyHuanYuanProc", {
+    ID: id
+  }, function (obj) {
+    var vText = obj;
+    if (vText != "-101") {
+      window.location.reload();
+    }
+  });
+}
+
+
+//申请的职位批量删除
+function JobApplyBatchDelete() {
+  var ids = GetAllCheckBoxValue();
+  if (ids.length == 0) {
+    alert("请选择您要删除的职位!!");
+  }
+  else {
+    //var ids = "";
+    //$("http://www.shoudurc.com/content/personal/script/.tbApply .CheckBox.Yes").each(function () {
+    //    var jobid = $(this).attr("jobid");
+    //    ids = ids + jobid + ",";
+    //})
+    if (ids) {
+      //ids = ids.substr(0, ids.length - 1);
+      if (confirm("您确定要删除选中的职位吗？")) {
+        $.post("/Personal/jm/AjaxJobApplyDelete", {
+          ID: ids
+        }, function (obj) {
+          var vText = obj;
+          if (vText == "-101") {
+            alert("请正确登陆");
+          }
+          else if (vText == "-1") {
+            alert("申请记录不存在");
+          }
+          else if (vText == "-2") {
+            alert("申请记录号为空");
+          }
+          else {
+            window.location.reload();
+          }
+        });
+
+      }
+    }
+  }
+}
+
+//申请的职位批量彻底删除
+function JobApplyHuanYuanDelete() {
+  var ids = GetAllCheckBoxValue();
+
+  if (ids.length == 0) {
+    alert("请选择您要删除的职位!!");
+  }
+  else {
+    if (confirm("您确定要删除选中的职位吗？")) {
+      $.post("/Personal/jm/AjaxJobApplyHuiShouDelete", {
+        ID: ids
+      }, function (obj) {
+        var vText = obj;
+        if (vText == "-101") {
+          alert("请正确登陆");
+        }
+        else if (vText == "-1") {
+          alert("申请记录不存在");
+        }
+        else if (vText == "-2") {
+          alert("申请记录号为空");
+        }
+        else {
+          window.location.reload();
+        }
+      });
+    }
+  }
+}
+
+
+
+//申请的职位单个删除
+function JobApplyDelete(pos) {
+  var id = document.getElementById("ID" + pos).value;
+  if (confirm("您确定要删除该申请的职位吗？"))
+    window.location.href = "http://www.shoudurc.com/personal/jm/JobApplyDelete?id=" + id;
+}
+
+//收藏的职位批量删除
+function FavouriteBatchDelete() {
+  var _cb = document.getElementsByName("chkChecked");
+  var ids = "";
+  ids = GetAllCheckBoxValue();
+  if (ids) {
+    ids = ids.substr(0, ids.length - 1);
+    if (confirm("您确定要删除选中的收藏职位吗？"))
+      window.location.href = "http://www.shoudurc.com/personal/jm/FavouriteDelete?id=" + ids;
+  }
+  else
+    alert("请选择您要删除的收藏职位！")
+}
+//批量申请职位
+function BatchApply(ids, ApplyAlert) {
+  if (ApplyAlert && ApplyAlert != "") {
+    infoboxs("网站消息", 420, 165, "", 25, 0, ApplyAlert, "");
+    return;
+  }
+  if (ids == "idsTemp") {
+    ids = GetAllCheckBoxValue();
+    if (ids) {
+      window.open("/personal/jm/JobApplyBatch?id=" + ids);
+      return;
+    }
+    else {
+      alert("请选择您要申请的职位！")
+      return;
+    }
+  }
+  window.open("/personal/jm/JobApplyBatch?id=" + ids);
+}
+//批量收藏职位
+function BatchFavourite(obj, id) {
+  var _cb = document.getElementsByName("chkChecked");
+  ids = "";
+  if (id > -1) {
+    ids = document.getElementById("JobID" + id).value;
+    $("#lnkFavourite" + id).html("已收藏");
+    $("#lnkFavourite" + id).attr("onclick", "");
+    $("#lnkFavourite" + id).addClass("Yes");
+  }
+  else {
+    for (i = 0; i < _cb.length; i++) {
+      if (_cb[i].checked) {
+        var no = _cb[i].id.substr(10);
+        ids = ids + document.getElementById("JobID" + no).value + ",";
+        $("#lnkFavourite" + no).html("已收藏");
+        $("#lnkFavourite" + no).attr("onclick", "");
+        $("#lnkFavourite" + no).addClass("Yes");
+      }
+    }
+    ids = ids.substr(0, ids.length - 1);
+  }
+  if (ids) {
+    var postStr = "ids=" + ids;
+    var url = "/Personal/js/AjaxJobAttentionBatch";
+    Ajax("POST", url, postStr, ajaxJobAttentionBatchUpdate, false);
+
+  }
+  else
+    alert("请选择职位！");
+}
+
+function ajaxJobAttentionBatchUpdate(obj) {
+  if (obj.responseText == "-101") {
+    ShowNoticeTip("请正确操作");
+  }
+  else {
+    //ShowNoticeTip("关注成功");
+    ShowBindLove();
+  }
+}
+function SaveFavourite(ids, row) {
+  var remark = escape(document.getElementById("txtRemark").value.replace(/(^\s*)|(\s*$)/g, ""));
+  if (remark == "可以填写对该职位的看法，也可以不写...") remark = "";
+  $.get("/personal/js/FavorateInsert?jobs=" + ids + "&remark=" + remark, function (data) {
+    alert(data);
+    popup.ibClose();
+    if (row || row == 0) {
+      $("#lnkFavourite" + row).html("已收藏");
+      $("#lnkFavourite" + row).attr("onclick", "");
+    }
+    else {
+      if (ids.indexOf(",") > -1) {
+        var _cb = $("[name='chkChecked']");
+        for (i = 0; i < _cb.length; i++) {
+          if (_cb[i].checked) {
+            var no = _cb[i].id.substr(10);
+            $("#lnkFavourite" + no).html("已收藏");
+            $("#lnkFavourite" + no).attr("onclick", "");
+          }
+        }
+      }
+    }
+  });
+}
+//修改收藏职位的备注
+var FavouritePos;
+function reMarkInfobox(obj, no) {
+  var content = arrRemarks[no].length == 0 ? '可以填写对该职位的看法，也可以不写...' : unescape(arrRemarks[no]);
+  infoboxs("对职位的收藏描述", 300, 0, obj, 0, -280, PopupHtml(content, "SaveRemark(" + no + ")"), "");
+}
+function SaveRemark(n) {
+  FavouritePos = n;
+  var id = document.getElementById("ID" + n).value;
+  var remark = escape(document.getElementById("txtRemark").value.replace(/(^\s*)|(\s*$)/g, ""));
+  if (remark == "可以填写对该职位的看法，也可以不写...") remark = "";
+  var url = "FavouriteUpdate";
+  Ajax("POST", url, "id=" + id + "&remark=" + remark, SetImage, false)
+}
+function SetImage(obj) {
+  if (obj.responseText == 1) {
+    alert("备注修改成功！")
+    strRemark = document.getElementById("txtRemark").value;
+    arrRemarks[FavouritePos] = strRemark;
+    popup.ibClose()
+  }
+  else if (obj.responseText == -3) {
+    alert("您还没有登录，请您先登录");
+    window.location.href = "http://www.shoudurc.com/personal/sys/login";
+  }
+  else if (obj.responseText == -100) {
+    alert("非法提交");
+  }
+}
+//显示求职信内容
+function messageTips(dockobj, bodyHtml) {
+  infoboxs("", 310, 1, dockobj, 30, -70, strFormat(bodyHtml), "", 1);
+}
+function strFormat(strName) {
+  return '<span style="width:300px;border:0px ; padding:4px;line-height:18px; display:block; position: relative; top:0px; left:0px; background:#FFFFED;z-index:10;">' + strName + '</span>';
+}
+//弹出层
+function infoboxs(title, w, h, dockobj, dockTop, dockLeft, bodyHtml, className, noFilter) {
+  popup.clearData();
+  if (title.length == 0) {
+    popup.isHeader = 0;
+    popup.isMessageTip = 0;
+    popup.drag = 0;
+  }
+  else {
+    popup.isHeader = 1;
+    popup.isMessageTip = 0;
+    popup.drag = 1;
+    popup.headerTitle = title;
+  }
+  popup.mask = 3;
+  popup.W = w;
+  popup.H = h;
+  popup.isFilter = 1;
+  if (noFilter)
+    popup.isFilter = 0;
+  if (className)
+    if (className.length > 0) popup.divClass = className;
+  popup.dockObj = dockobj;
+  popup.dockTop = dockTop;
+  popup.dockLeft = dockLeft;
+  popup.bodyHtml = bodyHtml;
+  popup.creatDiv();
+}
+//弹出内容（用于备注填写）
+function PopupHtml(content, func) {
+  if (content.length == 0) content = "可以填写对该职位的看法，也可以不写...";
+  return '\
+	  <p style="text-align:center; padding:10px 0;">\
+        <textarea id="txtRemark" class="inputSearch" style="width:250px;height:55px;" onfocus="MarkTextFocus(this)" onblur="MarkTextBlur(this)" onkeyup="if(this.value.length>100)this.value=this.value.slice(0,100)">' + content + '</textarea>\
+        <div style="height:25px;padding-left:20px">最多输入100字</div>\
+      </p>\
+      <p class="popupfooter">\
+        <input type="button" onclick="' + func + '" value="确定" class="popupBtn" id="msg1confirm1" />    \
+		<input type="button" value="取消" id="msg1cancel" class="popupBtnCancel" onclick="popup.ibClose()" />\
+      </p>';
+}
+function MarkTextFocus(obj) {
+  if (obj.value == "可以填写对该职位的看法，也可以不写...") {
+    obj.value = "";
+    $(obj).removeClass("inputSearch");
+  }
+}
+function MarkTextBlur(obj) {
+  if (obj.value == "可以填写对该职位的看法，也可以不写..." || $.trim(obj.value) == "") {
+    obj.value = "可以填写对该职位的看法，也可以不写..."
+    $(obj).addClass("inputSearch");
+  }
+}
+function CheckKeywordSearch() {
+  if (_("k").value == "请输入职位名称或企业名称") {
+    _("k").value = "";
+  }
+  if (_("k").value == "请输入企业名称") {
+    _("k").value = "";
+  }
+  return true;
+}
+
+//面试通知
+var InterviewID;
+var ReplyReason;
+var InterViewReply
+function ReplyInterview(ID, cpMainID) {
+  InterviewID = ID;
+  var _reply = document.getElementsByName("InterViewReply" + ID);
+  InterViewReply = $("http://www.shoudurc.com/content/personal/script/input.RadioButton.Yes").filter("[name='InterViewReply" + ID + "']").attr("checkvalue");
+  message = "";
+  if (!InterViewReply)
+    alert("请选择是否准时参加面试！")
+  else {
+    var strReplyReason=document.getElementById("txtReason" + ID).value.replace("同时给企业留言","")
+    ReplyReason = escape(strReplyReason);
+    var url = "/personal/jm/InterViewUpdate";
+    if (InterViewReply == 2 && document.getElementById("txtReason" + ID).value == "同时给企业留言") {
+      alert("请填写不能准时参加面试的理由！");
+      return;
+    }
+    if (InterViewReply == 1 && document.getElementById("txtReason" + ID).value == "同时给企业留言") {
+      document.getElementById("txtReason" + ID).value = "";
+    }
+    if (InterViewReply == 2 && ReplyReason.length == 0) {
+      alert("请填写不能准时参加面试的理由！");
+      return;
+    }
+    Ajax("POST", url, "id=" + ID + "&reply=" + InterViewReply + "&cpMainID=" + cpMainID + "&message=" + ReplyReason, SetInterview, true); 
+  }
+}
+
+function SetInterview(obj) {
+  if (obj.responseText == -2) {
+    alert("您还没有登录，请先登录系统！");
+    window.location.href = 'http://www.shoudurc.com/personal/sys/login';
+  }
+  else if (obj.responseText.length > 0) {
+    alert("您的面试通知已经成功回复！");
+    $("#ReplyStatus" + InterviewID).html("<table cellpadding='0' cellspacing='0' border='0'><tr><th>回复状态：</th><td>" + (InterViewReply == 1 ? '<b>您已答复赴约</b>' : '<b>您已答复不能赴约</b>') + "</td></tr><tr><th>留言：</th><td>" + unescape(ReplyReason) + "</td></tr></table><input type='button' onclick='DeleteInterview(" + InterviewID + ")' class='btnDelete' value='删除本条面试通知' />");
+
+  }
+}
+
+function DeleteInterview(ID) {
+  if (confirm("您确定要删除该面试通知吗？"))
+    window.location.href = "http://www.shoudurc.com/personal/jm/InterviewDelete?id=" + ID;
+}
+
+function DeleteMessage(caMainId) {
+  if (confirm("您确定要删除该留言吗？")) {
+    window.location.href = "http://www.shoudurc.com/personal/jm/MessageDeleteByPa?caMainId=" + caMainId;
+  }
+}
+
+var MessageCaMainID;
+function ReplyMessage(caMainID, cvMainID) {
+  MessageCaMainID = caMainID;
+  var message = escape(document.getElementById("txtMessage" + caMainID).value);
+  if (!message) {
+    alert("请输入内容！")
+    return false;
+  }
+  var url = "/personal/jm/MessageP2CInsert";
+  Ajax("POST", url, "caMainID=" + caMainID + "&cvMainID=" + cvMainID + "&message=" + message, SetReply, false)
+}
+
+function SetReply(obj) {
+  var data = obj.responseText
+  if (obj.responseText == 0) {
+    alert(obj.responseText);
+  }
+  else if (obj.responseText == -3) {
+    alert("您还没有登录，请您先登录");
+    window.location.href = 'http://www.shoudurc.com/personal/sys/login';
+  }
+  else if (obj.responseText == -100) {
+    alert("非法提交");
+  }
+  else {
+    window.location.href = window.location.href;
+  }
+}
+
+function DeleteCvIntention(id) {
+  if (confirm("您确定要删除该应聘邀请吗？"))
+    window.location.href = "http://www.shoudurc.com/personal/jm/CvIntentionDelete?id=" + id;
+}
+
+function ShowMessage(caID, obj) {
+  var str = '<iframe name="ifrMessage" id="ifrMessage" width="300px" height="160px" frameborder="0" scrolling="no" src="/personal/jv/Message?caID=' + caID + '"></iframe>';
+  infoboxs("留言内容", 320, 1, obj, -100, -330, str, "", 1);
+  document.getElementById('ifrMessage').src = '/personal/jv/Message?caID=' + caID;
+}
+//批量关注职位
+function JobAttentionBatch() {
+  var ids = "";
+
+  ids = GetAllCheckBoxValue();
+  if (ids) {
+    var postStr = "ids=" + ids;
+    var url = "/Personal/js/AjaxJobAttentionBatch";
+    Ajax("POST", url, postStr, ajaxJobAttentionBatchUpdate, false);
+  }
+  else
+    alert("请选择您要关注的职位！");
+}
+
+function ajaxJobAttentionBatchUpdate(obj) {
+  if (obj.responseText == "-101") {
+    ShowNoticeTip("请正确操作");
+  }
+  else {
+    if (window.applicationCache) {
+      ShowBindLove();
+    } else {
+      alert("关注成功");
+    }
+  }
+}
+
+//加关注爱心效果
+var strLove = "<div class=\"love-bg love-anim\"></div>";
+function ShowBindLove() {
+  if ($(".love-bg").length > 0) {
+    $(".love-bg").remove();
+  }
+  $(document.body).append(strLove);
+}

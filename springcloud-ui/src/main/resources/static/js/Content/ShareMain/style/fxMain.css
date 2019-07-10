@@ -1,0 +1,113 @@
+/*******分享样式1 用途：页面加载完成后就在页面上显示的分享**********/
+.fxFrontPage{display:inline; font-family:'宋体';font-size: 12px;text-align: left!important;zoom: 1;vertical-align: middle;}
+.fxFrontPage a{text-decoration: none;cursor: pointer;height: 16px;padding-top: 6px;padding-bottom: 3px;padding-left: 22px;background: url("../Images/ico_fxMain.png")/*tpa=http://www.shoudurc.com/Content/shareMain/Images/ico_fxMain.png*/ no-repeat; width:auto;#display:inline-block;}
+.fxFrontPage a.Renren{background-position: 4px -203px;}
+.fxFrontPage a.Qzone{background-position: 4px -47px;}
+.fxFrontPage a.Weibo{background-position: 4px -99px;}
+.fxFrontPage a.Weixin{background-position: 4px -1607px;}
+.fxFrontPage a.Tweibo{background-position: 4px -255px;}
+.fxFrontPage a.Tieba{background-position: 4px -723px;}
+.fxFrontPage a.Douban{background-position: 4px -463px;}
+.fxFrontPage a.QQ{background-position: 4px -2647px;}
+
+/*******分享样式2 用途：弹出层式的样式*******/
+.fxSharePop{ position: absolute;border:1px solid #EDEDED;padding:3px;border-radius: 4px; background:#fff;margin-left: -10px;margin-top: 0px;z-index:100;}
+.fxSharePop a{display:inline-block;text-decoration: none;cursor: pointer;height: 16px;padding-top: 6px;padding-bottom: 3px;padding-left: 22px;background: url("../Images/ico_fxMain.png")/*tpa=http://www.shoudurc.com/Content/shareMain/Images/ico_fxMain.png*/ no-repeat; width:auto;}
+.fxSharePop a.Renren{background-position: 4px -203px;}
+.fxSharePop a.Qzone{background-position: 4px -47px;}
+.fxSharePop a.Weibo{background-position: 4px -99px;}
+.fxSharePop a.Weixin{background-position: 4px -1607px;}
+.fxSharePop a.Tweibo{background-position: 4px -255px;}
+.fxSharePop a.Tieba{background-position: 4px -723px;}
+.fxSharePop a.Douban{background-position: 4px -463px;}
+.fxSharePop a.QQ{background-position: 4px -2647px;}
+
+
+/***************企业分享的弹出层*********************/
+.fxCpJob{ width:44px; height:18px; display:inline-block;background: url("../Images/ico_btn_fxcpjob.png")/*tpa=http://www.shoudurc.com/Content/shareMain/Images/ico_btn_fxcpjob.png*/ no-repeat; cursor:pointer;vertical-align: middle;}
+.fxCpJobShare{z-index:100; position: absolute;border:1px solid #EDEDED;padding:10px; background:#fff;margin-left: -10px;margin-top: 30px; width:440px; height:123px;cursor:default;}
+.fxCpJobShare .cpJobShareTop{height:15px;}
+.fxCpJobShare .cpJobShareTop span{ display:block; float:right; height:16px; width:16px;background: url("../Images/ico_popupclose.png")/*tpa=http://www.shoudurc.com/Content/shareMain/Images/ico_popupclose.png*/ no-repeat; cursor:pointer;}
+.fxCpJobShare .cpJobShareTitle { font: 15px "宋体",arial;color: #000;}
+.fxCpJobShare .cpJobShareBottom{width: 350px;padding-top:60px;*padding-top:20px;}
+.fxCpJobShare .cpJobShareBottom a{text-decoration: none;cursor: pointer;height: 16px;padding-left: 50px;padding-top: 40px;width:auto;#display:inline-block;}
+.fxCpJobShare .cpJobShareBottom a.Renren{background:url("../images/ico_renren_cpnormal.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_renren_cpnormal.png*/ 0px 0px no-repeat;padding-top: 40px;}
+.fxCpJobShare .cpJobShareBottom a.Qzone{background:url("../images/ico_qzone_cpnormal.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_qzone_cpnormal.png*/ 0px 0px no-repeat;}
+.fxCpJobShare .cpJobShareBottom a.Weibo{background:url("../images/ico_weibo_cpnormal.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_weibo_cpnormal.png*/ 0px 0px no-repeat;}
+.fxCpJobShare .cpJobShareBottom a.Weixin{background:url("../images/ico_weixin_cpnormal.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_weixin_cpnormal.png*/ 0px 0px no-repeat;}
+.fxCpJobShare .cpJobShareBottom a.Tweibo{background:url("../images/ico_tweibo_cpnormal.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_tweibo_cpnormal.png*/ 0px 0px no-repeat;}
+.fxCpJobShare .cpJobShareBottom a.QQ{background:url("../images/ico_qq_cpnormal.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_qq_cpnormal.png*/ 0px 0px no-repeat;}
+.fxCpjobErweima{position: relative;right: -305px;top: -111px;width: 120px;height: 145px;background: url("../Images/jobwx.png")/*tpa=http://www.shoudurc.com/Content/shareMain/Images/jobwx.png*/ no-repeat;}
+.fxCpjobErweimaImg {width: 85px;height: 85px;padding-top: 23px;padding-left: 20px;}
+.fxCpjobShareWenZi {color: #7D7D7D;font-family: 微软雅黑;right: -27px;top: 11px;letter-spacing: 2px;position: relative;}
+/*****************企业发布完职位的弹出分享**********/
+.fxCpfbShare{position: absolute;padding:15px; background:#fff;margin-left: 0px;margin-top: -33px; width:440px; height:120px;cursor:default;}
+.fxCpfbShare .cpJobShareBottom{width: 350px;padding-top:60px;}
+.fxCpfbShare .cpJobShareBottom a{text-decoration: none;cursor: pointer;height: 16px;padding-left: 50px;padding-top: 40px;width:auto;#display:inline-block;}
+.fxCpfbShare .cpJobShareBottom a.Renren{background:url("../images/ico_renren_cpnormal.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_renren_cpnormal.png*/ 0px 0px no-repeat;padding-top: 40px;}
+.fxCpfbShare .cpJobShareBottom a.Qzone{background:url("../images/ico_qzone_cpnormal.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_qzone_cpnormal.png*/ 0px 0px no-repeat;}
+.fxCpfbShare .cpJobShareBottom a.Weibo{background:url("../images/ico_weibo_cpnormal.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_weibo_cpnormal.png*/ 0px 0px no-repeat;}
+.fxCpfbShare .cpJobShareBottom a.Weixin{background:url("../images/ico_weixin_cpnormal.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_weixin_cpnormal.png*/ 0px 0px no-repeat;}
+.fxCpfbShare .cpJobShareBottom a.Tweibo{background:url("../images/ico_tweibo_cpnormal.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_tweibo_cpnormal.png*/ 0px 0px no-repeat;}
+.fxCpfbShare .cpJobShareBottom a.QQ{background:url("../images/ico_qq_cpnormal.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_qq_cpnormal.png*/ 0px 0px no-repeat;}
+.fxCpfbErweima{position: relative;right: -326px;top: -44px;width: 120px;height: 145px;background: url("../Images/jobwx.png")/*tpa=http://www.shoudurc.com/Content/shareMain/Images/jobwx.png*/ no-repeat;}
+.fxCpfbErweimaImg {width: 85px;height: 85px;padding-top: 24px;padding-left: 9px;}
+.fxCpfbShareWenZi {color: #000;right: -8px;top: 11px;letter-spacing: 2px;position: relative;}
+ /**************企业发布中的职位直接显示样式*****/
+.fbJob{display:inline; font-family:'宋体';font-size: 12px;text-align: left!important;zoom: 1;vertical-align: middle;padding-left:10px;}
+.fbJob a{text-decoration: none;cursor: pointer;height: 16px;padding-top: 6px;padding-bottom: 5px;padding-left: 29px; width:auto;#display:inline-block;}
+.fbJob a.Renren{background:url("../images/ico_renren_cpsmall.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_renren_cpsmall.png*/ 0px 0px no-repeat;}
+.fbJob a.Qzone{background:url("../images/ico_qzone_cpsmall.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_qzone_cpsmall.png*/ 0px 0px no-repeat;}
+.fbJob a.Weibo{background:url("../images/ico_weibo_cpsmall.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_weibo_cpsmall.png*/ 0px 0px no-repeat;}
+.fbJob a.Weixin{background:url("../images/ico_weixin_cpsmall.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_weixin_cpsmall.png*/ 0px 0px no-repeat;}
+.fbJob a.Tweibo{background:url("../images/ico_tweibo_cpsmall.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_tweibo_cpsmall.png*/ 0px 0px no-repeat;}
+.fbJob a.QQ{background:url("../images/ico_qq_cpsmall.png")/*tpa=http://www.shoudurc.com/content/ShareMain/images/ico_qq_cpsmall.png*/ 0px 0px no-repeat;}
+
+/*******通用样式***********/
+.fxLink{background: url("../../personal/images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ -314px -117px no-repeat;height: 14px; padding-left:16px; display:inline-block;cursor: pointer;vertical-align: middle;font-size:12px;text-decoration: none;color: rgb(167, 167, 167);font-family: "微软雅黑"; font-size:12px;line-height: 14px; }
+.fxLink:hover{background: url("../../personal/images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ -315px -196px no-repeat;text-decoration:underline;color: rgb(29, 125, 150);}
+
+/******右侧边栏分享样式*******/
+.fxRight{z-index: 9998;text-align: left;background: #f6f6f6;border: solid 1px #e9e9e9;width: 116px;top: -203px;right: -1px;margin-right: 44px;position: absolute;}
+.fxRight_top{height: 28px;color: #626262;overflow: hidden;font-weight: bold;font-size: 14px;line-height: 28px;padding: 0 5px;}
+.fxRight ul{margin: 0;padding: 5px 0;background: #fff;overflow: auto;overflow-x: hidden;}
+.fxRight ul li{float: left;width: 100px;padding: 2px;margin-left: 6px;_margin-left: 3px;height: 28px;overflow: hidden;list-style: none;}
+.fxRight ul li a{height:43px;width:116px;margin-top:5px;}
+.fxRight ul li a{color: #565656;font: 12px '宋体';display: block;padding: 5px 0 5px 28px;text-decoration: none;border: 1px solid #fff;line-height: 18px;background: url("../Images/ico_fxMain.png")/*tpa=http://www.shoudurc.com/Content/shareMain/Images/ico_fxMain.png*/ no-repeat;}
+.fxRight a.Renren{background-position: 4px -203px;}
+.fxRight a.Qzone{background-position: 4px -47px;}
+.fxRight a.Weibo{background-position: 4px -99px;}
+.fxRight a.Weixin{background-position: 4px -1607px;}
+.fxRight a.Tweibo{background-position: 4px -255px;}
+.fxRight a.Tieba{background-position: 4px -723px;}
+.fxRight a.Douban{background-position: 4px -463px;}
+.fxRight a.QQ{background-position: 4px -2647px;}
+.fxRight a:hover{-moz-background-clip: padding;-webkit-background-clip: padding-box;background-clip: padding-box;background-color: #f3f3f3;border: 1px solid #eee;border-radius: 3px;-webkit-border-radius: 3px;-moz-border-radius: 3px;}
+.Rightshare{height:43px; width:43px; display:block;background:url("../../Homepage/images/img_index_ico.png")/*tpa=http://www.shoudurc.com/content/Homepage/images/img_index_ico.png*/ -1045px -1132px;margin:0;}
+.RightshareA {height:43px; width:43px; display:block;background:url("../../Homepage/images/img_index_ico.png")/*tpa=http://www.shoudurc.com/content/Homepage/images/img_index_ico.png*/ -1100px -1132px; margin:0;}
+.fxRight_weixin_popup{left: 40%;top: 26%;position: fixed;padding: 10px;background: #fff;border: solid 1px #d8d8d8;z-index: 11001;font-size: 12px; width:228px;}
+.fxRight_weixin_head{font-size: 12px;font-weight: bold;text-align: left;line-height: 16px;height: 16px;position: relative;color: #000;}
+.fxRight_weixin_close{width: 16px;height: 16px;position: absolute;right: 0;top: 0;color: #999;text-decoration: none;font-size: 16px;}
+.fxRight_weixin_img{padding: 15px;height: 198px;width:198px;}
+.fxRight_weixin_foot{font-size: 12px;text-align: left;line-height: 22px;color: #666;}
+
+/*******职位分享样式******/
+.jobShare {margin-top: -38px;margin-left: -204px;}
+.jobShare a{color: #565656;font: 12px '宋体';display: inline;padding: 0px 0 40px 40px;text-decoration: none;border: 1px solid #fff;line-height: 18px;background: url("../Images/jobshare.png")/*tpa=http://www.shoudurc.com/Content/shareMain/Images/jobshare.png*/ no-repeat;}
+.jobShare a.Renren{background-position: -3px -40px;}
+.jobShare a.Qzone{background-position: -2px -93px;}
+.jobShare a.Weibo{background-position: -2px 12px;}
+.jobShare a.Weixin{background-position: -2px -257px;}
+.jobShare a.Tweibo{background-position: -3px -149px;}
+.jobShare a.QQ{background-position: -2px -203px;}
+.jobErweima{position: relative;right: -313px;top: -97px;width: 120px;height: 145px;background: url("../Images/jobshare.png")/*tpa=http://www.shoudurc.com/Content/shareMain/Images/jobshare.png*/ no-repeat;background-position-x: -2px;background-position-y: -308px;}
+.jobErweimaImg{width: 78px;height: 78px;padding-top: 52px;padding-left: 25px;}
+.jobShareWenZi{color: #1CB006;font-weight: bold;right: -27px;top: -111px;letter-spacing: 2px;position: relative;}
+.jobShareCloseErWeima{width: 17px;height: 18px;right: -106px;position: relative;top: -152px;cursor: pointer;}
+
+/*******右侧分享的样式****/
+.fix_toolbar {position: fixed;bottom: 50px;right: 0px;z-index: 9999;}
+.fix_toolbar ul li {height: 43px;width: 43px;margin-top: 5px;}
+.fix_toolbar ul li.Contentus a {background: url("../../Homepage/images/img_index_ico.png")/*tpa=http://www.shoudurc.com/content/Homepage/images/img_index_ico.png*/ -1045px -1180px;}
+.fix_toolbar ul li.ContentusA a {background: url("../../Homepage/images/img_index_ico.png")/*tpa=http://www.shoudurc.com/content/Homepage/images/img_index_ico.png*/ -1100px -1180px;}
+.fix_toolbar ul li a {height: 43px;width: 43px;display: block;}

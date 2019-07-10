@@ -1,0 +1,1013 @@
+var jobid;
+var ids;
+function _(o) {
+  return document.getElementById(o)
+}
+
+function ShowList(obj) {
+  _("divList").style.display = "";
+  _("divCpInfo").style.display = "none";
+  if (_("divLeft")) {
+    _("divLeft").style.display = "none";
+  }
+  classSet(obj);
+}
+
+function ShowCpInfo(obj) {
+  _("divList").style.display = "none";
+  _("divCpInfo").style.display = "";
+  if (_("divLeft")) _("divLeft").style.display = "none";
+  classSet(obj);
+}
+
+function ShowJobInfo(obj, id) {
+  _("divList").style.display = "none";
+  _("divCpInfo").style.display = "none";
+  _("divLeft").style.display = "";
+  if (id) {
+    for (var i = 0; i < arrJobId.length; i++) {
+      if (arrJobId[i] == id) _("divLeft").innerHTML = arrJobInfo[i];
+    }
+  }
+  classSet(obj);
+}
+
+function classSet(obj) {
+  var len = 0;
+  var j = 0;
+  for (var i = 0; i < _("ulTitle").childNodes.length; i++) {
+    if (_("ulTitle").childNodes[i].nodeType == 1) {
+      _("ulTitle").childNodes[i].className = "";
+      _("ulTitle").childNodes[i].style.left = eval(29 + 110 * j) + "px";
+      j++;
+    }
+  }
+  obj.className = "TagThis";
+}
+
+function ChangeJobInfo(id, word) {
+  if (window.lastScrollY) lastScrollY = 0;
+  jobid = id;
+  for (var i = 0; i < arrJobId.length; i++) {
+    if (arrJobId[i] == jobid) {
+      _("divLeft").innerHTML = arrJobInfo[i];
+      ShowJobInfo(_("liJob" + jobid));
+      return;
+    }
+  }
+  Ajax("Get", "/personal/jv/ajaxGetJob?radom=" + new Date() + "&id=" + id + "&word=" + word, "", SetJob, false);
+}
+
+function SetJob(obj) {
+  var data = obj.responseText;
+  var arr = data.split("##$$");
+  _("divLeft").innerHTML = arr[0];
+  var len = 0;
+  for (var i = 0; i < _("ulTitle").childNodes.length; i++) {
+    if (_("ulTitle").childNodes[i].nodeType == 1) {
+      len++;
+    }
+  }
+  if (arr[1].length > 5) arr[1] = arr[1].substr(0, 5) + "...";
+  if (len < 7) {
+    var left = "";
+    if (len + 1 == 3) left = "left:249px;";
+    if (len + 1 == 4) left = "left:359px;";
+    if (len + 1 == 5) left = "left:469px;";
+    if (len + 1 == 6) left = "left:579px;";
+    if (len + 1 == 7) left = "left:689px;";
+    _("ulTitle").innerHTML = _("ulTitle").innerHTML + '<li style=' + left + ' class="TagThis" id="liJob' + jobid + '" onclick="ShowJobInfo(this,' + jobid + ')"><span class="JobStyle">' + arr[1] + '</span><a href="javascript:void(0)" onclick="closeInfo(' + jobid + ')"> </a></li>';
+  } else {
+    len = 0;
+    for (var i = 0; i < _("ulTitle").childNodes.length; i++) {
+      if (_("ulTitle").childNodes[i].nodeType == 1) {
+        len++;
+        if (len != 3) continue;
+        var id = _("ulTitle").childNodes[i].id.toLowerCase().replace("lijob", "");
+        for (var j = 0; j < arrJobId.length; j++) {
+          if (arrJobId[j] == id) {
+            arrJobId[j] = "";
+            arrJobInfo[j] = "";
+          }
+        }
+        _("ulTitle").removeChild(_("ulTitle").childNodes[i]);
+        break;
+      }
+    }
+    _("ulTitle").innerHTML = _("ulTitle").innerHTML + '<li class="TagThis" id="liJob' + jobid + '" onclick="ShowJobInfo(this,' + jobid + ')"><span>' + arr[1] + '</span><a href="javascript:" onclick="closeInfo(' + jobid + ')"> </a></li>';
+  }
+  arrJobId[arrJobId.length] = jobid;
+  arrJobInfo[arrJobInfo.length] = arr[0];
+  ShowJobInfo(_("liJob" + jobid));
+}
+
+function closeInfo(id) {
+  _("ulTitle").removeChild(_("liJob" + id));
+  for (var i = 0; i < arrJobId.length; i++) {
+    if (arrJobId[i] == id) {
+      arrJobId[i] = "";
+      arrJobInfo[i] = "";
+    }
+  }
+  ShowList(_("liList"));
+}
+
+function showJob(id, word, no) {
+  var _ul = document.getElementsByTagName("ul");
+  for (var i = 0; i < _ul.length; i++) {
+    if (_ul[i].id) {
+      _ul[i].className = "ulUnSelect";
+    }
+  }
+  jobid = id;
+  document.getElementById("ulJob" + no).className = "ulSelect";
+  Ajax("Get", "/personal/jv/ajaxGetJob?radom=" + new Date() + "&jobid=" + id + "&word=" + word, "", SetJobAll, false)
+
+}
+
+function SetJobAll(obj) {
+  var ua = navigator.userAgent.toLowerCase();
+  var isIE6 = ua.indexOf("msie 6") > -1; //判断是否为IE6   
+  // remove css image flicker   
+  //IE6下默认不缓存背景图片，CSS里每次更改图片的位置时都会重新发起请求，用这个方法告诉IE6缓存背景图片   
+  if (isIE6) {
+    try {
+      document.execCommand("BackgroundImageCache", false, true);
+    } catch (e) { }
+  }
+  _("divRight").innerHTML = obj.responseText;
+  fx();
+  initMap();
+}
+function initMap() {
+  if (_("spMapInfo")) {
+    eval(_("spMapInfo").innerHTML);
+    map = new BMap.Map("allmap"); // 创建Map实例
+    map.centerAndZoom(new BMap.Point(lng, lat), 15);
+    marker = new BMap.Marker(new BMap.Point(lng, lat), {
+      enableMassClear: false
+    });
+    map.addOverlay(marker);
+    map.enableScrollWheelZoom();
+    map.addControl(new BMap.NavigationControl());
+    infoWindow = new BMap.InfoWindow("详细位置：<br /><br />" + address);
+    marker.openInfoWindow(infoWindow);
+    local = new BMap.LocalSearch(map, {
+      renderOptions: {
+        map: map,
+        selectFirstResult: false,
+        autoViewport: true
+      },
+      onSearchComplete: SetLocalIcon
+    });
+    arrNearby = new Array();
+  }
+}
+
+function SetApply(obj) {
+  var data = obj.responseText;
+  if (data == -2) alert("您没有可投递的简历！");
+  if (data == -1) {
+    var ua = navigator.userAgent.toLowerCase();
+    var canopen = window.open("/personal/jm/JobApplyBatch?id=" + ids);
+    if (typeof (canopen) == "undefined") window.location.href = "http://www.shoudurc.com/personal/jm/JobApplyBatch?id=" + ids;
+    else if (ua.indexOf("chrome") > -1) window.location.href = "http://www.shoudurc.com/personal/jm/JobApplyBatch?id=" + ids;
+  }
+  if (data == 0) alert("在1个月内您已经申请过该职位，不能重复申请");
+  if (data > 0) alert("职位申请成功！");
+  if (data == -200) window.open("/personal/jv/JobApplyByNoLogin?id=" + ids);
+}
+
+var appObj;
+var appId;
+var appType;
+function ajaxMenu(id, obj, type, isrow) {
+  appObj = obj;
+  appId = id;
+  if (isrow) appId = document.getElementById("JobID" + id).value;
+  appType = type;
+  Ajax("post", "/personal/jv/ajaxCheckLogin", "radom=" + new Date(), OperAction, false)
+}
+
+function OperAction(obj) {
+  var data = obj.responseText;
+  if (data == 1) {
+    if (appType == 1) {
+      ShowMessage(appId, appObj);
+    }
+    if (appType == 2) {
+      popup.ibClose();
+      JobAttentionBatch();
+    }
+    if (appType == 3) {
+      ShowPlaint(appId, appObj)
+    }
+  } else {
+    showJobApplyLogin("", 1);
+    return;
+    if (!appId) {
+      var str = '<center><p style="line-height:20px; margin:15px">您未登录或登录已过期，请<a href="http://www.shoudurc.com/personal/sys/login" target="_blank">重新登录</a>后再刷新此页面<br>如果您还没有注册，请<a href="http://www.shoudurc.com/personal/sys/register" target="_blank">免费注册</a></p><input type="button" class="popupBtn" value="关闭" onclick="popup.ibClose()" /></center>';
+      infoboxsjv("登录提示", 320, 150, "", -100, -330, str);
+    } else {
+      infoboxsjv("", 650, 1, "", -100, -350, '<iframe frameborder="0" scrolling="no" style="width:650px;height:310px;background-color: #F7F7F7;padding-top:0px;" src="/personal/jv/JobApplyByNoLogin?id=' + ids + '"></iframe>', "popupJobApply");
+    }
+  }
+}
+
+function ShowFavorate(id, obj) {
+  if (!id) {
+    id = "";
+    var _cb = document.getElementsByName("chkChecked");
+    for (i = 0; i < _cb.length; i++) if (_cb[i].checked) id += _cb[i].value + ",";
+
+    if (!id) {
+      alert("请选择职位!");
+      return;
+    }
+    id = id.substr(0, id.length - 1);
+  }
+  var str = '<center><textarea style="width:280px; height:54px; font:12px/20px 新宋体; margin:4px;" onfocus="SearchTextFocus();" onblur="SearchTextBlur();" class="" onkeyup="CheckCount(this)" id="txtRemark" name="txtRemark">可以填写对该职位的看法，也可以不写...</textarea><div style="width:280px;text-align:left; margin:3px;">最多100汉字</div><input type="button" class="popupBtnLeft" value="确定" onclick="SaveFavorate(\'' + id + '\')" />   <input type="button" class="popupBtnRight" value="关闭" onclick="popup.ibClose()" /></center>';
+  infoboxsjv("对职位的收藏描述", 320, 150, obj, 0, 20, str);
+}
+
+function SaveFavorate(id) {
+  var str = _("txtRemark").value;
+  if (str == "可以填写对该职位的看法，也可以不写...") {
+    str = "";
+  }
+  Ajax("GET", "/personal/js/FavorateInsert?jobs=" + id + "&remark=" + str, "", SetFavorate, false);
+}
+
+function SetFavorate(obj) {
+  var data = obj.responseText
+  if (data == -100) alert("请从本网站提交")
+  else if (data == -101) {
+    alert("您还未登录，请您重新登录");
+    window.location.href = "http://www.shoudurc.com/personal/sys/Login?urlfile=" + escape(window.location.href.toString());
+  } else {
+    alert(obj.responseText);
+    popup.ibClose();
+  }
+}
+
+function ShowPlaint(id, obj) {
+  var str = '<center><textarea style="width:280px; height:55px; font:12px/20px 新宋体; margin:4px;" onkeyup="CheckCount(this)" id="txtPlaint" name="txtPlaint"></textarea><div style="width:280px;text-align:left; margin:4px; line-height:20px">1、最少10个字，最多100个字<br>2、请务必详细说明事情的经过，并留下手机号码以便网站联系核实</div><input type="button" class="popupBtnLeft" value="确定" onclick="SavePlaint(\'' + id + '\')" />   <input type="button" class="popupBtnRight" value="关闭" onclick="popup.ibClose()" /></center>';
+  infoboxsjv("投诉内容", 320, 200, obj, -100, -330, str);
+}
+
+function SavePlaint(id) {
+  var message = _("txtPlaint").value;
+  if (!message) {
+    alert("请输入内容！");
+    return;
+  }
+
+  if (message.length < 10) {
+    alert("最少10个字");
+    return;
+  }
+  message = escape(_("txtPlaint").value);
+  var params = "caMainID=" + _("hidcaMainID").value + "&plaint=" + message + "&jobid=" + id;
+  Ajax("Post", "/personal/jv/PlaintInsert", params, SetPlaint, false);
+}
+
+function SetPlaint(obj) {
+  var data = obj.responseText;
+  if (data == -100) alert("请从本网站提交");
+  if (data == -101) {
+    alert("您还未登录，请您重新登录");
+    window.location.href = "http://www.shoudurc.com/personal/sys/Login?urlfile=" + escape(window.location.href.toString());
+  }
+  if (data > 1) {
+    alert("投诉成功！");
+    popup.ibClose();
+  }
+  if (data == 0) alert("数据库错误，请稍后重试！");
+  if (isNaN(data)) alert(data);
+}
+
+function CheckCount(obj) {
+  if (obj.value.length > 100) obj.value = obj.value.slice(0, 100);
+}
+
+function ShowRecommend(id, obj) {
+  var str = '<div style="line-height:30px;padding-left:20px;padding-top:10px"><p style="_height:30px;_display:Block">朋友的Email：<input type="text" id="txtEmail" name="txtEmail" maxlength="37" /></p>';
+  str += '<p style="_height:30px;_display:Block"> 朋友的姓名：<input type="text" id="txtFname" maxlength="6" name="txtFname" /></p>';
+  str += '<p style="_height:30px;_display:Block">   您的姓名：<input type="text" maxlength="6" id="txtYname" name="txtYname" /></p>';
+  str += '<p style="text-align:center;_height:30px;_display:Block"><input type="button" onclick="SaveRecommend(\'' + id + '\')" value="确定" class="popupBtnLeft" /> <input type="button" onclick="popup.ibClose()" value="取消" class="popupBtnRight" /></p></div>';
+  infoboxsjv("推荐给朋友", 320, 170, obj, -100, -330, str);
+}
+
+function SaveRecommend(id) {
+  if (_("txtEmail").value) {
+    if (!checkEmail(_("txtEmail").value)) {
+      alert("邮箱格式错误，请重新输入！");
+      return;
+    }
+  } else {
+    alert("请输入您朋友的邮箱！");
+    return;
+  }
+  if (!_("txtFname").value) {
+    alert("请输入您朋友的姓名！");
+    return;
+  }
+  if (!_("txtYname").value) {
+    alert("请输入您的姓名！");
+    return;
+  }
+  var params = "jobid=" + id + "&fname=" + escape(_("txtFname").value) + "&yname=" + escape(_("txtYname").value) + "&email=" + _("txtEmail").value;
+  Ajax("POST", "/personal/jv/ajaxRecommendProc", params, setRecommend, false);
+}
+
+function setRecommend(obj) {
+  var data = obj.responseText;
+  if (data == 1) {
+    alert("邮件发送成功");
+    popup.ibClose();
+  }
+  if (data == 0) alert("邮件发送失败，请稍后再试");
+  if (data == 2) alert("该职位不存在！")
+}
+
+function ShowMessage(id, obj) {
+  var str = '<iframe name="ifrMessage" id="ifrMessage" width="300px" height="160px" frameborder="0" scrolling="no" src="/personal/jv/Message?caID=' + _("hidcaMainID").value + '"></iframe>';
+  infoboxsjv("留言内容", 320, 1, obj, -100, -330, str);
+  document.getElementById('ifrMessage').src = '/personal/jv/Message?caID=' + _("hidcaMainID").value;
+}
+
+function checkEmail(data) {
+  var regValidator = /^([a-zA-Z0-9]+[_|\_|\.|\-]?)*[a-zA-Z0-9]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+  var strEmail = data.split('.');
+  var len = strEmail.length;
+  if (!regValidator.exec(data)) return false;
+  regValidator = /^[a-zA-Z]+$/;
+  if (!regValidator.exec(strEmail[len - 1])) return false;
+  if (strEmail[len - 1].length > 3 || strEmail[len - 1].length < 2) return false;
+
+  return true;
+}
+
+function ChangePager(page) {
+  Ajax("GET", "/personal/jv/ajaxPager?page=" + page + "&cp=" + _("hidCpId").value + "&url=" + window.location.href.toString() + "&radom=" + new Date(), "", SetList, false)
+}
+
+function SetList(obj) {
+  var data = obj.responseText;
+  _("divList").innerHTML = data;
+}
+
+function MessageTips(iType, obj, w, h, l) {
+  var str = ""
+  if (iType == 0) {
+    str = '1、网站已收到该单位的认证资料。<br> 2、该单位对所提供资料的真实性负完全责任。出于保密的原因，网站不公开显示单位的认证资料。';
+
+  }
+  if (iType == 1) {
+    str = '1、网站主要是通过单位提供的认证资料，来验证单位信息的真实性。<br> 2、该单位对所提供资料的真实性负完全责任。<br>3、单位从首页登录后，可以自行上传相关证明材料。';
+  }
+  if (iType == 2) {
+    str = '<strong>1、拒交各种名义的费用。</strong> <br>    任何招聘单位，以任何名义向求职者收取抵押金、服装费、产品押金、风险金、报名费、培训费等行为，都属非法行为。招聘单位培训本单位的职工，也不准收取培训费。求职者遇到此类情况，要坚持拒交，并向招聘单位所在地区举报，以确保自己的合法权益不受侵害。<br><strong>2、不轻信许诺到外地上岗。</strong><br>    对外地企业或某某外地分公司、分厂、办事处的高薪招聘，不论其待遇多么好，求职者千万要保持清醒的头脑和高度的警惕，不要轻信他的口头许诺，一是不去，二是到劳动保障部门咨询，并办理相关的手续，否则会吃大亏，被骗工骗钱甚至被人贩子骗卖，悔之晚矣。<br><strong>3、掌握劳动法规和相关政策。</strong> <br>     求职者在求职前或求职过程中，应主动学习一些劳动法规和相关政策，提高自己的求职素质和独立思考的能力。<br> <strong>4、多种途径了解公司背景。</strong><br>    在求职者正式进入单位之前，想方设法加强对企业的了解以免误入骗子设下的陷阱。比如：注意招聘单位的营业执照等相关证件；正规单位招聘一般会将招聘地点设在单位的办公室、会议室，一些以租用房间作为应聘地点的单位，要警惕。<br><strong>5、谨慎签定劳动合同。</strong><br>    与用人企业签合同时，求职者要"三看"：一看企业是否经过工商部门登记以及企业注册的有效期限，否则所签合同无效；二看合同字句是否准确、清楚、完整，不能用缩写、替代或含糊的文字表达；三看劳动合同是否有一些必备内容，包括劳动合同期限、工作内容、劳动保护和劳动条件、劳动报酬、社会保险和福利、劳动纪律、劳动合同终止的条件、违反劳动合同的责任等。必须签书面合同，试用期内也要签合同。<br><strong>6、发觉被骗，及时报案。</strong><br>    求职者一旦发觉上当受骗，要及时向招聘单位所在地的人事局、劳动局监察大队或公安局派出所报案，寻求法律保护。但由于劳务诈骗往往涉及公安、工商、劳动、人事等部门，求职者应该根据情况选择最有效的投诉部门，若被投诉对象为合法机构，求职者可以找劳动部门；若求职受骗情况特别严重、诈骗金额大，可以到公安部门进行报案。'
+  }
+  if (str) {
+    if (!l) l = 120;
+    str = '<p style="line-height:20px;margin:15px">' + str + '</p><p style="text-align:center"><input type="button" onclick="popup.ibClose()" value="关闭" class="popupBtn" /></p>';
+    infoboxsjv(obj.innerHTML, w, h, "", -100, l, str);
+  }
+}
+
+//弹出层
+function infoboxsjv(title, w, h, dockobj, dockTop, dockLeft, bodyHtml, className, noFilter) {
+  popup.clearData();
+  if (title.length == 0) {
+    popup.isHeader = 0;
+    popup.isMessageTip = 0;
+    popup.drag = 0;
+  } else {
+    popup.isHeader = 1;
+    popup.isMessageTip = 0;
+    popup.drag = 1;
+    popup.headerTitle = title;
+  }
+  popup.mask = 3;
+  popup.W = w;
+  popup.H = h;
+  popup.isFilter = 1;
+  if (!className) {
+    className = "";
+  }
+  if (noFilter) popup.isFilter = 0;
+  if (className.length > 0) popup.divClass = className;
+  popup.dockObj = dockobj;
+  popup.dockTop = dockTop;
+  popup.dockLeft = dockLeft;
+  popup.bodyHtml = bodyHtml;
+  popup.creatDiv();
+}
+
+function ShowDetail(str) {
+  var bodyHtml = '<div style="margin:10px; line-height:20px; max-height:300px;overflow-y:scroll; overflow-x:hidden">' + unescape(str) + '</div>';
+  infoboxsjv("企业简介", 500, 1, "", "", "", bodyHtml)
+}
+
+function CheckIs(obj) {
+  if (!obj.checked) _('chkAll').checked = false;
+  else {
+    var hasChecked = true;
+    var _cb = document.getElementsByName("chkChecked");
+    for (i = 0; i < _cb.length; i++) {
+      if (!_cb[i].checked) {
+        hasChecked = false;
+        break;
+      }
+    }
+    if (hasChecked) _('chkAll').checked = true;
+  }
+}
+
+function CheckAll(obj) {
+  var _cb = document.getElementsByName("chkChecked");
+  if (obj.checked) {
+    for (i = 0; i < _cb.length; i++) if (!_cb[i].disabled) _cb[i].checked = true;
+  } else {
+    for (i = 0; i < _cb.length; i++) if (!_cb[i].disabled) _cb[i].checked = false;
+  }
+}
+
+function SearchTextFocus() {
+  if (_("txtRemark").value == "可以填写对该职位的看法，也可以不写...") {
+    _("txtRemark").value = "";
+    RemoveClass(_("txtRemark"), "inputSearch");
+  }
+}
+
+function SearchTextBlur() {
+  if (_("txtRemark").value == "可以填写对该职位的看法，也可以不写..." || trim(_("txtRemark").value) == "") {
+    _("txtRemark").value = "可以填写对该职位的看法，也可以不写...";
+    AddClass(_("txtRemark"), "inputSearch");
+  }
+}
+
+function GotoUrl(url) {
+  _("lnkSimilar").href = url;
+  _("lnkSimilar").click();
+  return false;
+}
+
+function GoLoinRedirect(type) {
+  addCookie("urlfile", location.href, 0);
+  if (type == 1) {
+    window.open("http://www.shoudurc.com/personal/sys/QQLoginRediret");
+  } else if (type == 2) {
+    window.open("http://www.shoudurc.com/personal/sys/SinaLoginRediret");
+  } else if (type == 3) {
+    window.open("http://www.shoudurc.com/personal/sys/RenRenLoginRediret");
+  }
+}
+function showLogin(type) {
+  infoboxsjv("", 600, 1, "", -100, -350, '<iframe frameborder="0" scrolling="no" style="width:600px;height: 260px;background-color: #F7F7F7;padding-top:0px;" src="/personal/comment/CommentByNoLogin?type=' + type + '"></iframe>', "");
+}
+function showLogin1(type, obj) {
+  if (!obj) obj = "";
+  popup.clearData();
+  popup.isHeader = 0;
+  popup.isMessageTip = 0;
+  popup.drag = 1;
+  popup.mask = 3;
+  popup.headerTitle = "";
+  popup.W = 600;
+  popup.H = 260;
+  popup.divClass = "popup";
+  popup.isFilter = 1;
+  popup.dockTop = 20;
+  popup.dockObj = obj;
+  popup.dockLeft = -80;
+  popup.bodyHtml = GenLoginHtml(type);
+  popup.creatDiv();
+}
+
+//function GenLoginHtml(type) {
+//  var str = "";
+//  str = str + '<div class="ContentLogin" style="width:600px;background-color:#f7f7f7;padding-top:0;">';
+//  str = str + '  <div style="height:24px"><span class="closeWin" onclick="parent.popup.ibClose()"></span></div>';
+//  str = str + '  <div style="float:left;">';
+//  str = str + '    <form action="/personal/sys/Login" method="post" name="frm" id="frm" class="ContentLoginForm" style="padding-top:0;padding-bottom:10px;" onsubmit="return HeadLoginCheckSubmit()">';
+//  str = str + '      <input name="UserName" id="LoginAreaUserName" type="text" onkeyup="CtoH(this);" onfocus="HeadUserNameOnClick()" onblur="HeadUserNameOnBlur()" class="Input_login_text_unfocus" maxlength="50" tabindex="1" value="用户名/邮箱/手机号" />';
+//  str = str + '      <input name="Password" id="LoginAreaPassword" maxlength="20" type="password" onblur="HeadPasswordOnBlur()" onfocus="HeadPasswordOnClick()" class="Input_login_password_unfocus" tabindex="2" placeholder="请输入密码" />';
+//  str = str + '	   <input type="hidden" name="urlfile" id="urlfile" value="' + window.location.href + '" />';
+//  str = str + '      <div class="Login_setting">';
+//  str = str + '        <input id="AutoLogin" checked="checked" tabindex="4" value="1" type="checkbox" name="AutoLogin" class="chkAutoLogin" />';
+//  str = str + '        <span class="autoLogin">自动登录</span>';
+//  //一般登录
+//  if (type == 0) {
+//    str = str + '        <a class="getPwd" href="http://www.shoudurc.com/personal/sys/GetPassword/" target="_blank">忘记密码？</a>';
+//    str = str + '      </div>';
+//    str = str + '      <input class="LoginButton" tabindex="4" value="登  录" type="submit" name="btnLogin" />';
+//    str = str + '      <div style="margin:5px 0 6px 30px"> </div>';
+//  }
+//  //查看优质点评登录下提示
+//  else if (type == 1) {
+//    str = str + '        <a class="getPwd" href="http://www.shoudurc.com/personal/sys/GetPassword/" target="_blank">忘记密码？</a>';
+//    str = str + '      </div>';
+//    str = str + '      <input class="LoginButton" tabindex="4" value="登  录" type="submit" name="btnLogin" />';
+//    str = str + '      <div style="margin:5px 0 6px 30px">*登录并完善简历后再点评可获得查看优质点评的权限！</div>';
+//  }
+//  //不登录点评
+//  else if (type == 2) {
+//    str = str + '          <a style="text-decoration:none;color:#888;line-height:20px;" href="http://www.shoudurc.com/personal/sys/GetPassword/" target="_blank">忘记密码？</a>';
+//    str = str + '      </div>';
+//    str = str + '      <input class="LoginButtons" tabindex="4" value="登  录" type="submit" name="btnLogin" />';
+//    str = str + '      <a class="unloginComment" style="cursor:pointer" onclick="parent.popup.ibClose();ShowComment()">不登录写点评</a>';
+//    str = str + '      <div style="margin:5px 0 6px 30px">*登录并完善简历后再点评可获得查看优质点评的权限！</div>';
+//  }
+//  //查看优质面经登录下提示
+//  else if (type == 3) {
+//    str = str + '        <a class="getPwd" href="http://www.shoudurc.com/personal/sys/GetPassword/" target="_blank">忘记密码？</a>';
+//    str = str + '      </div>';
+//    str = str + '      <input class="LoginButton" tabindex="4" value="登  录" type="submit" name="btnLogin" />';
+//    str = str + '      <div style="margin:5px 0 6px 30px">*登录并完善简历后再发表面经可获得查看优质面经的权限！</div>';
+//  }
+//  //不登录写面经
+//  else if (type == 4) {
+//    str = str + '          <a style="text-decoration:none;color:#888;line-height:20px;" href="http://www.shoudurc.com/personal/sys/GetPassword/" target="_blank">忘记密码？</a>';
+//    str = str + '      </div>';
+//    str = str + '      <input class="LoginButtons" tabindex="4" value="登  录" type="submit" name="btnLogin" />';
+//    str = str + '      <a class="unloginComment" style="cursor:pointer" onclick="parent.popup.ibClose();ShowInterview()">不登录写面经</a>';
+//    str = str + '      <div style="margin:5px 0 6px 30px">*登录并完善简历后再发表面经可获得查看优质面经的权限！</div>';
+//  }
+//  str = str + '    </form>';
+//  str = str + '  </div>';
+//  str = str + '  <div style="float:right;margin:0 35px 20px 0;font-family:微软雅黑;">';
+//  str = str + '    <span style="font-size:14px;color:#888">您还没有账号？</span><br />';
+//  str = str + '    <a href="http://www.shoudurc.com/personal/sys/register" target="_blank" style="display:inline-block;margin-top:10px;text-decoration:none;">';
+//  str = str + '      <span style="font-size:14px;color:#fd893c">立即注册</span>';
+//  str = str + '      <span class="goRegister"></span>';
+//  str = str + '    </a><br />';
+//  str = str + '    <a href="http://www.shoudurc.com/personal/sys/oneminute" target="_blank" style="display:inline-block;margin-top:10px;text-decoration:none;">';
+//  str = str + '      <span style="font-size:14px;color:#105aa1">一分钟填写简历</span>';
+//  str = str + '      <span class="goOneMinute"></span>';
+//  str = str + '    </a><br />';
+//  str = str + '    <span style="display:inline-block;font-size:14px;color:#888;margin-top:20px;">使用以下账号直接登录：</span><br />';
+//  str = str + '    <a href="javascript:void(0)" onclick="GoLoinRedirect(1)" title="QQ账号登录" ><span class="Input_Qq"></span></a>';
+//  if (_("hdnIsShowSina").value == "1") {
+//    str = str + '    <a href="javascript:void(0)" onclick="GoLoinRedirect(2)" title="新浪微博账号登录" ><span class="Input_Sina"></span></a>';
+//  }
+//  if (_("hdnIsShowRenRen").value == "1") {
+//    str = str + '    <a href="javascript:void(0)" onclick="GoLoinRedirect(3)" title="人人网账号登录" ><span class="Input_Rr"></span></a>';
+//  }
+//  str = str + '  </div>';
+//  str = str + '</div>';
+//  return str;
+//}
+
+function HeadUserNameOnClick() {
+  var txtUserName = _("LoginAreaUserName");
+  if (txtUserName.value == "用户名/邮箱/手机号") {
+    txtUserName.value = "";
+  }
+  //txtUserName.className = "Input_login_text_unfocus";
+}
+function HeadUserNameOnBlur() {
+  var txtUserName = _("LoginAreaUserName");
+  if (txtUserName.value == "") {
+    txtUserName.value = "用户名/邮箱/手机号";
+    //txtUserName.className = "Input_login_text";
+  }
+}
+function HeadPasswordOnClick() {
+  var txtPassword = _("LoginAreaPassword");
+  if (txtPassword.className == "Input_login_password_unfocus") {
+    txtPassword.value = "";
+  }
+  txtPassword.className = "Input_login_password";
+}
+function HeadPasswordOnBlur() {
+  var txtPassword = _("LoginAreaPassword");
+  if (txtPassword.value == "") {
+    txtPassword.className = "Input_login_password_unfocus";
+  }
+}
+function closeLoginArea() {
+  if (document.getElementById("pageHeadLogin")) {
+    document.body.removeChild(document.getElementById("pageHeadLogin"));
+  }
+  if (document.getElementById("LoginMask")) document.body.removeChild(document.getElementById("LoginMask"));
+}
+
+function HeadLoginCheckSubmit() {
+  if (_("LoginAreaUserName").value == "" || _("LoginAreaUserName").value == "用户名/邮箱/手机号") {
+    alert("请输入用户名");
+    _("LoginAreaUserName").focus();
+    return false;
+  }
+  if (_("LoginAreaPassword").value == "") {
+    alert("请输入密码");
+    _("LoginAreaPassword").focus();
+    return false;
+  }
+	 if (!_("chkAgreement").checked) {
+    alert("您需要接受用户协议，才可以继续使用网站！");
+   
+    return false;
+  }
+  //  if(!InFreeze(5))
+  //    return false;
+  _("LoginAreaUserName").value = escape(_("LoginAreaUserName").value);
+  _("LoginAreaPassword").value = escape(_("LoginAreaPassword").value);
+  return true;
+}
+
+function JobApply(id, type, ApplyAlert) {
+  if (ApplyAlert && ApplyAlert != "") {
+    if (ApplyAlert.indexOf("基本信息") > -1 || ApplyAlert.indexOf("求职意向") > -1 || ApplyAlert.indexOf("教育背景") > -1 || ApplyAlert.indexOf("工作经历") > -1) {
+      ApplyCvStep(ApplyAlert,id);
+    } else {
+      popup.clearData();
+      popup.isHeader = 1;
+      popup.headerTitle = "网站消息";
+      popup.isMessageTip = 0;
+      popup.drag = 0;
+      popup.mask = 1;
+      popup.W = 420;
+      popup.H = 165;
+      popup.dockTop = 25;
+      popup.bodyHtml = ApplyAlert;
+      popup.creatDiv();
+    }
+    return;
+  }
+  ids = "";
+  if (id) {
+    ids = id;
+    if (type && type != "SubTemp") ids = document.getElementById("JobID" + id).value;
+  } else {
+    id = "";
+    var _cb = document.getElementsByName("chkChecked");
+    for (i = 0; i < _cb.length; i++) if (_cb[i].checked) id += _cb[i].value + ",";
+
+    if (!id) {
+      alert("请选择您要申请的职位！");
+      return;
+    }
+    ids = id;
+  }
+  if (IsLogin.length > 0) {
+    if (ids) {
+      document.getElementById("lnkJobApply").href = "http://www.shoudurc.com/personal/jm/JobApplyBatch?id=" + ids;
+      if (document.all) document.getElementById("lnkJobApply").click();
+      else {
+        var evt = document.createEvent("MouseEvents");
+        evt.initEvent("click", true, true);
+        document.getElementById("lnkJobApply").dispatchEvent(evt);
+      }
+    }
+  } else {
+    if (ids) {
+      //infoboxsjv("", 650, 1, "", -100, -350, '<iframe frameborder="0" scrolling="no" style="width:650px;height:310px;background-color: #F7F7F7;padding-top:0px;" src="/personal/jv/JobApplyByNoLogin?id=' + ids + '"></iframe>', "");
+      showJobApplyLogin(ids);
+    }
+  }
+  //window.location.href = "http://www.shoudurc.com/personal/jm/JobApplyBatch.asp?id=" + ids;
+}
+
+function addCookie(objName, objValue, objHours) { //添加cookie
+  var str = objName + "=" + escape(objValue);
+  if (objHours > 0) { //为0时不设定过期时间，浏览器关闭时cookie自动消失
+    var date = new Date();
+    var ms = objHours * 3600 * 1000;
+    date.setTime(date.getTime() + ms);
+    str += "; expires=" + date.toGMTString();
+  }
+  document.cookie = str;
+}
+
+function getCookie(objName) { //获取指定名称的cookie的值
+  var arrStr = document.cookie.split("; ");
+  for (var i = 0; i < arrStr.length; i++) {
+    var temp = arrStr[i].split("=");
+    if (temp[0] == objName) return unescape(temp[1]);
+  }
+}
+
+function SearchWordFocus() {
+  if (_("txtKeyWord").value == "请输入关键字..." || _("txtKeyWord").value == "会计/财务/人力/客服/设计…" ) {
+    _("txtKeyWord").value = "";
+  }
+}
+
+function SearchWordBlur() {
+  if (_("txtKeyWord").value == "请输入关键字..." || trim(_("txtKeyWord").value) == "") {
+    _("txtKeyWord").value = "请输入关键字..."
+  }
+}
+
+function ShowSalary(jobtypeid, regionid) {
+  var strUrl = "/personal/jv/salaryreport?dcRegionID=" + regionid.substr(0, 4) + "&JobTypeID=" + jobtypeid;
+  infoboxsjv("参考工资", 760, 420, "", -100, -330, "<div style=\"padding:15px 30px\"><iframe width=\"700\" height=\"370\" scrolling=\"no\" frameborder=\"0\" src=\"" + strUrl + "\"></iframe></div>");
+}
+
+function ShowCpMap(obj, lat, lng, name, address, type) {
+  var strUrl = "/personal/jv/CompanyMap?lat=" + lat + "&lng=" + lng + "&name=" + escape(name) + "&address=" + escape(address);
+  if (!type) {
+    infoboxsjv("", 840, 515, "", 0, 0, "<iframe width=\"840\" height=\"515\" scrolling=\"no\" frameborder=\"0\" src=\"" + strUrl + "\"></iframe>");
+  } else {
+    infoboxsjv("", 840, 515, "", 350, -400, "<iframe width=\"840\" height=\"515\" scrolling=\"no\" frameborder=\"0\" src=\"" + strUrl + "\"></iframe>");
+  }
+
+  var btnClose = document.getElementById("msg1closeBtn");
+  btnClose.parentNode.removeChild(btnClose);
+}
+
+function TriggleDetail(obj) {
+  var no = obj.id.substr(10);
+  var detail = $('#tablelist #trDetail' + no);
+  if (detail.css('display') != 'none') {
+    $('#tablelist #imgtrigger' + no).removeClass('IcoListMin').addClass('IcoListPlus');
+    detail.hide();
+    $('#imgApply' + no).show();
+  } else {
+    $('#tablelist #imgtrigger' + no).removeClass('IcoListPlus').addClass('IcoListMin'); ;
+    detail.show();
+    $('#imgApply' + no).hide();
+  }
+	
+}
+function TriggleDetail(obj, row) {
+if ($('#trDetail' + row).css("display") == "none") {
+    addViewLog(row);
+    $(obj).attr("class", "PointerUp");
+    $('#trDetail' + row).css("display", "table-row");
+  }
+  else {
+    $(obj).attr("class", "PointerDown");
+    $('#trDetail' + row).css("display", "none");
+  }
+}
+
+function ChangeList(page, obj) {
+  _("divList1").style.display = "none";
+  _("spPageNo1").className = "PageNo_noSelect";
+  if (_("divList2")) {
+    _("divList2").style.display = "none";
+    _("spPageNo2").className = "PageNo_noSelect";
+  }
+  if (_("divList3")) {
+    _("divList3").style.display = "none";
+    _("spPageNo3").className = "PageNo_noSelect";
+  }
+  _("divList" + page).style.display = "";
+  obj.className = "PageNo_select";
+  window.location.href = "#";
+}
+
+function ViewBrief(show, hide) {
+  //document.getElementById("lblBrief" + hide).style.display = "none";
+  document.getElementById("lblBrief" + show).style.display = "";
+  $("#lblBrief" + hide).slideUp("slow");
+  //$("#lblBrief" + show).slideDown("slow");
+}
+//切换企业形象图
+function LoadCpImage() {
+  var sWidth = $("#focus").width();
+  var len = $("#focus ul li").length;
+  var index = 0;
+  var picTimer;
+  var btn = "<div class='btnBg'></div><div class='btn'>";
+  for (var i = 0; i < len; i++) {
+    btn += "<span></span>";
+  }
+  btn += "</div><div class='preNext pre'><div class='leftArrow'></div></div><div class='preNext next'><div class='rightArrow'></div></div>";
+  $("#focus").append(btn);
+  $("#focus .btnBg").css("opacity", 0);
+  $("#focus .btn span").css("opacity", 0.4).mouseenter(function () {
+    index = $("#focus .btn span").index(this);
+    showPics(index);
+  }).eq(0).trigger("mouseenter");
+  $("#focus .pre").css("opacity", 0.0).hover(function () {
+    if (index == 0) {
+      $(this).css("cursor", "text");
+    } else {
+      $(this).css("cursor", "pointer");
+      $(this).stop(true, false).animate({
+        "opacity": "0.5"
+      },
+      300);
+    }
+  },
+  function () {
+    $(this).stop(true, false).animate({
+      "opacity": "0"
+    },
+    300);
+  });
+  $("#focus .next").css("opacity", 0.0).hover(function () {
+    if (index == len - 1) {
+      $(this).css("cursor", "text");
+    } else {
+      $(this).css("cursor", "pointer");
+      $(this).stop(true, false).animate({
+        "opacity": "0.5"
+      },
+      300);
+    }
+  },
+  function () {
+    $(this).stop(true, false).animate({
+      "opacity": "0"
+    },
+    300);
+  });
+  $("#focus .pre").click(function () {
+    if (index == 0) {
+      return;
+    }
+    index -= 1;
+    if (index == -1) {
+      index = len - 1;
+    }
+    showPics(index);
+  });
+  $("#focus .next").click(function () {
+    if (index == len - 1) {
+      return;
+    }
+    index += 1;
+    showPics(index);
+  });
+  $("#focus ul").css("width", sWidth * (len));
+  $("#focus").hover(function () {
+    clearInterval(picTimer);
+  },
+  function () {
+    picTimer = setInterval(function () {
+      index++;
+      if (index == len) {
+        index = 0;
+      }
+      showPics(index);
+    },
+    5000);
+  }).trigger("mouseleave");
+  function showPics(index) {
+    if (index == len - 1) {
+      $("#focus .next").css({
+        "opacity": "0.0",
+        "cursor": "text"
+      });
+    }
+    if (index == 0) {
+      $("#focus .pre").css({
+        "opacity": "0.0",
+        "cursor": "text"
+      });
+    }
+    var nowLeft = -index * sWidth;
+    $("#focus ul").stop(true, false).animate({
+      "left": nowLeft
+    },
+    300);
+    $("#focus .btn span").stop(true, false).animate({
+      "opacity": "0.4"
+    },
+    300).eq(index).stop(true, false).animate({
+      "opacity": "1"
+    },
+    300);
+  }
+}
+
+//批量关注职位
+function JobAttentionBatch() {
+  var ids = "";
+  var _cb = document.getElementsByName("chkChecked");
+  for (i = 0; i < _cb.length; i++) if (_cb[i].checked) ids += _cb[i].value + ",";
+
+  if (!ids) {
+    alert("请选择职位!");
+    return;
+  }
+  ids = ids.substr(0, ids.length - 1);
+  if (ids) {
+    var postStr = "ids=" + ids;
+    var url = "/Personal/js/AjaxJobAttentionBatch";
+    Ajax("POST", url, postStr, ajaxJobAttentionBatchUpdate, false);
+  } else alert("请选择您要关注的职位！");
+}
+
+function ajaxJobAttentionBatchUpdate(obj) {
+  if (obj.responseText == "-101") {
+    ShowNoticeTip("请正确操作");
+  } else {
+    ShowBindLove();
+  }
+}
+
+//加关注爱心效果
+var strLove = "<div class=\"love-bg love-anim\"></div>";
+function ShowBindLove() {
+  if ($(".love-bg").length > 0) {
+    $(".love-bg").remove();
+  }
+  $(document.body).append(strLove);
+}
+
+function fx() {
+  var myDate = new Date();
+  var paraAnd = "&";
+  var strUrl = "";
+  if (location.href.indexOf("?") < 0) {
+    paraAnd = "?";
+  }
+  share.fxid = myDate.getYear() + "" + myDate.getMonth() + "" + myDate.getDate() + "" + myDate.getHours() + "" + myDate.getMinutes() + "" + myDate.getSeconds() + "" + myDate.getMilliseconds();
+  strUrl = "http://"+window.location.host + "/personal/jb" + jobid + ".html" + paraAnd + "fxid=" + share.fxid;
+  share.url = strUrl;
+  share.subsiteID = subsiteId;
+  share.pageID = jobid;
+  share.pageMark = "1";
+  share.erweima = "Http://www.qlrc.com/common/shareqrcode?strdata=url=" + share.url;
+  document.getElementById("jobErweimaImg").src = share.erweima;
+}
+
+function closeIntentionReg() {
+  $(".IntentionReg").remove();
+  $.cookie('regtips', '2');
+}
+
+function DisComplaints(jobId, userName, mobile, email,caMainID) {
+    var str = '';
+    str += '  <table style="border-spacing:0px 10px;margin-left: 35px;">';
+    str += '   <tr><td valign="top"><span style="color:red;">*</span>投诉原因： </td>';
+    str += '   <td><textarea style="width:248px;height:58px;" id="txtComplaintWhy" name="txtComplaintWhy" maxlength="200" oninput="checkNumLen()" onpropertychange = "checkNumLen()""></textarea></td><td>还可输入<span id="ComplaintNumLen" style="color:#EF813B;"> 200 </span>字</td></tr>';
+    str += '   <tr><td> <span style="color:red;">*</span>联系人：</td>';
+    str += '    <td><input type="text" name="txtUserName" id="txtUserName" maxlength="11" value="' + userName + '" class="txtUserName" style="height:25px;width:248px;" /></td><td></td></tr>';
+    str += '   <tr><td><span style="color:red;">*</span>联系电话：</td>';
+    str += '    <td><input type="text" name="txtMobile" id="txtMobile" maxlength="11" value="' + mobile + '" class="txtMobile" style="height:25px;width:248px;" /></td><td></td></tr>';
+    str += '   <tr><td><span style="color:red;">*</span>电子邮箱：</td>';
+    str += '    <td><input type="text" name="txtEmail" id="txtEmail" maxlength="11" value="' + email + '" class="txtEmail" style="height:25px;width:248px;" /></td><td></td></tr>';
+
+    str += '     <tr><td></td><td style="padding-top:12px;"><input type="button" value="确 定" onClick="RefreshComplaints(' + jobId +','+caMainID+ ')" class="popupBtn" />'
+    str += '  <input type="button" onclick="popup2.ibClose()" value="取 消" class="popupBtnCancel" /></td><td></td></tr>'
+    str += '  </table>';
+    popup2.clearData();
+    popup2.isHeader = 1;
+    popup2.isMessageTip = 0;
+    popup2.drag = 0;
+    popup2.mask = 3;
+    popup2.headerTitle = "投诉";
+    popup2.W = 480;
+    popup2.H = 300;
+    popup2.isFilter = 1;
+    popup2.dockObj = "";
+    popup2.dockLeft = 0;
+    popup2.dockTop = -130;
+    popup2.bodyHtml = str;
+    popup2.creatDiv();
+}
+
+function checkNumLen() {
+    var area = $("#txtComplaintWhy");
+    var value = area.val();
+    if (value.length > 200) {
+        area.val(value.substring(0, 200));
+    }
+    if (value.length > 200) {
+        $("#ComplaintNumLen").html(0);
+    } else {
+        $("#ComplaintNumLen").html(200 - value.length);
+    }
+}
+
+function RefreshComplaints(jobId, caMainID) {
+    var txtComplaintWhy = $("#txtComplaintWhy").val();
+    var userName = $("#txtUserName").val();
+    var mobile = $("#txtMobile").val();
+    var email = $("#txtEmail").val();
+    if ($.trim(userName).length == 0) {
+        alert('联系人不能为空!');
+        return;
+    }
+    if ($.trim(mobile).length == 0) {
+        alert('手机号码不能为空!');
+        return;
+    }
+    if (!CheckRule("mobile", mobile)) {
+        alert('请输入正确的手机号!');
+        return;
+    }
+    if ($.trim(email).length == 0) {
+        alert('联系邮箱不能为空!');
+        return;
+    }
+    if (!CheckRule("email", email)) {
+        alert('请输入正确的电子邮箱!');
+        return;
+    }
+    if ($.trim(txtComplaintWhy).length == 0) {
+        alert('投诉原因不能为空!');
+        return;
+    }
+    $.post("/Personal/Jv/SaveComplaints", { jobId: jobId, txtComplaintWhy: txtComplaintWhy, userName: userName, mobile: mobile, email: email, caMainID: caMainID }, function (data) {
+        alert("投诉已提交!");
+        popup2.ibClose();
+    });
+}

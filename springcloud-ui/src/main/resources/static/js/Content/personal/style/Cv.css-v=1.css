@@ -1,0 +1,226 @@
+/***************************2013-07-26 Peter 添加 新版个人会员中心简历修改样式***********************/
+.ContentRight .CvStepNav{width:527px; height:35px; margin-top:10px;margin-left:5px;font-size:14px;line-height: 35px;}
+.ContentRight .CvStepNav p {background: url("../images/ico_jm-1.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_jm.png*/ 0px 0px no-repeat; float:left; padding-left:38px; display:inline-block;}
+.ContentRight .CvStepNav .StepOne{ background-position:0px -502px;}
+.ContentRight .CvStepNav .StepTwo{ background-position:0px -570px;}
+.ContentRight .CvStepNav .StepTwoUnable{ background-position:0px -536px;}
+.ContentRight .CvStepNav .StepSeparate {width:100px; height:1px; background:#FB6C04; float:left; margin:16px;}
+/*错误提示*/
+.ContentRight .CvMainPart table td .TipsError{margin-left:10px; padding-left:20px; background:url("../Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat;display: inline-block;line-height: 16px;color:#FD713E; background-position:0px -512px; font-size:12px; font-family:"宋体";*zoom:1; vertical-align:middle;}
+.ContentRight .CvMainPart table td .TipsError b{ font-weight:normal;}
+/*错误提示*/
+.ContentRight .CvMainPart{margin-top:10px;width:100%; border-bottom:1px solid #E0E0E0;}
+.ContentRight .CvMainPart h1{ font-size:14px;color:#f86e01;height:20px; line-height:20px; border-left:4px solid #F36000; padding-left:10px;}
+.ContentRight .CvMainPart h1 span {display:inline-block; float:left; width:75px;}
+.ContentRight .CvMainPart h1 div {height:1px; background:#E3E3E3; float:left; width:700px; margin-top:8px;}
+.ContentRight .CvMainPart table th{ text-align:right;padding-right:20px; font-weight:normal;padding:7px 0px; height:25px;}
+.ContentRight .CvMainPart table td{padding:7px 10px;}
+.ContentRight .CvMainPart .TextInput{ width:243px; height:35px; line-height:35px; border:1px #DBDBDB solid; border-radius:4px; padding-left:10px; vertical-align:middle;}
+.ContentRight .CvMainPart .Textarea{width:365px; height:60px; line-height:20px; padding:10px;}
+.ContentRight .CvMainPart .PopupSelect {width:253px; height:37px; border-radius:4px; border:1px solid #DBDBDB; padding-left:10px; text-align:left; background:url("../images/ico_jm-1.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_jm.png*/ 230px -1337px no-repeat #FFF; cursor:pointer; vertical-align:middle;}
+.ContentRight .CvMainPart .Short{width:114px; background-position:91px -1337px;}
+.ContentRight .CvMainPart .Middle{width:170px; background-position:147px -1337px;}
+.ContentRight .CvMainPart .Long{width:353px; background-position:330px -1337px;}
+.ContentRight .CvMainPart .Multi {background-position-y:-433px;}
+.ContentRight .CvMainPart .Required {border-color:#FF7A4D;}
+.ContentRight .CvMainPart .BtnGender{ width:47px; height:32px; line-height:30px; text-align:center;border:1px solid #D9DBD8; background:#FFF; font-family:"微软雅黑"; border-radius:2px;cursor:pointer; margin-right:5px;}
+.ContentRight .CvMainPart .BtnGender.Active{ color:#0BC10A;background:url("../Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat 0px -1276px; border:none; width:47px; height:31px;}
+.ContentRight .CvMainPart .CheckBox {margin:0px 5px 0px 5px;}
+.ContentRight .CvMainPart .CheckBoxTips {vertical-align:middle; display:inline-block;}
+.ContentRight .CvStepFooter{ margin-top:20px;}
+.ContentRight .CvStepFooter .btnConfirm{ margin-top:10px; width:120px; height:35px; background:#FF7A4D;border:none; cursor:pointer;color:#FFF; font-size:14px; font-family:"微软雅黑"; border-radius:4px; line-height:35px; margin-left:157px;}
+.ContentRight .CvStepFooter .btnCancel{ margin-top:10px; width:120px; height:35px; background:#E8EBF2;border:none; cursor:pointer;color:#000; font-size:14px; font-family:"微软雅黑"; border-radius:4px; line-height:35px; margin-left:10px;}
+.ContentRight .CvStepFooter .btnStepPre{background: url("../images/img_CvEditor.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_CvEditor.gif*/ -0px -391px; width:92px; height:34px;border:none;font-size:14px; font-weight:bold; line-height:34px; text-align:center;color:#fff;margin-left:10px;cursor:pointer;}
+
+.ContentRight .CvMainPart .CvMainPartTable{padding-top:10px;margin-top:5px;padding-bottom:20px;}
+.ContentRight .CvMainPart .CvTable{overflow: hidden;margin-bottom: 10px;height: auto;}
+.ContentRight .CvMainPart .CvTable .LeftLine{vertical-align:top; padding:0px; border-right:1px solid #89E787;}
+.ContentRight .CvMainPart .CvTable .LeftLine div{width:11px;height:24px;background: url("../images/ico_jm-1.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_jm.png*/ 0px -364px #FFF; position:relative; left:7px; float:right;}
+
+.ContentRight .CvMainPart table td .PaPhoto .PaPhotoNotice{width: 80px;text-align: center;background: #000000;height: 20px;float: left;position: relative;line-height: 20px;bottom: 20px;opacity: 0.3;filter: alpha(opacity=30);}
+.ContentRight .CvMainPart table td .PaPhoto .PaPhotoNoticeTxt{width: 80px;text-align: center;height: 20px;float: left;position: relative;line-height: 20px;bottom: 40px; z-index:4;color:#fff;}
+.ContentRight .CvMainPart table td .PaPhoto .PaPhotoNoticeDel{width: 80px;text-align: center;background: #000000;height: 100px;float: left;position: relative;line-height: 20px;bottom: 100px;opacity: 0.3;filter: alpha(opacity=30);}
+.ContentRight .CvMainPart table td .PaPhoto .PaPhotoNoticeTxtDel{width: 80px;text-align: center;height: 20px;float: left;position: relative;line-height: 20px;bottom: 200px; z-index:4;color:#fff;background:url("../images/ico_jm-2.png")/*tpa=http://www.shoudurc.com/content/personal/images/ico_jm.png*/ 22px -3910px;}
+.ContentRight .CvMainPart table td span{vertical-align:middle; word-break:break-all;}
+.ContentRight .CvMainPart table th span{color:#f25b16; margin-right:10px;}
+.ContentRight .CvMainPart table .MoreWorkInfo{height:12px;padding-left:17px;background: url("../images/ico_jm-1.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_jm.png*/ no-repeat 0px -1337px; width:300px;margin-left:20px;color:#43B576;cursor:pointer;}
+.ContentRight .CvMainPart table .Hide{background-position:0px -1467px;}
+.ContentRight .CvMainPart table .Show{background-position:0px -1502px;}
+
+.ContentRight .CvMainPart .ModifyEmail{ text-decoration:underline;margin-left:10px; background: url("../images/ico_jm-2.png")/*tpa=http://www.shoudurc.com/content/personal/images/ico_jm.png*/ 0px -173px no-repeat; padding-left: 18px;height: 16px;line-height: 16px;display: inline-block; text-decoration:none;}
+
+.ContentRight .CvMainPart .btnModify{width: 25px;background: url("../images/ico_jm-1.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_jm.png*/ 0px -171px; padding-left: 20px; height: 20px; line-height: 20px;display:inline-block;float: right; color:#004C91; cursor:pointer; margin-right:10px; font-size:12px; font-weight:normal;}
+.ContentRight .CvMainPart .Delete{background: url("../images/ico_jm-1.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_jm.png*/ -5px -1199px;}
+.ContentRight .CvMainPart .btnSave{width:100px;height:35px;background:#FF771B;cursor:pointer;margin-right:15px;border:none; font-weight:bold;color:#FFF; border-radius:4px; font-size:14px;}
+.ContentRight .CvMainPart .btnCancel{width:100px;height:35px;background:#F9F9F9;cursor:pointer;margin-right:15px;border:1px solid #DCDBDB;border-radius:4px; font-size:14px;}
+.ContentRight .CvMainPart .btnTopPlus{width:11px;height:11px;background: url("../images/img_CvEditor.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_CvEditor.gif*/ -0px -284px;cursor:pointer; position:relative;left:6px; }
+.ContentRight .CvMainPart .btnAddNewOne{color:#FF6600;margin-top:10px;width:130px;height:35px;cursor:pointer;border:1px solid #FAB13E;background:#FFF3EB;margin-left: 370px; border-radius:4px;}
+.ContentRight .CvMainPart .textDescription{width:462px; height:40px;}
+.ContentRight .CvMainPart .btnResumeUpload{width:81px;height:25px; margin-left:10px;background: url("../images/img_CvEditor.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_CvEditor.gif*/ -0px -212px;border:none; text-align:center;cursor:pointer;}
+.ContentRight .CvMainPart .DocResumeUpload{line-height:25px;margin-left:127px;margin-top:30px;}
+.ContentRight .CvMainPart .DocResumeUpload span{margin-left:10px;}
+.ContentRight .CvMainPart .txtSpeciality{width:600px;height:100px;padding:10px;resize:none;}
+.ContentRight .CvMainPart span.LongText{max-width:490px;line-height:21px; display:block;}
+.ContentRight .CvMainPart .txtTraDetails{width:440px;padding:10px;height:100px;resize:none;}
+.ContentRight .ResumeTopTitle{margin-top:20px; width:100%;border-bottom:1px #cbcbcb solid;float:left;line-height: 12px;}
+.ContentRight .ResumeTopTitle div{height:30px; line-height:22px;}
+.ContentRight .ResumeTopTitle .OperateCv{float:left;}
+.ContentRight .ResumeTopTitle .OperateCv a{margin-left:15px; vertical-align:middle;}
+.ContentRight .ResumeTopTitle .SwitchCv{float:right; margin-top:2px;}
+.ContentRight .ResumeTopTitle .NameModify{width:250px; height:25px; border:1px solid #cbcbcb; display:inline-block; border-radius:4px;*zoom:1;*display:inline; vertical-align:middle;}
+.ContentRight .ResumeTopTitle .NameModify input{margin-left:5px; height:25px; line-height:25px; border:none; width:195px; vertical-align:middle; background:none;}
+.ContentRight .ResumeTopTitle .NameModify input.ModifyConfirm{width:39px; border-left:1px solid #CBCBCB; background:none; cursor:pointer; height:20px; line-height:20px;}
+
+.ContentList{width:140px;height:380px;border:1px #f96a02 solid; position:absolute;background: #fff;}
+.ContentList .ContentListTop{height:60px;width:110px;border-bottom:1px #fedec7 solid;padding:5px 15px;}
+.ContentList .ContentListTop span{display:block; font-family:Arial, Helvetica, sans-serif;font-size:32px; font-weight:bold;color:#fc7411; margin-top:10px;text-align: center;}
+.ContentList .ContentListTop span font{ font-family:'微软雅黑';font-size:30px; font-weight:normal;margin-left:3px;}
+.ContentList .ContentListMain{width:140px;margin-top:5px;text-align:center;}
+.ContentList .ContentListMain table{margin:0 auto;}
+.ContentList .ContentListMain table td{height:26px; text-align:right;padding-right:20px;}
+.ContentList .ContentListMain table td span{color:#f25b16;}
+.ContentList .ContentListMain table td .Green{width:23px;height:12px;display:block;background:#52bb56;color:#FFF;text-align:center;}
+.ContentList .ContentListMain table td .Grey{width:23px;height:12px;display:block;background:#b6b6b6;color:#FFF;text-align:center;}
+.ContentList .ContentListFoot{width:140px; text-align:center;}
+.ContentList .ContentListFoot input{margin-top:10px;height:21px;border:none;cursor:pointer;color:#fff;}
+.ContentList .ContentListFoot .btnComplate{width:67px;background: url("../images/img_CvEditor.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_CvEditor.gif*/ -0px -87px;}
+.ContentList .ContentListFoot .btnView{width:51px;background: url("../images/img_CvEditor.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_CvEditor.gif*/ -0px -138px;}
+.Over{background:#FFCC00;color:#000000;cursor:pointer;}
+
+
+.CvPoint {width:150px; height:350px; position:absolute;}
+.CvPoint .PointStart{width:50px; height:59px; background:url("../images/ico_jm-1.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_jm.png*/ 0px -206px; margin-left:80px;}
+.CvPoint .PointStart span{display:inline-block; width:51px; text-align:center; font-size:14px; font-weight:bold; font-family:"微软雅黑"; line-height:15px;}
+.CvPoint .PointEnd{width:30px; height: 15px; background: url("../images/ico_jm-1.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_jm.png*/ 0px -343px; margin-left: 98px;}
+.CvPoint table td{height:35px; line-height:35px;}
+.CvPoint table td div.Separate{background:#00CC00; height:350px; width:2px; margin:0 auto;}
+.CvPoint table td a{padding-left: 20px;display:inline-block; width: 80px; height: 25px; line-height: 25px; background: url("../images/ico_jm-1.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_jm.png*/ 0px -624px;text-decoration: none; vertical-align:middle; color:#000;}
+.CvPoint table td.PointStatus div{background: url("../images/ico_jm-1.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_jm.png*/ 0px -407px; width:12px; height:20px; display:inline-block; position:relative; left:-8px; vertical-align:middle; float:left;}
+.CvPoint table td.PointStatus span{display:inline-block; width:20px; height:20px; line-height:20px; vertical-align:middle; float:left;}
+.CvPoint table tr.Ok td div{background-position:0px -307px;}
+.CvPoint table tr.Ok td a{background-position:0px -662px; color:#FFF;}
+.CvPoint table tr.Ok td span{color:#00CC00;}
+/**************照片样式****************/
+
+/***************************2013-07-15 Peter 添加 新版个人会员中心简历导入页面样式***********************/
+.ContentRight .CvImport{margin-left: 15px;margin-top: 20px;}
+.ContentRight .CvImport .CvImportTitle{color: #7d7d7d;}
+.ContentRight .CvImport .CvImportTitle span{font-size: 14px;font-weight: bold;margin-right: 20px;color: #f86e01;}
+.ContentRight .CvImport .CvImportMain{margin-top: 40px; text-align:center;} 
+.ContentRight .CvImport .CvImportMain .ImportFrom input{width: 15px;height: 15px;vertical-align: top;display: inline-block;border: none;background: none;margin: 0;padding: 0;font-size: 12px;margin-top: 4px;cursor: pointer;}
+.ContentRight .CvImport .CvImportMain .ImportFrom span{display: inline-block;line-height: 20px;text-decoration: none;}
+.ContentRight .CvImport .CvImportMain .ImportFrom .btnHelp{width:63px; height:24px;background: url("../images/img_CvCreatOption.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_CvCreatOption.gif*/ -0px -383px;vertical-align:middle;margin-top: 0px;}
+.ContentRight .CvImport .CvImportMain .ImportEditor{ margin-top:25px;}
+.ContentRight .CvImport .CvImportMain .ImportEditor .btnResumeImport{ width:120px; height:37px; border:none;background: url("../images/img_CvCreatOption.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_CvCreatOption.gif*/ -0px -477px; font-size:14px; font-weight:bold; color:#FFFFFF;padding:7px 15px;margin-top: 20px;}
+.ContentRight .CvImport .CvImportMain .ImportEditor .ClearText{ height:14px; padding-left:16px; color:#3366CC;float:right;cursor:pointer; background: url("../images/img_CvCreatOption.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_CvCreatOption.gif*/ -0px -585px; margin-right:15px; margin-top:15px;}
+.ContentRight .Notice{width:800px; height:200px;float:left; margin-top:30px;line-height:25px;}
+.ContentRight .Notice .Left{float:left;color:#F38530; font:18px '微软雅黑'; width:60px; font-weight:bold;}
+.ContentRight .Notice .Right{float:left;color:#6F6F6F; width:700px; margin-left:10px;text-align:left;}
+
+.nr{overflow:hidden;zoom:1;}
+div.nr{width:auto;height:305px;line-height:24px;text-align:left;overflow-y:scroll}
+.title{font-weight: bold;color: #0000FF;text-decoration: none;}
+.ul{line-height:20px;list-style-type:none;}
+.li{background-color:#F2F4FD;padding:1px 0 1px 5px;width:436px}
+.li1{background-color:#FDFBF2;padding:1px 0 1px 5px;width:436px}
+.ul li{cursor:pointer}
+
+.top-title {
+	background-color: #f4f4f4;
+	border-bottom: 1px solid #ccc;
+	font-size: 14px;
+	height: 30px;
+	line-height: 30px;
+	position: relative;
+	text-align: center;
+	color: #666;
+}
+.top-title .arrow-left {
+	position: absolute;
+	left: 2px;
+	top: 2px;
+	border: 1px #f4f4f4 solid;
+	line-height: 0;
+	width: 24px;
+	height: 24px;
+	border-radius: 3px;
+	cursor: pointer;
+}
+.top-title .arrow-left i {
+	border: 5px solid transparent;
+	border-right: 5px solid #f86e01;
+	display: inline-block;
+	margin: 7px 9px 0 -6px;
+}
+.top-title .arrow-right {
+	position: absolute;
+	right: 2px;
+	top: 2px;
+	border: 1px #f4f4f4 solid;
+	line-height: 0;
+	width: 24px;
+	height: 24px;
+	border-radius: 3px;
+	cursor: pointer;
+}
+.top-title .arrow-right i {
+	border: 5px solid transparent;
+	border-left: 5px solid #f86e01;
+	display: inline-block;
+	margin: 7px -6px 0 9px;
+}
+.top-title .arrow-right:hover {
+	border: 1px #dcdcdc solid;
+	background-color: #fdfdfd;
+}
+.top-title .arrow-left:hover {
+	border: 1px #dcdcdc solid;
+	background-color: #fdfdfd;
+}
+
+.popup .ResumeSucess{ width:350px; margin: 15px auto; border-bottom:1px dotted #F34B09;height: 47px;padding: 10px 0px;}
+.popup .ResumeSucess span{float:left;display:inline-block; background: url("../images/ico_pub_2-1.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_pub_2.png*/ 0px -1827px no-repeat; width: 200px; height: 36px;line-height: 36px;padding-left: 51px;margin-left: 20px;font-size: 20px;color: #F34B09;font-weight: bold;}
+.popup .ResumeSucess div{cursor:pointer;background: url("../../Homepage/NewIndex/PopupNew/p2.gif")/*tpa=http://www.shoudurc.com/content/Homepage/NewIndex/PopupNew/p2.gif*/ no-repeat ;float:right;width:20px; height:19px;}
+.popup .ResumeNext{width: 350px;margin: 0px auto;}
+.popup .ResumeNext .NextTip{padding-left: 20px;color: #858585;}
+.popup .ResumeNext .NextOperate{width: 235px;margin: 10px auto 0px auto;}
+.popup .ResumeNext .NextOperate span{display: inline-block;width: 85px;height: 15px;background: url("../images/ico_pub_2-1.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_pub_2.png*/ 8px -1728px no-repeat;padding-top: 77px; color:#325FC3; cursor:pointer;}
+
+/**************个人标签*******************/
+#divCvTags .CvMainPartTable{width: 730px; margin-left: 80px;}
+#divCvTags #pCvTagsNotice{color:#808080;}
+#divCvTags .divCvTagsEditArea{display:none; margin-top: 15px;}
+#divCvTags .btnAddNewOne{margin-left: 290px;}
+#divCvTags .EditMain{ width:610px;border:1px solid #E6E6E6;float: left;padding: 3px;position:relative; z-index: 2;}
+#divCvTags .EditMain .spNotice{}
+#divCvTags .EditMain #txtTagsEdit{color:#7F7F7F; border:none;margin-top:8px;margin-left: 13px; margin-bottom:8px;letter-spacing: -1px;    width: 184px;} 
+#divCvTags .EditMain .divOneTag{cursor:pointer;margin: 3px 7px;}
+#divCvTags .EditMain .divOneTag .spCondition{background-position: 2px -98px;}
+#divCvTags .EditMain .divOneTag:hover .spCondition{background-position: 0px -55px;}
+#divCvTags .divPushTags{margin: 5px 0;width: 640px;float: left;position: relative; }
+#divCvTags .divPushTags .spPushTagsNotice{margin-top: 12px;float: left;width: 100%;}
+#divCvTags .divPushTags span{vertical-align: middle;}
+#divCvTags .divPushTags div{display: inline-block; vertical-align: middle;}
+#divCvTags .divPushTags a{display: inline-block; vertical-align: middle;margin-top: 12px;float: left;margin-left: 15px;    position: absolute;right: 10px;top:0px; }
+#divCvTags .divPushTags .divOneTag{cursor:pointer;}
+#divCvTags .divPushTags .divOneTag:hover{}
+#divCvTags .divPushTags .divOneTag:hover .spTagText{color:#0269DF;}
+#divCvTags .divPushTags .divOneTag:hover .spCondition{background-position: 0px -221px;}
+#divCvTags .divPushTags .divOneTag.Selected{cursor:auto;}
+#divCvTags .divPushTags .divOneTag.Selected .spTagText{color:#B1B1B1;}
+#divCvTags .divPushTags .divOneTag.Selected .spCondition{background-position: 2px -181px;}
+#divCvTags .divPushTags .divOneTag.Selected:hover .spTagText{color:#B1B1B1;}
+#divCvTags .divPushTags .divOneTag.Selected:hover .spCondition{background-position: 2px -181px;}
+#divCvTags .divPushTags .divOneTag .spCondition{background-position: 2px -140px;}
+#divCvTags .divOneTag{height:27px; background: url("../Cv/Images/pic_cvtags.png")/*tpa=http://www.shoudurc.com/Content/Personal/Cv/Images/pic_cvtags.png*/ 0 0px no-repeat;padding-left: 12px; margin:7px;float:left;}
+#divCvTags .divOneTag .divTagMain{border:1px solid #CCCCCC; border-radius:4px;border-left: 0;    line-height: 25px; height: 25px;}
+#divCvTags .divOneTag .spTagText{text-align: center;min-width: 43px;float:left; height: 25px;line-height: 25px;}
+#divCvTags .divOneTag .spCondition{float:left;width: 14px; height: 14px;    background: url("../Cv/Images/pic_cvtags.png")/*tpa=http://www.shoudurc.com/Content/Personal/Cv/Images/pic_cvtags.png*/ 0 -142px no-repeat;margin-top: 5px; margin-right: 3px;}
+#divCvTags #divMoreTag{position: absolute;    background: #FFF;border:1px solid #CCCCCC; width: 155px; display: none;}
+#divCvTags #divMoreTag .TagPopTop{width: 155px;height:25px; line-height: 25px;    text-align: center;}
+#divCvTags #divMoreTag .TagList{width: 155px;}
+#divCvTags #divMoreTag .TagList span{ display: block;height: 30px; line-height: 30px; width: 145px;padding-left: 10px;cursor: pointer;}
+#divCvTags #divMoreTag .TagList span:hover{background: #E6E6E6}
+#divCvTags .divCvTagsList{float:left;    margin-bottom: 20px;}
+#divCvTags .divCvTagsList .spTagText{padding:0 4px;}
+#divCvTags .divCvTagsList .spCondition{display: none;}

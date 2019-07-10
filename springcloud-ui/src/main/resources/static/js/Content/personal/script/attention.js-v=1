@@ -1,0 +1,268 @@
+function _(name) { return document.getElementById(name); }
+//页面跳转
+function ApplyAttentionRedir(replytype) {
+  if (replytype == "1") {
+    location.href = "http://www.shoudurc.com/Personal/jm/AttentionCompany";
+  }
+  else {
+    location.href = "http://www.shoudurc.com/Personal/jm/AttentionJob";
+  }
+}
+$(
+  function(){
+    $("#cpAttention").each(
+      function(){
+        if($(this).html().indexOf("已关注")>0){
+          $(this).css("cursor","default");
+        }
+        
+      }
+    );
+    
+  }
+);
+$(document).ready(function () {
+  //动态提醒
+  $(".attMenuR label").click(function () {
+    if ($(this).hasClass("attCheckedIcon")) {
+      //取消提醒
+      $(this).attr("class", "attCheckIcon");
+      var pamainid = $(this).attr("pid");
+      var type = $(this).attr("ptype");
+      UpdateNotice(pamainid, type, 0);
+      if (type == 1) {
+        ShowNoticeTip("成功取消APP动态提醒");
+      }
+      else if (type == 2) {
+        ShowNoticeTip("成功取消邮箱动态提醒");
+      }
+      else if (type == 3) {
+        ShowNoticeTip("成功取消微信动态提醒");
+      }
+    }
+    else {
+      //加入提醒
+      var pamainid = $(this).attr("pid");
+      var type = $(this).attr("ptype");
+      UpdateNotice(pamainid, type, 1);
+      $(this).attr("class", "attCheckedIcon");
+      if (type == 1) {
+        ShowNoticeTip("成功开启APP动态提醒");
+      }
+      else if (type == 2) {
+        ShowNoticeTip("成功开启邮箱动态提醒");
+      }
+      else if (type == 3) {
+        ShowNoticeTip("成功开启微信动态提醒");
+      }
+    }
+  });
+});
+
+//ajax修改提醒状态
+function UpdateNotice(pamainid, type, isnotice) {
+  $.post("/Personal/jm/AjaxUpdateNotice", {
+    pamainid: pamainid,
+    type: type,
+    isnotice: isnotice
+  }, function (data) {
+  });
+}
+
+//点击微信显示弹层
+function ShowWeixin() {
+  if ($(".weixinBox").is(":hidden")) {
+    //$(".weixinBox").show();
+    document.getElementById("spWeiXinBox").style.display = "";
+  }
+  else {
+    $(".weixinBox").hide();
+  }
+}
+//职位关注全取消
+function CancelAttentionAll() {
+  if ($(".attJobBox .attCheckedIcon").length == 0) {
+    alert("请选择要取消的关注");
+  }
+  else {
+    var jobids = "";
+    $(".attJobBox .attCheckedIcon").each(function () {
+      var jobid = $(this).attr("jobid");
+      jobids = jobids + jobid + ",";
+    })
+    CancelAttention("job", jobids);
+  }
+}
+//取消关注
+function CancelAttention(type, id) {
+  popup.clearData();
+
+  popup.isHeader = 1;
+  popup.headerTitle = "取消关注";
+  popup.isMessageTip = 0;
+  popup.drag = 1;
+  popup.mask = 3;
+  popup.W = 494;
+  popup.H = 1;
+  popup.isFilter = 1;
+  popup.dockObj = "";
+  popup.dockTop = -100;
+  popup.dockLeft = -350;
+  var strType = "";
+  if (type == "job") {
+    strType = "该职位";
+  }
+  else if (type == "cp") {
+    strType = "该企业";
+  }
+  var strHtml = '<div class="attPopupBorderL"></div>' +
+	  ' <div class="attPopupMain">' +
+	  '   <div class="attPopupBorderT"></div>' +
+	  '   <div style="width:291px;height:180px; padding-left:40px">' +
+	  '     <div style="float:left;width: 415px;margin-top: 26px;"><div style="font-size:14px;">取消关注后，您就不能第一时间了解到' + strType + '的最新招聘动态了。</div>' +
+	  '    <div style="font-size:14px;color:#F26B00;float:left;padding-top:17px">您真的要取消对' + strType + '的关注吗？</div><div style="clear:both"></div>' +
+	  '     <div style="margin-top: 42px;text-align:center;"><span class="btnAttConfirm" onclick="DelAttention(\'' + id + '\')">确定</span>  <span class="btnCancle" onclick="popup.ibClose()">点错了</span></div></div>' +
+	  '   </div>' +
+	  '   <div class="attPopupBorderB"></div>' +
+	  ' </div>' +
+	  '<div class="attPopupBorderR"></div>';
+  popup.bodyHtml = strHtml;
+  popup.creatDiv();
+}
+
+function DelAttention(id) {
+  var url = escape(document.location.toString());
+  window.location.href = "http://www.shoudurc.com/Personal/jm/DelAttention?ID=" + id + "&url=" + url;
+}
+
+//弹层关闭
+function CloseOver(obj) {
+  $(obj).attr("class", $(obj).attr("class") + "Over");
+}
+function CloseOut(obj) {
+  $(obj).attr("class", $(obj).attr("class").replace("Over", ""));
+}
+//显示地图
+function showMapPlace(href) {
+  popup.clearData();
+  popup.isHeader = 0;
+  popup.mask = 2;
+  popup.W = 820;
+  popup.H = 488;
+  popup.isFilter = 0;
+  popup.bodyHtml = "<iframe id='mapbarframe' border='0' vspace='0' hspace='0' marginwidth='0' marginheight='0' framespacing='0' frameborder='0' scrolling='no' width='805' height='488' src='" + href + "'></iframe>";
+  popup.creatDiv();
+}
+
+function CheckLoginAttention(obj, id, type, i) {
+  if (IsLogin.length == 0) {
+    //showLogin(0);
+    showJobApplyLogin('', 1);
+  }
+  else {
+    CheckAttention(obj, id, type, i);
+  }
+}
+
+function CheckAttention(objClick, id, type, i) {
+  var tmp = "spFav";
+  $.post("/Personal/jv/AjaxPaAttentionProc", {
+    ID: id,
+    type: type
+  }, function (obj) {
+    ShowBindLove();
+    var vText = obj.responseText;
+    if (vText != "-101") {
+      _(tmp + i).innerHTML = "<span>已关注</span>";
+      $("#" + (tmp + i) + "").addClass("Yes");
+    }
+  });
+}
+
+function CheckCpLoginAttention(cpid, type) {
+  if($("#cpAttention").length>0){
+    if($("#cpAttention b").html()=="已关注"||$("#cpAttention").val()=="已关注"||$.trim($("#cpAttention").html())=="已关注"){
+      return ;
+    }
+  }
+  if (IsLogin.length > 0) {
+    $.post("/Personal/jv/AjaxPaAttentionProc", {
+      ID: cpid,
+      type: type
+    },
+	function (obj) {
+      var vText = obj.responseText;
+      ShowBindLove();
+      if (vText != "-101") {//成功
+        _("cpAttention").innerHTML = "<b>已关注</b>";
+		    _("cpAttention").value = "已关注";
+        $("#cpAttention").css("cursor","default");
+        
+      }
+    });
+  }
+  else {
+    if (cpid) {
+      showJobApplyLogin('', 1);
+    }
+  }
+}
+
+function CheckJobLoginAttention(jobid, type) {
+  if($(".JobAttention").html()=="已收藏"){
+    return;
+  }
+  if (IsLogin.length > 0) {
+    $.post("/Personal/jv/AjaxPaAttentionProc", {
+      ID: jobid,
+      type: type
+    }, function (obj) {
+      var vText = obj.responseText;
+      ShowBindLove();
+      if (vText != "-101") {
+        //成功
+        _("jobAttention").innerHTML = "<span>已收藏</span>";
+        $("#jobAttention").addClass("Yes");
+		$(".JobAttention").html("已收藏").addClass("Yes");
+        
+      }
+    });
+  }
+  else {
+    if (jobid) {
+      showJobApplyLogin('', 1);
+    }
+  }
+}
+
+function CheckJobLoginAttention2(jobid, obj, type) {
+  if (IsLogin.length > 0) {
+    $.post("/Personal/jv/AjaxPaAttentionProc", {
+      ID: jobid,
+      type: type
+    }, function (obj) {
+      var vText = obj.responseText;
+      ShowBindLove();
+      //if (vText != "-101") {
+      //成功
+      $("#obj").innerHTML = "已关注";
+      //$("#jobAttention").removeClass("JobAttr").addClass("JobAttrTo");
+      //}
+    });
+  }
+  else {
+
+    if (cpid) {
+      infoboxs("", 650, 1, "", -100, -350, '<iframe frameborder="0" scrolling="no" style="width:650px;height:310px;background-color: #F7F7F7;padding-top:0px;" src="/personal/jv/JobApplyByNoLogin?id=' + jobid + '"></iframe>', "");
+    }
+  }
+}
+
+//加关注爱心效果
+var strLove = "<div class=\"love-bg love-anim\"></div>";
+function ShowBindLove() {
+  if ($(".love-bg").length > 0) {
+    $(".love-bg").remove();
+  }
+  $(document.body).append(strLove);
+}

@@ -1,0 +1,325 @@
+//前台分享的JS
+var arrShareClass = ["", "Weibo", "Weixin", "Renren", "Qzone", "Tweibo", "QQ", "Tieba", "Douban"]; //分享超链接的样式
+var arrShareName = ["", "新浪微博", "微信", "人人网", "QQ空间", "腾讯微博", "QQ好友", "百度贴吧", "豆瓣网"]; //分享超链接的文字
+
+var shareRight = {
+    type: "", //分享类型1.新浪微博，2.微信，3.人人，4.QQ空间，5.腾讯微博，6.QQ好友7.百度贴吧，8.豆瓣.
+    url: "", //分享链接
+    title: "", //分享标题
+    summary: "", //分享摘要（可选）
+    pic: "", //分享图片（可选）
+    desc: "", //分享理由（可选）
+    saveshare: 1, //是否保存分享记录（默认1保存）
+    pageMark: "", //分享的页面类型
+    pageID: "", //分享的ID 根据pageMark 来确定此ID的类型
+    shareBy: "", //1.个人 2.企业
+    shareMan: "", //分享人ID
+    subsiteID: "", //地区ID
+    erweima: "", //微信二维码图片url
+    fxid: "", //分享Id
+    Share: function () {//详细的分享方法
+        //重新生成Url信息
+        var myDate = new Date();
+        var paraAnd = "&";
+        var strshareUrl = "";
+        if (location.href.indexOf("?") < 0) {
+            paraAnd = "?";
+        }
+        shareRight.fxid = myDate.getYear() + "" + myDate.getMonth() + "" + myDate.getDate() + "" + myDate.getHours() + "" + myDate.getMinutes() + "" + myDate.getSeconds() + "" + myDate.getMilliseconds();
+        strshareUrl = paraAnd + "fxid=" + shareRight.fxid;
+        if (this.showType == 3) {
+            strshareUrl = this.dockObj.getAttribute("fxUrl") + strshareUrl;
+        } else {
+            strshareUrl = location.href + strshareUrl;
+        }
+        shareRight.url = strshareUrl;
+
+        if (this.type == 1) {//新浪微博
+            var strUrl = "http://service.weibo.com/share/share.php?url=" + this.url + "&title=" + encodeURIComponent(this.title) + "&appkey=" + GetShareKey("Weibo", this.subsiteID);
+            if (this.pic.length > 0) {
+                strUrl += "&pic=" + this.pic;
+            }
+            window.open(strUrl, "_blank");
+        } else if (this.type == 2) {//微信
+            shareRightPop.ShowWeixin();
+        } else if (this.type == 3) {//人人
+            var strUrl = "http://widget.renren.com/dialog/share?resourceUrl=" + this.url + "&srcUrl=" + this.url + "&title=" + encodeURIComponent(this.title) + "&description=" + encodeURIComponent(this.summary);
+            if (this.pic.length > 0) {
+                strUrl += "&pic=" + this.pic;
+            }
+            window.open(strUrl, "_blank");
+
+        } else if (this.type == 4) {//QQ空间
+            var strUrl = "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=" + encodeURIComponent(this.url) + "&srcUrl=" + this.url + "&title=" + encodeURIComponent(this.title) + "&desc=" + encodeURIComponent(this.summary);
+            if (this.pic.length > 0) {
+                strUrl += "&pics=" + this.pic;
+            }
+            window.open(strUrl, "_blank");
+        } else if (this.type == 5) {//腾讯微博
+            var strUrl = "http://share.v.t.qq.com/index.php?c=share&a=index&url=" + this.url + "&title=" + encodeURIComponent(this.title) + "&appkey=" + GetShareKey("Tencent", this.subsiteID);
+            if (this.pic.length > 0) {
+                strUrl += "&pic=" + this.pic;
+            }
+            window.open(strUrl, "_blank");
+
+        } else if (this.type == 6) {//QQ好友
+            var strUrl = "http://connect.qq.com/widget/shareqq/index.html?url=" + this.url + "&summary=" + encodeURIComponent(this.summary) + "&title=" + encodeURIComponent(this.title) + "&desc=" + encodeURIComponent(this.desc);
+            if (this.pic.length > 0) {
+                strUrl += "&pics=" + this.pic;
+            }
+            window.open(strUrl, "_blank");
+
+        } else if (this.type == 7) {//百度贴吧
+            var strUrl = "http://tieba.baidu.com/f/commit/share/openShareApi?url=" + encodeURIComponent(this.url + "#0-tieba-1-" + addNumber(5) + "-7eff13ea8df1a334a227e1223f8d0dd3") + "&title=" + this.title + "&desc=" + this.summary;
+            if (this.pic.length > 0) {
+                strUrl += "&pic=" + this.pic;
+            }
+            window.open(strUrl, "_blank");
+        } else if (this.type == 8) {//豆瓣网
+            var strUrl = "http://www.douban.com/share/service?href=" + this.url + "&name=" + this.title + "&text=" + this.summary;
+            if (this.pic.length > 0) {
+                strUrl += "&image=" + this.pic;
+            }
+
+            window.open(strUrl, "_blank");
+        }
+    }
+
+}
+function addNumber(_idx) {//生成5位随机码用于百度贴吧分享
+    var str = '';
+    for (var i = 0; i < _idx; i += 1) {
+        str += Math.floor(Math.random() * 10);
+    }
+    return str;
+}
+function ShareRightThis(type) {//默认点击分享方式
+    shareRight.type = type;
+    shareRight.Share();
+    if (type != 2)//weixin
+    {
+        ShareAjax("post", "/Common/AddShareLog",
+  	"ShareID=" + shareRight.fxid +
+	"&Url=" + shareRight.url +
+	"&ShareMode=1" +
+	"&ShareWay=" + shareRight.type, UpdateShareInfoCallBack, true);
+    }
+}
+
+var shareRightPop = {
+    arrShare: "",   //显示的分享方式如 1.新浪微博，2.微信，3.人人，4.QQ空间，5.腾讯微博，6.QQ好友7.百度贴吧，8.豆瓣  用“|”分割
+    showType: "",  //显示方式 2弹出层
+    showText: 0,  //是否显示文字，0不显示（默认） 1显示
+    dockObj: "", //显示在页面内时，放分享的容器。如果是弹出层则依附的容器和鼠标经过弹出的控件
+    className: "",  //弹出层样式
+
+    Show: function () {//显示在页面内，或显示弹出层
+
+        var shareRightDiv = document.createElement("div");
+        shareRightDiv.setAttribute("id", "fxRight");
+        shareRightDiv.className = this.className;
+        //shareRightDiv.setAttribute("class", this.className);
+        var shareRightHtml = this.GenShareRightHtml();
+        shareRightDiv.innerHTML = shareRightHtml;
+        if (this.showType == 2) {//弹出层
+            shareRightDiv.style.display = "none";
+            this.dockObj.innerHTML += "<br>";
+            this.dockObj.appendChild(shareRightDiv);
+            this.dockObj.onmouseover = function () { shareRightPop.ShowPopup(); };
+            this.dockObj.onmouseleave = function () { shareRightPop.HidePopup(); };
+        }
+    },
+    GenShareRightHtml: function () {//生成分享内容
+        var strHtml = "";
+        strHtml += "<div class='fxRight_top'>分享到</div><ul style='margin: 0;padding: 5px 0;background: #fff;overflow: auto;overflow-x: hidden;'>";
+        for (var i = 0; i < this.arrShare.length; i++) {//遍历显示的分享方式。
+            var shareRightWayID = this.arrShare[i];
+            strHtml += "<li style=\"float: left;width: 100px;padding: 2px;margin-left: 6px;_margin-left: 3px;height: 28px;overflow: hidden;list-style: none;\">"
+            strHtml += "<a href='javascript:void(0)' target='_self' style='height:43px;width:116px;margin-top:5px;color: #565656;font: 12px '宋体';display: block;padding: 5px 0 5px 28px;text-decoration: none;border: 1px solid #fff;line-height: 18px;background: url(/Content/shareMain/Images/ico_fxMain.png) no-repeat;' onclick='ShareRightThis(" + shareRightWayID + ")' class='" + arrShareClass[shareRightWayID] + "'>";
+            if (this.showText == 1) {//是否显示文字
+                strHtml += arrShareName[shareRightWayID];
+            }
+            strHtml += "</a></li>";
+        }
+        strHtml += "</ul>"
+        return strHtml;
+    },
+    HidePopup: function () {//隐藏弹出层
+
+        if (document.getElementById("fxRight")) {
+            document.getElementById("fxRight").style.display = "none";
+            event.cancelBubble = true;
+        }
+    },
+    ShowPopup: function () {//显示弹出层
+        //计算依附控件的位置，然后调整弹出层位置
+        if (this.showType == 3) {
+            var objTemp = document.getElementById("fxRight");
+            objTemp.parentNode.removeChild(objTemp);
+            this.dockObj.appendChild(objTemp);
+        }
+        document.getElementById("fxRight").style.display = 'block';
+        return;
+    },
+    ShowWeixin: function () {//显示微信弹出层
+        if (document.getElementById("weixinPopup")) {//当前页面已经显示过了，则直接显示上次显示那个 不再重新构建html
+            document.getElementById("weixinPopup").style.display = 'block';
+            document.getElementById("fxRight_weixin_img").src = shareRight.erweima.substring(0, shareRight.erweima.indexOf("?strdata=") + 9) + escape("url=" + shareRight.url.substring(shareRight.url.indexOf(".com") + 4));
+            return;
+        }
+        var weixinPop = document.createElement("div");
+        weixinPop.setAttribute("id", "weixinPopup");
+        weixinPop.setAttribute("class", "fxRight_weixin_popup");
+        var popHtml = "<div class='fxRight_weixin_head'><span>分享到微信朋友圈</span><a target='_self' href='javascript:void(0);' onclick='shareRightPop.hideWeixin();' class=\"fxRight_weixin_close\">×</a></div>"
+        popHtml += "<img src='" + shareRight.erweima.substring(0, shareRight.erweima.indexOf("?strdata=") + 9) + escape("url=" + shareRight.url.substring(shareRight.url.indexOf(".com") + 4)) + "' id='fxRight_weixin_img' class='fxRight_weixin_img'/>";
+        popHtml += "<div class=\"fxRight_weixin_foot\">打开微信，点击底部的“发现”，<br>使用“扫一扫”即可将网页分享至朋友圈。</div>";
+        weixinPop.innerHTML = popHtml;
+        document.getElementsByTagName("body").item(0).appendChild(weixinPop);
+    },
+    hideWeixin: function () {//隐藏微信弹出层
+        if (document.getElementById("weixinPopup")) {
+            document.getElementById("weixinPopup").style.display = "none";
+        }
+    }
+}
+function AjaxUpdateShareInfo() {//记录被分享页面点击次数
+    var strUrl = location.href;
+    var sid = "";
+    sid = getQueryString("fxid");
+    if (sid != null && sid.length > 0) {//通过被分享的链接点击过来的
+        //var shareID = strUrl.substring(strUrl.indexOf("$S") + 2);
+        ShareAjax("post", "/Common/AjaxAddShareClickNum", "ShareID=" + sid, UpdateShareInfoCallBack, true);
+    }
+}
+
+function UpdateShareInfoCallBack() {
+
+}
+function ShareAjax(method, url, parm, callback, bool) {//Ajax方法
+    var xmlHttp = false;
+    if (window.ActiveXObject) {
+        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    else if (window.XMLHttpRequest) {
+        xmlHttp = new XMLHttpRequest();
+    }
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4) {
+            if (xmlHttp.status == 200) {
+				if(callback!=null){
+                callback(xmlHttp);
+				}
+            }
+            else {
+                // popbox.error(xmlHttp.status + "：" + xmlHttp.responseText);
+            }
+        }
+    }
+    xmlHttp.open(method, url, bool);
+    xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=gb2312");
+    xmlHttp.send(parm);
+    if (navigator.userAgent.indexOf("Firefox") > 0)
+        callback(xmlHttp);
+
+}
+//获取参数传递
+function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
+//sinaAppKey
+var arrWeiboKey = [["30", "2202256327"],
+					["83", "3840073200"],
+					["10", "1055269866"],
+					["12", "349909839"],
+					["32", "3089170965"],
+					["40", "666302626"],
+					["41", "2121482659"],
+					["61", "4026249852"],
+					["70", "1785357725"],
+					["72", "569919246"],
+					["71", "3086713289"],
+					["35", "1444178748"],
+					["60", "2914279474"],
+					["11", "3884612626"],
+					["63", "1117575216"],
+					["36", "1877891748"],
+					["33", "4174041935"],
+					["42", "1264424268"],
+					["80", "3384736342"],
+					["82", "3512538574"],
+					["31", "1152871854"],
+					["14", "114941745"],
+					["84", "269330324"],
+					["13", "1362589557"],
+					["22", "4199305985"],
+					]
+//TencentAppKey
+var arrTencentKey = [
+					["10", "100255309"],
+					["11", "100255660"],
+					["12", "100255665"],
+					["13", "100255668"],
+					["14", "100255676"],
+					["20", "100255678"],
+					["21", "100255680"],
+					["22", "100255684"],
+					["30", "100255686"],
+					["31", "100255689"],
+					["32", "100249844"],
+					["33", "100255692"],
+					["34", "100255695"],
+					["35", "100255696"],
+					["36", "100255698"],
+					["40", "100255703"],
+					["41", "100255706"],
+					["42", "100255708"],
+					["60", "100255709"],
+					["61", "100255712"],
+					["62", "100255714"],
+					["63", "100255718"],
+					["64", "100255722"],
+					["70", "100255736"],
+					["71", "100255740"],
+					["72", "100255746"],
+					["80", "100255754"],
+					["81", "100255760"],
+					["82", "100255765"],
+					["83", "100255768"],
+					["84", "100255771"],
+					["2002", "100255780"],
+					["4002", "100255952"],
+					["3102", "100255783"],
+					["3402", "100255933"],
+					["3502", "100255943"],
+					["3108", "100255925"],
+					["3103", "100255789"],
+					["4013", "100255963"],
+					["4010", "100255959"],
+					["1203", "100255778"],
+					["3404", "100255936"],
+					["3106", "100255921"],
+					["3503", "100255946"],
+					["3107", "100255924"],
+					["3506", "100255948"],
+				]
+function GetShareKey(Type, subsiteID) {
+    if (Type == "Weibo") {
+        for (var i = 0; i < arrWeiboKey.length; i++) {
+            if (arrWeiboKey[i] != undefined) {
+                if (arrWeiboKey[i][0] == subsiteID) {
+                    return arrWeiboKey[i][1];
+                }
+            }
+        }
+    } else if (Type == "Tencent") {
+        for (var i = 0; i < arrTencentKey.length; i++) {
+            if (arrTencentKey[i] != undefined) {
+                if (arrTencentKey[i][0] == subsiteID) {
+                    return arrTencentKey[i][1];
+                }
+            }
+        }
+    }
+}

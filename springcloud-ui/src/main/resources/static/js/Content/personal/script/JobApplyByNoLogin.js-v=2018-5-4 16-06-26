@@ -1,0 +1,345 @@
+var arrAjaxValue = new Array();
+var arrAjaxState = new Array();
+function _(s) {
+  return document.getElementById(s)
+}
+function EmailOnClick() {
+  var txtEmail = _("txtDocEmail");
+  if (txtEmail.value == "手机号") {
+    txtEmail.value = "";
+    txtEmail.style.color = "#000";
+  }
+  $("#spDocEmail").show();
+}
+function txtEmail_blur(obj) {
+
+    if (!obj.value) {
+        $("#spDocEmail").html("");
+        obj.value = "手机号";
+        obj.style.color = "#b3b4b6";
+        return;
+    }
+    if (!CheckRule("mobile", obj.value))
+    { 
+    $("#spDocEmail").html(strError + '<font>请填写正确的手机号！</font>');
+    }else {
+       
+        $.post("/personal/sys/AjaxGetMobileVerification", { "mobile": obj.value }, function (data) {
+            if (data == "0") {
+                $("#spDocEmail").html(strError + '<span style="color:red;">手机号已存在,您可以登录或取回密码。</span>');
+            } else {
+                $("#spDocEmail").html(strSuccess);
+            }
+        })
+    }
+}
+
+function VeriyCodeOnClick() {
+    var txtEmail = _("txtWordVeriyCode");
+    if (txtEmail.value == "验证码") {
+        txtEmail.value = "";
+        txtEmail.style.color = "#000";
+    }
+    //$("#spDocEmail").show();
+}
+
+function txtVeriyCode_blur(obj) {
+    if (!obj.value) {
+        _("txtWordVeriyCode").innerHTML = "";
+        obj.value = "验证码";
+        obj.style.color = "#b3b4b6";
+        return;
+    }
+}
+
+function SetEmail(obj) {
+  var data = obj.responseText;
+  if (data == 0) _("spDocEmail").innerHTML = strSuccess;
+  if (data == 1) _("spDocEmail").innerHTML = strError + "<font>邮箱已经存在，请重新输入</font>";
+  if (isNaN(data)) alert("系统错误，请刷新后重试");
+  else {
+    arrAjaxValue[arrAjaxValue.length] = _("txtDocEmail").value;
+    arrAjaxState[arrAjaxState.length] = data;
+  }
+}
+
+function AjaxExist(value) {
+  for (var i = 0; i < arrAjaxValue.length; i++) if (value == arrAjaxValue[i]) return arrAjaxState[i];
+}
+function NameOnClick() {
+  var txtName = _("txtDocName");
+  if (txtName.value == "您的姓名") {
+    txtName.value = "";
+    txtName.style.color = "#000";
+  }
+  $("#spDocName").show();
+}
+function txtName_blur(obj) {
+  if (!obj.value) {
+    _("spDocName").innerHTML = "";
+    obj.value = "您的姓名";
+    obj.style.color = "#b3b4b6";
+    return;
+  }
+  if (!CheckRule("chinese", obj.value)) _("spDocName").innerHTML = strError + '<font>请输入汉字</font>';
+  else {
+    if (obj.value.length == 1) _("spDocName").innerHTML = strError + '<font>请输入至少2个汉字</font>';
+    else _("spDocName").innerHTML = "";
+  }
+}
+function AttachmentOnClick() {
+  var txtAttachment = _("txtAttachment");
+  if (txtAttachment.value == "上传附件简历") {
+    txtAttachment.value = "";
+  }
+}
+function AttachmentOnBlur() {
+  var txtAttachment = _("txtAttachment");
+  if (txtAttachment.value == "") {
+    txtAttachment.value = "上传附件简历";
+  }
+}
+function checkApplyWordForm() {
+  if (!_("txtDocEmail").value || _("txtDocEmail").value == "电子邮箱") {
+    alert("请输入您的电子邮箱！");
+    _("txtDocEmail").focus();
+    return false;
+  }
+  if (!_("txtDocName").value || _("txtDocName").value == "您的姓名") {
+    alert("请输入您的姓名！");
+    _("txtDocName").focus();
+    return false;
+  }
+  if (!_("attachment").value) {
+    alert("请选择简历文档！");
+    _("attachment").focus();
+    return false;
+  } 
+  var fileExt = _("attachment").value.substring(_("attachment").value.lastIndexOf(".") + 1);
+  if (fileExt.toUpperCase() != "DOC" && fileExt.toUpperCase() != "XLS" && fileExt.toUpperCase() != "DOCX" && fileExt.toUpperCase() != "XLSX") {
+    alert("请选择正确格式的简历文档");
+    return false;
+  }
+
+  if (_("spDocName").innerHTML) return false;
+  if (_("spDocEmail").innerHTML.toLowerCase().indexOf("iconf") > 0) return false;
+  var fileName = _("attachment").value.substring(_("attachment").value.lastIndexOf("\\") + 1);
+  var str;
+  str = "http://www.shoudurc.com/content/Personal/script/@{@ViewBag.ImageManager}JobApplyByNoLoginProcNew.asp";
+  str += "?email=" + _("txtDocEmail").value;
+  str += "&name=" + escape(_("txtDocName").value);
+  str += "&cvfileName=" + escape(fileName);
+  str += "&gender=" + _("hdnSex").value;
+  str += "&jobid=" + $("#hidApplyJobId").val();
+  str += "&domain=@ViewBag.HttpPost";
+  str += "&provinceID=@ViewBag.MainSiteID";
+  _("frmApplyWord").action = str;
+  return true;
+}
+
+function showJobApplyLogin(ids, attention) {
+  RefreshQrImage();
+  $("#hidApplyJobId").val(ids);
+  if (attention == undefined) {
+    $("#hidIsJobApply").val("1");
+    $("#tab_Word").hide();
+    //$("#tab_Word").show();
+  } else {
+    $("#hidIsJobApply").val("0");
+    $("#tab_Word").hide();
+    $("#tab_Login").click();
+  }
+  $("#divApplyLogin").css("top", $(document).scrollTop() + 69).show();
+  $("#divApplyLogin").css("left", $(document).width()/2- 268).show();
+  $("#divApplyLogin_filter").css("top", $(document).scrollTop() + 58).show();
+  $("#divApplyLogin_filter").css("left", $(document).width()/2-278).show();
+}
+
+function showApplyLogin() {
+  document.getElementById('ContentLogin').style.display = "block";
+  document.getElementById('ContentDoc').style.display = "none";
+  document.getElementById('tab_Login').className = "Select";
+  document.getElementById('tab_Word').className = "UnSelect";
+  $("#divApplyLogin_filter").height($("#divApplyLogin").height() + 22);
+}
+
+function showApplyWord() {
+  document.getElementById('ContentLogin').style.display = "none";
+  document.getElementById('ContentDoc').style.display = "block";
+  document.getElementById('tab_Login').className = "UnSelect";
+  document.getElementById('tab_Word').className = "Select";
+  $("#divApplyLogin_filter").height($("#divApplyLogin").height() + 22);
+}
+function ChangeSex(sex) {
+  if (sex == 0) {
+    _("rbMale").className = "rbChecked";
+    _("rbFemale").className = "rbUnchecked";
+    _("hdnSex").value = "0";
+  } else {
+    _("rbMale").className = "rbUnchecked";
+    _("rbFemale").className = "rbChecked";
+    _("hdnSex").value = "1";
+  }
+}
+function TransferValue() {
+  _("txtAttachment").value = _("attachment").value;
+}
+
+function getInternetExplorerVersion() {
+  var rv = -1;
+  if (navigator.appName == 'Microsoft Internet Explorer') {
+    var ua = navigator.userAgent;
+    var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+    if (re.exec(ua) != null) {
+      rv = parseFloat(RegExp.$1);
+    }
+  }
+  return rv;
+}
+function checkVersion() {
+  var ver = getInternetExplorerVersion();
+  if (ver > -1) {
+    if (ver >= 7 && ver <= 10) {
+      _("attachment").className = "file2";
+      _("selFile").style.display = "none";
+      if (ver >= 9) {
+        _("fileover").className = "fileover1";
+      } else if (ver == 7) {
+        _("fileover").className = "fileover2";
+      }
+    }
+  }
+}
+
+function ApplyLogin() {
+  var navUrl = "";
+	var locationUrl=window.location.href;
+  if ($("#hidIsJobApply").val() == "1") {
+	  
+	  if(window.location.href.indexOf("/zhaopinhui")>-1){   //从招聘会页面过来的
+		  navUrl = locationUrl.substring(locationUrl.indexOf("/zhaopinhui"))+"?bm=1";
+	  }else if(window.location.href.indexOf("/salaryanalysis")>-1){  //从查工资页面申请的
+		  navUrl = '/personal/jm/JobApplyBatch?id=' + $("#hidApplyJobId").val();
+		  window.open('/personal/sys/login?urlfile=' + escape(navUrl));
+		  return ;
+	  }
+	  else{
+		  navUrl = '/personal/jm/JobApplyBatch?id=' + $("#hidApplyJobId").val();
+	  }
+  } else {
+	  if(window.location.href.indexOf("/padownload")>-1){  //从文档下载页面过来
+		  navUrl=window.location.pathname+window.location.search;
+	  }else{
+		  navUrl = window.location.pathname;
+	  }
+    
+  }
+  window.location.href = 'http://www.shoudurc.com/personal2018/sys/login?urlfile=' + escape(navUrl);
+}
+
+function ApplyLoginClose() {
+  $("#divApplyLogin").hide();
+  $("#divApplyLogin_filter").hide();
+}
+
+var intExpireSeconds = "1785";
+var winxinTimer1, winxinTimer2;
+var hasGen = 0
+function RefreshQrImage() {
+  hasGen = 1;
+	try {
+   document.getElementById("imgWinxinQr").style.display = "";
+}
+catch(err){
+    
+}
+  
+  if (!winxinTimer2) winxinTimer2 = setInterval('CheckWinxinLogin()', 5 * 1000)
+
+  $.post("/personal2018/sys/ajaxGetPaTicket?t=" + new Date().getTime(), {
+    ticketType: 1
+  }, function (data) {
+	  	try {
+   document.getElementById("imgWinxinQr").src = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + data;
+    
+}
+catch(err){
+    
+}
+   intExpireSeconds = 1780;
+    winxinTimer1 = setTimeout('RefreshQrImage()', intExpireSeconds * 1000);
+  });
+}
+function CheckWinxinLogin() {
+  $.post("/personal2018/sys/ajaxCheckWeChatStatus?t=" + new Date().getTime() + "&urlfile=" + escape('/personal/jm/JobApplyBatch?id=' + $("#hidApplyJobId").val()), {
+    ticketType: 1
+  }, function (data) {
+    if (data.length > 0) {
+      location.reload();
+    }
+
+  });
+}
+
+$(function() {
+  var _nTimer = 0,
+  _oGuide$ = $(".guide"),
+  _oGuideTrigger$ = $("#guideTrigger, #imgWinxinQr"),
+  _oMask$ = $(".mask");
+
+  function _back() {
+    _nTimer = setTimeout(function() {
+      _oMask$.stop().animate({
+        opacity: 0
+      },
+      function() {
+        $(".mask").hide()
+      });
+      _oGuide$.stop().animate({
+        marginLeft: "-120px",
+        opacity: 0
+      },
+      "400", "swing",
+      function() {
+        _oGuide$.hide();
+      });
+    },
+    100);
+  }
+  /*guide*/
+  _oGuide$.css({
+    "left": "50%",
+    "opacity": 0
+  });
+  _oGuideTrigger$.mouseover(function() {
+    clearTimeout(_nTimer);
+    _oMask$.show().stop().animate({
+      "opacity": 0.2
+    });
+    _oGuide$.css("display", "block").stop().animate({
+      marginLeft: "+168px",
+      opacity: 1
+    },
+    900, "swing",
+    function() {
+      _oGuide$.animate({
+        marginLeft: "+153px"
+      },
+      300);
+    });
+  }).mouseout(_back);
+
+  _oGuide$.mouseover(function() {
+    clearTimeout(_nTimer);
+  }).mouseout(_back);
+});
+$(function() {
+  checkVersion();
+  $("#divApplyLogin_filter").height($("#divApplyLogin").height() + 22);
+});
+
+function logjobpara(relationid, act)
+{
+  $("#hidRelationId").val(relationid);
+  $("#hidAction").val(act);
+}

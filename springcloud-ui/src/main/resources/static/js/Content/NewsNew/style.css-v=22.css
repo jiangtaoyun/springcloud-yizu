@@ -1,0 +1,396 @@
+/**********************Peter 新版个人会员中心改版 头部  头部导航 左侧导航  以及一些页面统一样式***************************/
+
+body{margin:0;padding:0;background:#fff;font:12px "新宋体",arial;color:#434343;}
+div,form,img,ul,ol,li,dl,dt,dd,p{margin:0;padding:0;border:0;}
+h1,h2,h3,h4,h5,h6{margin:0;padding:0;}
+img{vertical-align:top;}
+ul{list-style:none;}
+a{ text-decoration:none; color:#3364cb}
+/********************头部样式***********************/
+.ContentLogin .DuanxinLogin{border-right: 1px dashed #d5d5d5;width: 350px;padding-right: 25px;padding-top: 10px;float: left;}
+.ContentLogin .DuanxinLogin .UserMobile{height:40px;display: inline-block;margin-left: 30px;width: 307px;border: 1px solid #d5d5d5;}
+.ContentLogin .DuanxinLogin .UserMobile.Active{background-position:0px 0px;}
+.ContentLogin .DuanxinLogin .UserMobile span{background:url("../Personal/Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat 10px 9px;width:33px;height:40px;float:left;margin-top:1px;}
+.ContentLogin .DuanxinLogin .UserMobile.Active span{background-position:9px -83px;}
+.ContentLogin .DuanxinLogin .UserMobile input{float:left;background:none;border:none;width:227px;margin-top:1px;color:#757776;font-family:"微软雅黑";font-size:14px;padding-left:10px;line-height:40px;height:40px;margin-left:0;}
+.ContentLogin .DuanxinLogin .BtnLoginConfirm{margin-top:10px;width:288px;height:42px;background:#FF7A4D;border:none;cursor:pointer;color:#FFF;font-size:20px;font-family:"微软雅黑";border-radius:4px;line-height:42px;}
+.ContentLogin .DuanxinLogin .BtnLoginConfirm:hover{background:#FD5E29;}
+.ContentLogin .DuanxinLogin .TxtInputBg{height:40px;margin-top:15px;display: inline-block;margin-left: 30px;width: 307px;border: 1px solid #d5d5d5;background: none;}
+.ContentLogin .DuanxinLogin .TxtInputBg span{width: 33px;margin-left: -6px;}
+.ContentLogin .DuanxinLogin .TxtInputBg input{float:left;background:none;border:none;width:159px;margin-top:1px;color:#757776;font-family:"微软雅黑";font-size:14px;padding-left:15px;line-height:40px;outline:none;height:40px;}
+.ContentLogin .DuanxinLogin .TxtInputBg input.BtnReGet{vertical-align:middle;height:40px;line-height:35px;color:#F38351;background:#FFE5D4;border:1px solid #F3CEB4;border-radius:4px;width:105px;font-size:12px;padding:0px;cursor:pointer;margin-top:0;}
+.ContentLogin .DuanxinLogin .NoticeTd{height:25px;display: inline-block;}
+.ContentLogin .DuanxinLogin .AutoLogin{font-size:14px;font-family:"微软雅黑";}
+.ContentLogin .DuanxinLogin .AutoLogin span{vertical-align:middle;font-size:12px;}
+.ContentLogin .DuanxinLogin .AutoLogin a{vertical-align:middle;float:right;color:#0485C7;}
+.ContentLogin .LoginTopAll{margin-top: 12px;text-align: center;margin-left: 30px;width: 307px;border-bottom: 1px #F2F2F2 solid;display: inline-block;}
+.ContentLogin .LoginTop{float:left;width: 102px;height: 24px;color: #B7B7B7;font-family: "微软雅黑";font-size: 16px;cursor:pointer;}
+.ContentLogin .LoginTop.Yes{float:left;width: 102px;height: 24px;color:Black;border-bottom: 3px #fa6d01 solid;font-family: "微软雅黑";font-size: 16px;cursor:pointer;}
+.ContentLogin .SmartResumeTop span.No{border:none;color:#B7B7B7;}
+.DXSpan{background:url("../Homepage/NewIndex/images/in_Bg01.gif")/*tpa=http://www.shoudurc.com/content/Homepage/NewIndex/images/in_Bg01.gif*/ no-repeat -3px -120px;}
+.TxtInputBg span{background:url("../Personal/Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat;width:51px;height:40px;float:left;margin-top:1px;margin-left:5px;}
+.TxtInputBg.Cer span{background-position:15px -732px;}
+
+
+.Header{width:1100px;margin:0 auto;Height:50px;margin-top:10px;}
+.Header .Logo{float:left;width: 190px;height:42px;cursor:pointer}
+.Header .Spirit{float:left; width:150px; height:28px;background: url("../Personal/images/Nav_Main.gif")/*tpa=http://www.shoudurc.com/Content/Personal/images/Nav_Main.gif*/ 0px -84px;margin-top: 12px; margin-left:10px;}
+.Header .Right{float:right;width:500px;margin-top: 10px;}
+.Header .Right div{float:right; height:19px; margin-top:10px;line-height: 16px;}
+.Header .Right .LoginStatus{margin-right:5px;}
+.Header .Right .MobileSite{color:#E61F00;margin-right:20px;background: url("../Personal/images/Nav_Main.gif")/*tpa=http://www.shoudurc.com/Content/Personal/images/Nav_Main.gif*/ no-repeat -2px -23px; width:68px; padding-left:16px;cursor:pointer; padding-top:4px; margin-top:6px}
+.Header .Right .PersonLogin{margin-right:10px;background: url("../Personal/images/Nav_Main.gif")/*tpa=http://www.shoudurc.com/Content/Personal/images/Nav_Main.gif*/ no-repeat -159px -1px; width:50px; padding-left:25px;cursor:pointer}
+.Header .Right .PersonReg{margin-right:0px;width:50px; padding-left:5px;cursor:pointer}
+.Header .Right .CpLogin{background: url("../Personal/images/Nav_Main.gif")/*tpa=http://www.shoudurc.com/Content/Personal/images/Nav_Main.gif*/ no-repeat -0px -1px; width:50px; padding-left:25px;cursor:pointer}
+.Header .Right .HomePage{background: url("../personal/images/nav_bg.gif")/*tpa=http://www.shoudurc.com/content/personal/images/nav_bg.gif*/ 0 -16px; width:50px; padding-left:20px;cursor:pointer; height:15px}
+/********************头部导航样式***********************/
+.NavTop{ width:100%;background-color:#fa6d01; height:45px;}
+.NavTop .NavMain{ width:1100px; margin:0 auto;height:45px; position:relative;}
+.NavTop .NavMain .NavItems{}
+.NavTop .NavMain .NavItems a{color:#FFF; display:block; float:left; cursor:pointer; width:10%; text-align:center; font-size:16px; height:45px; line-height:45px;font-family: "微软雅黑";}
+.NavTop .NavMain .NavItems a:hover{text-decoration:none;}
+.NavTop .NavMain .CursorLine{ width:70px; background:#AF4C01; height:3px; position: absolute; bottom:0; left:20px;}
+/********************头部导航样式***********************/
+.NavBottom{ width:1100px; margin:0 auto; height:25px; line-height:30px; margin-top:5px; display:none;}
+.NavBottomUnSelect{ float:left; width: 55px; margin-left: 45px;}
+.NavBottomUnSelect a{color:black}
+.NavBottomSelect{float:left; width: 55px; margin-left: 45px;}
+.NavBottomSelect a{color:rgb(248,90,0); font-weight:bold;}
+/********************页脚样式***********************/
+.Footer {margin-left: 10px;padding: 10px 0 16px 10px;clear: both;margin: 10px auto; margin-top: 20px; text-align:center;border-top: 1px #DEDEDE solid;}
+/********************内容样式***********************/
+.BodyMain{width:1100px;margin:0 auto; border:0px solid #0F0;  margin-top:10px;}
+.place{ margin-top:8px; margin-left:10px;color:black}
+.place a{ color:black}
+.place a:hover{color:#0033FF; text-decoration:underline}
+.MainSearch{border:0px solid #f00; height:58px;}
+.MainSearchLeft {float:left; height:58px; width:3px; background:url("images/rm.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/rm.gif*/ no-repeat;  }
+.MainSearchA{background:url("images/rmbg.jpg")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/rmbg.jpg*/ repeat-x; float:left;height:48px; width:980px; padding-top:10px }
+.MainSearchRight {float:left; height:58px; width:3px; background:url("images/rm.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/rm.gif*/ no-repeat -35px 0px;  }
+.SpFormBBut2{ width:229px; background:url("images/rm.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/rm.gif*/ no-repeat 0px -68px; border:none; background-color:#FFF; height:30px ; color:#949494;text-align:left; padding-left:20px; cursor:pointer}
+.SpFormBBut3{ width:388px; background:url("images/rm.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/rm.gif*/ no-repeat 0px -108px; border:none; background-color:#FFF; height:30px ;color:#949494; text-align:left;padding-left:20px;cursor:pointer}
+.SpFormBBut4{ width:111px; background:url("images/rm.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/rm.gif*/ no-repeat 0px -146px; border:none; background-color:#FFF; height:30px ;font-size:14px;cursor:pointer}
+.MainSearchA span{  background:url("images/rm.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/rm.gif*/ no-repeat -16px -298px;padding:3px 0px;padding-right:30px; font-size:14px;cursor:pointer}
+
+.MainContent{margin-top:10px;}
+.ContentLeft{border:1px solid #e3e7ea; float:left; padding-left:15px; width:715px; margin-bottom:20px}
+.MainContent table{border:1px solid #e3e7ea; float:left}
+.MainContent table a{color:#000}
+.MainContent table td{color:#000}
+.MainContent table a:hover{color:#0033FF; text-decoration:underline}
+.ContentLeft{border:1px solid #e3e7ea; float:left; margin-bottom:20px;}
+.ContentLeft table{border:none; float:none}
+.ContentLeft table th{ text-align:left }
+.BottomB{ margin-top:10px; line-height:30px;margin-right:10px;color:#000 }
+
+.MainContent .tr1{background-color:#f2f3f5; height:35px;}
+.MainContent .tr1 td{background-color:#f2f3f5;white-space:nowrap; line-height:25px; height:25px}
+.MainContent table td{line-height:25px;height:35px}
+.MainContent table .mapLocation{background:url("images/rm.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/rm.gif*/ no-repeat -334px -294px;display:-moz-inline-box;display:inline-block; width:30px; height:19px;}
+
+.MainContentRight{float:left; width:170px; border:1px solid #e3e7ea; margin-left:10px; }
+.MainContentRight .top{margin-left:10px; margin-top:10px; margin-bottom:20px; text-align:center }
+.MainContentRight .top img{ border:0px; margin:0px auto;margin-top:8px; }
+.MainContentRight .top span{ background:url("images/rm.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/rm.gif*/ no-repeat 0px -242px;display:-moz-inline-box;display:inline-block; width:160px; height:47px; margin-left:-4px;}
+.MainContentRight .top b{ background:url("images/rm.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/rm.gif*/ no-repeat 0px -185px;display:-moz-inline-box;display:inline-block; width:227px; height:47px; }
+.MainContentRight .bottom { margin-top:10px}
+.MainContentRight .bottom p{ background-color:#f2f3f5; padding:6px 0px; padding-left:10px; border-bottom:1px solid #e3e7ea; border-top:1px solid #e3e7ea }
+.MainContentRight .bottom ul{ margin-left:10px; margin-top:10px;}
+.MainContentRight .bottom ul li{ list-style:none; line-height:30px; float:left; width:80px }
+.MainContentRight .bottom ul li a{ color:#434343}
+.MainContentRight .bottom ul li a:hover{color:#0033FF; text-decoration:underline}
+.MainContentRight .bottom .Title{ font-weight:bold; float:none;  clear:both; display:block; width:90%}
+
+
+.MainContentRight .recruitmentList { margin-top:10px; border-top:1px solid #e3e7ea }
+.MainContentRight .recruitmentList ul{ margin-left:10px; margin-top:10px;list-style:none;}
+.MainContentRight .recruitmentList ul li{ list-style:none;line-height:30px; width:220px ; overflow:hidden;white-space:nowrap;}
+.MainContentRight .recruitmentList ul li a{ color:#000}
+.MainContentRight .recruitmentList .Title{ font-weight:bold; float:none; color:#000; clear:both; display:block; width:90%}
+
+.MainTitle h3{text-align:center; font-size:16px; margin-top:20px;font-family: "Microsoft YaHei" }
+.ViewNumber{ text-align:center; margin-top:20px; color:#949494; background-color:}
+.ViewNumber span{background:url("images/rm.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/rm.gif*/ no-repeat 0px -294px; padding-left:16px; padding-top:5px;}
+.MainTitle3{background-color:#fffaee; border:1px solid #fceab8 ; padding:5px; width:680px; margin-top:40px; padding-left:5px;}
+
+/******************校园招聘*********************/
+.CampusHeader{}
+.CampusHeaderTitle{ float:left; width:1100px; margin-bottom:15px;margin-top: 15px;}
+.CampusHeaderTitle div{ float:left;background:url("images/campus.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/campus.gif*/ no-repeat 0px -97px; padding-left:15px; height:16px;font-size:14px; font-weight:bold}
+.CampusHeaderTitle a{ float:right; vertical-align:bottom}
+.CampusHeaderContent{ color:#000}
+.CampusHeaderContent table{ border:1px solid #ececec} 
+.CampusHeaderContent table td{ padding:0px 15px} 
+.CampusHeaderContent table td b{ color:#F00}
+.CampusHeaderContent table td a.aNoline{text-decoration:none;color:#000}
+.CampusHeaderContent table td a:hover{ color:#00F;text-decoration:underline}
+.CampusTableTitle{border:1px solid #ececec}
+.CampusHeaderContent th{  padding-left:15px;text-align:left; font-weight:normal; background-color:#fefaf1; border-bottom:1px solid #ececec; height:30px}  
+.CampusHeaderContent .greytd td{ background-color:rgb(250,250,250);}
+.JobMain{ border:1px solid #ececec; color:#434343 ;clear:both;}
+.Job ul{width:961px;border-bottom:1px dotted #cccccc; padding-bottom:10px;padding-left:15px }
+.Job ul li{width:300px;float:left;padding-top:20px; list-style:none; margin-left:20px;}
+.Job ul li a{color:#434343;text-decoration:none;background: url("../homepage/images/img_index_top.gif")/*tpa=http://www.shoudurc.com/content/homepage/images/img_index_top.gif*/ no-repeat 0 -172px;padding-left: 15px;}
+.Job ul li img{ vertical-align:middle; text-align:center;}
+.Job ul li a:hover{color:#00F;text-decoration:underline}
+.clear{ clear:both}
+.link{  border:1px solid #ececec; margin-top:15px; margin-bottom:5px}
+.linkTitle{padding-left:20px; height:25px; color:#000;font-weight:bold;margin:0px 0px; background-color:#f0f0f0; vertical-align:bottom; padding-top:5px;margin-bottom:20px;}
+.link div.linkMain{padding-left:6px; margin-left:15px; }
+.link a{ margin:0; padding:0;float:left;line-height:22px;margin-right:5px; margin-bottom:8px;white-space:nowrap; width:155px ; white-space:nowrap; overflow:hidden; display:inline-block;color:#000;text-decoration:none;}
+
+.link a:hover{color:#00F;text-decoration:underline}
+/******************校园招聘 内容页面*********************/
+.CampusTab{}
+.CampusTab p{ background:url("images/campus.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/campus.gif*/ no-repeat 0px -39px; width:107px; height:25px ; vertical-align:middle; text-align:center; line-height:39x;float:left; padding-top:10px; margin-right:8px; cursor:pointer}
+.CampusTab .this{background:url("images/campus.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/campus.gif*/ no-repeat 0px 0px; cursor:pointer; color:red;  font-weight:bold }
+.CampusContent1,.CampusContent2,.CampusContent3{ border:1px solid #ececec; margin-top:-3px}
+.CampusCompanyTitle{ text-align:center; font-weight:bold ; font-size:20px; margin:20px;font-family: "Microsoft YaHei" ! important; }
+.CampusCompanyInfo{ text-align:center; border-bottom:1px dotted #ececec; margin:10px 30px; padding-bottom:10px;  }
+.CampusCompanyInfo span{margin-right:30px;}
+.CampusCompanyInfo span b{ color:#999}
+.CampusCompanyDesc{ margin:10px 30px; line-height:30px; margin-top:20px; color:#000}
+.tableHeadDiv table{ width:910px; margin:10px 10px; border:none; margin-left:30px }
+.CampusTalkBottom table,.CampusList table{ width:910px; margin:0px 0px; border:none}
+.CampusTalkBottom table td,.CampusList table td{padding:0px 15px; text-align:left  }
+.tableHeadDiv table th{  padding-left:15px;text-align:left; font-weight:normal; background-color:#fefaf1; height:30px}
+.CampusList table td{  padding:0px 14px}
+.CampusList{ margin:20px 30px;}
+.CampusTalkBottom{ border-top:1px solid #ececec; margin:20px 30px; padding-top:15px;}
+.CampusTalkBottom ul{ list-style:disc; margin-left:40px; line-height:30px}
+.CampusTalkBottom li{ padding:0px}
+.CampusTalkBottom li a{ color:#000}
+.CampusTalkBottomTitle{ font-weight:bold;background:url("images/campus.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/campus.gif*/ no-repeat 0px -114px; padding-left:20px; height:20px; line-height:20px; margin-left:20px }
+
+.MainBodyBig{ font-size:14px; width:959px; border:1px solid #BECFED; margin-top:10px; float:left; }
+.paDownMainBody{ width:100%; float:left;background:url("images/paDownBg.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/paDownBg.gif*/ repeat-x; border:1px solid #ffe6a4}
+.paDownBodyTop{ float:left; width:100%; height:100px;}
+.paDownBodyTopBig{ color:#434345; font-size:30px; margin:0 auto;margin-top:33px; width:450px; display:block;  text-align:center; border-bottom:1px solid #ffeede; padding-bottom:4px;font-family: "Microsoft YaHei" ! important; }
+.paDownBodyTopSmall{ color:#fb7802; font-size:14px; width:190px; margin:5px auto; display:block;font-family: "楷体" ! important;}
+.paDownBodyBottom{  width:960px; margin:0px 70px 20px 70px; float:left;}
+.paDownBodyBottom a{ text-decoration:none;}
+.paDownContent{ float:left; width:435px; cursor:pointer; margin:35px 0px 35px 40px; color:#365089; display:inline; text-decoration:none}
+.paDownContentImg{ width:100px; height:85px; float:left; }
+.paDownContentTitleA{ height:30px; margin-right:3px; font-size:21px;  float:left;font-family: "Microsoft YaHei" ! important;   color:#000}
+.paDownContentTitleB{ height:25px;float:left;margin-top:5px; font-family:Arial, Helvetica, sans-serif; font-weight:bold; font-size:16px; color:#666}
+.paDownContentText{ float:left; width:330px; line-height:25px; color:#777 }
+.caDownMainBody{ width:100%;  float:left;background:url("images/caBg.gif")/*tpa=http://www.shoudurc.com/Content/NewsNew/images/caBg.gif*/ repeat-x; border:1px solid #b5d4e8}
+
+
+.tableborder{background:white;border:1px solid #86B9D6; font-size:14px}
+.tableborder tr{ height:19px;}
+.tableborder .header {font: 12px Arial, Tahoma !important;font-weight: bold !important;font: 11px Arial, Tahoma;font-weight: bold;color: #154BA0;background:#C2DEED;height: 25px;}
+.tableborder .header a {color: #000000;}
+.tableborder .header input {background:none;vertical-align: middle;height: 16px;}
+.tableborder .category {font: 12px Arial, Tahoma !important;font: 11px Arial, Tahoma;color: #92A05A;height:20px;background-color: #FFFFD9;}
+.tableborder .category td {border-bottom: 1px solid #DEDEB8;}
+.tableborder .expire, .expire a:link, .expire a:visited {color: #999999; cursor:not-allowed; text-decoration:none;}
+.tableborder .default, .default a:link, .default a:visited {color: #000000;}
+.tableborder .checked, .checked a:link, .checked a:visited {color: #FF0000;}
+.tableborder .today, .today a:link, .today a:visited {color: #00BB00;}
+.tableborder tr a{ color:#365089;}
+
+div.page{text-align:center;margin:10px auto;background-color:#FFFFFF;}
+div.page a,div.page b,div.page em,div.page label{border: 1px solid rgb(209,204,198);background:rgb(244,244,244);color: #222;margin-right: 1px;padding: 3px 5px;line-height: 20px;font-size: 12px;  font-family: Verdana;}
+div.page label{color:#444}
+div.page em{font-style:normal;}
+div.page a:hover{border:1px solid rgb(251,205,119);text-decoration:none;background:rgb(254,241,232);color:rgb(253,131,30); }
+div.page b{border:1px solid rgb(251,205,119);background:rgb(254,241,232);color:rgb(253,131,30); font-weight:bold}
+div.page{ font-size:12px;}
+div.page i{font-style:normal}
+
+
+/****************************薪酬报告*******************************/
+
+.SalaryMain .SalaryTop{background:url("images/img_SalarytopBg.gif")/*tpa=http://www.shoudurc.com/content/newsnew/images/img_SalarytopBg.gif*/ repeat-x; height:56px;float:left;width:1100px; text-align:center;line-height: 50px;margin-bottom: 20px;}
+.SalaryMain .SalaryTop .bgFront{background:url("images/img_Salary.gif")/*tpa=http://www.shoudurc.com/content/newsnew/images/img_Salary.gif*/ -0px 0px;height:56px;width:6px;float:left;}
+.SalaryMain .SalaryTop .bgBack{background:url("images/img_Salary.gif")/*tpa=http://www.shoudurc.com/content/newsnew/images/img_Salary.gif*/ -6px 0px;height:56px;width:6px;float:right;}
+.SalaryMain .SalaryTop .bgMain{height:56px;float:left;width:974px; text-align:center;}
+.SalaryMain .SalaryTop span{ vertical-align:middle;}
+.SalaryMain .SalaryTop input{ vertical-align:middle;border:none;text-align: left;}
+.SalaryMain .SalaryTop .IndustrySelect{background: url("../personal/images/img_JsUnLogin_High.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_JsUnLogin_High.gif*/ -0px -64px;width: 357px;height: 30px;cursor: pointer;margin-right: 20px;padding-left: 10px;}
+.SalaryMain .SalaryTop .RegionSelect{background: url("../personal/images/img_JsUnLogin_High.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_JsUnLogin_High.gif*/ -0px -94px;width: 178px;height: 30px;cursor: pointer;padding-left: 10px;}
+.SalaryMain .SalaryTop .btnSalaryConfirm{background: url("images/img_Salary.gif")/*tpa=http://www.shoudurc.com/content/newsnew/images/img_Salary.gif*/ -0px -86px;width: 101px;height: 31px;cursor: pointer;margin-top: 1px;margin-left: 10px;}
+.SalaryMain .SalaryBody{float:left; width:100%;}
+.SalaryMain .SalaryBody .BodyTitle{float:left; background:#ecf1f6;border:1px solid #fff;height:36px; line-height:36px;padding-left:15px; font-weight:bold; width:829px;}
+.SalaryMain .SalaryBody .BodyContent{float:left;border-top: 1px solid #e1e8f0;border-bottom: 1px solid #e1e8f0;padding:20px 0;width:100%;}
+.SalaryMain .SalaryBody .BodyLeft{float:left;width:844px;border:1px solid #e1e8f0;}
+.SalaryMain .SalaryBody .BodyLeft .BodyTitle span{float:left;}
+.SalaryMain .SalaryBody .BodyLeft .BodyTitle a{float:right; margin-right:30px;background: url("images/img_Salary.gif")/*tpa=http://www.shoudurc.com/content/newsnew/images/img_Salary.gif*/ -0px -133px; height:15px;padding-left:20px;line-height: normal;margin-top: 10px;}
+.SalaryMain .SalaryBody .BodyLeft .BodyContent .BodyPart{width:750px;border-bottom:1px #e1e8f0 dotted; margin:0 auto; padding-bottom:20px;margin-top: 20px;}
+.SalaryMain .SalaryBody .BodyLeft .BodyContent .ContentTitle{ font-family:"微软雅黑";font-size:16px;padding-bottom: 20px;}
+.SalaryMain .SalaryBody .BodyLeft .BodyContent .ContentTitle span{color: #FF6600;font-size:20px;}
+.SalaryMain .SalaryBody .BodyLeft .BodyContent .ContentNotice{color:#999;line-height: 20px;padding-top: 20px;}
+.SalaryMain .SalaryBody .BodyLeft .BodyContent .ContentNotice .Title{ font-weight:bold; vertical-align:top;}
+.SalaryMain .SalaryBody .BodyLeft .BodyContent .ContentNotice .Content{width:660px; display:inline-block;vertical-align:top;}
+.SalaryMain .SalaryBody .BodyLeft .BodyContent .tableD{width:700px; margin:0px auto;}
+.SalaryMain .SalaryBody .BodyLeft .BodyContent .tableD td{line-height:36px; border-bottom:1px #e1e8f0 dotted; text-align:right;}
+.SalaryMain .SalaryBody .BodyLeft .BodyContent .tableD td a{ text-decoration:none;color: #434343;}
+.SalaryMain .SalaryBody .BodyLeft .BodyContent .tableD td a:hover{color:#F90}
+.SalaryMain .SalaryBody .BodyRight{float:right;width:240px;border:1px solid #e1e8f0;}
+.SalaryMain .SalaryBody .BodyRight .BodyTitle{width:223px;}
+.SalaryMain .SalaryBody .BodyRight .BodyContent{width:240px;}
+.SalaryMain .SalaryBody .BodyRight .BodyContent .RightHeadRight div{height: 32px;float:left}
+.SalaryMain .SalaryBody .BodyRight .BodyContent .RightHeadRight span{display:inline-block;overflow:hidden;white-space: nowrap;text-overflow: ellipsis;}
+.SalaryMain .SalaryBody .BodyRight .BodyContent .RightHeadRight span.City{width: 110px;padding-right:6px;}
+/*.SalaryMain .SalaryBody .BodyRight .BodyContent .RightHeadRight span{display:inline-block;height: 32px; overflow:hidden;white-space: nowrap;text-overflow: ellipsis;}
+.SalaryMain .SalaryBody .BodyRight .BodyContent .RightHeadRight span.City{width: 110px;padding-right:6px;}*/
+
+.SalaryMain .SalaryBody .BodyContent .tableA{border:1px #e1e8f0 solid; border-right:none;} 
+.SalaryMain .SalaryBody .BodyContent .tableA td{border:none; height:40px; vertical-align:top;border-right:1px #e1e8f0 dotted;width:90px;}
+.SalaryMain .SalaryBody .BodyContent .tableA td.Title{width:205px; text-align:right;}
+
+.SalaryMain .SalaryBody .BodyContent .tableB{border:1px #e1e8f0 solid; border-top:none;width:655px;}
+.SalaryMain .SalaryBody .BodyContent .tableB td{border:none; height:40px; vertical-align:top;border-top:1px #e1e8f0 dotted;width:90px;}
+.SalaryMain .SalaryBody .BodyContent .tableB .top td{border-top:none;}
+.SalaryMain .SalaryBody .BodyContent .tableBLeft{float: left;width: 35px;}
+.SalaryMain .SalaryBody .BodyContent .tableBLeft span{display: inline-block;height: 41px;}
+
+.Bar{ position:absolute;}
+.Bar span{vertical-align: middle;}
+.Bar .BarOrange{ display:inline-block; background:#ff9900; height:18px;width:18px; margin-right:5px;}
+.Bar .SalaryNo{font-family:Arial;font-size:14px;font-weight:bold;color:#666666;}
+
+.BarB{ position:absolute;width: 25px;text-align: center;margin-left: 30px;}
+.BarB span{vertical-align: middle;}
+.BarB .BarBlue{ display:inline-block; background:#00cc99; height:18px;width:22px;}
+.BarB .BarGreen{ display:inline-block; background:#99cc00; height:18px;width:22px;}
+.BarB .SalaryNo{font-family:Arial;font-size:14px;font-weight:bold;color:#666666;}
+.tbTitle{color:#999999; margin-left:15px; white-space:nowrap;}
+
+.tableA_x{margin-left: 176px;}
+.tableA_x span{display:inline-block; width:85px;font-family: Arial;}
+
+.tableB_x{margin-left: 48px;}
+.tableB_x span{display:inline-block; width:55px;font-family: Arial; text-align:center;white-space: nowrap;}
+
+.tips{margin-left:20px;line-height:20px;width:667px;background:url("../company/images/errorpage.gif")/*tpa=http://www.shoudurc.com/Content/company/images/errorpage.gif*/  0px 0px no-repeat;background-position:16px 16px;height:383px}
+.tips p{color:#000;font-size:16px;font-family:"黑体";font-weight:NORMAL; width:279px;padding-top: 200px;margin-left: 290px;}
+
+.BodyPart .imgPieCount{width:230px; float:left; text-align:center;}
+
+.imgPieNote{float:left;width:230px;}
+.imgPieNote div{float:left;height: 20px; margin-left:5px; white-space:nowrap;}
+.imgPieNote div span{ display:inline-block;width:14px; height:8px;border:1px #534f50 solid; margin-right:6px;}
+
+/*弹出式窗口*/
+.popup{background:#fff;}
+.popup .popupBtn{width:87px;height:28px;background:#33FFFF url("../personal/images/img_popup.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_popup.gif*/ 0px 0px no-repeat;border:0;font:12px/22px "新宋体";cursor:pointer; color:#FFF; font-weight:bold} 
+.popup .popupBtnCancel{width:87px;height:28px;background:#33FFFF url("../personal/images/img_popup.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_popup.gif*/ 0px -69px no-repeat;border:0;font:12px/22px "新宋体";cursor:pointer; color:#000; font-weight:bold} 
+.popup .popuphead{background:#f4f4f4;height:33px;}
+.popup .popuphead hh1{background:url("../Company/images/popdivicon.gif")/*tpa=http://www.shoudurc.com/Content/Company/images/popdivicon.gif*/ no-repeat left;font:bold 12px "新宋体";color:#fff;float:left;margin:6px 0 0 5px;cursor:move; padding-left:10px}
+.popup .popuphead h1{font:bold 14px "新宋体";color:#000;float:left;margin:6px 0 0 10px;cursor:move;padding-left:6px}
+.popup .popuphead img{float:right;margin:4px 5px 0 0;cursor:pointer}
+.popup .popupfooter{padding:8px 0;text-align:center;}
+.popup .popupBody .popupbodyContent{padding:3px;}
+.popup .popupBody{clear:both;}
+/*新版弹出层样式*/
+.popup{border: 1px solid #a7aab3;background:#fff;}
+.popupDivProvince{ padding:5px 0; font-size:12px}
+.popupDivProvince ul{ list-style-type:none; margin:0px; padding:0px;clear:both; line-height:31px}
+.popupDivProvince ul li{ list-style-type:none; margin:0px; padding:0px; clear:both; line-height:27px;border:2px solid #fff; height:27px}
+.pink{ background-color:#fff6f1;border-bottom:1px solid #fff6f1}
+.popupDivProvince ul li span.provincePinyin{display:-moz-inline-box; display:inline-block; width:50px; float:left; padding:0 30px; font-weight:bold;color:#f7610c; font-size:14px}
+.popupDivProvince ul li b{display:-moz-inline-box; cursor:pointer; display:inline-block; width:60px; float:left; line-height:16px; margin-top:7px; font-weight:normal }
+.popupDivProvince ul li span{padding:4px 0 0; width:auto; float:left}
+.popupDivProvinceNav{font:12px "新宋体";color:#DF4017;clear:both;height:1%;border-bottom: 1px dotted #cacaca;margin:8px 0 5px 13px;height:30px;}
+.popupDivProvinceNav .popupDivProvinceHot{float:right; margin-top:3px; margin-right:30px}
+.popupDivProvinceNav .popupDivProvinceHot span{ vertical-align:-2px;}
+.popupDivProvinceNav .popupDivProvinceHot b{font-weight:normal; color:#000; cursor:pointer}
+.popupDivArrowDown{background: url("../../images/popuparrow.png")/*tpa=http://www.shoudurc.com/images/popuparrow.png*/ no-repeat 0px 2px; width:15px; height:9px; display:inline-block}
+.popupDivArrowUp{background: url("../../images/popuparrow.png")/*tpa=http://www.shoudurc.com/images/popuparrow.png*/ no-repeat 0px -17px; width:15px; height:9px; display:inline-block}
+.showSelectedLi{margin:5px 13px; margin-top:5px; padding-right:0px }
+.showSelectedLi ul{ list-style-type:none;margin:0px; padding:0px; line-height:25px}
+.showSelectedLi li{ cursor:pointer; float:left; min-width:89px ; width:89px; overflow:hidden;   height:19px; line-height:19px; vertical-align:top; padding-top:3px;padding-bottom:3px;  border:2px solid #fff}
+.showSelectedLi li span{ margin:0px; padding:0px; line-height:19px; vertical-align:middle}
+
+.DivShow{padding:1px;height:1%;background:#fff;}
+.DivShowT{background:url("../../personal/images/DivShowH.jpg")/*tpa=http://www.shoudurc.com/personal/images/DivShowH.jpg*/ repeat-x;color:#fff;padding-top:6px;height:16px;}
+.DivShowT h5{font:12px "新宋体";float:left;}
+.DivShowT h5 img{margin:1px 8px 0;vertical-align:top;}
+.DivShowT span{float:right;margin-right:6px;cursor:pointer;}
+.DivShowB{background:#fff;}
+.DivShowB div.ThisBg{background:#FEF8F1;}
+.DivShowB p{background:url("../../personal/images/BgAX.gif")/*tpa=http://www.shoudurc.com/personal/images/BgAX.gif*/ repeat-x bottom;line-height:20px;padding:5px 0 3px 5px;clear:both;float:left;width:100%;}
+.DivShowB span.Anauto{font:12px/24px "新宋体";margin-top:12px;display:block;float:left;clear:both;width:100%;height:24px;}
+.DivShowB h6{margin-bottom: 10px;font:12px/24px "新宋体";color:#DF4017;border-bottom: 1px dotted #fc5d01;margin-top:4px;clear:both;display:block;padding:0 0 0 15px;}
+.DivShowB h6 li{margin-right:6px;}
+.DivShowB ul{clear:both;}
+.DivShowB li{float:left;line-height:22px;height:22px;padding-left:0px;margin-left:4px;display:inline;overflow:hidden}
+.DivShowB li input{margin-top:0px;vertical-align:middle;padding:0;height:13px;margin-right:3px;width:13px;}
+div.BgIcon li,ul.BgIcon li,p.BgIcon{}
+.DivShowLi{float:left;clear:both;width:100%;padding-top:8px;}
+.DivShowB .DivShowLi h6{background:url("../../personal/images/BgAX.gif")/*tpa=http://www.shoudurc.com/personal/images/BgAX.gif*/ repeat-x top;font:12px/24px "新宋体";}
+.DivShowLi li{position:relative;}
+.LiAbsoDiv{position:absolute;top:0px;left:0px;z-index:998;filter:alpha(opacity=90);opacity:0.9;background:#FFFDFB;border:1px solid #FFECD7;padding-left:6px;height:100px;}
+.DivShowBT{font:12px "新宋体";color:#DF4017;clear:both;height:1%;border-bottom: 1px dotted #cacaca;margin:8px 13px 5px 13px}
+.DivShowBT li{ border:1px solid #d2d2d2; color:#000; padding-left:5px ;white-space:nowrap;  overflow:hidden}
+.DivShowBT li input{ display:none  }
+.DivShowBT b{float:left;display:block;padding:14px 0 0 6px;}
+.DivShowBT li b{ padding:0px 4px; height:20px; line-height:20px; vertical-align:middle;  border-left:1px solid #d2d2d2; display:inline-block; float:right; display:inline }
+.DivShowBT li b img{ margin-top:5px;}
+.DivShowBT span{float:right;margin:6px 0px 6px 0px;}
+.DivShowBT span a{display:block;line-height: 11px;margin-right:6px;}
+.DivShowBT span a img{margin-right:4px;vertical-align:top;}
+.DivShowBT span input{cursor:pointer;height:24px;width:48px;background:url("../homepage/NewIndex/PopupNew/p4.gif")/*tpa=http://www.shoudurc.com/content/homepage/NewIndex/PopupNew/p4.gif*/ no-repeat;text-align:center;line-height:24px;border:0;color:#ffffff;}
+
+.ThisLiInput{font:12px "新宋体";color:#DF4017;background-color:#ffffff;clear:both;width:100%;overflow:visible; padding-left:5px}
+.ThisLiInput li{ margin-top:3px; margin-right:8px;line-height:20px;height:20px;float:left;white-space:nowrap;overflow:hidden; text-align:center;width:125px;}
+.ThisLiInput li i{ font-weight:normal; font-style:normal; margin:1px auto; padding:0px 2px; float:left;width:100px; overflow:hidden; color:#1c4dcd; font-weight:bold}
+
+.ThisLiInputRegion{font:12px "新宋体";color:#DF4017;background-color:#ffffff;clear:both;overflow:hidden; padding-left:5px;}
+.ThisLiInputRegion li{margin-right:8px;line-height:20px;height:20px;float:left;white-space:nowrap;overflow:hidden;width:99px;}
+.ThisLiInputRegion li i{ font-weight:normal; font-style:normal; margin:2px auto; padding:0px 2px; float:left;width:67px; overflow:hidden; text-align:center; }
+
+.DivShowB span ul.ThisLi li{font:12px/24px "新宋体";margin-right:8px;display:inline;}
+.DivShowB li input{vertical-align:middle;}
+
+.NDivCl{clear:both;float:left;width:100%; border-top:1px solid #d2d2d0;}
+.NDivCl1{clear:both;float:left;width:100%;}
+.NDivClind{width:146px;margin-top:-6px; text-align:right;  color:#434343;font:bold 12px "新宋体";z-index:1;left:5px;}
+.NDivClind30{width:146px;margin-top:-6px;text-align:right;color:#434343;font:bold 12px "新宋体";z-index:1;left:5px;}
+.NDivCl li{cursor:pointer; list-style-type:none}
+.NDivCl .NDivClBig{width:190px; text-align:right; color:#434343;z-index:1; float:left; height:100%; background-color:#f9f9f9; padding-right:10px}
+.NDivCl .NDivClSmall{float:left; width:500px; height:100%;}
+.NDivCl .NDivClSmall li{padding-left:15px;height:22px;overflow:hidden;}
+.NDivCl .NDivClSmall li input{padding-bottom:2px;}
+.NDivCl ul.indUL{display:block;padding-left:154px;height:1%; list-style-type:none;}
+.indUL li{padding-left:8px;height:20px;overflow:hidden; padding:2px 0px;}
+.indUL li.nobg{padding-left:0px;height:18px;padding:2px 0px; overflow:hidden;background:none;}
+
+.showDivsub{cursor:pointer;padding:0px;position:absolute;display:none}
+.showDivsub p.BgIcon{padding-left:12px;height:20px;line-height:20px;}
+.showDivsub ul{border:2px solid #c8c8c8;position:relative; margin-top:-2px; z-index:0;background:#fff; padding:0px;float:left}
+.showDivsub li{float:left;display:block;padding:0 0 0 4px;height:20px;line-height:20px;overflow:hidden;background:#fff;}
+.showDivsub li input{padding:0;height:13px;width:13px;margin:0 3px 0 0;vertical-align:middle;}
+.showDivsub p{font-weight:bold;height:14px;line-height:14px;overflow:hidden; background:#fff;border:2px solid #c8c8c8; border-bottom:none; position:relative; z-index:999; padding:4px 2px 4px 4px;white-space:nowrap; }
+.showDivsub p input{padding:0;height:13px;width:13px;margin:0 3px 0 0;vertical-align:top;  }
+.Bgc{background:#fff6e5}
+.JobTypeSearch{position:absolute; width:165px; height:auto; max-height:300px;overflow:hidden;position: absolute; margin-left: 478px; margin-top: 0px; display:none;color:#1c4dcd; background-color:#fff;font-size: 12px;border: 1px solid rgb(50, 50, 50);font-weight: normal;}
+.JobTypeSearch li{cursor:pointer;width:155px; height:25px; overflow:hidden; line-height:25px; padding:0 5px}
+.BoxBg{ width:385px; background:#fff6f1 repeat bottom; font-size: 12px; line-height: 22px; padding-top: 15px; padding-left: 30px; padding-bottom: 10px; }
+.BoxBg a{color:#000000;}
+.BoxBg a:hover{color:#0033FF; text-decoration:underline}
+
+/*******************翻页样式**********************/
+.spPageRight{margin-top: 20px;float: right;margin-bottom: 10px;}
+.spPageRight i{font-style: normal;}
+.pagerNum {clear: both;text-align: center;color:#313131;border-top: 1px #E0E0E0 dotted;padding-top: 10px;}
+.pagerNum span{width:auto; margin-right:5px; cursor:pointer;padding:3px 7px; margin-bottom:3px;line-height:30px;}
+.pagerNum a{width:auto; margin-right:5px; cursor:pointer;padding:3px 7px; margin-bottom:3px;line-height:30px;color: #313131;}
+.pagerNum .PageNo_select{border:1px #FBCD78 solid; color:#F85A01; background-color:#FFF2EC; cursor:default; font-family:Arial, Helvetica, sans-serif; font-weight:bold; font-size:14px;}
+.pagerNum .PageNo_noSelect{border:1px #C4C7D1 solid; color:#313131; background-color:#F3F4F6;font-family:Arial, Helvetica, sans-serif; font-weight:bold; font-size:14px;}
+.pagerNum .normal_noSelect{cursor:default;}
+.Footer {padding-top: 20px; padding-bottom:20px; clear: both;margin: 20px auto 0 auto; border-top:1px #E2E2E2 solid;text-align: center;}
+
+/*******************地图翻页样式**********************/
+.spPageRight{margin-top: 20px;float: right;margin-bottom: 10px;}
+.spPageRight i{font-style: normal;}
+.pages {clear: both;text-align: center;color:#313131;border-top: 1px #E0E0E0 dotted;padding-top: 10px;}
+.pages li{width:auto; margin-right:5px; cursor:pointer;padding:3px 7px; margin-bottom:3px;line-height:30px; display:inline;}
+.pages a{width:auto;cursor:pointer;margin-bottom:3px;line-height:30px;color: #313131;}
+.pages .page-number{border:1px #FBCD78 solid; color:#F85A01; background-color:#FFF2EC; cursor:default; font-family:Arial, Helvetica, sans-serif; font-weight:bold; font-size:14px;}
+.pages .active{border:1px #C4C7D1 solid; color:#313131; background-color:#F3F4F6;font-family:Arial, Helvetica, sans-serif; font-weight:bold; font-size:14px;}
+.pages .normal_noSelect{cursor:default;}
+
+.Login_setting .chkAutoLogin{margin-left: 34px;margin-top: 0;margin-bottom: 0;}

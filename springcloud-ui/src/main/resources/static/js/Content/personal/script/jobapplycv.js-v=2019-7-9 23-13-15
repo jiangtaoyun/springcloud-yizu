@@ -1,0 +1,818 @@
+var isBasicFill = false;
+var isJobIntentionFill = false;
+var isEducationFill = false;
+var isExperienceFill = false;
+var jobId;
+window.onbeforeunload = function () { }
+function ApplyCvStep(Message,id) {
+	if(id !== null && id !== undefined) {
+		jobId=id;
+	}
+    isBasicFill = Message.indexOf("基本信息") > -1;
+    isJobIntentionFill = Message.indexOf("求职意向") > -1;
+    isEducationFill = Message.indexOf("教育背景") > -1;
+    isExperienceFill = Message.indexOf("工作经历") > -1;
+    if (Message.indexOf("stepOne") > -1) {
+        cvMainID = Message.substring(Message.indexOf("stepOne/") + 8, Message.indexOf("\" target=\"_blank\""));
+    } else {
+        cvMainID = Message.substring(Message.indexOf("stepTwo/") + 8, Message.indexOf("\" target=\"_blank\""));
+    }
+    params = "?Type=0&Language=" + 0 + "&cv=" + cvMainID;
+    if (isBasicFill) {
+        ShowBasicInfo();
+    } else if (isJobIntentionFill) {
+        ShowJobIntention();
+    } else if (isEducationFill) {
+        ShowEducation();
+    } else if (isExperienceFill) {
+        ShowExperience();
+    } else {
+        window.location.reload();
+    }
+    BindCheckBoxClick();
+}
+ 
+
+		  
+function BindCheckBoxClick() {
+    //复选框，单选框点击事件
+    $(".CheckBox").unbind("click");
+    $(".CheckBox").click(
+    function () {
+        if ($(this).hasClass("UnAble")) {
+            return;
+        }
+        if ($(this).attr("id") == "chkAll") {
+            if ($(this).hasClass("No")) {
+                $(this).removeClass("No").addClass("Yes");
+                $(".TblList").find("table").find("http://www.shoudurc.com/content/personal/script/.CheckBox.No").each(function (index, element) {
+                    $(this).removeClass("No").addClass("Yes");
+                });
+            } else {
+                $(this).removeClass("Yes").addClass("No");
+                $(".TblList").find("table").find("http://www.shoudurc.com/content/personal/script/.CheckBox.Yes").each(function (index, element) {
+                    $(this).removeClass("Yes").addClass("No");
+                });
+            }
+        } else {
+            if ($(this).hasClass("No")) {
+                $(this).removeClass("No").addClass("Yes");
+                if ($(".TblList").find("http://www.shoudurc.com/content/personal/script/table .CheckBox.No").length == 0) {
+                    $("#chkAll").removeClass("No").addClass("Yes");
+                }
+            } else {
+                $(this).removeClass("Yes").addClass("No");
+                if ($(this).parents(".TblList").length > 0) {
+                    $("input.CheckBox.Yes[id='chkAll']").removeClass("Yes").addClass("No");
+                }
+            }
+        }
+    }
+  );
+    //复选框
+    $(".BtnGender").click(function () {
+        if ($(this).hasClass("Active")) return;
+        $(this).addClass("Active");
+        $(this).siblings(".BtnGender").removeClass("Active");
+    });
+}
+function ShowBasicInfo() {
+
+    var strHtml = '<div class="ContentRight"><p class="pNotice">您的简历还不完善，目前还不能申请职位，请先完善简历信息！</p><div class="CvMainPart" style="border-bottom:none;">'
+      + '<h1>'
+      + '  <span>基本信息</span>'
+      + '  <div></div>'
+      + '</h1>'
+      + '<table width="100%" border="0" cellpadding="0" cellspacing="0" id="tabPaMain">'
+      + '  <tbody><tr>'
+      + '    <th width="18%">'
+      + '      <span>*</span>姓    名：'
+      + '    </th>'
+      + '    <td width="82%">'
+      + '      <input class="TextInput Short" type="text" id="txtName" minlength="2" maxlength="6" name="txtName" value="" verify="required" onblur="NameCheck(this)">'
+      + '      <input type="button" id="cbIsNameHidden" name="cbIsNameHidden" class="CheckBox No"><span class="CheckBoxTips">隐藏姓名</span>'
+			+ '<span id="Name" class="TipsError" style="display: none;"></span>'
+      + '    </td>'
+      + '  </tr>'
+      + '  <tr>'
+      + '    <th>'
+      + '      <span>*</span>性    别：'
+      + '    </th>'
+      + '    <td>'
+      + '      <input type="button" class="BtnGender Active" gender="0" value="男">'
+      + '      <input type="button" class="BtnGender" gender="1" value="女">'
+      + '    </td>'
+      + '  </tr>'
+      + '  <tr>'
+      + '    <th>'
+      + '      <span>*</span>出生年月：'
+      + '    </th>'
+      + '    <td>'
+      + '      <input type="hidden" id="idBirthMonth" value="">'
+      + '      <input class="PopupSelect" type="button" id="txtBirthMonth" name="txtBirthMonth" onclick="birthdayPicker(this,\'请选择出生年月\')">'
+      + '      <span id="spBirthMonth" dic="Yearmonth" style="display: none;"></span>'
+      + '    </td>'
+      + '  </tr>';
+    if (MobileVerifyDate == "") {
+        strHtml = strHtml
+          + '  <tr>'
+          + '    <th>'
+          + '      <span>*</span>手机号码：'
+          + '    </th>'
+          + '    <td>'
+	      + '<input class="TextInput" type="text" id="txtMobile" value="' + mobile + '" verify="required" name="txtMobile" maxlength="11" style="ime-mode:disabled" onblur="MobileCheck(this)">'
+	      + '		<input type="button" id="cbReceiveSms" name="ReceiveSms" class="CheckBox No"><span class="CheckBoxTips">接收短信面试通知</span>'
+	      + '	<span id="Mobile" class="TipsError" style="display: none;"></span>'
+          + '    </td>'
+          + '  </tr>'
+
+          + '  <tr id="jobVerificationCode">'
+          + '    <th>'
+          + '      <span>*</span>验证码：'
+          + '    </th>'
+          + '    <td>'
+          + ' <div class="TxtInputBg Cer" style="width: 255px;border: 1px #DBDBDB solid;border-radius: 4px;height: 33px;">'
+	      + '<input type="text" tabindex="3" default="验证码" id="txtVeriyCode" name="txtVeriyCode" maxlength="6" onafterpaste="if(isNaN(this.value)){this.value=this.value.replace(/\D/g,\'\')};" onkeyup="if(isNaN(this.value)){this.value=this.value.replace(/\D/g,\'\')};document.getElementById(\'spVerifyCodeTip\').innerHTML=\'\';$(\'#spVerifyCodeTip\').removeClass(\'Error\');" style="border: none;outline: none;height: 32px;width:150px" />'
+	      + '<input type="button" class="BtnReGet" value="发送验证码" onclick="SendVerifyCodeJob()" name="btnSendCode" id="btnSendCode" style="background: #F34B09;color: white;width: 104px;height: 32px;border: none;border-radius: 4px;" />'
+	      + '	<span id="spVerifyCodeTip" class="TipsError" style="display: none;"></span>'
+          + '</div> '
+          + '    </td>'
+          + '  </tr>'
+    } else {
+        strHtml = strHtml
+          + '  <tr>'
+          + '    <th>'
+          + '      <span>*</span>手机号码：'
+          + '    </th>'
+          + '    <td>'
+          + mobile + '<input type="hidden" id="txtMobile"  value="' + mobile + '" />'
+	      + '<a class="ModifyEmail" href="http://www.shoudurc.com/Personal/account/certifmobileone?Modify=1" target="_blank" id="txtModifyMobile">修改手机号</a>'
+	      + '<input type="button" id="cbReceiveSms" name="ReceiveSms" class="CheckBox No"><span class="CheckBoxTips">接收短信面试通知</span>'
+	      + '	<span id="Mobile" class="TipsError" style="display: none;"></span>'
+          + '    </td>'
+          + '  </tr>'
+    }
+    strHtml = strHtml
+      + '  <tr>'
+      + '    <th>'
+      + '      <span>*</span>现居住地：'
+      + '    </th>'
+      + '    <td>'
+      + '      <input type="hidden" id="idLivePlace" value="">'
+      + '      <input class="PopupSelect" type="button" id="txtLivePlace" name="txtLivePlace" onclick="PopupSelect(RegionSelect.newSelect(55,0,1,1,0),this,750,\'请选择居住地\',\'LinkAgeChange()\')">'
+      + '      <span id="spLivePlace" dic="Region" style="display: none;"></span>'
+      + '    </td>'
+      + '  </tr>'
+      + '  <tr>'
+      + '    <th>'
+      + '      <span>*</span>户口所在地：'
+      + '    </th>'
+      + '    <td>'
+      + '      <input type="hidden" id="idAccountPlace" value="">'
+      + '      <input class="PopupSelect" type="button" id="txtAccountPlace" name="txtAccountPlace" onclick="PopupSelect(RegionSelect.newSelect(55,0,1,1,0), this, 750, \'请选择户口所在地\');">'
+      + '      <span id="spAccountPlace" dic="Region" style="display: none;"></span>'
+      + '    </td>'
+      + '  </tr>'
+      + '  <tr>'
+      + '    <th>'
+      + '      <span>*</span>我成长在：'
+      + '    </th>'
+      + '    <td>'
+      + '      <input type="hidden" id="idGrowPlace" value="3212">'
+      + '      <input class="PopupSelect" type="button" id="txtGrowPlace" name="txtGrowPlace" onclick="PopupSelect(RegionSelect.newSelect(55,0,0,1,0),this,750,\'请选择成长地\')">'
+      + '      <span id="spGrowPlace" dic="Region" style="display: none;"></span>'
+      + '    </td>'
+      + '  </tr>'
+     
+      + '  <tr style="height:51px;">'
+      + '    <th>'
+      + '      <span>*</span>电子邮箱：'
+      + '    </th>'
+      + '    <td colspan="2"><a class="ModifyEmail" href="http://www.shoudurc.com/personal/account/username" target="_blank">修改电子邮箱</a>'
+      + '    </td>'
+      + '  </tr>'
+      + '</tbody></table>'
+      + '<input type="button" id="btnSavePaMain" class="btnConfirm" name="btnSavePaMain" onclick="SaveBasicInfoStep(this)" value="下一步">'
+    + '</div></div>';
+    if (mobile != '') {
+        $("#jobVerificationCode").hide();
+        $("#txtMobile").val(mobile);
+    }
+    ShowInfo(strHtml);
+    if (isJobIntentionFill || isEducationFill || isExperienceFill) {
+        $("#btnSavePaMain").val("下一步");
+    } else {
+        $("#btnSavePaMain").val("保存");
+    }
+}
+function SaveBasicInfoStep(btType) {
+    if (btType.value == "保存" || btType.value == "Save" || btType.value == "下一步") {
+        if (!CheckError("PaMain")) {
+            return false;
+        }
+        var IsNameHidden = ($("#cbIsNameHidden").hasClass("Yes") ? "1" : "0");
+        if (IsNameHidden != 1)
+            IsNameHidden = 0;
+
+        var Gender = $("[gender]").filter(".Active").attr("gender");
+        var verifyCode="";
+        if ($("#txtVeriyCode").length > 0) {
+            verifyCode = $("#txtVeriyCode").val();
+        }
+        $.ajax({ type: "post", url: "/Personal/Account/SavePaMain?" + params, data: {
+            IsNameHidden: IsNameHidden,
+            Name: escape($("#txtName").val()),
+            Gender: Gender,
+            BirthDay: $("#idBirthMonth").val(),
+            LivePlace: $("#idLivePlace").val(),
+            AccountPlace: $("#idAccountPlace").val(),
+            GrowPlace: $("#idGrowPlace").val(),
+            Mobile: $("#txtMobile").val(),
+            VerifyCode: verifyCode,
+            OnlineContact: $("#idOnlineContact").length == 0 ? "" : $("#idOnlineContact").val(),
+            OnlineContactNo: $("#txtOnlineContactNo").length == 0 ? "" : escape($("#txtOnlineContactNo").val()),
+            HomePage: $("#txtHomePage").length == 0 ? "" : $("#txtHomePage").val(),
+            Marriage: $("#idMarriage").length == 0 ? "" : $("#idMarriage").val(),
+            Height: $("#txtHeight").length == 0 ? "" : $("#txtHeight").val(),
+            Nation: $("#idNation").length == 0 ? "" : $("#idNation").val(),
+            dcCareerStatus: $("#iddcCareerStatus").length == 0 ? "" : $("#iddcCareerStatus").val(),
+            IsReceiveSms: ($("#cbReceiveSms").hasClass("Yes") ? "1" : "0"),
+            Email: $("#txtEmail") ? $("#txtEmail").val() : ""
+        }, async: false, success: function (data) {
+            if (data == 1) {
+                isBasicFill = false;
+                if (isJobIntentionFill) {
+                    ShowJobIntention();
+                } else if (isEducationFill) {
+                    ShowEducation();
+                } else if (isExperienceFill) {
+                    ShowExperience();
+                } else {
+                    //window.location.reload();
+					window.location.href='http://www.shoudurc.com/personal/jm/JobApplyBatch?id='+jobId;
+                }
+            }
+            else if (data == 0)
+                alert("保存数据出现错误，请重新操作")
+            else if (data == -1)
+                alert("您的手机号码已被我们列入黑名单，数据没有保存")
+            else if (data == -9)
+                alert("用户参数错误，数据没有保存")
+            else if (data == -8)
+                alert("姓名不能为空，数据没有保存")
+            else if (data == -7)
+                alert("手机号不能为空，数据没有保存")
+            else if (data == -100)
+                alert("请从本网站提交")
+            else if (data == -101) {
+                alert("您还未登录，请您重新登录");
+                window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+            }
+            else
+                alert(data);
+        }
+        });
+    }
+    else {
+        ChangeModify("PaMain", "", btType);
+        $("#height").show();
+        $("#cbIsNameHidden").removeAttr("disabled");
+        $("#cbReceiveSms").removeAttr("disabled");
+    }
+    if (isJobIntentionFill || isEducationFill || isExperienceFill) {
+        $("#btnSavePaMain").val("下一步");
+    } else {
+        $("#btnSavePaMain").val("保存");
+    }
+}
+function ShowJobIntention() {
+    var strHtml = '<div class="ContentRight"><p class="pNotice">您的简历还不完善，目前还不能申请职位，请先完善简历信息！</p><div class="CvMainPart" style="border-bottom:none;">'
+     + '<h1>'
+     + '  <span>求职意向</span>'
+     + '   <div></div>'
+     + ' </h1>'
+     + '  <table width="100%" border="0" cellpadding="0" cellspacing="0" id="tabJobIntention">'
+    + '    <tbody><tr>'
+    + '      <th width="18%">'
+    + '        <span>*</span>求职状态：'
+    + '      </th>'
+    + '      <td width="60%">'
+    + '        <input type="hidden" id="idCareerStatus" value="2">'
+    + '        <input class="PopupSelect" type="button" id="txtCareerStatus" name="txtCareerStatus" onclick="PopupSelect(CommonSelect.newSelect(\'jsCareerStatus\',240,1),this,250)" value="目前在职，正在寻找更好机会">'
+    + '        <span id="spCareerStatus" dic="CareerStatus" style="display: none;">目前在职，正在寻找更好机会</span>'
+    + '      </td>'
+    + '    </tr>'
+    + '    <tr>'
+    + '      <th width="18%">'
+    + '        <span>*</span>相关工作经验：'
+    + '      </th>'
+    + '      <td width="60%">'
+    + '        <input type="hidden" id="idRelatedWorkYears" value="0">'
+    + '        <input class="PopupSelect" type="button" id="txtRelatedWorkYears" name="txtRelatedWorkYears" onclick="PopupSelect(CommonSelect.newSelect(\'jsRelatedWorkYears\',50,1),this,112)" value="无">'
+    + '        <span id="spRelatedWorkYears" dic="RelatedWorkYears" style="display: none;">无</span>'
+    + '      </td>'
+    + '    </tr>'
+    + '    <tr>'
+    + '      <th>'
+    + '        <span>*</span>期望工作性质：'
+    + '      </th>'
+    + '      <td>'
+    + '        <input id="raEmployType1" name="raEmployType" type="button" class="BtnGender Active" employtype="1" value="全职">'
+     + '       <input id="raEmployType3" name="raEmployType" type="button" class="BtnGender" employtype="3" value="兼职">'
+    + '        <input id="raEmployType4" name="raEmployType" type="button" class="BtnGender" employtype="4" value="实习">'
+    + '        <span id="spEmployType" style="display: none;"></span>'
+    + '      </td>'
+    + '    </tr>'
+    + '    <tr>'
+    + '      <th>'
+    + '        <span>*</span>期望月薪：'
+    + '      </th>'
+    + '      <td>'
+    + '        <input type="hidden" id="iddcSalaryID" value="">'
+    + '        <input class="PopupSelect" type="button" id="txtdcSalaryID" name="txtdcSalaryID" onclick="PopupSelect(CommonSelect.newSelect(\'jsSalary\',82,1),this,178)" value="">'
+     + '       <span id="spdcSalaryID" dic="Salary" style="display: none;"> </span>'
+    + '        <input type="button" class="CheckBox  Yes" name="cbIsNegotiable" id="cbIsNegotiable"><span class="CheckBoxTips">可面议</span>'
+    + '      </td>'
+    + '    </tr>'
+    + '    <tr>'
+    + '      <th>'
+    + '        <span>*</span>期望工作地点：'
+    + '      </th>'
+    + '      <td>'
+    + '        <input type="hidden" id="idJobPlace" value="">'
+    + '        <input class="PopupSelect Long Multi" type="button" id="txtJobPlace" name="txtJobPlace" onclick="PopupSelect(RegionSelect.newSelect(58,1,1),this,520,\'请选择期望工作地点\')" value="">'
+    + '        <span id="spJobPlace" dic="Region" style="width: 505px; display: none;"> </span>'
+    + '      </td>'
+    + '    </tr>'
+    + '    <tr>'
+    + '      <th>'
+    + '        <span>*</span>期望职位类别：'
+    + '      </th>'
+    + '      <td>'
+    + '        <input type="hidden" id="idJobType" value="">'
+    + '        <input class="PopupSelect Long Multi" type="button" id="txtJobType" name="txtJobType" onclick="PopupSelect(JobTypeSelect.newSelect(1),this,600,\'请选择期望职位类别\')" value="">'
+    + '        <span style="width: 505px; display: none;" id="spJobType" dic="JobType"> </span>'
+    + '      </td>'
+    + '    </tr>'
+    + '  </tbody></table>'
+    + '  <input type="button" id="btnSaveJobIntention" class="btnConfirm" onclick="SaveJobIntentionStep(this)" name="btnSaveJobIntention" value="下一步">'
+    + '</div></div>';
+    ShowInfo(strHtml);
+    if (isJobIntentionFill || isEducationFill || isExperienceFill) {
+        $("#btnSaveJobIntention").val("下一步");
+    } else {
+        $("#btnSaveJobIntention").val("保存");
+    }
+}
+
+function SaveJobIntentionStep(btType) {
+    if (btType.value == "保存" || btType.value == "Save" || btType.value == "下一步") {
+        if (!CheckError("JobIntention"))
+            return false;
+
+        var Negotiable = ($("#cbIsNegotiable").hasClass("Yes") ? "1" : "0");
+        if (Negotiable != 1)
+            Negotiable = 0;
+
+        var EmployType = $("[employtype]").filter(".Active").attr("employtype");
+        $.ajax({ type: "post", url: "/Personal/cv/UpdateJobIntention?cv=" + cvMainID, data: {
+            Negotiable: Negotiable,
+            EmployType: EmployType,
+            JobType: $("#idJobType").val(),
+            RelatedWorkYears: $("#idRelatedWorkYears").val(),
+            JobPlace: $("#idJobPlace").val(),
+            Industry: $("#idIndustry").length == 0 ? "" : $("#idIndustry").val(),
+            dcSalaryID: $("#iddcSalaryID").val(),
+            CareerStatus: $("#idCareerStatus").val()
+        }, async: false, success: function (data) {
+            if (data == 1) {
+                isJobIntentionFill = false;
+                if ($("#idRelatedWorkYears").val() == "0") {
+
+                    isExperienceFill = false;
+                }
+                if (isEducationFill) {
+                    ShowEducation();
+                } else if (isExperienceFill) {
+                    ShowExperience();
+                } else {
+                    //window.location.reload();
+					window.location.href='http://www.shoudurc.com/personal/jm/JobApplyBatch?id='+jobId;
+                }
+            }
+            else if (data == -100)
+                alert("请从本网站提交")
+            else if (data == -101) {
+                alert("您还未登录，请您重新登录");
+                window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+            }
+            else
+                alert("求职意向保存失败：" + data);
+        }
+        });
+    }
+    else {
+        ChangeModify("JobIntention", "", btType);
+        $("#cbIsNegotiable").removeAttr("disabled");
+    }
+    if (isEducationFill || isExperienceFill) {
+        $("#btnSaveJobIntention").val("下一步");
+    } else {
+        $("#btnSaveJobIntention").val("保存");
+    }
+}
+
+function ShowEducation() {
+	//alert(window.location.href);
+    var strHtml = '<div class="ContentRight"><p class="pNotice">您的简历还不完善，目前还不能申请职位，请先完善简历信息！</p><div class="CvMainPart" style="border-bottom:none;">'
++ '    <h1>'
++ '        <span>最高学历</span>'
++ '        <div></div></h1>'
++ '      <table width="100%" border="0" cellpadding="0" cellspacing="0" id="tabCvEducation1">'
++ '        <tbody><tr>'
++ '          <th width="18%">'
++ '            <span>*</span>学校名称：'
++ '          </th>'
++ '          <td width="82%">'
++ '            <input type="text" id="txtGraduateCollage1" name="txtGraduateCollage1" class="TextInput" value="" verify="required" maxlength="50" onkeyup="CollegeAutoComplete(this)">'
++ '          </td>'
++ '        </tr>'
++ '        <tr>'
++ '          <th>'
++ '            <span>*</span>毕业时间：'
++ '          </th>'
++ '          <td>'
++ '            <input type="hidden" id="idGraduation1" value="">'
++ '            <input class="PopupSelect" type="button" id="txtGraduation1" name="txtGraduation1" onclick="datePicker(this,\'请选择毕业时间\')" value="">'
++ '            <span id="spGraduation1" dic="Yearmonth" style="display: none;"> </span>'
++ '          </td>'
++ '        </tr>'
++ '        <tr>'
++ '          <th>'
++ '            <span>*</span>学历：'
++ '          </th>'
++ '          <td>'
++ '            <input type="hidden" id="idDegree1" value="">'
++ '            <input type="button" class="PopupSelect" id="txtDegree1" name="txtDegree1" onclick="PopupSelect(CommonSelect.newSelect(\'jsEducation\',170,1),this,177,\'\',\'SetDegree(\\\'1\\\')\')" value="">'
++ '            <span id="spDegree1" dic="Education" style="display: none;"> </span>'
++ '          </td>'
++ '        </tr>'
++ '        <tr>'
++ '          <th>'
++ '            <span>*</span>学历类型：'
++ '          </th>'
++ '          <td>'
++ '            <input type="hidden" id="idEduType1" value="">'
++ '            <input type="button" class="PopupSelect" id="txtEduType1" name="txtEduType1" onclick="PopupSelect(CommonSelect.newSelect(\'jsEducationType\',170,1),this,177)" value="">'
++ '            <span id="spEduType1" dic="EducationType" style="display: none;"> </span>'
++ '          </td>'
++ '        </tr>'
++ '        <tr>'
++ '          <th>'
++ '            <span>*</span>专业名称：'
++ '          </th>'
++ '          <td>'
++ '            <input type="text" id="txtMajorName1" class="TextInput" verify="required" name="txtMajorName1" maxlength="20" value="" onkeyup="MajorAutoComplete(this)">'
++ '          </td>'
++ '        </tr>'
++ '        <tr>'
++ '          <th>'
++ '            <span>*</span>专业类别：'
++ '          </th>'
++ '          <td>'
++ '            <input type="hidden" id="iddcMajorID1" value="">'
++ '            <input type="button" class="PopupSelect" id="txtdcMajorID1" name="txtdcMajorID1" onclick="PopupSelect(MajorSelect.newSelect(),this,704,\'请选择所学专业\')" value="">'
++ '            <span id="spdcMajorID1" dic="Major" style="display: none;"> </span>'
++ '          </td>'
++ '        </tr>'
++ '      </tbody></table>'
++ '  <input type="button" id="btnSaveCvEducation1" class="btnConfirm" name="btnSaveCvEducation" value="下一步" onclick="SaveCvEducationStep(this)" />'
++ '      <input type="hidden" id="hidCvEducationID1" name="hidCvEducationID1" value="" />'
++ '    </div></div>';
+    ShowInfo(strHtml);
+    if (isExperienceFill) {
+        $("#btnSaveCvEducation1").val("下一步");
+    } else {
+        $("#btnSaveCvEducation1").val("保存");
+    }
+}
+
+function SaveCvEducationStep(btType) {
+    var intEdu = btType.id.substring(18);
+    if (btType.value == "保存" || btType.value == "Save" || btType.value == "下一步") {
+        if ($("#txtEduDetails" + intEdu).val() == "可以填写您所学专业包括什么课程，取得的成绩与荣誉以及您的毕业设计等等。") {
+            $("#txtEduDetails" + intEdu).val("");
+        }
+        if (!CheckError("CvEducation", intEdu)) {
+            return false;
+        }
+        $.post("/Personal/cv/ProcessCvEducation" + params, {
+            ID: $("#hidCvEducationID" + intEdu).val(),
+            GraduateCollage: escape($.trim($("#txtGraduateCollage" + intEdu).val())),
+            Graduation: $("#idGraduation" + intEdu).val(),
+            dcMajorID: $("#iddcMajorID" + intEdu).val(),
+            MajorName: escape($.trim($("#txtMajorName" + intEdu).val())),
+            Degree: $("#idDegree" + intEdu).val(),
+            EduType: $("#idEduType" + intEdu).val(),
+			url:window.location.href,
+            Details: $("#txtEduDetails" + intEdu).length == "0" ? "" : escape($("#txtEduDetails" + intEdu).val())
+        },
+    function (data) {
+        if (!isNaN(data)) {
+            if (data == -100) {
+                alert("请从本网站提交")
+                return;
+            }
+            else if (data == -101) {
+                alert("您还未登录，请您重新登录");
+                window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+            }
+            isEducationFill = false;
+            if (isExperienceFill) {
+                ShowExperience();
+            } else {
+                //window.location.reload();
+				window.location.href='http://www.shoudurc.com/personal/jm/JobApplyBatch?id='+jobId;
+            }
+        }
+        else {
+            alert(data);
+        }
+    });
+    }
+    else {
+        ChangeModify("CvEducation", intEdu, btType);
+    }
+    if (isExperienceFill) {
+        $("#btnSaveCvEducation1").val("下一步");
+    } else {
+        $("#btnSaveCvEducation1").val("保存");
+    }
+}
+
+function ShowExperience() {
+    var strHtml = '<div class="ContentRight"><p class="pNotice">您的简历还不完善，目前还不能申请职位，请先完善简历信息！</p><div class="CvMainPart" style="border-bottom:none;">'
++ '  <h1>'
++ '	<span style="width:100px;">最近工作经历</span>'
+
++ '	<div style="width:675px;"></div></h1>'
++ '	<table width="100%" border="0" cellpadding="0" cellspacing="0" id="tabCvExperience1">'
++ '	  <tbody><tr>'
++ '		<th width="18%">'
++ '		  <span>*</span>企业名称：'
++ '		</th>'
++ '		<td width="82%">'
++ '		  <input type="text" class="TextInput" id="txtCompanyName1" name="txtCompanyName1" verify="required" maxlength="30" value="">'
++ '		</td>'
++ '	  </tr>'
++ '	  <tr>'
++ '		<th>'
++ '		  <span>*</span>所属行业：'
++ '		</th>'
++ '		<td>'
++ '		  <input type="hidden" id="iddcIndustryID1" value="">'
++ '		  <input type="button" class="PopupSelect" id="txtdcIndustryID1" name="txtdcIndustryID1" onclick="PopupSelect(IndustrySelect.newSelect(170,0),this,700)" value="">'
++ '		  <span id="spdcIndustryID1" dic="Industry" style="display: none;"> </span>'
++ '		</td>'
++ '	  </tr>'
++ '	  <tr>'
++ '		<th>'
++ '		  企业规模：'
++ '		</th>'
++ '		<td>'
++ '		  <input type="hidden" id="iddcCompanySizeID1" value="">'
++ '		  <input type="button" class="PopupSelect" id="txtdcCompanySizeID1" name="txtdcCompanySizeID1" onclick="PopupSelect(CommonSelect.newSelect(\'jsCompanySize\',170,1),this,177)" value="">'
++ '		  <span id="spdcCompanySizeID1" dic="CompanySize" style="display: none;"> </span>'
++ '		</td>'
++ '	  </tr>'
++ '	  <tr>'
++ '		<th>'
++ '		  <span>*</span>职位名称：'
++ '		</th>'
++ '		<td>'
++ '		  <input type="text" id="txtJobName1" name="txtJobName1" class="TextInput" verify="required" maxlength="20" value="">'
++ '		</td>'
++ '	  </tr>'
++ '	  <tr>'
++ '		<th>'
++ '		  <span>*</span>职位类别：'
++ '		</th>'
++ '		<td>'
++ '		  <input type="hidden" id="iddcJobtypeID1" value="">'
++ '		  <input type="button" class="PopupSelect" id="txtdcJobtypeID1" name="txtdcJobtypeID1" onclick="PopupSelect(JobTypeSelect.newSelect(0),this,600,\'请选择从事的职位类别\')" value="">'
++ '		  <span id="spdcJobtypeID1" dic="JobType" style="display: none;"> </span>'
++ '		</td>'
++ '	  </tr>'
++ '	  <tr>'
++ '		<th>'
++ '		  <span>*</span>工作时间：'
++ '		</th>'
++ '		<td>'
++ '		  <input type="hidden" id="idBeginDate1" value="">'
++ '		  <input class="PopupSelect Short" type="button" id="txtBeginDate1" name="txtBeginDate1" onclick="datePicker(this,\'请选择开始工作时间\')" value="">'
++ '		  <span id="spBeginDate1" dic="Yearmonth" style="display: none;"> </span>'
++ '		  至'
++ '		  <input type="hidden" id="idEndDate1" value="">'
++ '		  <input class="PopupSelect Short" type="button" id="txtEndDate1" name="txtEndDate1" onclick="datePicker(this,\'请选择结束工作时间\')" value="">'
++ '		  <span id="spBeginDate1" dic="Yearmonth" style="display: none;"> </span>'
++ '		</td>'
++ '	  </tr>'
++ '	  <tr>'
++ '		<th>'
++ '		  <span>*</span>下属总人数：'
++ '		</th>'
++ '		<td>'
++ '		  <input type="hidden" id="idSubNodeNum1" value="">'
++ '		  <input type="button" class="PopupSelect" id="txtSubNodeNum1" name="txtSubNodeNum1" onclick="PopupSelect(CommonSelect.newSelect(\'jsLowerNumber\',170,1),this,177)" value="">'
++ '		  <span id="spSubNodeNum1" dic="LowerNumber" style="display: none;"> </span>'
++ '		</td>'
++ '	  </tr>'
++ '	  <tr>'
++ '		<th valign="top" style="padding-top: 10px;">'
++ '		  <span>*</span>工作描述：'
++ '		</th>'
++ '		<td>'
++ '		  <textarea id="txtDescription1" name="txtDescription1" maxlength="2000" class="TextInput Textarea" verify="required"></textarea>'
++ '		</td>'
++ '	  </tr>'
++ '	  <tr>'
++ '		<th> '
++ '		  '
++ '		</th>'
++ '		<td>'
++ '		  <font id="txtDescriptionTips1">最多可输入2000汉字</font><font style="font-size:9pt"></font>'
++ '		</td>'
++ '	  </tr>'
++ '	</tbody></table>'
++ '  <input type="button" id="btnSaveCvExperience1" name="btnSaveCvExperience" value="保存" class="btnConfirm" onclick="SaveCvExperienceStep(this)" />'
++ '        <input type="hidden" id="hidCvExperienceID1" name="hidCvExperienceID1" value="" />'
++ '  </div></div>';
+    ShowInfo(strHtml);
+}
+
+function SaveCvExperienceStep(btType) {
+    var intExp = btType.id.substring(19);
+    if (btType.value == "保存" || btType.value == "Save" || btType.value == "下一步") {
+        if ($("#txtDescription" + intExp).val() == "主要填写自己从事工作的岗位职责，在工作中能力的体现，以及自己取得过哪些成绩。") {
+            $("#txtDescription" + intExp).val("");
+        }
+        if (!CheckError("CvExperience", intExp))
+            return false;
+        var strDescription = $("#txtDescription" + intExp).val();
+
+        $.post("/Personal/cv/ProcessCvExperience" + params, {
+            ID: $("#hidCvExperienceID" + intExp).val(),
+            CompanyName: escape($.trim($("#txtCompanyName" + intExp).val())),
+            dcIndustryID: $("#iddcIndustryID" + intExp).val(),
+            dcCompanySizeID: $("#iddcCompanySizeID" + intExp).val(),
+            JobName: escape($.trim($("#txtJobName" + intExp).val())),
+            dcJobtypeID: $("#iddcJobtypeID" + intExp).val(),
+            BeginDate: $("#idBeginDate" + intExp).val(),
+            EndDate: $("#idEndDate" + intExp).val(),
+            SubNodeNum: $("#idSubNodeNum" + intExp).val(),
+            Description: escape($("#txtDescription" + intExp).val().replace("°", "°")),
+            dcCompanyKindID: $("#iddcCompanyKindID" + intExp).length == 0 ? "" : $("#iddcCompanyKindID" + intExp).val(),
+            WorkPlace: $("#idWorkPlace" + intExp).length == 0 ? "" : $("#idWorkPlace" + intExp).val(),
+            Dept: $("#txtDept" + intExp).length == 0 ? "" : escape($.trim($("#txtDept" + intExp).val())),
+            UpperPost: $("#txtUpperPost" + intExp).length == 0 ? "" : escape($.trim($("#txtUpperPost" + intExp).val())),
+            dcLeaveResonID: $("#iddcLeaveResonID" + intExp).length == 0 ? "" : $("#iddcLeaveResonID" + intExp).val()
+        },
+	function (data) {
+	    if (!isNaN(data)) {
+	        if (data == -100) {
+	            alert("请从本网站提交")
+	            return;
+	        }
+	        else if (data == -101) {
+	            alert("您还未登录，请您重新登录");
+	            window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+	        }
+	        //window.location.reload();
+			window.location.href='http://www.shoudurc.com/personal/jm/JobApplyBatch?id='+jobId;
+	    }
+	    else
+	        alert(data);
+	});
+    }
+    else {
+        ChangeModify("CvExperience", intExp, btType);
+    }
+}
+
+function ShowInfo(strHtml) {
+    popup2.clearData();
+    popup2.isHeader = 1;
+    popup2.headerTitle = "完善简历";
+    popup2.isMessageTip = 0;
+    popup2.drag = 0;
+    popup2.mask = 1;
+    popup2.W = 620;
+    popup2.H = 1;
+    popup2.dockTop = 25;
+    popup2.bodyHtml = strHtml;
+    popup2.creatDiv();
+}
+
+//手机号认证
+function SendVerifyCodeJob() {
+    var mobile = document.getElementById("txtMobile").value;
+    if (document.getElementById("txtMobile").value == "") {
+        alert("请输入手机号");
+        document.getElementById("txtMobile").focus();
+        return;
+    }
+    if (!CheckRule("mobile", document.getElementById("txtMobile").value)) {
+        return;
+    }
+    Ajax("post", "/personal/sys/AjaxCertifMobile?t=" + new Date().getTime(), "mobile=" + document.getElementById("txtMobile").value,
+  function (obj) {
+
+      var strText = obj.responseText;
+      alert(strText + "==========" + document.getElementById("txtMobile").value);
+      if (strText == "1") {
+          document.getElementById("btnSendCode").disabled = true;
+          second = 179;
+          document.getElementById("spVerifyCodeTip").innerHTML = "已发送成功，180秒后可重新获取";
+          $("#spVerifyCodeTip").removeClass("Error");
+          funcInterval = window.setInterval(Countdown, 1000);
+      } else if (strText == "-101") {
+          alert("请从本站提交");
+      } else if (strText.indexOf("s") > -1) {
+          document.getElementById("btnSendCode").disabled = true;
+          second = 179;
+          document.getElementById("spVerifyCodeTip").innerHTML = "已发送成功，180秒后可重新获取";
+          $("#spVerifyCodeTip").removeClass("Error");
+          funcInterval = window.setInterval(Countdown, 1000);
+      } else if (strText == "-1") {
+          alert("该ip今天注册的次数过多");
+      } else if (strText == "-2") {
+          document.getElementById("Mobile").innerHTML = '<div></div><b>您输入手机号已经存在，请重新输入。<a href="http://www.shoudurc.com/Personal/sys/login?un=' + mobile + '">点此登录</a> 或 <a href="http://www.shoudurc.com/Personal/sys/getpassword?un=' + mobile + '">取回密码</a></b>';
+      }
+      //      else if (strText == "-4") {
+      //          document.getElementById("Mobile").innerHTML = '<div></div><b>您输入手机号已经存在，请重新输入。<a href="http://www.shoudurc.com/Personal/sys/login?un=' + mobile + '">点此登录</a> 或 <a href="http://www.shoudurc.com/Personal/sys/getpassword?un=' + mobile + '">取回密码</a></b>';
+      //      }
+      else if (strText == "0") {
+          alert("该手机号发送验证码次数过多");
+      } else if (strText == "-9") {
+          showVerifyCode(document.getElementById("btnSendCode"));
+      }
+  },
+  false)
+}
+
+function showVerifyCode(obj) {
+    var str = '<p style="text-align:center; padding:16px 0;">';
+    str = str + '   输入右侧图片中的数字：';
+    str = str + '    <input type="text" id="txtVerifyCode" maxlength="4" style="width:80px;    vertical-align: middle;"  /> <img style="vertical-align: middle;" src="/personal/sys/VerifyCode?time=' + (new Date()).getTime() + '" id="valiCode">';
+    str = str + '  </p>';
+    str = str + '  <p class="popupfooter">';
+    str = str + '     <input type="button" value="确 认" onClick="CheckVerifyCode()" class="popupBtn" />';
+    str = str + '  </p>';
+    popup.clearData();
+    popup.isHeader = 1;
+    popup.isMessageTip = 0;
+    popup.drag = 1;
+    popup.mask = 2;
+    popup.headerTitle = "输入右侧图片中的数字";
+    popup.W = 320;
+    popup.H = 1;
+    popup.isFilter = 1;
+    popup.dockObj = obj;
+    popup.dockLeft = 0;
+    popup.dockTop = -130;
+    popup.bodyHtml = str;
+    popup.creatDiv();
+    $(function () {
+        $("#valiCode").bind("click",
+    function () {
+        this.src = "/personal/sys/VerifyCode?time=" + (new Date()).getTime();
+    });
+    });
+}
+
+function CheckVerifyCode() {
+    $.post("/personal/sys/AjaxCheckVerifyCode?t=" + new Date().getTime(), {
+        code: document.getElementById("txtVerifyCode").value,
+        mobile: document.getElementById("txtMobile").value
+    }, function (data) {
+        if (data = "1") {
+            popup.ibClose();
+            SendVerifyCodeJob();
+        } else {
+            alert("输入错误，请重新输入右边图片中的数字");
+            document.getElementById("txtVerifyCode").focus();
+        }
+    });
+}
+
+function Countdown() {
+    document.getElementById("btnSendCode").value = second + "秒后重新获取";
+    if (second == 0) {
+        document.getElementById("btnSendCode").value = "发送验证码";
+        CheckMobile(document.getElementById("txtMobile"));
+        document.getElementById("spVerifyCodeTip").innerHTML = '短信有可能延迟，请耐心等待，如果您一直没有收到短信，建议您使用<a href="javascript:" onclick="$(\'.TabSwitcher div\').eq(0).click()">邮箱注册</a>';
+        $("#spVerifyCodeTip").removeClass("Error");
+        window.clearInterval(funcInterval);
+    }
+    second--;
+}

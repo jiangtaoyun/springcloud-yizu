@@ -1,0 +1,234 @@
+$(function () {
+  NavTopDefault();
+  $(".NavItems a").mouseenter(
+    function () {
+      if ($('.CursorLine').is(':animated')) {
+        $('.CursorLine').stop(true, false);
+      }
+      $(".CursorLine").animate({ left: ($(this).position().left + (($(this).width() - $(".CursorLine").width()) / 2)) + "px" }, 300);
+    }
+  );
+  $(".NavItems a").mouseleave(
+    function () {
+	  if (typeof(strNavTopID) == "undefined") {
+		$(".CursorLine").animate({ left: "20px" }, 300);
+	  }
+	  else {
+        var objSelect = document.getElementById(strNavTopID);
+        $(".CursorLine").animate({ left: ($(objSelect).position().left + (($(this).width() - $(".CursorLine").width()) / 2)) + "px" }, 300);
+	  }
+    }
+  );
+  $(".Info").mouseenter(
+    function () {
+      $("#InfoPopup").css("left", $(this).position().left + 15 + "px");
+      $("#InfoPopup").css("width", $(this).width() + 7 + "px");
+      $(this).addClass("Active");
+      $("#InfoPopup").slideDown("fast");
+    }
+  );
+  $(".Info").mouseleave(
+    function () {
+      $(this).removeClass("Active");
+      $("#InfoPopup").slideUp("fast");
+    }
+  );
+  $(".Weixin").mouseenter(
+    function () {
+      RefreshQrImage();
+      $("#WeixinPopup").css("left", $(this).position().left - 64 + "px");
+      $(this).addClass("Active");
+      $("#WeixinPopup").slideDown("fast");
+    }
+  );
+  $(".Weixin").mouseleave(
+    function () {
+      $(this).removeClass("Active");
+      $("#WeixinPopup").slideUp("fast");
+    }
+  );
+  $(".NavItems").mouseenter(
+    function () {
+      $(this).addClass("Active");
+    }
+  );
+  $(".NavItems").mouseleave(
+    function () {
+      $(this).removeClass("Active");
+    }
+  );
+  $("http://www.shoudurc.com/Content/Personal/script/.NavItems.More").mouseenter(
+    function () {
+      $("#TopNavMorePopup").css("left", $(this).position().left + "px");
+      $(this).addClass("Active");
+      $("#TopNavMorePopup").slideDown("fast");
+    }
+  );
+
+  $("http://www.shoudurc.com/Content/Personal/script/.NavItems.More").mouseleave(
+    function () {
+      $(this).removeClass("Active");
+      $("#TopNavMorePopup").slideUp("fast");
+    }
+  );
+
+  $(".NavLeftMain div,li").click(function () {
+    if ($(this).attr("href") != undefined) {
+      location.href = $(this).attr("href");
+    } else {
+      var obj = $("#" + $(this).attr("id") + "Content");
+      if (obj.is(":hidden")) {
+        $(this).find(".PointerUp").removeClass("PointerUp").addClass("PointerDown");
+      } else {
+        $(this).find(".PointerDown").removeClass("PointerDown").addClass("PointerUp");
+      }
+      obj.slideToggle("fast");
+    }
+  });
+  if (typeof (strNavLeftID) != "undefined") {
+    $(".NavLeftMain div,li").each(function (index, element) {
+      if ($(this).attr("id") == strNavLeftID) {
+        $(this).addClass("Active");
+      } else {
+        $(this).removeClass("Active");
+      }
+    });
+  }
+  BindCheckBoxClick();
+});
+function RefreshQrImage() {
+  $.get("/personal/sys/AjaxGetBindTicket?t=" + new Date().getTime(), function (data) {
+    $("[name='WeixinQr']").attr("src", "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + data);
+    $(".WeixinQr img").show();
+  });
+}
+function BindCheckBoxClick() {
+  $(".CheckBox").unbind("click");
+  $(".CheckBox").click(
+    function () {
+      if ($(this).hasClass("UnAble")) {
+        return;
+      }
+      if ($(this).attr("id") == "chkAll") {
+        if ($(this).hasClass("No")) {
+          $(this).removeClass("No").addClass("Yes");
+          $(".TblList").find("table").find("http://www.shoudurc.com/Content/Personal/script/.CheckBox.No").each(function (index, element) {
+            $(this).removeClass("No").addClass("Yes");
+          });
+        } else {
+          $(this).removeClass("Yes").addClass("No");
+          $(".TblList").find("table").find("http://www.shoudurc.com/Content/Personal/script/.CheckBox.Yes").each(function (index, element) {
+            $(this).removeClass("Yes").addClass("No");
+          });
+        }
+      } else {
+        if ($(this).hasClass("No")) {
+          $(this).removeClass("No").addClass("Yes");
+          if ($(".TblList").find("http://www.shoudurc.com/Content/Personal/script/table .CheckBox.No").length == 0) {
+            $("#chkAll").removeClass("No").addClass("Yes");
+          }
+        } else {
+          $(this).removeClass("Yes").addClass("No");
+          if ($(this).parents(".TblList").length > 0) {
+            $("input.CheckBox.Yes[id='chkAll']").removeClass("Yes").addClass("No");
+          }
+        }
+      }
+    }
+  );
+}
+function GetAllCheckBoxValue() {
+  var ids = "";
+  $("http://www.shoudurc.com/Content/Personal/script/.CheckBox.Yes").each(function (index, element) {
+    if ($(this).attr("checkValue") != undefined) {
+      ids += $(this).attr("checkValue") + ",";
+    }
+  });
+  if (ids.length > 0) {
+    ids = ids.substring(0, ids.length - 1);
+  }
+  return ids;
+}
+function ShowNoticeTip(Message, TimeLast) {
+  if (!TimeLast) {
+    TimeLast = 3000;
+  }
+  if ($("#NoticeTip").length == 0) {
+    var NoticeTipDiv = $("<div></div>");
+    NoticeTipDiv.attr('id', 'NoticeTip');
+    NoticeTipDiv.html(Message);
+    NoticeTipDiv.appendTo("body");
+    NoticeTipDiv.fadeIn();
+  } else {
+    $("#NoticeTip").html(Message);
+    $("#NoticeTip").fadeIn();
+  }
+  var top = ($(window).height() - $("#NoticeTip").height()) / 2;
+  var left = ($(window).width() - $("#NoticeTip").width()) / 2;
+  var scrollTop = $(document).scrollTop();
+  var scrollLeft = $(document).scrollLeft();
+  $("#NoticeTip").css({ position: 'absolute', 'top': top + scrollTop, 'left': left + scrollLeft });
+  setTimeout(function () { $("#NoticeTip").fadeOut(); }, TimeLast);
+}
+
+//设置顶部导航栏默认选中项
+function NavTopDefault() {
+  try {
+    if (typeof (strNavTopID) == "undefined") return;
+    var objSelect = document.getElementById(strNavTopID);
+    if (objSelect == null) return;
+    $(".CursorLine").animate({ left: ($(objSelect).position().left + (($(objSelect).width() - $(".CursorLine").width()) / 2)) + "px" }, 300);
+  //职位搜索和校园招聘设置二级菜单--Modify by mice 123 2014-11-25
+    if (strNavTopID == "NavTop_JobSearch") {
+      NavBottomDefault();
+    }
+  //点评与面经设置二级菜单--Modify by John 2014.11.27
+    else if (strNavTopID == "NavTop_Comment") {
+      NavBottomDefaultComment();
+    }
+  }
+  catch(e) {}
+}
+function textBoxFocus(obj, strText) {
+  var strObjValue = obj.value;
+  if (strObjValue == strText) {
+    obj.value = "";
+  }
+}
+
+function textBoxBlur(obj, strText) {
+  var strObjValue = obj.value;
+  if (strObjValue == "") {
+    obj.value = strText;
+  }
+}
+
+function ChangeTag() {
+
+  $("#NavTop_Help").toggle(200);
+  $("#NavTop_Salary").toggle(200);
+}
+
+//设置顶部职位搜索二级导航栏默认选中项
+function NavBottomDefault() {
+  document.getElementById("NavTop_JobSearch_All").style.display = "block";
+  var objSelect = document.getElementById(strNavBottomID);
+  objSelect.className = "NavBottomSelect";
+}
+
+//点评与面经设置二级导航栏默认选中项--Added by John 2014.11.27
+function NavBottomDefaultComment() {
+  document.getElementById("NavTop_Comment_All").style.display = "block";
+  var objSelect = document.getElementById(strNavBottomID);
+  objSelect.className = "NavBottomSelect";
+}
+
+function JobSearchNavShow(obj) {
+  obj.className = "Select";
+  document.getElementById("NavTop_JobSearch_All").style.display = "block";
+}
+
+function JobSearchNavHidden(obj) {
+  obj.className = "unSelect";
+  document.getElementById("NavTop_JobSearch_All").style.display = "none";
+}

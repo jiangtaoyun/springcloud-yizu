@@ -1,0 +1,136 @@
+var ieVersion;
+var browser = navigator.appName
+var b_version = navigator.appVersion
+var version = b_version.split(";");
+var tDisplay;
+var trim_Version="" ;
+try{
+trim_Version= version[1].replace(/[ ]/g, "")
+}catch(ex){
+}
+if (browser == "Microsoft Internet Explorer" && (trim_Version == "MSIE7.0" || trim_Version == "MSIE6.0")) {
+  ieVersion = 6;
+}
+else {
+  ieVersion = 8;
+}
+var boxI;
+function display(event, str, jobid, j, cpname) {
+	if(tDisplay){
+		clearTimeout(tDisplay);
+	}
+	$(".box").mouseleave(function(){hiddenAllBox();});
+	$(".JobList").mouseleave(function(){hiddenAllBox();});
+	Ev= event || window.event; 
+	var mousePos1 = mouseCoords(Ev); 
+	var mousePos2;
+	tDisplay=setTimeout(function(){
+		mousePos2=mouseCoords(Ev)
+		var xMin=mousePos2.x-mousePos1.x;
+		var yMin=mousePos2.y-mousePos1.y;
+		if(xMin<=0){
+			if (boxI == str) {
+				document.getElementById(str).style.display = "block";
+				return;
+			}
+			
+			if (document.getElementById(str).innerHTML.replace(/(^\s*)|(\s*$)/g, "").length>10) {
+				DisJobPopDiv(str.replace("box",""))
+				boxI = str;
+				return;
+				
+			}
+			boxI = str;
+			Ajax("post", "/personal/js/ajaxGetBriefBox", "jobid=" + jobid + "&i=" + j + "&cpname=" + escape(cpname), FillPlace, false);
+		}else if((yMin/xMin>3)||(yMin/xMin<-3)){
+			if (boxI == str) {
+				document.getElementById(str).style.display = "block";
+				return;
+			}
+			if (document.getElementById(str).innerHTML.replace(/(^\s*)|(\s*$)/g, "").length>10) {
+				DisJobPopDiv(str.replace("box",""))
+				boxI = str;
+				return;
+			}
+			boxI = str;
+			Ajax("post", "/personal/js/ajaxGetBriefBox", "jobid=" + jobid + "&i=" + j + "&cpname=" + escape(cpname), FillPlace, false);
+		}else{
+			return;
+		}
+	},50);
+}
+function menuLoad(){
+}
+function disappear(str) {
+  var tmp;
+	clearTimeout(tDisplay);
+	for (var i = 0; i < 50; i++) {
+	  tmp = document.getElementById("box" + i);
+	  if (tmp != null) {
+		document.getElementById("box" + i).style.display = "none";
+	  }
+  }
+  //}
+}
+/*document.onclick = function () {disappear(boxI); }*/
+function DisJobPopDiv(arr1,arr2)
+{
+  var tmp;
+  for (var i = 0; i < 50; i++) {
+    if (i != arr1) {
+      tmp = document.getElementById("box" + i);
+      if (tmp != null) {
+        document.getElementById("box" + i).style.display = "none";
+      }
+    }
+  }
+  document.getElementById("box" +arr1).style.display = "block";
+  if (ieVersion != 6) {
+    document.getElementById("box" + arr1).style.marginLeft = (parseInt(arr2)+40) + "px";
+  }  
+
+  var offTop = _("box" +arr1).offsetTop; //距离顶部距离
+  var scTop = document.documentElement.scrollTop || document.body.scrollTop; //滚轮滚动高度
+  var boxHeight = document.getElementById("box" + arr1).offsetHeight;
+  var tbBoxHeight = document.getElementById("tbDetail" + arr1).offsetHeight;
+  var winHeight = document.documentElement.clientHeight || document.body.clientHeight;
+  var dockObj = document.getElementById("tbDetail" + arr1)
+  var y = dockObj.offsetTop;
+  while (dockObj = dockObj.offsetParent) { y += dockObj.offsetTop; }
+  var top = Math.max("-" + (tbBoxHeight - 25), Math.min(-46, (-46 - ((y + tbBoxHeight) - (document.documentElement.scrollTop + document.body.scrollTop + document.documentElement.clientHeight)))))
+  document.getElementById("tbDetail" + arr1).style.top = top + "px";	
+}
+function FillPlace(obj) {
+  var strPlace = ""
+  var data = obj.responseText;
+  var arr = data.split('$*##*$');
+
+  _("box" + arr[1]).innerHTML = arr[0];
+  DisJobPopDiv(arr[1],arr[2])
+}
+
+function hiddenAllBox(){
+	clearTimeout(tDisplay);
+	$(".box").each(function(index, element) {
+    $(this).hide();
+  });
+}
+
+function mouseCoords(ev) 
+{ 
+	if(ev.pageX || ev.pageY){ 
+		return {x:ev.pageX, y:ev.pageY}; 
+	} 
+	var PointerY=0,PointerX=0;
+	try{
+		PointerX=ev.clientX + document.body.scrollLeft - document.body.clientLeft;
+	}catch(e){}
+	try{
+		PointerY = ev.clientY + document.body.scrollTop - document.body.clientTop;
+	}catch(e){}
+	return{ 
+		'x':PointerX, 
+		'y':PointerY
+	}; 
+}  
+

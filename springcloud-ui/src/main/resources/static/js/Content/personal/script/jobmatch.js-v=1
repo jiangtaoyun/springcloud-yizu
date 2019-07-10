@@ -1,0 +1,157 @@
+function GenJobMatch() {
+  if (!window.CvDegree) //如果没登陆或者没有完整的简历，则取消
+  {
+    document.getElementById('JobMatchHead').style.display = 'none';
+    document.getElementById('JobMatchHead').parentNode.width = '1%';
+    return;
+  }
+  for (var i = 0; i < arrJsJobID.length; i++) {
+    var JobDegreeMatch = 0, JobRelatedWorkYearsMatch = 0, JobDcSalaryIDMatch = 0, AgeMatch = 0, JobTypeMatch = 0, JobRegionMatch = 0, JobIndustryMatch = 0;
+    //匹配学历
+    if (CvDegree == arrJsdcEducationID[i])
+      JobDegreeMatch = 100
+    else if (CvDegree - arrJsdcEducationID[i] == 1)
+      JobDegreeMatch = 80
+    else if (CvDegree - arrJsdcEducationID[i] == 2)
+      JobDegreeMatch = 50
+
+    //匹配工作经验
+    JobRelatedWorkYearsMatch = GetExperienceMatch(arrJsMinExperience[i], CvRelatedWorkYears);
+
+    //匹配月薪
+    if (arrJsdcSalaryID[i] == CvDcSalaryID || CvIsNegotiable == "True" || arrJsdcSalaryID[i] == "100")
+      JobDcSalaryIDMatch = 100;
+    else if (arrJsdcSalaryID[i] - CvDcSalaryID == 1 || arrJsdcSalaryID[i] - CvDcSalaryID == -1)
+      JobDcSalaryIDMatch = 50;
+
+    //匹配年龄
+    AgeMatch = GetAgeMatch(arrJsMinAge[i], arrJsMaxAge[i], PaAge);
+
+    //匹配职位类别
+    JobTypeMatch = GetJobTypeMatch(CvJobTypeID, arrJsJobTypeID[i]);
+
+    //匹配工作地点
+    JobRegionMatch = GetRegionMatch(CvRegionID, arrJsdcRegionID[i]);
+
+    //匹配行业
+    JobIndustryMatch = GetIndustryMatch(CvIndustryID, arrJsIndustry[i]);
+    document.getElementById('JobMatch' + arrJsJobID[i]).innerHTML = parseInt((JobDegreeMatch + JobRelatedWorkYearsMatch + JobDcSalaryIDMatch + AgeMatch + JobTypeMatch + JobRegionMatch + JobIndustryMatch) / 7) + "%";
+  }
+}
+
+function GetIndustryMatch(cvIndustry, cpIndustry) {
+
+  var arrCvIndustry = cvIndustry.split(",");
+  var i;
+  for (i = 0; i < arrCvIndustry.length; i++) {
+    if (cpIndustry.indexOf(',' + arrCvIndustry[i] + ',') >= 0)
+      if (arrCvIndustry[i].indexOf("c") >= 0)
+        return 50;
+      else
+        return 100;
+
+  }
+  if (cvIndustry.length > 0) {
+    return 0;
+  }
+  else {
+    return 100;
+  }
+}
+function GetRegionMatch(cvRegionID, RegionID) {
+  var arr = cvRegionID.split(",");
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] == RegionID || (RegionID.indexOf(arr[i]) == 0 && arr[i].length == 4) || (RegionID.indexOf(arr[i]) == 0 && arr[i].length == 2))
+      return 100;
+  }
+  return 0;
+}
+function GetJobTypeMatch(CvJobTypeID, JobTypeID) {
+  var arr = CvJobTypeID.split(",")
+  var JobTypeMatch = 0;
+  for (var i = 0; i < arr.length; i++) {
+    try {
+      if (ArrJobTypeSimilar[arr[i] + "c" + JobTypeID])
+        return ArrJobTypeSimilar[arr[i] + "c" + JobTypeID] * 10;
+      if (ArrJobTypeSimilar[JobTypeID + "c" + arr[i]])
+        return ArrJobTypeSimilar[JobTypeID + "c" + arr[i]] * 10;
+    }
+    catch (e)
+	  { }
+    if (arr[i] == JobTypeID || JobTypeID.indexOf(arr[i]) == 0)
+      return 100;
+    else if (arr[i].substr(0, 2) == JobTypeID.substr(0, 2))
+      JobTypeMatch = 50;
+  }
+  return JobTypeMatch;
+}
+function GetAgeMatch(MinAge, MaxAge, Age) {
+
+  if ((MinAge == 99 && MaxAge == 99) || (MinAge == 0 && MaxAge == 0))
+    return 100;
+  else if (Age < MinAge) {
+    if (MinAge - Age == 1)
+      return 80;
+    else if (MinAge - Age == 2)
+      return 50;
+  }
+  else if (Age > MaxAge) {
+    if (Age - MaxAge == 1)
+      return 80;
+    else if (Age - MaxAge == 2)
+      return 50;
+  }
+  else
+    return 100;
+  return 0;
+}
+function GetExperienceMatch(MinExperience, cvRelatedWorkYears) {
+  if (MinExperience == 0)
+    return 100;
+  else if (MinExperience == 1) {
+    if (cvRelatedWorkYears < 1)
+      return 50;
+    else if (cvRelatedWorkYears > 2)
+      return 100 + (cvRelatedWorkYears - 2) * -10;
+    else
+      return 100;
+  }
+  else if (MinExperience == 1) {
+    if (cvRelatedWorkYears < 1)
+      return 50;
+    else if (cvRelatedWorkYears > 2)
+      return ExperienceMatch = 100 + (cvRelatedWorkYears - 2) * -10;
+    else
+      return 100;
+  }
+  else if (MinExperience == 2) {
+    if (cvRelatedWorkYears < 3)
+      if (cvRelatedWorkYears >= 1 && cvRelatedWorkYears <= 2)
+        return 50;
+      else if (cvRelatedWorkYears > 5)
+        return 100 + (cvRelatedWorkYears - 2) * -10
+      else
+        return 100;
+  }
+  else if (MinExperience == 3) {
+    if (cvRelatedWorkYears < 6)
+      if (cvRelatedWorkYears >= 3 && cvRelatedWorkYears <= 5)
+        return 50;
+      else if (cvRelatedWorkYears > 10)
+        return 100 + (cvRelatedWorkYears - 2) * -10
+      else
+        return 100;
+  }
+  else if (MinExperience == 4) {
+    if (cvRelatedWorkYears < 10)
+      if (cvRelatedWorkYears >= 6 && cvRelatedWorkYears <= 10)
+        return 50;
+      else
+        return 100;
+  }
+  else if (MinExperience == 5)
+    return 100 + (cvRelatedWorkYears * -10);
+  else
+    return 100;
+  return 0;
+}

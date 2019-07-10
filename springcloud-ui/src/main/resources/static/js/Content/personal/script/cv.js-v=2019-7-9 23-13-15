@@ -1,0 +1,3198 @@
+    var intWrong = 0;
+    var params;
+    var cvMainID;
+    var intLanguage;
+    var intInterval;
+    var beforeLivePlaceId;
+    //◆◆◆ 页面载入时执行的方法
+    window.onbeforeunload = function () { if (Resume_beforeunload()) return '您编辑的内容没有保存'; }
+    $(function () {
+        intLanguage = $("#hidLanguage").val();
+        cvMainID = $("#hidcvMainID").val();
+        params = "?Type=0&Language=" + intLanguage + "&cv=" + cvMainID;
+        $(".TipsError").hide();
+        $("span[dic]").each(function () {
+            var strType = $(this).attr("dic");
+            $(this).siblings("input[id='" + $(this).attr("id").replace("sp", "hid") + "'],input[id^='" + $(this).attr("id").replace("sp", "id") + "']").val($(this).html());
+            if (strType == "Appendix" && $(this).html() == 999) {
+                $(this).html($(this).siblings("input[id^='txt']").val());
+            }
+            else $(this).html(GetArrayValue(strType, $(this).html().trim()));
+        });
+
+        if (window.location.href.toString().toLowerCase().indexOf("/resume") > -1) {
+            $("input[id^='btnSave']").siblings().hide();
+            $("[id^='txt']").hide();
+            $("input[id^='cb']").attr("disabled", "disabled");
+        }
+        else {
+            //$("span[dic]").hide();
+            ChangeModify("PaMain", "");
+            ChangeModify("JobIntention", "");
+            ChangeModify("CvEducation", "1");
+            ChangeModify("CvExperience", "1");
+        }
+        $(".btnSave").parents("tr").hide();
+        $("span[for]").click(function () {
+            $(this).hide();
+            $(this).siblings("[class]").hide();
+            $("#" + $(this).attr("for")).parents("tr").show();
+            $("#" + $(this).attr("for")).click();
+        });
+
+        $("input[name='btnAllDone']").click(function () {
+            intWrong = 0;
+            var intI = 0;
+            $("input[id^='btnSave']").each(function (i) {
+                if ($(this).val() == "保存") {
+                    var typeFun = "Save" + this.name.substring(7) + "(this)";
+                    if (eval(typeFun) == false) {
+                        if (intI == 0) {
+                            window.location.href = "#div" + $(this).attr("id").substring(7);
+                            alert("您有未填写完成的信息");
+                            intI++;
+                        }
+                    }
+                }
+            });
+			
+			//insertSourcelog($("#hidcvMainID").val());
+
+            if (intWrong == 0) {
+                if (window.location.href.toLowerCase().indexOf("/resume") == -1) {
+                    if (applyUrl.length > 0) {
+                        window.location.href = applyUrl;
+                    }
+                    else {
+                        intInterval = window.setInterval(Run, 200);
+                    }
+                }
+                else {
+                    document.body.onbeforeunload = function () { };
+                    window.location.href = "http://www.shoudurc.com/Personal/cvm/cvlist";
+                }
+            }
+        });
+
+        $("#cvName").focus(function () {
+            $(this).parent().css("border-color", "#E35201");
+            $(this).siblings().css("border-color", "#E35201");
+        });
+
+        //$("table[id^='tab']").click(function () {
+        //        //$("table[id^='tab']").css({ "background-color": "#fdfaf1" });
+        //        $("table[id^='tab']").css({ "background-color": "#fff" });
+        //        $(this).css({ "background-color": "#eef2ff" });
+        //    });
+
+        $("font[id]").each(function () {
+            $(this).after("<font style='font-size:9pt'></font>");
+            $("#" + $(this).attr("id").toLowerCase().replace("tips", "")).keyup(function () { ShowWordCount(this) }).keydown(function () { CheckTextLength(this) });
+        });
+
+        $("[class='btnHideInfo']").each(function () {
+            $(this).click(function () {
+                $(this).toggleClass("btnHideInfo").toggleClass("btnShowInfo").parent().next("div").toggle();
+            });
+        });
+
+        $("input[id^='btnAdd']").each(function () {
+            $(this).click(function () {
+                eval($(this).attr("name").substr(3) + "(this)");
+            });
+        });
+
+        $("span[id^='spEnd']").each(function () {
+            if ($(this).attr("id").toLowerCase().indexOf("year") > 0) {
+                var EndDate = $(this).html() + $(this).nextAll("span").eq(0).html();
+                if (EndDate == "999999")
+                    $(this).parent().hide().next().show();
+            }
+        });
+
+        if ($("#txtEmail")) {
+            $("#txtEmail").focus(function () {
+                $(this).removeClass('required');
+            });
+            $("#txtEmail").keyup(function () {
+                EmailAutoComplate(this);
+            });
+            $("#txtEmail").blur(function () {
+                CheckEmail(this);
+            });
+        }
+        //复选框
+        $(".BtnGender").click(function () {
+            if ($(this).hasClass("Active")) return;
+            $(this).addClass("Active");
+            $(this).siblings(".BtnGender").removeClass("Active");
+        });
+
+        initFloatTips();
+        initCvTagsInfo();
+
+
+        beforeLivePlaceId = $("#idLivePlace").val();
+
+    });
+    //◆◆◆ 页面载入结束
+    //function Resume_beforeunload() {
+    //    var HasSave = false;
+    //    $("input[id^='btnSave']").each(function (i) {
+    //        if ($(this).val() == "保存" || btType.value == "Save")
+    //            HasSave = true;
+    //    });
+    //    return HasSave
+    //}
+
+    function SavePaMain(btType) {
+        if (btType.value == "保存" || btType.value == "Save") {
+            var isAjax = 'T';
+            if (!CheckError("PaMain")) {
+                return false;
+            }
+            if ($("#txtVeriyCode").is(":visible")) {
+                if ($("#txtImgVerifyCode").val() == "") {
+                    alert("图片验证码不能为空");
+                    return false;
+                }
+                if ($("#txtVeriyCode").val() == "") {
+                    alert("短信验证码不能为空");
+                    return false;
+                }
+            }
+            var IsNameHidden = ($("#cbIsNameHidden").hasClass("Yes") ? "1" : "0");
+            if (IsNameHidden != 1)
+                IsNameHidden = 0;
+
+            var idPalce = "";
+            if ($("#txtPlace").val() != "居住地大概位置") {
+                idPalce = $("#idPlace").val();
+            }
+
+            var Gender = $("[gender]").filter(".Active").attr("gender");
+            if ($("#txtVeriyCode").is(":visible")) {
+                $.ajax({ type: "post", url: "/Personal/Account/SavePaMain?" + params, data: {
+                    IsNameHidden: IsNameHidden,
+                    Name: escape($("#txtName").val()),
+                    Gender: Gender,
+                    BirthDay: $("#idBirthMonth").val(),
+					
+					url: window.location.href,
+					
+
+                    LivePlace: $("#idLivePlace").val(),
+                    dcMapPlace: idPalce,
+
+                    AccountPlace: $("#idAccountPlace").val(),
+                    GrowPlace: $("#idGrowPlace").val(),
+                    Mobile: $("#txtMobile").val(),
+                    VerifyCode: $("#txtVeriyCode").val(),
+                    OnlineContact: $("#idOnlineContact").length == 0 ? "" : $("#idOnlineContact").val(),
+                    OnlineContactNo: $("#txtOnlineContactNo").length == 0 ? "" : escape($("#txtOnlineContactNo").val()),
+                    HomePage: $("#txtHomePage").length == 0 ? "" : $("#txtHomePage").val(),
+                    Marriage: $("#idMarriage").length == 0 ? "" : $("#idMarriage").val(),
+                    Height: $("#txtHeight").length == 0 ? "" : $("#txtHeight").val(),
+                    Nation: $("#idNation").length == 0 ? "" : $("#idNation").val(),
+                    dcCareerStatus: $("#iddcCareerStatus").length == 0 ? "" : $("#iddcCareerStatus").val(),
+                    IsReceiveSms: ($("#cbReceiveSms").hasClass("Yes") ? "1" : "0"),
+                    Email: $("#txtEmail") ? $("#txtEmail").val() : ""
+                }, async: false, success: function (data) {
+                    if (data == 1) {
+                        if (window.location.href.toLowerCase().toString().indexOf("/resume") > -1) {
+                            ChangeSave("PaMain", "", btType, data);
+                            Gender == 1 ? $("#spGender").html("女") : $("#spGender").html("男");
+                            if (IsNameHidden == 1)
+                                $("#IsNameHidden").html("True");
+                            else
+                                $("#IsNameHidden").html("False");
+
+                            $("#cbIsNameHidden").attr("disabled", "disabled");
+                            $("#cbReceiveSms").attr("disabled", "disabled");
+                            setStarUp(1);
+                            if (!$("#txtHeight").val())
+                                $("#height").hide();
+
+                            if (!$("#idOnlineContact").val()) {
+                                $("#txtOnlineContactNo").val("");
+                                $("#spOnlineContactNo").html("");
+                            }
+                        }
+                        beforeIdPlace = $("#idPlace").val();
+                        beforeTxtPlace = $("#txtPlace").val();
+                        $(".trDisplay").hide();
+                        if ($("#txtPlace").val().length > 0 && $("#txtPlace").val() != "居住地大概位置") {
+                            $("#spMapPlace").text(beforeTxtPlace + "附近");
+                        }
+                    } else if (data == 0) {
+                        alert("短信验证码错误，请重新输入");
+                        isAjax = 'F';
+                    }
+                    else if (data == -2) {
+                        alert("保存数据出现错误，请重新操作");
+                        isAjax = 'F';
+                    }
+                    else if (data == -1) {
+                        alert("您的手机号码已被我们列入黑名单，数据没有保存");
+                        isAjax = 'F';
+                    }
+                    else if (data == -9) {
+                        alert("用户参数错误，数据没有保存");
+                        isAjax = 'F';
+                    }
+                    else if (data == -8) {
+                        alert("姓名不能为空，数据没有保存");
+                        isAjax = 'F';
+                    }
+                    else if (data == -7) {
+                        alert("手机号不能为空，数据没有保存");
+                        isAjax = 'F';
+                    }
+                    else if (data == -100) {
+                        alert("请从本网站提交");
+                        isAjax = 'F';
+                    }
+                    else if (data == -101) {
+                        alert("您还未登录，请您重新登录");
+                        window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+                    }
+                    else
+                        alert(data);
+                }
+                });
+            } else{
+                $.ajax({ type: "post", url: "/Personal/Account/SavePaMain?" + params, data: {
+                    IsNameHidden: IsNameHidden,
+                    Name: escape($("#txtName").val()),
+                    Gender: Gender,
+                    BirthDay: $("#idBirthMonth").val(),
+
+                    LivePlace: $("#idLivePlace").val(),
+                    dcMapPlace: idPalce,
+
+                    AccountPlace: $("#idAccountPlace").val(),
+                    GrowPlace: $("#idGrowPlace").val(),
+                    Mobile: $("#txtMobile").val(),
+                    OnlineContact: $("#idOnlineContact").length == 0 ? "" : $("#idOnlineContact").val(),
+                    OnlineContactNo: $("#txtOnlineContactNo").length == 0 ? "" : escape($("#txtOnlineContactNo").val()),
+                    HomePage: $("#txtHomePage").length == 0 ? "" : $("#txtHomePage").val(),
+                    Marriage: $("#idMarriage").length == 0 ? "" : $("#idMarriage").val(),
+                    Height: $("#txtHeight").length == 0 ? "" : $("#txtHeight").val(),
+                    Nation: $("#idNation").length == 0 ? "" : $("#idNation").val(),
+                    dcCareerStatus: $("#iddcCareerStatus").length == 0 ? "" : $("#iddcCareerStatus").val(),
+                    IsReceiveSms: ($("#cbReceiveSms").hasClass("Yes") ? "1" : "0"),
+                    Email: $("#txtEmail") ? $("#txtEmail").val() : ""
+                }, async: false, success: function (data) {
+                    if (data == 1) {
+                        if (window.location.href.toLowerCase().toString().indexOf("/resume") > -1) {
+                            ChangeSave("PaMain", "", btType, data);
+                            Gender == 1 ? $("#spGender").html("女") : $("#spGender").html("男");
+                            if (IsNameHidden == 1)
+                                $("#IsNameHidden").html("True");
+                            else
+                                $("#IsNameHidden").html("False");
+
+                            $("#cbIsNameHidden").attr("disabled", "disabled");
+                            $("#cbReceiveSms").attr("disabled", "disabled");
+                            setStarUp(1);
+                            if (!$("#txtHeight").val())
+                                $("#height").hide();
+
+                            if (!$("#idOnlineContact").val()) {
+                                $("#txtOnlineContactNo").val("");
+                                $("#spOnlineContactNo").html("");
+                            }
+                        }
+                        beforeIdPlace = $("#idPlace").val();
+                        beforeTxtPlace = $("#txtPlace").val();
+                        $(".trDisplay").hide();
+                        if ($("#txtPlace").val().length > 0 && $("#txtPlace").val() != "居住地大概位置") {
+                            $("#spMapPlace").text(beforeTxtPlace + "附近");
+                        }
+                    }
+                    else if (data == -2){
+                        alert("保存数据出现错误，请重新操作");
+                        isAjax = 'F';
+                    }
+                    else if (data == -1){
+                        alert("您的手机号码已被我们列入黑名单，数据没有保存");
+                        isAjax = 'F';
+                    }
+                    else if (data == -9){
+                        alert("用户参数错误，数据没有保存");
+                        isAjax = 'F';
+                    }
+                    else if (data == -8){
+                        alert("姓名不能为空，数据没有保存");
+                        isAjax = 'F';
+                    }
+                    else if (data == -7){
+                        alert("手机号不能为空，数据没有保存");
+                        isAjax = 'F';
+                    }
+                    else if (data == -100){
+                        alert("请从本网站提交");
+                        isAjax = 'F';
+                    }
+                    else if (data == -101) {
+                        alert("您还未登录，请您重新登录");
+                        window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+                    }
+                    else
+                        alert(data);
+                }
+                });
+        }
+            return isAjax;
+        }
+        else {
+            ChangeModify("PaMain", "", btType);
+            $("#height").show();
+            $(".trDisplay").show();
+            $("#cbIsNameHidden").removeAttr("disabled");
+            $("#cbReceiveSms").removeAttr("disabled");
+        }
+    }
+
+    function SaveCvEducation(btType) {
+        var intEdu = btType.id.substring(18);
+        if (btType.value == "保存" || btType.value == "Save") {
+            if ($("#txtEduDetails" + intEdu).val() == "可以填写您所学专业包括什么课程，取得的成绩与荣誉以及您的毕业设计等等。") {
+                $("#txtEduDetails" + intEdu).val("");
+            }
+            if (!CheckError("CvEducation", intEdu))
+                return false;
+
+            $.post("/Personal/cv/ProcessCvEducation" + params, {
+                ID: $("#hidCvEducationID" + intEdu).val(),
+                GraduateCollage: escape($.trim($("#txtGraduateCollage" + intEdu).val())),
+                Graduation: $("#idGraduation" + intEdu).val(),
+                dcMajorID: $("#iddcMajorID" + intEdu).val(),
+                MajorName: escape($.trim($("#txtMajorName" + intEdu).val())),
+                Degree: $("#idDegree" + intEdu).val(),
+                EduType: $("#idEduType" + intEdu).val(),
+				url:window.location.href,
+                Details: $("#txtEduDetails" + intEdu).length == "0" ? "" : escape($("#txtEduDetails" + intEdu).val())
+            },
+      function (data) {
+          if (!isNaN(data)) {
+              if (data == -100) {
+                  alert("请从本网站提交")
+                  return;
+              }
+              else if (data == -101) {
+                  alert("您还未登录，请您重新登录");
+                  window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+              }
+              if (window.location.href.toLowerCase().toString().indexOf("/resume") > -1) {
+                  setStarUp(2);
+                  ChangeSave("CvEducation", intEdu, btType, data);
+              }
+              else {
+                  $("#hidCvEducationID" + intEdu).val(data);
+              }
+          }
+          else {
+              alert(data);
+          }
+      });
+        }
+        else
+            ChangeModify("CvEducation", intEdu, btType);
+    }
+
+    function SaveCvExperience(btType) {
+        var intExp = btType.id.substring(19);
+        if (btType.value == "保存" || btType.value == "Save") {
+            if ($("#txtDescription" + intExp).val() == "主要填写自己从事工作的岗位职责，在工作中能力的体现，以及自己取得过哪些成绩。") {
+                $("#txtDescription" + intExp).val("");
+            }
+            if (!CheckError("CvExperience", intExp))
+                return false;
+            var strDescription = $("#txtDescription" + intExp).val();
+
+            $.post("/Personal/cv/ProcessCvExperience" + params, {
+                ID: $("#hidCvExperienceID" + intExp).val(),
+                CompanyName: escape($.trim($("#txtCompanyName" + intExp).val())),
+                dcIndustryID: $("#iddcIndustryID" + intExp).val(),
+                dcCompanySizeID: $("#iddcCompanySizeID" + intExp).val(),
+                JobName: escape($.trim($("#txtJobName" + intExp).val())),
+                dcJobtypeID: $("#iddcJobtypeID" + intExp).val(),
+                BeginDate: $("#idBeginDate" + intExp).val(),
+                EndDate: $("#idEndDate" + intExp).val(),
+                SubNodeNum: $("#idSubNodeNum" + intExp).val(),
+                Description: escape($("#txtDescription" + intExp).val().replace("°", "°")),
+                dcCompanyKindID: $("#iddcCompanyKindID" + intExp).length == 0 ? "" : $("#iddcCompanyKindID" + intExp).val(),
+                WorkPlace: $("#idWorkPlace" + intExp).length == 0 ? "" : $("#idWorkPlace" + intExp).val(),
+                Dept: $("#txtDept" + intExp).length == 0 ? "" : escape($.trim($("#txtDept" + intExp).val())),
+                UpperPost: $("#txtUpperPost" + intExp).length == 0 ? "" : escape($.trim($("#txtUpperPost" + intExp).val())),
+                dcLeaveResonID: $("#iddcLeaveResonID" + intExp).length == 0 ? "" : $("#iddcLeaveResonID" + intExp).val()
+            },
+      function (data) {
+          if (!isNaN(data)) {
+              if (data == -100) {
+                  alert("请从本网站提交")
+                  return;
+              }
+              else if (data == -101) {
+                  alert("您还未登录，请您重新登录");
+                  window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+              }
+              if (window.location.href.toLowerCase().toString().indexOf("/resume") > -1) {
+                  setStarUp(3);
+                  ChangeSave("CvExperience", intExp, btType, data);
+                  if ($("#expnow" + intExp).is(":visible")) {
+                      $("#expnow" + intExp).removeClass().addClass("aPreview").show();
+                      $("#expnow" + intExp).unbind("click");
+                  }
+                  $("#Experience").hide();
+              }
+              else {
+                  $("#hidCvExperienceID" + intExp).val(data);
+              }
+          }
+          else
+              alert(data);
+      });
+        }
+        else {
+            ChangeModify("CvExperience", intExp, btType);
+        }
+    }
+
+    function SaveSpeciality(btType) {
+        if (btType.value == "保存" || btType.value == "Save") {
+            if (!CheckError("Speciality"))
+                return false;
+            var strSpeciality = $("#txtSpeciality").val();
+            if (strSpeciality == "建议您从工作能力、工作态度及未来职业生涯规划方面加以描述，能让企业更充分了解您，让您有更多机会。详细填写有助于用人单位了解您。") {
+                strSpeciality = "";
+
+            }
+            if (strSpeciality.length < $("#txtSpeciality").attr("minlength")) {
+                $("#txtSpeciality").nextAll("font").eq(1).addClass("TipsError");
+                $("#txtSpeciality").nextAll("font").eq(1).html("最少输入" + $("#txtSpeciality").attr("minlength") + "个汉字符");
+                return false;
+            }
+            $.post("/Personal/cv/UpdateSpeciality?" + params, {
+                Speciality: escape(strSpeciality)
+            },
+      function (data) {
+          if (data == 1) {
+              ChangeSave("Speciality", "", btType);
+              if ($("#txtSpeciality").val() == "建议您从工作能力、工作态度及未来职业生涯规划方面加以描述，能让企业更充分了解您，让您有更多机会。详细填写有助于用人单位了解您。") {
+                  setStarDown(4);
+              }
+              else {
+                  setStarUp(4);
+              }
+          }
+          else if (data == -100)
+              alert("请从本网站提交")
+          else if (data == -101) {
+              alert("您还未登录，请您重新登录");
+              window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+          }
+          else
+              alert(data);
+      });
+        }
+        else {
+            ChangeModify("Speciality", "", btType);
+            if (!$("#txtSpeciality").val())
+                $("#btnEscSpeciality").hide();
+        }
+    }
+
+    function SaveJobIntention(btType) {
+        if (btType.value == "保存" || btType.value == "Save") {
+            if (!CheckError("JobIntention"))
+                return false;
+
+            var Negotiable = ($("#cbIsNegotiable").hasClass("Yes") ? "1" : "0");
+            if (Negotiable != 1)
+                Negotiable = 0;
+
+            var EmployType = $("[employtype]").filter(".Active").attr("employtype");
+            $.ajax({ type: "post", url: "/Personal/cv/UpdateJobIntention?cv=" + cvMainID, data: {
+                Negotiable: Negotiable,
+                EmployType: EmployType,
+                JobType: $("#idJobType").val(),
+                RelatedWorkYears: $("#idRelatedWorkYears").val(),
+                JobPlace: $("#idJobPlace").val(),
+                Industry: $("#idIndustry").length == 0 ? "" : $("#idIndustry").val(),
+                dcSalaryID: $("#iddcSalaryID").val(),
+                CareerStatus: $("#idCareerStatus").val()
+            }, async: false, success: function (data) {
+                if (data == 1) {
+                    if (window.location.href.toLowerCase().toString().indexOf("/resume") > -1) {
+                        ChangeSave("JobIntention", "", btType, data);
+                        if (Negotiable == 1)
+                            $("#IsNegotiable").html("True");
+                        else
+                            $("#IsNegotiable").html("False");
+
+                        $("#cbIsNegotiable").attr("disabled", "disabled");
+                        if (EmployType == 1)
+                            $("#spEmployType").html("全职");
+                        else if (EmployType == 2)
+                            $("#spEmployType").html("全职/兼职");
+                        else if (EmployType == 3)
+                            $("#spEmployType").html("兼职");
+                        else if (EmployType == 4)
+                            $("#spEmployType").html("实习");
+
+                        setStarUp(5);
+                    }
+                    //GetCvName(); 
+                }
+                else if (data == -100)
+                    alert("请从本网站提交")
+                else if (data == -101) {
+                    alert("您还未登录，请您重新登录");
+                    window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+                }
+                else
+
+                    alert("求职意向保存失败：" + data);
+            }
+            });
+        }
+        else {
+            ChangeModify("JobIntention", "", btType);
+            $("#cbIsNegotiable").removeAttr("disabled");
+        }
+    }
+
+    function GetArrayValue(arrname, idval) {
+        if (!idval) return " ";
+        if (arrname == "Yearmonth") {
+            if (idval.length == 6) {
+                if (idval == "999999") {
+                    return "至今";
+                }
+                else {
+                    return idval.substring(0, 4) + "年" + idval.substring(4, 6) + "月";
+                }
+            }
+            else if (idval.length == 4) {
+                return idval + "年";
+            }
+            else {
+                return "";
+            }
+        }
+        else if (arrname == "CareerStatus" && idval == 0) {
+            return "求职状态未填写";
+        }
+        if (idval.indexOf(" ") < 0 && idval.indexOf(",") < 0) {
+            var strRegionPre = "";
+            var strRegionNo = "";
+            if (arrname == "Region") {
+                if (idval.length > 2) {
+                    strRegionNo = idval.substring(0, 2);
+                    strRegionPre = GetArrayValueOne(arrname, strRegionNo);
+                }
+                if (idval.length > 4) {
+                    strRegionNo = idval.substring(0, 4);
+                    strRegionPre += GetArrayValueOne(arrname, strRegionNo);
+                }
+            }
+
+            if (arrname != "MapPlace") {
+                return strRegionPre + (GetArrayValueOne(arrname, idval) ? GetArrayValueOne(arrname, idval) : "");
+            }
+
+        }
+        else {
+            if (idval.indexOf(" ") > 0) var idarr = idval.split(" ");
+            if (idval.indexOf(",") > 0) var idarr = idval.split(",");
+            var result = '';
+            for (var i = 0; i < idarr.length; i++) {
+                if (result.length == 0) result += GetArrayValueOne(arrname, idarr[i]);
+                else result += " " + GetArrayValueOne(arrname, idarr[i]);
+            }
+            return result;
+        }
+    }
+
+    function GetArrayValueOne(arrname, idval) {
+        if (arrname == "JobType") {
+            var arrid = eval("jsJobTypeL2ID")
+            var arrCode = eval("jsJobTypeL2")
+            for (var i = 0; i < arrid.length; i++) {
+                for (var j = 0; j < arrid[i].length; j++) {
+                    if (arrid[i][j] == idval) return arrCode[i][j];
+                }
+            }
+            arrid = eval("jsJobTypeL1ID")
+            arrCode = eval("jsJobTypeL1")
+            for (var i = 0; i < arrid.length; i++) {
+                if (arrid[i] == idval) return arrCode[i];
+            }
+        }
+        else if (arrname == "Region") {
+            var arrid = [];
+            var arrCode = [];
+            if (idval.length == 2) {
+                arrid = region1id;
+                arrCode = region1;
+                for (var i = 0; i < arrid.length; i++) {
+                    if (arrid[i] == idval) return arrCode[i];
+                }
+            }
+            if (idval.length == 4) {
+                arrid = region2id;
+                arrCode = region2;
+            }
+            if (idval.length == 6) {
+                arrid = region3id;
+                arrCode = region3;
+            }
+            for (var i = 0; i < arrid.length; i++) {
+                if (arrid[i] != null) {
+                    for (var j = 0; j < arrid[i].length; j++) {
+                        if (arrid[i][j] == idval) return arrCode[i][j];
+                    }
+                }
+            }
+        } else if (arrname == "MapPlace") {
+			return idval;
+		}
+        else {
+            var arrid = eval("js" + arrname + "ID");
+            var arrCode = eval("js" + arrname);
+            for (var i = 0; i < arrid.length; i++) {
+                if (arrid[i] == idval) return arrCode[i];
+            }
+        }
+    }
+
+    function CheckError(Table, intNum) {
+        if (!intNum) intNum = "";
+        var intErr = 0;
+        $("#tab" + Table + intNum + " .TipsError").each(function () {
+            if ($(this).html() && $(this).html().indexOf("IconT") == -1) intErr++;
+        });
+
+        $("#tab" + Table + intNum + " [verify]").each(function () {
+            if ($(this).attr("verify").indexOf("required") >= 0) {
+                if (!$.trim($(this).val())) {
+                    $(this).val("");
+                    $(this).addClass("Required");
+                    $(this).focus(function () {
+                        $(this).removeClass("Required");
+                    });
+                    intErr++;
+                }
+            }
+        });
+
+        $("#tab" + Table + intNum + " [time]").each(function () {
+            if (!$(this).val()) {
+                $("#" + $(this).attr("time") + intNum).html("请选择日期");
+                $(this).focus(function () {
+                    $("#" + $(this).attr("time") + intNum).html("");
+                });
+                intErr++;
+            }
+        });
+        if ($("#Gender").length > 0) {
+            if ($("input[name='raGender']:checked").length == 0) {
+                $("#Gender").html("请选择性别！");
+                $("#txtGender").click(function () {
+                    $("#Gender").html("");
+                });
+                intErr++;
+            }
+        }
+        if ($("#txtCareerStatus").val() == '求职状态未填写') {
+            $("#txtCareerStatus").addClass("Required");
+            $("#txtCareerStatus").focus(function () {
+                $("#txtCareerStatus").removeClass("Required");
+            });
+            intErr++;
+        }
+        //if ($("#EmployType").length > 0) {
+        //        if ($("input[name='raEmployType']:checked").length == 0) {
+        //            $("#EmployType").html("请选择期望工作性质！");
+        //            $("input[name='raEmployType']").click(function () {
+        //                $("#EmployType").html("");
+        //            });
+        //            intErr++;
+        //        }
+        //    }
+
+        $("#tab" + Table + intNum + " .PopupSelect").each(function () {
+            if ($(this).hasClass("Required")) intErr++;
+            if ($(this).siblings("[id^='id']").val().length == 0 && $(this).parent().prev("th").children("span").html() == "*") {
+                $(this).val("");
+                $(this).addClass("Required");
+                intErr++;
+            }
+        });
+        if ($("#txtMobile").val() == "请填写本人手机号,防止机会落他人之手!") {
+            $("#txtMobile").addClass("Required");
+            intErr++;
+        }
+        if (intErr > 0) {
+            intWrong++;
+            return false;
+        }
+
+        else
+            return true;
+    }
+
+    function SaveCvType(obj) {
+        var CvType = $("input[name='raExperience']:checked").val();
+        if ($("#cvType").val() == CvType)
+            return false;
+        var strWarming = CvType == 0 ? "确定修改为有工作经验？" : "确定修改为没有工作经验？";
+        if (confirm(strWarming)) {
+            $.post("/Personal/cv/UpdateCvType?cv=" + cvMainID, {
+                CvType: CvType
+            },
+        function (data) {
+            if (data == 1) {
+                $("#cvType").val(CvType);
+                if (CvType == 0) {
+                    $("#tabCvExperience1").length > 0 ? $("#tabCvExperience1").show() : AddExperience($("#btnAddExperience"));
+                    $("#btnAddExperience").show();
+                    setStarDown(3);
+                }
+                else {
+                    $("#tabCvExperience1,#btnAddExperience").hide();
+                    setStarUp(3);
+                }
+            }
+            else if (data == -100)
+                alert("请从本网站提交")
+            else if (data == -101) {
+                alert("您还未登录，请您重新登录");
+                window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+            }
+        });
+        }
+        else {
+            document.getElementById($(obj).siblings("[type='radio']").eq(0).attr("id")).checked = true;
+        }
+    }
+
+    function TextAreaSet(obj) {
+        if (obj.scrollHeight < 20) {
+            obj.style.posHeight = 38;
+            return
+        }
+        if (obj.scrollHeight == 20)
+            obj.style.posHeight = obj.scrollHeight * 2;
+        else
+            if (obj.scrollHeight > 300)
+                obj.style.posHeight = 300;
+            else
+                obj.style.posHeight = obj.scrollHeight;
+    }
+
+    function backspace() {
+        if (event.keyCode == 8 && event.srcElement.tagName != "INPUT" && event.srcElement.tagName != "TEXTAREA" && event.srcElement.type != "text")
+            event.returnValue = false;
+    }
+
+    function SetDegree(id) {
+        //alert(id);
+        if ($("#idDegree" + id).val() == 2 || $("#idDegree" + id).val() == 1) {
+            $("#txtEduType" + id).val("其他");
+            $("#txtEduType" + id).removeClass("Required");
+            $("#idEduType" + id).val("100");
+            $("#iddcMajorID" + id).val("1106");
+            $("#txtdcMajorID" + id).val("未划分专业");
+            $("#txtdcMajorID" + id).removeClass("Required");
+            $("#txtMajorName" + id).val("无");
+            $("#txtMajorName" + id).removeClass("Required");
+        }
+    }
+
+    function ChangeModify(Table, intNum, btType) {
+        $("#tab" + Table + intNum + " [id^='txt']").each(function () {
+            if ($(this).next("span").html() && $.trim($(this).next("span").html()) != " ") {
+                console.log($(this).attr("id"));
+                if ($(this).attr("type") == "button" && $(this).hasClass("Long") && $(this).next("span").html().length > 28) {
+                    $(this).val($(this).next("span").html().substring(0, 28) + "...");
+                }
+                else {
+                    var strText = ToHtml($(this).next("span").html().replace(/<br>/g, "\r\n"));
+                    strText = strText.replace(/<BR>/g, "\r\n").replace(/ /g, " ");
+                    if (strText == " ") {
+                        strText = "";
+                    }
+                    $(this).val(strText);
+
+                    if ($(this).attr("id") == "txtPlace" && strText.trim() == "") {
+                        $(this).val("居住地大概位置");
+                    }
+
+                }
+            }
+        });
+        $("#tab" + Table + intNum + " [id^='cb']").removeAttr("disabled");
+        if (Table == "CvExperience") {
+            $("#moreCvExperience" + intNum).show();
+            //    $("#MoreExp" + intNum).html($("#MoreExp" + intNum).html().replace("DownArrow", "UpArrow"));
+            $("#otherCvExperience" + intNum).show();
+        }
+        $("#tab" + Table + intNum + " [id^='txt']").show();
+        $("#tab" + Table + intNum + " span[id*='sp']").hide();
+        if (btType) {
+            if (1 == 1) {
+                btType.value = "保存";
+            } else {
+                btType.value = "Save";
+            }
+            $(btType).siblings().show();
+        }
+    }
+
+    function ToHtml(str) {
+        var sHtml;
+        sHtml = str.replace(/</g, "<");
+        sHtml = sHtml.replace(/>/g, ">");
+        sHtml = sHtml.replace(/&/g, "&");
+        return sHtml;
+    }
+
+    function Cancel(btType, Table) {
+        var msgAlert = "";
+        if (1 == 1) {
+            msgAlert = "确定要取消么？";
+        } else {
+            msgAlert = "Are you sure you want to Cancel?";
+        }
+        if (confirm(msgAlert)) {
+            var intNum = btType.id.substring(9);
+            if (isNaN(intNum)) intNum = "";
+            $("#tab" + Table + intNum + " .TipsError").html("");
+            $("#tab" + Table + intNum + " .required").removeClass("required");
+            $("#tab" + Table + intNum + " [id^='txt']").each(function () {
+                if ($(this).attr("type") == "button") {
+                    var spanDc = $(this).next("span");
+                    var hidVal = $(this).siblings("input[id^='" + $(this).attr("id").replace("txt", "hid") + "']").val();
+                    var strType = spanDc.attr("dic");
+                    if (strType == "Appendix") {
+                        if ($("#hidAppendixID" + intNum).val() == 999)
+                            spanDc.html(spanDc.siblings("input[id^='txt']").attr("old"));
+                    }
+                    else spanDc.html(GetArrayValue(strType, hidVal));
+                    spanDc.show();
+                    $(this).siblings("input[id^='" + $(this).attr("id").replace("txt", "id") + "']").val(hidVal);
+                }
+                else $(this).siblings("span[id^='" + $(this).attr("id").replace("txt", "sp") + "']").show();
+            });
+            if ($("#tab" + Table + intNum + " a[name='now']").length > 0) {
+                $("#tab" + Table + intNum + " a[name='now']").removeClass().addClass("aPreview");
+                $("#tab" + Table + intNum + " a[name='now']").unbind("click");
+            }
+            if (Table == "PaMain") {
+                $("#cbIsNameHidden").attr("disabled", "disabled");
+                $("#cbReceiveSms").attr("disabled", "disabled");
+                if (!$("#spHeight").html()) $("#height").hide();
+                if ($("#IsNameHidden").html() == "True") $("#cbIsNameHidden").attr("checked", "checked");
+                else $("#cbIsNameHidden").removeAttr("checked");
+
+                if ($("#IsReceiveSms").html() == "True") $("#cbReceiveSms").attr("checked", "checked");
+                else $("#cbReceiveSms").removeAttr("checked");
+            }
+            if (Table == "JobIntention") {
+                $("#cbIsNegotiable").attr("disabled", "disabled");
+                if ($("#IsNegotiable").html() == "True") $("#cbIsNegotiable").attr("checked", "checked");
+                else $("#cbIsNegotiable").removeAttr("checked");
+            }
+            $("#tab" + Table + intNum + " [id^='txt']").hide();
+            $(btType).parents("tr").hide();
+            $("span[for='" + $(btType).siblings(".btnSave").attr("id") + "']").show().siblings().show();
+            $(btType).siblings(".btnSave").val("修改");
+
+            $("#spMapPlace").text(beforeTxtPlace);
+            $("#idPlace").val(beforeIdPlace);
+
+
+        }
+    }
+
+    function SaveCvLanguage(btType) {
+        var intLan = btType.id.substring(17);
+        if (btType.value == "保存" || btType.value == "Save") {
+            if (!CheckError("CvLanguage", intLan))
+                return false;
+
+            $.post("/Personal/cv/ProcessCvLanguage" + params, {
+                ID: $("#hidCvLanguageID" + intLan).val(),
+                LanguageType: $("#idLanguageType" + intLan).val(),
+                Mastery: $("#idMastery" + intLan).val(),
+                ReadWrite: $("#idReadWrite" + intLan).val(),
+                Spoken: $("#idSpoken" + intLan).val(),
+                Score: escape($("#txtScore" + intLan).val())
+            },
+      function (data) {
+          if (!isNaN(data)) {
+              if (data == -100) {
+                  alert("请从本网站提交")
+                  return;
+              }
+              else if (data == -101) {
+                  alert("您还未登录，请您重新登录");
+                  window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+              }
+              ChangeSave("CvLanguage", intLan, btType, data);
+              setStarUp(6);
+          }
+          else
+              alert(data);
+      });
+        }
+        else
+            ChangeModify("CvLanguage", intLan, btType);
+    }
+
+    function SaveCvTraining(btType) {
+        var intTra = btType.id.substring(17);
+        if (btType.value == "保存" || btType.value == "Save") {
+            if (!CheckError("CvTraining", intTra))
+                return false;
+
+            $.post("/Personal/cv/ProcessCvTraining" + params, {
+                ID: $("#hidCvTrainingID" + intTra).val(),
+                StartDate: $("#idStartDate" + intTra).val(),
+                TimeLength: $("#idTimeLength" + intTra).val(),
+                TimeUnit: $("#idTimeUnit" + intTra).val(),
+                Institution: escape($.trim($("#txtInstitution" + intTra).val())),
+                Course: escape($.trim($("#txtCourse" + intTra).val())),
+                City: escape($.trim($("#txtCity" + intTra).val())),
+                Certificate: escape($.trim($("#txtCertificate" + intTra).val())),
+                Details: escape($("#txtTraDetails" + intTra).val())
+            },
+      function (data) {
+          if (!isNaN(data)) {
+              if (data == -100) {
+                  alert("请从本网站提交");
+                  return;
+              }
+              else if (data == -101) {
+                  alert("您还未登录，请您重新登录");
+                  window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+              }
+              ChangeSave("CvTraining", intTra, btType, data);
+              setStarUp(7);
+          }
+          else
+              alert(data);
+      });
+        }
+        else
+            ChangeModify("CvTraining", intTra, btType);
+    }
+
+    function SaveCvProject(btType) {
+        var intPrj = btType.id.substring(16);
+        if (btType.value == "保存" || btType.value == "Save") {
+            if (!CheckError("CvProject", intPrj))
+                return false;
+
+            $.post("/Personal/cv/ProcessCvProject" + params, {
+                ID: $("#hidCvProjectID" + intPrj).val(),
+                Name: escape($.trim($("#txtProjectName" + intPrj).val())),
+                StartDate: $("#idProjectStartDate" + intPrj).val(),
+                EndDate: $("#idProjectEndDate" + intPrj).val(),
+                Description: escape($("#txtProjectDescription" + intPrj).val()),
+                Responsibilities: escape($("#txtResponsibilities" + intPrj).val())
+            },
+      function (data) {
+          if (!isNaN(data)) {
+              if (data == -100) {
+                  alert("请从本网站提交");
+                  return;
+              }
+              else if (data == -101) {
+                  alert("您还未登录，请您重新登录");
+                  window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+              }
+              setStarUp(8);
+              ChangeSave("CvProject", intPrj, btType, data);
+              if ($("#prjnow" + intPrj).is(":visible")) {
+                  $("#prjnow" + intPrj).removeClass().addClass("aPreview").show();
+                  $("#prjnow" + intPrj).unbind("click");
+              }
+          }
+          else
+              alert(data);
+      })
+        }
+        else {
+            ChangeModify("CvProject", intPrj, btType);
+        }
+    }
+
+    function SaveCvAppendix(btType) {
+        var intApp = btType.id.substring(17);
+        if (btType.value == "保存" || btType.value == "Save") {
+            if (!CheckError("CvAppendix", intApp))
+                return false;
+            $.post("/Personal/cv/ProcessCvAppendix" + params, {
+                ID: $("#hidCvAppendixID" + intApp).val(),
+                AccessDate: escape($.trim($("#idAccessYear" + intApp).val())),
+                AppendixID: $("#idAppendixID" + intApp).val(),
+                Name: escape($("#txtAppendixID" + intApp).val()),
+                Desc: escape($("#txtAppendixDesc" + intApp).val())
+            },
+      function (data) {
+          if (!isNaN(data)) {
+              if (data == -100) {
+                  alert("请从本网站提交");
+                  return;
+              }
+              else if (data == -101) {
+                  alert("您还未登录，请您重新登录");
+                  window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+              }
+              setStarUp(9);
+              ChangeSave("CvAppendix", intApp, btType, data);
+          }
+          else
+              alert(data);
+      })
+        }
+        else
+            ChangeModify("CvAppendix", intApp, btType);
+    }
+
+    function FormatNumber(obj) {
+        var value = $(obj).val();
+        value = value.replace(/[^\d-()]/g, '');
+        if (value != $(obj).val())
+            $(obj).val(value);
+    }
+
+    function ChangeSave(Table, intNum, btType, ReqData) {
+        $("#hid" + Table + "ID" + intNum).val(ReqData);
+        $("#tab" + Table + intNum + " [id^='txt']").each(function () {
+            if ($(this).attr("type") != "button") {
+                var strText = FilterHtml($(this).val()).replace(/\n/g, "<BR>");
+                if ($(this).attr("type") == "text") {
+                    $(this).next("span").html($.trim(strText).replace(" ", " "));
+                }
+                else {
+                    $(this).next("span").html(CheckTrim(strText));
+                }
+            }
+            else {
+                var strType = $(this).next("span").attr("dic");
+                if (strType != "MapPlace") {
+                    $(this).siblings("input[id^='hid']").val($(this).siblings("input[id^='id']").val());
+                    if (Table == "CvAppendix" && $("#idAppendixID" + intNum).val() == 999)
+                        $(this).next("span").html($(this).val());
+                    else {
+                        $(this).next("span").html(GetArrayValue(strType, $(this).siblings("input[id^='id']").val()));
+                    }
+                }
+
+            }
+        });
+        $("#tab" + Table + intNum + " [id^='txt']").hide();
+        $("#tab" + Table + intNum + " span[id^='sp']").show();
+        if (1 == 1) {
+            btType.value = "修改";
+        }
+        else {
+            btType.value = "Modify";
+        }
+        $(btType).parents("tr").hide();
+        $("span[for='" + $(btType).attr("id") + "']").show().siblings().show();
+    }
+
+    function CheckTrim(str) {
+        if ($.trim(str) == "") return ""
+        if (str.slice(0, 5) == "     ") return "    " + ($.trim(str).replace(/\s{2}/g, "  ").replace(/\s{2}/g, "  "));
+        else
+            return str.replace(/\s*$/, "").replace(/\s{2}/g, "  ").replace(/\s{2}/g, "  ");
+    }
+
+    function FilterHtml(str) {
+        var Filter;
+        Filter = str.replace(/&/g, "&");
+        Filter = Filter.replace(/</g, "&lt;");
+        Filter = Filter.replace(/>/g, ">");
+        return Filter;
+    }
+
+    function AppendixShow(obj) {
+        var intI = obj.id.substr(13);
+        var arrPos = [25, 112, 119, 127, 154];
+        var sValue = ""
+        //alert($("#idAppendixID" + intI).val())
+        if ($("#idAppendixID" + intI).val() == 999) sValue = obj.value;
+        var bodyHtml = '<table width="560" border="0" cellspacing="0" cellpadding="0" style="border-bottom:2px solid #4E8DDC">';
+        bodyHtml += '  <tr><td width="100" valign="top">';
+        bodyHtml += '      <table width="100%" border="0" cellspacing="1" cellpadding="0">';
+        bodyHtml += '        <tr><td width="100" height="60" align="center" bgcolor="#DCD8F1" id="title_1" style="cursor:pointer" onmouseover="showDiv(\'title_1\');" class="title">外语证书</td></tr>';
+        bodyHtml += '        <tr bgcolor="#DCD8F1"><td height="60" align="center" id="title_2" style="cursor:pointer" onmouseover="showDiv(\'title_2\')" onmousedown="" class="title">计算机证书</td></tr>';
+        bodyHtml += '        <tr bgcolor="#DCD8F1"><td height="60" align="center" id="title_3" style="cursor:pointer" onmouseover="showDiv(\'title_3\')" class="title">会计证书</td></tr>';
+        bodyHtml += '        <tr bgcolor="#DCD8F1"><td height="60" align="center" id="title_4" style="cursor:pointer" onmouseover="showDiv(\'title_4\')" class="title">职称证书</td></tr>';
+        bodyHtml += '        <tr bgcolor="#DCD8F1"><td height="60" align="center" id="title_5" style="cursor:pointer" onmouseover="showDiv(\'title_5\')" class="title">其他证书</td></tr>';
+        bodyHtml += '      </table>';
+        bodyHtml += '    </td>';
+        bodyHtml += '    <td valign="top">';
+        for (var j = 0; j < arrPos.length; j++) {
+            var sPos = 0;
+            if (j > 0) sPos = arrPos[j - 1];
+            var ePos = arrPos[j];
+            if (j > 0) bodyHtml += '<div class="nr" style="display:none" id="div_' + parseInt(eval(j + 1)) + '"><ul class="ul">';
+            else bodyHtml += '<div class="nr" id="div_' + parseInt(eval(j + 1)) + '"><ul class="ul">';
+            for (i = sPos; i < ePos; i++) {
+                if (i % 2 == 1)
+                    bodyHtml += '<li class="li" onclick="SaveValue(\'' + jsAppendixID[i] + '\',this,' + intI + ')">' + jsAppendix[i] + '</li>';
+                else
+                    bodyHtml += '<li class="li1" onclick="SaveValue(\'' + jsAppendixID[i] + '\',this,' + intI + ')">' + jsAppendix[i] + '</li>';
+            }
+            bodyHtml += '</ul></div>';
+        }
+        bodyHtml += '</td></tr></table><table width="500" border="0" cellpadding="0" cellspacing="0"><tr><td align="right" width="420px"  height="40">其它证书：<input name="textfield" id="AppendixName" type="text" value="' + sValue + '" size="34" maxlength="50" />    </td><td align="left" width="60px"> <input onclick="Customize(' + intI + ')" type="button" value="确定" style="width:48px;height:22px;background:#FF771B;line-height:22px;border:0;color:#fff;margin:2px 0 2px 4px;cursor:pointer;letter-spacing:2px;border-radius:4px;" /></td><td align="left" width="80"><a href="javascript:void(0)" onclick="popup.ibClose()">关 闭</a></td></tr></table>';
+
+        popup.clearData()
+        popup.drag = 1;
+        popup.mask = 3;
+        popup.H = 1;
+        popup.W = 560;
+        popup.dockObj = obj;
+        popup.headerTitle = "证书选择";
+        popup.isHeader = 1;
+        popup.mask = 4;
+        popup.bodyHtml = bodyHtml;
+        popup.creatDiv();
+    }
+
+    function showDiv(titleID) {
+        var i = titleID.replace("title_", "");
+        $("div[id^='div_']").each(function () { $(this).hide() });
+        $("#div_" + i).show();
+    }
+    function SaveValue(id, obj, i) {
+        $("#txtAppendixID" + i).val($(obj).html().slice(0, 11));
+        //$("#txtAppendixID" + i).val($(obj).html());
+        $("#idAppendixID" + i).val(id);
+        $("#txtAppendixID" + i).removeClass().addClass("PopupSelect");
+        popup.ibClose();
+    }
+
+    function Customize(i) {
+        if (!$("#AppendixName").val()) {
+            alert("请输入证书名称");
+            $("#AppendixName").focus();
+            return;
+        }
+        if ($("#hidAppendixID" + i).val() == 999)
+            $("#txtAppendixID" + i).attr("old", $("#txtAppendixID" + i).val());
+
+        $("#txtAppendixID" + i).val($("#AppendixName").val());
+        $("#idAppendixID" + i).val(999);
+        $("#txtAppendixID" + i).removeClass("Required");
+        popup.ibClose();
+    }
+
+    function AddEducation(btType) {
+        var intLen = $("table[id^='tabCvEducation']").length;
+        if (intLen == "undefined") intLen = 0;
+
+        if (intLen < 5) {
+            if (intLen != 0) {
+                var intEduId = $("table[id^='tabCvEducation']:last").attr("id");
+                var intEduNum = intEduId.substring(14);
+                var intNewEdu = parseInt(intEduNum) + 1;
+            }
+            else intNewEdu = 1;
+            var arrName;
+            if (1 == 1) {
+                arrName = ["学校名称", "毕业时间", "学历", "学历类型", "专业", "专业名称", "学习经历", "保存", "删除"];
+            } else {
+                arrName = ["School", "Graduate Date", "Degree", "Edu Type", "Major", "Major Name", "Experiences", "Save", "Delete"];
+            }
+            var strEdu = '<div class="CvTable"><table width="100%" border="0" cellpadding="0" cellspacing="0" id="tabCvEducation' + intNewEdu + '">\
+      <tr>\
+        <td width="6%" rowspan="6" class="LeftLine"><div></div></td>\
+        <th>\
+          <span>*</span>' + arrName[0] + '：\
+        </th>\
+        <td colspan="3">\
+          <input type="text" class="TextInput" id="txtGraduateCollage' + intNewEdu + '" verify="required" maxlength="50" name="txtGraduateCollage' + intNewEdu + '" onkeyup="CollegeAutoComplete(this)" onblur="SetDefaultBySchoolName(this)" />\
+          <span id="spGraduateCollage' + intNewEdu + '"></span>\
+        </td>\
+      <td width="14%" rowspan="6" style="vertical-align:top; padding:0px;">\
+          <span class="btnModify" style="display:none" for="btnSaveCvEducation' + intNewEdu + '">修改</span>\
+          <span class="btnModify Delete" id="btnDelEdu' + intNewEdu + '" name="btnDelCvEducation" onclick="Delete(this,\'CvEducation\')">删除</span>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          <span>*</span>' + arrName[1] + '：\
+        </th>\
+        <td colspan="3">\
+          <input type="hidden" id="idGraduation' + intNewEdu + '" />\
+          <input class="PopupSelect" type="button" id="txtGraduation' + intNewEdu + '" name="txtGraduation' + intNewEdu + '" onclick="datePicker(this,\'请选择毕业时间\')" />\
+          <span id="spGraduation' + intNewEdu + '" dic="Yearmonth"></span>\
+        <input type="hidden" id="hidGraduation' + intNewEdu + '" />\
+        </td>\
+      </tr>\
+      <tr>\
+        <th width="13%">\
+          <span>*</span>' + arrName[2] + '：\
+        </th>\
+        <td width="27%">\
+          <input type="hidden" id="idDegree' + intNewEdu + '" />\
+          <input class="PopupSelect Middle" type="button" value="" id="txtDegree' + intNewEdu + '" name="txtDegree' + intNewEdu + '" onclick="PopupSelect(CommonSelect.newSelect(\'jsEducation\',170,1),this,177,\'\',\'SetDegree(' + intNewEdu + ')\')" />\
+          <span id="spDegree' + intNewEdu + '" dic="Education"></span>\
+          <input type="hidden" id="hidDegree' + intNewEdu + '" />\
+        </td>\
+        <th width="13%">\
+          <span>*</span>' + arrName[3] + '：\
+        </th>\
+        <td width="27%">\
+          <input type="hidden" id="idEduType' + intNewEdu + '" />\
+          <input class="PopupSelect Middle" type="button" value="" id="txtEduType' + intNewEdu + '" name="txtEduType' + intNewEdu + '" onclick="PopupSelect(CommonSelect.newSelect(\'jsEducationType\',170,1),this,177)" />\
+          <span id="spEduType' + intNewEdu + '" dic="EducationType"></span>\
+          <input type="hidden" id="hidEduType' + intNewEdu + '" />\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          <span>*</span>' + arrName[5] + '：\
+        </th>\
+        <td>\
+          <input type="text" class="TextInput Middle" id="txtMajorName' + intNewEdu + '" verify="required" name="txtMajorName' + intNewEdu + '" maxlength="20" onkeyup="MajorAutoComplete(this)" />\
+          <span id="spMajorName' + intNewEdu + '"></span>\
+        </td>\
+        <th>\
+          <span>*</span>' + arrName[4] + '：\
+        </th>\
+        <td>\
+          <input type="hidden" id="iddcMajorID' + intNewEdu + '" />\
+          <input class="PopupSelect Middle" type="button" value="" id="txtdcMajorID' + intNewEdu + '" name="txtdcMajorID' + intNewEdu + '" onclick="PopupSelect(MajorSelect.newSelect(),this,704,\'请选择所学专业\')" />\
+          <span id="spdcMajorID' + intNewEdu + '" dic="Major"></span>\
+          <input type="hidden" id="hiddcMajorID' + intNewEdu + '" />\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          ' + arrName[6] + '：\
+        </th>\
+        <td colspan="3">\
+          <textarea onfocus="EduExpOnFocus(this)" onblur="EduExpOnBlur(this)" onpropertychange="TextAreaSet(this)" id="txtEduDetails' + intNewEdu + '" class="TextInput Textarea" maxlength="400" name="txtEduDetails' + intNewEdu + '">可以填写您所学专业包括什么课程，取得的成绩与荣誉以及您的毕业设计等等。</textarea>\
+          <span class="spEduDetails" id="spEduDetails' + intNewEdu + '"></span><br />\
+          <font id="txtEduDetailsTips' + intNewEdu + '" onselectstart="return false">最多可输入400汉字。</font>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+        </th>\
+        <td colspan="3">\
+        <input type="button" id="btnSaveCvEducation' + intNewEdu + '" name="btnSaveCvEducation" class="btnSave" value="保存" onclick="SaveCvEducation(this)" />\
+          <input type="button" id="btnEscEdu' + intNewEdu + '" class="btnCancel" name="btnEscCvEducation" onclick="Cancel(this,\'CvEducation\')" value="取消" style="display:none">\
+        </td>\
+      </tr>\
+    </table></div>\
+    <input type="hidden" id="hidCvEducationID' + intNewEdu + '" name="hidCvEducationID' + intNewEdu + '" value="" />';
+            $(btType).before(strEdu);
+            setStatus('CvEducation', intNewEdu);
+        }
+        if ($("table[id^='tabCvEducation']").length == 5) $("#btnAddEducation").hide();
+        if (1 == 1) {
+            btType.value = "继续添加教育背景";
+        } else {
+            btType.value = "Add More";
+        }
+    }
+
+    function AddExperience(btType) {
+        var intLen = $("table[id^='tabCvExperience']").length;
+        if (intLen == "undefined") intLen = 0;
+        if (intLen < 20) {
+            var intNewExp;
+            if (intLen != 0) {
+                var intExpId = $("table[id^='tabCvExperience']:last").attr("id");
+                var intExpNum = intExpId.substring(15);
+                intNewExp = parseInt(intExpNum) + 1;
+            }
+            else intNewExp = 1;
+            var arrName;
+            if (1 == 1) {
+                arrName = ["企业名称", "所属行业", "企业规模", "职位名称", "职位类别", "工作时间", "下属总人数", "工作描述", "企业性质", "工作地点", "所在部门", "上级职务", "离职原因", "保存", "删除", "填写更详细的工作经历"];
+            } else {
+                arrName = ["Company", "Industry", "Company Size", "Position", "Job Type", "Working Time", "Subordinates", "Description", "Nature", "Job Area", "Department", "Post", "Leave Reason", "Save", "Delete", "Fill in the detailed personal information"];
+            }
+            var strExp = '<div class="CvTable"><table width="100%" border="0" cellpadding="0" cellspacing="0" id="tabCvExperience' + intNewExp + '">\
+      <tr>\
+        <td width="6%" rowspan="11" class="LeftLine"><div></div></td>\
+        <th>\
+          <span>*</span>' + arrName[0] + '：\
+        </th>\
+        <td colspan="3">\
+          <input type="text" class="TextInput" id="txtCompanyName' + intNewExp + '" name="txtCompanyName' + intNewExp + '" verify="required" maxlength="' + (intLanguage == 1 ? 50 : 30) + '" />\
+          <span id="spCompanyName' + intNewExp + '" style="width: 508px"></span>\
+        </td>\
+      <td width="14%" rowspan="11" style="vertical-align:top; padding:0px;">\
+          <span class="btnModify" style="display:none" for="btnSaveCvExperience' + intNewExp + '">修改</span>\
+          <span class="btnModify Delete" id="btnDelExp' + intNewExp + '" name="btnDelCvExperience" onclick="Delete(this,\'CvExperience\')">删除</span>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          <span>*</span>' + arrName[1] + '：\
+        </th>\
+        <td colspan="3">\
+          <input type="hidden" id="iddcIndustryID' + intNewExp + '" />\
+          <input class="PopupSelect Long" type="button" value="" id="txtdcIndustryID' + intNewExp + '" name="txtdcIndustryID' + intNewExp + '" onclick="PopupSelect(IndustrySelect.newSelect(170,0),this,700)" />\
+          <span id="spdcIndustryID' + intNewExp + '" dic="Industry"></span>\
+          <input type="hidden" id="hiddcIndustryID' + intNewExp + '" />\
+        </td>\
+      </tr>\
+      <tr>\
+        <th width="13%">\
+          <span>*</span>' + arrName[3] + '：\
+        </th>\
+        <td width="27%">\
+          <input type="text" class="TextInput Middle" id="txtJobName' + intNewExp + '" name="txtJobName' + intNewExp + '" verify="required" maxlength="20" />\
+          <span id="spJobName' + intNewExp + '"></span>\
+        </td>\
+        <th width="13%">\
+          <span>*</span>' + arrName[4] + '：\
+        </th>\
+        <td width="27%">\
+          <input type="hidden" id="iddcJobtypeID' + intNewExp + '" />\
+          <input class="PopupSelect Middle" type="button" value="" id="txtdcJobtypeID' + intNewExp + '" name="txtdcJobtypeID' + intNewExp + '" onclick="PopupSelect(JobTypeSelect.newSelect(0),this,600,\'请选择从事的职位类别\')" />\
+          <span id="spdcJobtypeID' + intNewExp + '" dic="JobType"></span>\
+          <input type="hidden" id="hiddcJobtypeID' + intNewExp + '" />\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          <span>*</span>' + arrName[5] + '：\
+        </th>\
+        <td colspan="3">\
+          <input type="hidden" id="idBeginDate' + intNewExp + '" />\
+        <input class="PopupSelect Short" type="button" id="txtBeginDate' + intNewExp + '" name="txtBeginDate' + intNewExp + '" onclick="datePicker(this,\'请选择开始工作时间\')" />\
+        <span id="spBeginDate' + intNewExp + '" dic="Yearmonth"></span>\
+        <input type="hidden" id="hidBeginDate' + intNewExp + '" />\
+        <span class="ChectboxTips">至</span>\
+        <span style="line-heght:13px;"><input type="hidden" id="idEndDate' + intNewExp + '" />\
+        <input class="PopupSelect Short" type="button" id="txtEndDate' + intNewExp + '" name="txtEndDate' + intNewExp + '" onclick="datePicker(this,\'请选择结束工作时间\')"  />\
+        <span id="spEndDate' + intNewExp + '" dic="Yearmonth"></span>\
+        <input type="hidden" id="hidEndDate' + intNewExp + '" /></span>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          <span>*</span>' + arrName[6] + '：\
+        </th>\
+        <td colspan="3">\
+          <input type="hidden" id="idSubNodeNum' + intNewExp + '" />\
+          <input class="PopupSelect" type="button" value="" id="txtSubNodeNum' + intNewExp + '" name="txtSubNodeNum' + intNewExp + '" onclick="PopupSelect(CommonSelect.newSelect(\'jsLowerNumber\',170,1),this,177)" />\
+          <span id="spSubNodeNum' + intNewExp + '" dic="LowerNumber"></span>\
+          <input type="hidden" id="hidSubNodeNum' + intNewExp + '" />\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          <span>*</span>' + arrName[7] + '：\
+        </th>\
+        <td colspan="3">\
+          <textarea onfocus="WorkExpOnFocus(this)" onblur="WorkExpOnBlur(this)" onpropertychange="TextAreaSet(this)" class="TextInput Textarea" id="txtDescription' + intNewExp + '" name="txtDescription' + intNewExp + '" maxlength="2000" minlength="0" verify="required">主要填写自己从事工作的岗位职责，在工作中能力的体现，以及自己取得过哪些成绩。</textarea>\
+          <span class="spDescription" id="spDescription' + intNewExp + '"></span><br />\
+          <font id="txtDescriptionTips' + intNewExp + '" onselectstart="return false">最多可输入2000个字。</font>\
+        </td>\
+      </tr>\
+      <tr>\
+        <td colspan="4">\
+          <div class="MoreWorkInfo Hide" onclick="$(\'tr[name=&quot;WorkInfoMore' + intNewExp + '&quot;]\').toggle();$(this).toggleClass(\'Show\').toggleClass(\'Hide\')">' + arrName[15] + '</div>\
+        </td>\
+      </tr>\
+        <tr name="WorkInfoMore' + intNewExp + '">\
+          <th>\
+            ' + arrName[8] + '：\
+          </th>\
+          <td>\
+            <input type="hidden" id="iddcCompanyKindID' + intNewExp + '" />\
+            <input class="PopupSelect Middle" type="button" value="" id="txtdcCompanyKindID' + intNewExp + '"\ name="txtdcCompanyKindID' + intNewExp + '" onclick="PopupSelect(CommonSelect.newSelect(\'jsCompanyKind\',170,0),this,177)" />\
+            <span id="spdcCompanyKindID' + intNewExp + '" dic="CompanyKind"></span>\
+            <input type="hidden" id="hiddcCompanyKindID' + intNewExp + '" />\
+          </td>\
+        <th>\
+          ' + arrName[2] + '：\
+        </th>\
+        <td>\
+          <input type="hidden" id="iddcCompanySizeID' + intNewExp + '" />\
+          <input class="PopupSelect Middle" type="button" id="txtdcCompanySizeID' + intNewExp + '" name="txtdcCompanySizeID' + intNewExp + '" value="" onclick="PopupSelect(CommonSelect.newSelect(\'jsCompanySize\',170,0),this,177)" />\
+          <span id="spdcCompanySizeID' + intNewExp + '" dic="CompanySize"></span>\
+          <input type="hidden" id="hiddcCompanySizeID' + intNewExp + '" />\
+        </td>\
+        </tr>\
+        <tr name="WorkInfoMore' + intNewExp + '">\
+          <th>\
+            ' + arrName[9] + '：\
+          </th>\
+          <td>\
+            <input type="hidden" id="idWorkPlace' + intNewExp + '" />\
+            <input class="PopupSelect Middle" type="button" value="" id="txtWorkPlace' + intNewExp + '"\ name="txtWorkPlace' + intNewExp + '" onclick="PopupSelect(RegionSelect.newSelect(55,0,1,0,0),this,500,\'请选择工作地点\')" />\
+            <span id="spWorkPlace' + intNewExp + '" dic="Region"></span>\
+            <input type="hidden" id="hidWorkPlace' + intNewExp + '" />\
+          </td>\
+          <th>\
+            ' + arrName[10] + '：\
+          </th>\
+          <td>\
+            <input type="text" class="TextInput Middle" id="txtDept' + intNewExp + '" name="txtDept' + intNewExp + '" maxlength="20" />\
+            <span id="spDept' + intNewExp + '"></span>\
+          </td>\
+        </tr>\
+        <tr name="WorkInfoMore' + intNewExp + '">\
+          <th>\
+            ' + arrName[11] + '：\
+          </th>\
+          <td>\
+            <input type="text" class="TextInput Middle" maxlength="20" id="txtUpperPost' + intNewExp + '" name="txtUpperPost' + intNewExp + '" />\
+            <span id="spUpperPost' + intNewExp + '"></span>\
+          </td>\
+          <th>\
+            ' + arrName[12] + '：\
+          </th>\
+          <td>\
+            <input type="hidden" id="iddcLeaveResonID' + intNewExp + '" />\
+            <input class="PopupSelect Middle" type="button" value="" id="txtdcLeaveResonID' + intNewExp + '"\ name="txtdcLeaveResonID' + intNewExp + '" onclick="PopupSelect(CommonSelect.newSelect(\'jsLeaveReson\',200,0),this,450)" />\
+            <span id="spdcLeaveResonID' + intNewExp + '" dic="LeaveReson"></span>\
+            <input type="hidden" id="hiddcLeaveResonID' + intNewExp + '" />\
+          </td>\
+        </tr>\
+      <tr>\
+        <th>\
+        </th>\
+        <td colspan="3">\
+          <input type="button" id="btnSaveCvExperience' + intNewExp + '" name="btnSaveCvExperience" value="保存" class="btnSave" onclick="SaveCvExperience(this)" />\
+          <input type="button" class="btnCancel" value="取消" style="display:none" id="btnEscExp' + intNewExp + '" name="btnEscCvExperience" onclick="Cancel(this,\'CvExperience\')">\
+        </td>\
+      </tr>\
+    </table></div>\
+    <input type="hidden" id="hidCvExperienceID' + intNewExp + '" name="hidCvExperienceID' + intNewExp + '" value="" />';
+            $(btType).before(strExp);
+            setStatus('CvExperience', intNewExp);
+            //$("#divCvExperience"+intNewExp+" input[id^='txt'][type='button']").click(function(){BuildDiv(this)});
+        }
+        if ($("table[id^='tabCvExperience']").length == 20) $("#btnAddExperience").hide();
+        if (1 == 1) {
+            btType.value = "继续添加工作经历";
+        } else {
+            btType.value = "Add More";
+        }
+    }
+
+    function AddLanguage(btType) {
+        var intLen = $("table[id^='tabCvLanguage']").length;
+        if (intLen == "undefined") intLen = 0;
+        if (intLen < 5) {
+            var intNewLan;
+            if (intLen != 0) {
+                var intLanId = $("table[id^='tabCvLanguage']:last").attr("id");
+                var intLanNum = intLanId.substring(13);
+                intNewLan = parseInt(intLanNum) + 1;
+            }
+            else intNewLan = 1;
+            var arrName;
+            if (1 == 1) {
+                arrName = ["语    种", "掌握程度", "读写能力", "听说能力", "等级考试及成绩", "保存", "删除"];
+            } else {
+                arrName = ["Language", "Level", "Read & Write", "Listen & Spoken", "Score", "Save", "Delete"];
+            }
+            var strLan = '<div class="CvTable"><table width="100%" border="0" cellpadding="0" cellspacing="0" id="tabCvLanguage' + intNewLan + '">\
+      <tr>\
+        <td width="6%" rowspan="4" class="LeftLine"><div></div></td>\
+        <th width="13%">\
+        <span>*</span>' + arrName[0] + '：\
+        </th>\
+        <td width="27%">\
+          <input type="hidden" id="idLanguageType' + intNewLan + '" />\
+          <input class="PopupSelect Short" type="button" value="" id="txtLanguageType' + intNewLan + '" name="txtLanguageType' + intNewLan + '" onclick="PopupSelect(CommonSelect.newSelect(\'jsLanguage\',81,1),this,178)" />\
+          <span id="spLanguageType' + intNewLan + '" dic="Language"></span>\
+          <input type="hidden" id="hidLanguageType' + intNewLan + '" />\
+        </td>\
+        <th width="13%">\
+          <span>*</span>' + arrName[1] + '：\
+        </th>\
+        <td width="27%">\
+          <input type="hidden" id="idMastery' + intNewLan + '" />\
+          <input class="PopupSelect Short" type="button" value="" id="txtMastery' + intNewLan + '" name="txtMastery' + intNewLan + '" onclick="PopupSelect(CommonSelect.newSelect(\'jsMastery\',81,1),this,178)" />\
+          <span id="spMastery' + intNewLan + '" dic="Mastery"></span>\
+          <input type="hidden" id="hidMastery' + intNewLan + '" />\
+        </td>\
+      <td width="14%" rowspan="4" style="vertical-align:top; padding:0px;">\
+        <span class="btnModify" style="display:none" for="btnSaveCvLanguage' + intNewLan + '">修改</span>\
+        <span class="btnModify Delete" id="btnDelLan' + intNewLan + '" name="btnDelCvLanguage" onclick="Delete(this,\'CvLanguage\')">删除</span>\
+      </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          ' + arrName[2] + '：\
+        </th>\
+        <td>\
+          <input type="hidden" id="idReadWrite' + intNewLan + '" />\
+          <input class="PopupSelect Short" type="button" value="" id="txtReadWrite' + intNewLan + '" name="txtReadWrite' + intNewLan + '" onclick="PopupSelect(CommonSelect.newSelect(\'jsReadWrite\',170,0),this,177)" />\
+          <span id="spReadWrite' + intNewLan + '" dic="ReadWrite"></span>\
+          <input type="hidden" id="hidReadWrite' + intNewLan + '" />\
+        </td>\
+        <th>\
+          ' + arrName[3] + '：\
+        </th>\
+        <td>\
+          <input type="hidden" id="idSpoken' + intNewLan + '" />\
+          <input class="PopupSelect Short" type="button" value="" id="txtSpoken' + intNewLan + '" name="txtSpoken' + intNewLan + '" onclick="PopupSelect(CommonSelect.newSelect(\'jsReadWrite\',170,0),this,177)" />\
+          <span id="spSpoken' + intNewLan + '" dic="ReadWrite"></span>\
+          <input type="hidden" id="hidSpoken' + intNewLan + '" />\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          ' + arrName[4] + '：\
+        </th>\
+        <td colspan="3">\
+          <input type="text" class="TextInput" id="txtScore' + intNewLan + '" name="txtScore' + intNewLan + '" maxlength="30" />\
+          <span id="spScore' + intNewLan + '" style="width: 505px"></span>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+        </th>\
+        <td colspan="3">\
+          <input type="button" id="btnSaveCvLanguage' + intNewLan + '" name="btnSaveCvLanguage" value="保存" class="btnSave" onclick="SaveCvLanguage(this)" />\
+          <input type="button" class="btnCancel" value="取消" style="display:none" id="btnEscLan' + intNewLan + '" name="btnEscCvLanguage" onclick="Cancel(this,\'CvLanguage\')">\
+        </td>\
+      </tr>\
+    </table></div>\
+    <input type="hidden" id="hidCvLanguageID' + intNewLan + '" name="hidCvLanguageID' + intNewLan + '" value="" />';
+            $(btType).before(strLan);
+            setStatus('CvLanguage', intNewLan);
+            //$("#divCvLanguage"+intNewLan+" input[id^='txt'][type='button']").click(function(){BuildDiv(this)});
+        }
+        if ($("table[id^='tabCvLanguage']").length == 5) $("#btnAddLanguage").hide();
+        if (1 == 1) {
+            btType.value = "继续添加语言能力";
+        } else {
+            btType.value = "Add More Language";
+        }
+    }
+
+    function AddTraining(btType) {
+        var intLen = $("table[id^='tabCvTraining']").length;
+        if (intLen == "undefined") intLen = 0;
+        if (intLen < 10) {
+            var intNewTra;
+            if (intLen != 0) {
+                var intTraId = $("table[id^='tabCvTraining']:last").attr("id");
+                var intTraNum = intTraId.substring(13);
+                intNewTra = parseInt(intTraNum) + 1;
+            }
+            else intNewTra = 1;
+            var arrName;
+            if (1 == 1) {
+                arrName = ["完成时间", "培训时长", "培训机构", "培训课程", "获得证书", "城市", "培训描述", "保存", "删除"];
+            } else {
+                arrName = ["Training Date", "Time Period", "Institution", "Courses", "Certificate", "City", "Description", "Save", "Delete"];
+            }
+            var strTra = '<div class="CvTable"><table width="100%" border="0" cellpadding="0" cellspacing="0" id="tabCvTraining' + intNewTra + '">\
+      <tr>\
+        <td width="6%" rowspan="8" class="LeftLine"><div></div></td>\
+        <th width="13%">\
+          <span>*</span>' + arrName[0] + '：\
+        </th>\
+        <td width="67%">\
+          <input type="hidden" id="idStartDate' + intNewTra + '" />\
+        <input class="PopupSelect" type="button" id="txtStartDate' + intNewTra + '" name="txtStartDate' + intNewTra + '" onclick="datePicker(this,\'请选择完成时间\')" />\
+        <span id="spStartDate' + intNewTra + '" dic="Yearmonth"></span>\
+        <input type="hidden" id="hidStartDate' + intNewTra + '" />\
+        </td>\
+        <td width="14%" rowspan="8" style="vertical-align:top; padding:0px;">\
+        <span class="btnModify" style="display:none" for="btnSaveCvTraining' + intNewTra + '">修改</span>\
+        <span class="btnModify Delete" id="btnDelTra' + intNewTra + '" name="btnDelCvTraining" onclick="Delete(this,\'CvTraining\')">删除</span>\
+      </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          <span>*</span>' + arrName[1] + '：\
+        </th>\
+        <td>\
+          <input type="hidden" id="idTimeLength' + intNewTra + '" />\
+          <input class="PopupSelect Short" type="button" value="" id="txtTimeLength' + intNewTra + '" name="txtTimeLength' + intNewTra + '" onclick="PopupSelect(CommonSelect.newSelect(\'jsTimeLength\',20,1),this,300)" />\
+          <span id="spTimeLength' + intNewTra + '" dic="TimeLength" style="width: 12px"></span>\
+          <input type="hidden" id="hidTimeLength' + intNewTra + '" />\
+          <input type="hidden" id="idTimeUnit' + intNewTra + '" />\
+          <input class="PopupSelect Short" type="button" value="" id="txtTimeUnit' + intNewTra + '" name="txtTimeUnit' + intNewTra + '" onclick="PopupSelect(CommonSelect.newSelect(\'jsTimeUnit\',114,1),this,121)" />\
+          <span id="spTimeUnit' + intNewTra + '" dic="TimeUnit" class="SpanWidB"></span>\
+          <input type="hidden" id="hidTimeUnit' + intNewTra + '" />\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          <span>*</span>' + arrName[2] + '：\
+        </th>\
+        <td>\
+          <input type="text" class="TextInput" maxlength="30" id="txtInstitution' + intNewTra + '" name="txtInstitution' + intNewTra + '" verify="required " />\
+          <span id="spInstitution' + intNewTra + '"></span>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          <span>*</span>' + arrName[3] + '：\
+        </th>\
+        <td>\
+          <input type="text" class="TextInput" id="txtCourse' + intNewTra + '" name="txtCourse' + intNewTra + '" verify="required " maxlength="50" />\
+          <span id="spCourse' + intNewTra + '"></span>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          ' + arrName[4] + '：\
+        </th>\
+        <td>\
+          <input type="text" class="TextInput" maxlength="50" id="txtCertificate' + intNewTra + '" name="txtCertificate' + intNewTra + '" />\
+          <span id="spCertificate' + intNewTra + '"></span>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          ' + arrName[5] + '：\
+        </th>\
+        <td>\
+          <input type="text" class="TextInput" maxlength="10" id="txtCity' + intNewTra + '" name="txtCity' + intNewTra + '" />\
+          <span id="spCity' + intNewTra + '"></span>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          ' + arrName[6] + '：\
+        </th>\
+        <td>\
+          <textarea onpropertychange="TextAreaSet(this)" class="TextInput Textarea" id="txtTraDetails' + intNewTra + '" name="txtTraDetails' + intNewTra + '" maxlength="500"></textarea>\
+          <span id="spTraDetails' + intNewTra + '"></span><br />\
+          <font id="txtTraDetailsTips' + intNewTra + '">最多可输入500个字。</font>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>&nbsp;</th>\
+        <td>\
+          <input type="button" id="btnSaveCvTraining' + intNewTra + '" name="btnSaveCvTraining" class="btnSave" value="保存" onclick="SaveCvTraining(this)" />\
+          <input type="button" class="btnCancel" value="取消" style="display:none" id="btnEscTra' + intNewTra + '" name="btnEscCvTraining" onclick="Cancel(this,\'CvTraining\')">\
+        </td>\
+      </tr>\
+    </table></div>\
+    <input type="hidden" id="hidCvTrainingID' + intNewTra + '" name="hidCvTrainingID' + intNewTra + '" value="" />';
+            $(btType).before(strTra);
+            setStatus('CvTraining', intNewTra);
+        }
+        if ($("table[id^='tabCvTraining']").length == 10) $("#btnAddTraining").hide();
+        if (1 == 1) {
+            btType.value = "继续添加培训经历";
+        } else {
+            btType.value = "Add More Training";
+        }
+    }
+
+    function AddProject(btType) {
+        var intLen = $("table[id^='tabCvProject']").length;
+        if (intLen == "undefined") intLen = 0;
+        if (intLen < 10) {
+            var intNewPrj;
+            if (intLen != 0) {
+                var intPrjId = $("table[id^='tabCvProject']:last").attr("id");
+                var intPrjNum = intPrjId.substring(12);
+                intNewPrj = parseInt(intPrjNum) + 1;
+            }
+            else intNewPrj = 1;
+            var arrName;
+            if (1 == 1) {
+                arrName = ["项目名称", "时    间", "项目描述", "担负责任", "保存", "删除"];
+            } else {
+                arrName = ["Project Name", "Project Period", "Description", "Responsibility", "Save", "Delete"];
+            }
+            var strPrj = '<div class="CvTable"><table width="100%" border="0" cellpadding="0" cellspacing="0" id="tabCvProject' + intNewPrj + '">\
+      <tr>\
+        <td width="6%" rowspan="5" class="LeftLine"><div></div></td>\
+        <th width="13%">\
+          <span>*</span>' + arrName[0] + '：\
+        </th>\
+        <td width="67%">\
+          <input type="text" class="TextInput" maxlength="50" id="txtProjectName' + intNewPrj + '" name="txtProjectName' + intNewPrj + '" verify="required" />\
+          <span id="spProjectName' + intNewPrj + '"></span>\
+        </td>\
+        <td width="14%" rowspan="5" style="vertical-align:top; padding:0px;">\
+        <span class="btnModify" style="display:none" for="btnSaveCvProject' + intNewPrj + '">修改</span>\
+        <span class="btnModify Delete" id="btnDelPrj' + intNewPrj + '" name="btnDelCvProject" onclick="Delete(this,\'CvProject\')">删除</span>\
+      </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          <span>*</span>' + arrName[1] + '：\
+        </th>\
+        <td>\
+          <input type="hidden" id="idProjectStartDate' + intNewPrj + '" />\
+        <input class="PopupSelect Short" type="button" id="txtProjectStartDate' + intNewPrj + '" name="txtProjectStartDate' + intNewPrj + '" onclick="datePicker(this,\'请选择开始时间\')" />\
+        <span id="spProjectStartDate' + intNewPrj + '" dic="Yearmonth"></span>\
+        <input type="hidden" id="hidProjectStartDate' + intNewPrj + '" />\
+        <span class="ChectboxTips">至</span>\
+        <span style="line-heght:13px;"><input type="hidden" id="idProjectEndDate' + intNewPrj + '" />\
+        <input class="PopupSelect Short" type="button" id="txtProjectEndDate' + intNewPrj + '" name="txtProjectEndDate' + intNewPrj + '" onclick="datePicker(this,\'请选择结束时间\')" />\
+        <span id="spProjectEndDate' + intNewPrj + '" dic="Yearmonth"></span>\
+        <input type="hidden" id="hidProjectEndDate' + intNewPrj + '" /></span>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          ' + arrName[2] + '：\
+        </th>\
+        <td>\
+          <textarea onpropertychange="TextAreaSet(this)" class="TextInput Textarea" id="txtProjectDescription' + intNewPrj + '" name="txtProjectDescription' + intNewPrj + '" maxlength="1000"></textarea>\
+          <span id="spProjectDescription' + intNewPrj + '"></span>\<br />\
+          <font id="txtProjectDescTips" onselectstart="return false">最多可输入1000个字。</font>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          ' + arrName[3] + '：\
+        </th>\
+        <td>\
+          <textarea onpropertychange="TextAreaSet(this)" class="TextInput Textarea" id="txtResponsibilities' + intNewPrj + '" name="txtResponsibilities' + intNewPrj + '" maxlength="200"></textarea>\
+          <span id="spResponsibilities' + intNewPrj + '"></span><br />\
+          <font id="txtResponsibilitiesTips" onselectstart="return false">最多可输入200个字。</font>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>&nbsp;</th>\
+        <td>\
+          <input type="button" id="btnSaveCvProject' + intNewPrj + '" name="btnSaveCvProject" value="保存" class="btnSave" onclick="SaveCvProject(this)" />\
+          <input type="button" class="btnCancel" value="取消" style="display:none" id="btnEscPrj' + intNewPrj + '" name="btnEscCvProject" onclick="Cancel(this,\'CvProject\')">\
+        </td>\
+      </tr>\
+    </table></div>\
+    <input type="hidden" id="hidCvProjectID' + intNewPrj + '" name="hidCvProjectID' + intNewPrj + '" value="" />';
+            $(btType).before(strPrj);
+            setStatus('CvProject', intNewPrj);
+        }
+        if ($("table[id^='tabCvProject']").length == 10) $("#btnAddProject").hide();
+        if (1 == 1) {
+            btType.value = "继续添加项目经历";
+        } else {
+            btType.value = "Add More Project";
+        }
+    }
+
+    function AddAppendix(btType) {
+        var intLen = $("table[id^='tabCvAppendix']").length;
+        if (intLen == "undefined") intLen = 0;
+        if (intLen < 10) {
+            var intNewApp;
+            if (intLen != 0) {
+                var intAppId = $("table[id^='tabCvAppendix']:last").attr("id");
+                var intAppNum = intAppId.substring(13);
+                intNewApp = parseInt(intAppNum) + 1;
+            }
+            else intNewApp = 1;
+            var arrName;
+            if (1 == 1) {
+                arrName = ["获得时间", "证书名称", "证书说明", "保存", "删除"];
+            } else {
+                arrName = ["AccessDate", "Name", "Description", "Save", "Delete"];
+            }
+            var strApp = '<div class="CvTable"><table width="100%" border="0" cellpadding="0" cellspacing="0" id="tabCvAppendix' + intNewApp + '">\
+      <tr>\
+        <td width="6%" rowspan="4" class="LeftLine"><div></div></td>\
+        <th width="13%">\
+          <span>*</span>' + arrName[0] + '：\
+        </th>\
+        <td width="67%">\
+          <input type="hidden" id="idAccessYear' + intNewApp + '" />\
+        <input class="PopupSelect Short" type="button" id="txtAccessYear' + intNewApp + '" name="txtAccessYear' + intNewApp + '" onclick="datePicker(this,\'请选择获得时间\',1)" />\
+        <span id="spAccessYear' + intNewApp + '" dic="Yearmonth"></span>\
+        <input type="hidden" id="hidAccessYear' + intNewApp + '" />\
+        </td>\
+        <td width="14%" rowspan="5" style="vertical-align:top; padding:0px;">\
+        <span class="btnModify" style="display:none" for="btnSaveCvAppendix' + intNewApp + '">修改</span>\
+        <span class="btnModify Delete" id="btnDelApp' + intNewApp + '" name="btnDelCvAppendix" onclick="Delete(this,\'CvAppendix\')">删除</span>\
+      </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          <span>*</span>' + arrName[1] + '：\
+        </th>\
+        <td>\
+          <input type="hidden" id="idAppendixID' + intNewApp + '" />\
+          <input type="button" class="PopupSelect" id="txtAppendixID' + intNewApp + '" name="txtAppendixID' + intNewApp + '" onclick="AppendixShow(this)" value="" />\
+          <span id="spAppendixID' + intNewApp + '" dic="Appendix"></span>\
+          <input type="hidden" id="hidAppendixID' + intNewApp + '" />\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+          ' + arrName[2] + '：\
+        </th>\
+        <td>\
+          <textarea onpropertychange="TextAreaSet(this)" class="TextInput Textarea" id="txtAppendixDesc' + intNewApp + '"\ name="txtAppendixDesc' + intNewApp + '" maxlength="400"></textarea>\
+          <span id="spAppendixDesc' + intNewApp + '"></span><br />\
+          <font id="txtAppendixDescTips" onselectstart="return false">最多可输入400个汉字。</font>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th>\
+           \
+        </th>\
+        <td>\
+          <input type="submit" id="btnSaveCvAppendix' + intNewApp + '" name="btnSaveCvAppendix" value="保存" class="btnSave" onclick="SaveCvAppendix(this)" />\
+          <input type="button" class="btnCancel" value="取消" style="display:none" id="btnEscApp' + intNewApp + '" name="btnEscCvAppendix" onclick="Cancel(this,\'CvAppendix\')">\
+        </td>\
+      </tr>\
+    </table></div>\
+    <input type="hidden" id="hidCvAppendixID' + intNewApp + '" name="hidCvAppendixID' + intNewApp + '" value="" />';
+            $(btType).before(strApp);
+            setStatus('CvAppendix', intNewApp);
+        }
+        if ($("table[id^='tabCvAppendix']").length == 10) $("#btnAddAppendix").hide();
+        if (1 == 1) {
+            btType.value = "继续添加证书";
+        } else {
+            btType.value = "Add More Certificate";
+        }
+    }
+
+    function setStatus(Table, intNum) {
+        $("#tab" + Table + intNum + " font[id]").after("<font style='font-size:9pt'></font>");
+        $("#tab" + Table + intNum + " textarea").keyup(function () { ShowWordCount(this) });
+        $("#tab" + Table + intNum + " textarea").keydown(function () { CheckTextLength(this) });
+        $("#tab" + Table + intNum + " span[for]").click(function () {
+            $(this).hide();
+            $("#" + $(this).attr("for")).parents("tr").show();
+            $("#" + $(this).attr("for")).click();
+        });
+    }
+
+    function CheckTextLength(obj) {
+        var maxlen = $(obj).attr("maxlength");
+        if (obj.value.length >= maxlen)
+            if (!(event.keyCode == 8 || event.keyCode == 46))
+                event.returnValue = false;
+    }
+
+    function ShowWordCount(obj) {
+        var maxlen = $(obj).attr("maxlength");
+        $(obj).nextAll("font").eq(1).removeClass("TipsError");
+        $(obj).nextAll("font").eq(1).html(WordCount(obj));
+        $(obj).blur(function () {
+            if ($(obj).val() && $(obj).attr("minlength") > $.trim($(obj).val()).length) {
+                $(obj).nextAll("font").eq(1).addClass("TipsError");
+                $(obj).nextAll("font").eq(1).html("最少输入" + $(obj).attr("minlength") + "个汉字");
+            }
+            else $(obj).nextAll("font").eq(1).html("");
+        });
+    }
+
+    function datebackspace() {
+        if (event.keyCode == 8)
+            event.returnValue = false;
+    }
+
+    function Resume_beforeunload() {
+        var HasSave = false;
+        $(".btnSave").each(function (i) {
+            if ($(this).val() == "保存" && $(this).is(":hidden") == false)
+                HasSave = true;
+        });
+        return HasSave
+    }
+
+    function Delete(btType, Table) {
+        var strMessage;
+        if (1 == 1) {
+            strMessage = "确定要删除吗？";
+        } else {
+            strMessage = "Are you sure you want to Delete?";
+        }
+        if (confirm(strMessage)) {
+            var intNum = btType.id.substring(9);
+            var ID = $("#hid" + Table + "ID" + intNum).val();
+            if (!ID) {
+                $("#tab" + Table + intNum).remove();
+                var length = $("table[id^='tab" + Table + "']").length;
+                if (length == 0) {
+                    $("#btnAdd" + Table.substr(2)).val($("#btnAdd" + Table.substr(2)).val().replace("继续", ""));
+                }
+                $("#btnAdd" + Table.substr(2)).show()
+                return false;
+            }
+            else {
+                if (Table == "CvEducation") {
+                    var EduNum = 0;
+                    $("table[id^='tab" + Table + "']").each(function () {
+                        var intI = $(this).attr("id").replace("tab" + Table, "");
+                        if ($("#hid" + Table + "ID" + intI).val().length != 0) {
+                            EduNum++;
+                        }
+                    });
+                    if (EduNum == 1) {
+                        alert("您无法删除所有的教育经历");
+                        return;
+                    }
+                }
+            }
+            var URL = "/Personal/cv/Process" + Table + "?Type=1";
+            URL += "&cv=" + cvMainID;
+            $.post(URL, { ID: ID }, function (data) {
+                if (data != 3) {
+                    $("#tab" + Table + intNum).remove();
+                    if ($("#btnAdd" + Table.substr(2)).is(":hidden"))
+                        $("#btnAdd" + Table.substr(2)).show();
+
+                    if (Table == "CvExperience")
+                        if ($("table[id^='tabCvExperience']").length == 0)
+                            $("#Experience").show();
+
+                    var length = $("table[id^='tab" + Table + "']").length;
+                    if (length == 0)
+                        $("#btnAdd" + Table.substr(2)).val($("#btnAdd" + Table.substr(2)).val().replace("继续", ""));
+
+
+                    //    var boolDown = false;
+                    //      $("div[id^='div"+Table+"']").each(function(){
+                    //      var len=$(this).attr("id").replace("div"+Table,"");
+                    //      if($("#hid"+Table+"ID"+len).val()){
+                    //      boolDown = true;
+                    //        return false;
+                    //      }
+                    //      });
+                    //    if(!boolDown){
+                    var IsDown;
+                    if (data == 0 || data == 1) IsDown = 0;
+                    if (data == 11) IsDown = 1;
+                    if (IsDown == 0) {
+                        switch (Table) {
+                            case "CvEducation":
+                                setStarDown(2);
+                                break;
+                            case "CvExperience":
+                                setStarDown(3);
+                                break;
+                            case "CvLanguage":
+                                setStarDown(6);
+                                break;
+                            case "CvTraining":
+                                setStarDown(7);
+                                break;
+                            case "CvProject":
+                                setStarDown(8);
+                                break;
+                            case "CvAppendix":
+                                setStarDown(9);
+                                break;
+                        }
+                    }
+                }
+                else if (data == -100) {
+                    alert("请从本网站提交")
+                    return;
+                }
+                else if (data == -101) {
+                    alert("您还未登录，请您重新登录");
+                    window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+                }
+            });
+        }
+    }
+
+    var iKey = -1;
+    var iPos = -1;
+    function CollegeAutoComplete(obj) {
+        if ($(obj).val().length > 0) {
+            $.ajax({
+                type: "GET",
+                url: "/Personal/cv/AjaxGetDcschool?searchText=" + escape($(obj).val()),
+                data: null,
+                async: false,
+                success: function (data) {
+                    var array = data.split("\n");
+                    var li = "";
+                    var w = obj.clientWidth;
+                    iKey = 0;
+                    for (var i = 0; i < array.length; i++) {
+                        var strCollege = array[i].substring(array[i].indexOf(";")+1);
+                        if (strCollege.length == 0) {
+                            continue;
+                        }
+                        li += "<li style='width:" + (w - 8) + "px;padding:0 4px;line-height:30px;list-style-type:none;cursor:pointer'>" + strCollege + "</li>";
+                        iKey++;
+                    }
+                    if (li.length > 0) {
+                        popup.clearData()
+                        popup.isHeader = 0;
+                        popup.drag = 0;
+                        popup.mask = 3;
+                        popup.H = 1;
+                        popup.divClass = "";
+                        popup.W = w;
+                        popup.dockObj = obj;
+                        popup.dockTop = 2;
+                        popup.Overstep = 1;
+                        popup.bodyHtml = '<div id="divCollegeName" style="width:' + w + 'px; border:solid #ccc; border-width:0 1px 1px 1px;line-height:20px; background:#fff url(/Images/BgDiv.jpg) repeat-x bottom;filter:alpha(opacity=90); opacity: 0.9; font-family:Arial"><ul id="ulCollegeName">' + li + '</ul></div>';
+                        popup.creatDiv();
+                        $("#ulCollegeName li").each(function () {
+                            $(this).hover(
+            function () { $("#ulCollegeName li").removeClass(); $(this).addClass('Over') },
+            function () { $("#ulCollegeName li").removeClass(); $(this).removeClass() }
+            ).click(function () {
+                $(obj).val($(this).html());
+                popup.ibClose();
+            });
+                        });
+                    }
+                    else {
+                        popup.ibClose();
+                    }
+                }
+            });
+        }
+        else {
+            popup.ibClose();
+        }
+        var objTarget = $(obj);
+        switch (event.keyCode) {
+            case 38:
+                if (iPos <= 0) { iPos = iKey - 1 } else { iPos-- };
+                $("#ulCollegeName li").removeClass();
+                $("#ulCollegeName li:eq(" + iPos + ")").addClass("Over");
+                break;
+            case 40:
+                if (iPos >= iKey - 1) { iPos = 0 } else { iPos++ };
+                $("#ulCollegeName li").removeClass();
+                $("#ulCollegeName li:eq(" + iPos + ")").addClass("Over");
+                break;
+        }
+        objTarget.unbind("keydown");
+        objTarget.keydown(function (e) {
+            switch (e.keyCode) {
+                case 13:
+                    if ($(".Over").html() > "") {
+                        objTarget.val($(".Over").html());
+                        popup.ibClose();
+                    }
+                    i = -1;
+                    return false;
+            }
+        });
+    }
+
+    function AutoComplateKeyDown(obj) {
+        var objTarget = $(obj);
+        switch (event.keyCode) {
+            case 38:
+                if (iPos <= 0) { iPos = iKey - 1 } else { iPos-- };
+                $("#ulCollegeName li").removeClass();
+                $("#ulCollegeName li:eq(" + iPos + ")").addClass("Over");
+                break;
+            case 40:
+                if (iPos >= iKey - 1) { iPos = 0 } else { iPos++ };
+                $("#ulCollegeName li").removeClass();
+                $("#ulCollegeName li:eq(" + iPos + ")").addClass("Over");
+                break;
+        }
+        objTarget.unbind("keydown");
+        objTarget.keydown(function (e) {
+            switch (e.keyCode) {
+                case 13:
+                    if ($(".Over").html() > "") {
+                        objTarget.val($(".Over").html());
+                        popup.ibClose();
+                    }
+                    i = -1;
+                    return false;
+            }
+        });
+    }
+
+    function setStarUp(pos) {
+        if ($("#spCvLevel" + pos).parents("tr").hasClass("Ok")) return;
+        $("#spCvLevel" + pos).parents("tr").addClass("Ok");
+        CvPoint = eval(parseInt(CvPoint) + parseInt($("#spCvLevel" + pos).html()));
+        $("#CvPoint").html(CvPoint);
+    }
+
+    function setStarDown(pos) {
+        if (!$("#spCvLevel" + pos).parents("tr").hasClass("Ok")) return;
+        $("#spCvLevel" + pos).parents("tr").removeClass("Ok");
+        CvPoint = eval(parseInt(CvPoint) - parseInt($("#spCvLevel" + pos).html()));
+        $("#CvPoint").html(CvPoint);
+    }
+
+    function popupExamples(intLanguageType) {
+        var title;
+        var strBodyHtml;
+        if (intLanguageType != 1) {
+            title = "范例";
+            strBodyHtml = "<div oncontextmenu='return false' ondragstart='return false' onselectstart ='return false' onselect='document.selection.empty()' oncopy='document.selection.empty()' onbeforecopy='return false' onmouseup='document.selection.empty()' style='padding:20px; text-indent:2em;line-height: 20px;'>";
+            strBodyHtml += "<p style='text-indent:0em;text'><u>样本一</u></p>";
+            strBodyHtml += "<p>*注册会计师职称，多年会计及主管会计工作经验，熟悉国家财务制度和相关政策法规。</p>";
+            strBodyHtml += "<p>*英语六级水平，听说读写熟练，熟悉西方财务会计，能用英文进行账务处理。</p>";
+            strBodyHtml += "<p>*头脑灵活，善于分析，具有现代的财务管理理念。</p>";
+            strBodyHtml += "<p>*熟练使用财务相关软件及其他office软件。</p>";
+            strBodyHtml += "<p>*性格开朗，责任心强，有强烈的敬业精神。</p>";
+            strBodyHtml += "<p style='text-indent:0em;text'><u>样本二</u></p>";
+            strBodyHtml += "<p>自毕业以来，勤奋努力，在不同的单位和岗位上，做出了巨大的贡献，在电子技术研究所期间，主持研发的系统主控软件应用于公安局，得到了很好的效果，在工作期间，设计并且施工完善了集团的内部管理网络，并且根据公司业务的需要和发展的趋势，记过深入细致的调研，设计开发了MIS系统，直到现在此系统运行良好，取得了重大的效果。在工作期间，多次获得“优秀员工”、“拔尖人才”等荣誉称号。</p>";
+        } else {
+            title = "Sample";
+            strBodyHtml = "<div oncontextmenu='return false' ondragstart='return false' onselectstart ='return false' onselect='document.selection.empty()' oncopy='document.selection.empty()' onbeforecopy='return false' onmouseup='document.selection.empty()' style='padding:20px; text-indent:2em;line-height: 20px;'>";
+            strBodyHtml += "<p style='text-indent:0em;text'><u>Sample 1</u></p>";
+            strBodyHtml += "<p>* CPA title, years of experience in accounting and director of accounting, familiar with the national financial system and relevant policies and regulations.</p>";
+            strBodyHtml += "<p>* Six levels of English, speaking and writing proficiency, familiar with Western Financial Accounting, Accounting Treatment can be used in English.</p>";
+            strBodyHtml += "<p>* Quick mind, good at analysis, with the modern concept of financial management.</p>";
+            strBodyHtml += "<p>* Skilled use of finance-related software and other office software.</p>";
+            strBodyHtml += "<p>* Pleasant personality, strong sense of responsibility, a strong dedication.</p>";
+            strBodyHtml += "<p style='text-indent:0em;text'><u>Sample 2</u></p>";
+            strBodyHtml += "<p>Since graduating from, I have been hard, in different units and positions, made a great contribution. Institute of Electronic Technology in the period, I developed the system over the main control software. The software used in the Public Security Bureau, and obtained good results. At work, I designed and improved the Group's internal management network. I am also under the company's business needs and trends, to make thorough and meticulous research. And development of the MIS system. The system works well until now, and has achieved significant results. In the work, I has won the \"Outstanding Staff\", \"top-notch talent,\" and other honorary titles.</p>";
+        }
+        popup.clearData();
+        popup.isHeader = 1;
+        popup.isFilter = 1;
+        popup.isMessageTip = 0;
+        popup.drag = 1;
+        popup.mask = 1;
+        popup.headerTitle = title;
+        popup.W = 500;
+        popup.H = 1;
+        popup.dockObj = "";
+        popup.bodyHtml = strBodyHtml;
+        popup.creatDiv();
+    }
+    function infoboxs(title, w, h, dockobj, dockTop, dockLeft, bodyHtml) {
+        popup.clearData();
+        popup.isHeader = 1;
+        popup.isMessageTip = 0;
+        popup.drag = 1;
+        popup.mask = 2;
+        popup.headerTitle = title;
+        popup.W = w;
+        popup.H = h;
+        popup.isFilter = 1;
+        popup.divClass = "popup";
+        popup.dockObj = dockobj;
+        popup.dockTop = dockTop;
+        popup.dockLeft = dockLeft;
+        popup.bodyHtml = bodyHtml;
+        popup.creatDiv();
+    }
+
+    function SaveCvName(obj) {
+        if ($(obj).val() == "修改") {
+            $("#cvName").removeAttr("disabled");
+            $("#cvName").focus();
+            $(obj).val("保存");
+        }
+        else {
+            if (!$("#cvName").val())
+                return false;
+            $.post("/Personal/cv/UpdateCvName" + params, {
+                Name: escape($.trim($("#cvName").val()))
+            },
+          function (data) {
+              if (data == 1) {
+                  alert("简历名称修改成功");
+                  $("#cvName").attr("disabled", "disabled");
+                  $("#cvName").parent().css("border-color", "");
+                  $("#cvName").siblings().css("border-color", "");
+                  $(obj).val("修改");
+              }
+              else if (data == -100)
+                  alert("请从本网站提交");
+              else if (data == -101) {
+                  alert("您还没有登录，请您先登录");
+                  window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+              }
+              else
+                  alert("更改简历名称失败！");
+          });
+        }
+    }
+
+    function helpMessageTips(obj, message) {
+        var str = '<div id="divTipsTop" style="cursor:default;" oncopy="return false" onselectstart="return false"><img src="../../../Images/TipsDivTop.gif"/*tpa=http://www.shoudurc.com/Images/TipsDivTop.gif*/ style="position:absolute; bottom:-4px;height:8px; width:12px;z-index:100;top:-1px;right:15px;" /><span style=" max-width:300px; border:1px solid #A3A3A3; padding:4px; line-height:18px;display:block; position: relative; top:5px; left:0px; background:#FFFFED;width:auto !important;width:300px;z-index:10;">' + message + '</span></div>';
+        popup.clearData();
+        popup.isHeader = 0;
+        popup.isMessageTip = 0;
+        popup.drag = 0;
+        popup.mask = 3;
+        popup.W = 310;
+        popup.dockObj = obj;
+        popup.dockTop = -10;
+        popup.dockLeft = -280;
+        popup.divClass = "";
+        popup.Overstep = 1;
+        popup.bodyHtml = str;
+        popup.creatDiv();
+    }
+
+    function UrlMatch(obj) {
+        if ($(obj).val().length > 0) {
+            if ($(obj).val().toLowerCase() == "http://") {
+                $("#HomePage").html("").hide();
+            }
+            if (!CheckRule("url", $(obj).val())) {
+                $("#HomePage").html('请输入正确的网址').show();
+            }
+            else {
+                $("#HomePage").html("").hide();
+            }
+        }
+        else {
+            $("#HomePage").html("").hide();
+        }
+    }
+
+    function MobileCheck(obj) {
+        if ($(obj).val().length == 0) {
+            $("#Mobile").html("手机号不能为空！").show();
+
+        }
+		else if ($(obj).val().length <11) {
+            $("#Mobile").html("手机号格式不正确！").show();
+
+        }
+        else {
+            $.post("/personal2018/Sys/ajaxCheckMobileReg", { "mobile": $(obj).val() }, function (data) {
+                if (data == "1") {
+                  $("#Mobile").html("").hide();
+                } else {
+                  $("#Mobile").html(data).addClass("Error").show();
+                }
+            })
+        }
+    }
+
+    function NameCheck(obj) {
+        if ($(obj).val().length == 0) {
+            $("#Name").html("").hide();
+        }
+        else {
+            if ($(obj).val().length > 1) {
+                if (!CheckRule("chinese", $(obj).val())) {
+                    $("#Name").html("请填写中文姓名！").hide();
+					alert("请填写中文姓名！");
+                }
+                else {
+                    $("#Name").html("").hide();
+                }
+            }
+            else {
+                $("#Name").html("至少2个汉字！").hide();
+				alert("至少2个汉字！");
+				
+            }
+        }
+    }
+
+    function HeightCheck(obj) {
+        if ($(obj).val().length == 0) {
+            $("#Height").html("").hide();
+        }
+        else {
+            var height = parseInt($(obj).val());
+            if (height < 140 || height > 230) {
+                $("#Height").html("请输入140~230之间的整数！").show();
+            }
+            else {
+                $("#Height").html("").hide();
+            }
+        }
+    }
+
+    function LinkAgeChange() {
+        //户口所在地
+        var AccountPlace = document.getElementById("txtAccountPlace");
+        var AccountPlaceID = document.getElementById("idAccountPlace");
+        //成长所在地的对应控件
+        var GrowPlace = document.getElementById("txtGrowPlace");
+        var GrowPlaceID = document.getElementById("idGrowPlace");
+        //居住地的对应控件
+        var LivePlace = document.getElementById("txtLivePlace");
+        var LivePlaceID = document.getElementById("idLivePlace");
+        var PlaceID = LivePlaceID.value;
+        //正常取值居住地ID父ID 若长度为2  直接取当前值
+        if (PlaceID.length == 6) {
+            PlaceID = PlaceID.substring(0, 4);
+        } else if (PlaceID.length == 4) {
+            PlaceID = PlaceID.substring(0, 2);
+        } else if (PlaceID.length == 2) {
+            PlaceID = PlaceID;
+        }
+        //如果成长所在地为空则修改，否则不修改
+        if (GrowPlaceID.value == "") {
+            GrowPlaceID.value = PlaceID;
+            GrowPlace.value = GetArrayValue("Region", PlaceID);
+            $(GrowPlace).removeClass("Required");
+        }
+        //如果户口所在地为空则修改，否则不修改
+        if (AccountPlaceID.value == "") {
+            AccountPlaceID.value = PlaceID;
+            AccountPlace.value = GetArrayValue("Region", PlaceID);
+            $(AccountPlace).removeClass("Required");
+        }
+    }
+
+    function SpecialityOnFocus(obj) {
+        if (obj.value == "建议您从工作能力、工作态度及未来职业生涯规划方面加以描述，能让企业更充分了解您，让您有更多机会。详细填写有助于用人单位了解您。") {
+            obj.value = "";
+        }
+    }
+    function SpecialityOnBlur(obj) {
+        if (obj.value == "") {
+            obj.value = "建议您从工作能力、工作态度及未来职业生涯规划方面加以描述，能让企业更充分了解您，让您有更多机会。详细填写有助于用人单位了解您。";
+        }
+    }
+    function WorkExpOnFocus(obj) {
+        if (obj.value == "主要填写自己从事工作的岗位职责，在工作中能力的体现，以及自己取得过哪些成绩。") {
+            obj.value = "";
+        }
+    }
+    function WorkExpOnBlur(obj) {
+        if (obj.value == "") {
+            obj.value = "主要填写自己从事工作的岗位职责，在工作中能力的体现，以及自己取得过哪些成绩。";
+        }
+    }
+    function EduExpOnFocus(obj) {
+        if (obj.value == "可以填写您所学专业包括什么课程，取得的成绩与荣誉以及您的毕业设计等等。") {
+            obj.value = "";
+        }
+    }
+    function EduExpOnBlur(obj) {
+        if (obj.value == "") {
+            obj.value = "可以填写您所学专业包括什么课程，取得的成绩与荣誉以及您的毕业设计等等。";
+        }
+    }
+
+
+
+    function CvMessageTips(w, h, dockobj, bodyHtml, top) {
+        bodyHtml = bodyHtml.replace(/300px/g, '450px');
+        popup.clearData();
+        popup.isHeader = 0;
+        popup.isMessageTip = 1;
+        popup.drag = 0;
+        popup.mask = 3;
+        popup.W = w;
+        popup.H = h;
+        popup.divClass = ""
+        popup.dockObj = dockobj;
+        popup.bodyHtml = bodyHtml;
+        popup.creatDiv();
+        dockobj.className = dockobj.className.replace("required", "");
+        _("msg1").style.top = (getTop(dockobj) - _("divTips").clientHeight - 10) + "px";
+    }
+
+    function strFormat(strName) {
+        return '<div id="divTips" style="cursor:default;position:absolute;"><img src="../../../Images/TipsDiv.gif"/*tpa=http://www.shoudurc.com/Images/TipsDiv.gif*/ style="position:absolute;bottom:-6px;left:15px;height:8px;width:12px;z-index:100;" /><span id="spanTips" style="max-width:300px;border:1px solid #A3A3A3;padding:4px;line-height:18px;display:block;position: relative;top:0px;left:0px;background:#ffffed;overflow:hidden;width:auto !important;width:300px;z-index:10;">' + strName + '</span></div>';
+    }
+
+    function getTop(obj) {
+        var y = obj.offsetTop;
+        while (obj = obj.offsetParent) y += obj.offsetTop;
+        return y;
+    }
+
+    function EmailChangeInfoboxs(obj) {
+        var str = '<p class="popupbodyContent" style="text-align:center; padding: 20px;line-height: 30px;">'
+        str = str + ' 您的邮箱已经与用户名绑定。如果您确定要修改邮箱，请<a href="http://www.shoudurc.com/Personal/account/username">修改用户名。</a>'
+        str = str + '  </p>'
+
+        infoboxs("修改邮箱", 300, 1, obj, 20, -300, str);
+    }
+
+    function SetDefaultBySchoolName(obj) {
+
+        var objId = obj.id.replace("txtGraduateCollage", "");
+        var objValue = obj.value;
+        var objDegreeTxt = document.getElementById("txtDegree" + objId);
+        var objDegreeId = document.getElementById("idDegree" + objId);
+        var objEduTypeTxt = document.getElementById("txtEduType" + objId);
+        var objEduTypeId = document.getElementById("idEduType" + objId);
+        var objMajorTxt = document.getElementById("txtdcMajorID" + objId);
+        var objMajorId = document.getElementById("iddcMajorID" + objId);
+        if (objDegreeTxt.value == "" && objEduTypeTxt.value == "" && objMajorTxt.value == "") {
+            if (objValue.indexOf("大学") > -1) {
+                objDegreeTxt.value = "本科";
+                objDegreeId.value = "6";
+            } else if (objValue.indexOf("学院") > -1) {
+                objDegreeTxt.value = "大专";
+                objDegreeId.value = "5";
+            } else if (objValue.indexOf("学校") > -1) {
+                objDegreeTxt.value = "高中";
+                objDegreeId.value = "2";
+                objMajorTxt.value = "为划分专业";
+                objEduTypeId.value = "1106";
+            }
+            objEduTypeTxt.value = "统招";
+            objEduTypeId.value = "1";
+        }
+    }
+
+
+    //清空英文简历
+    function ClearResumeEng(cvMainID) {
+        $.post("/Personal/cv/AjaxClearCvEng", {
+            cvMainID: cvMainID
+        },
+      function (data) {
+          if (data == 1) {
+              window.location.href = "http://www.shoudurc.com/Personal/cvm/CvList";
+          }
+          else if (data == -100)
+              alert("请从本网站提交");
+          else if (data == -101) {
+              alert("您还没有登录，请您先登录");
+              window.location.href = "http://www.shoudurc.com/Personal/sys/login";
+          } else if (data == -102) {
+              alert("参数错误，请重新提交")
+          }
+          else
+              alert("数据异常，请重试！如果一直出现，请联系我们客服协助解决。");
+      });
+    }
+
+
+    var iKey = 8;
+    function EmailAutoComplate(obj) {
+        var objTarget = obj;
+		if ($(objTarget).is(":hidden")) return;
+        var strType = objTarget.value.split("@");
+        var strInput;
+        var w = obj.clientWidth
+        if (strType[0].length > 2) {
+            strInput = strType[0];
+            if (strInput.length > 18) {
+                var strMore = strInput.slice(0, 18);
+                strInput = strMore + "...";
+            }
+            if (objTarget.value.indexOf("@") == -1) {
+                var li = "";
+                li += "<li style='width:" + (w - 8) + "px;padding:0 4px;line-height:30px;'>" + strInput + "@163.com</li>";
+                li += "<li style='width:" + (w - 8) + "px;padding:0 4px;line-height:30px;'>" + strInput + "@qq.com</li>";
+                li += "<li style='width:" + (w - 8) + "px;padding:0 4px;line-height:30px;'>" + strInput + "@126.com</li>";
+                li += "<li style='width:" + (w - 8) + "px;padding:0 4px;line-height:30px;'>" + strInput + "@sina.com</li>";
+                li += "<li style='width:" + (w - 8) + "px;padding:0 4px;line-height:30px;'>" + strInput + "@hotmail.com</li>";
+				li += "<li style='width:" + (w - 8) + "px;padding:0 4px;line-height:30px;'>" + strInput + "@139.com</li>";				
+                li += "<li style='width:" + (w - 8) + "px;padding:0 4px;line-height:30px;'>" + strInput + "@sohu.com</li>";
+                li += "<li style='width:" + (w - 8) + "px;padding:0 4px;line-height:30px;'>" + strInput + "@gmail.com</li>";
+                popup.clearData()
+                popup.isHeader = 0;
+                popup.drag = 0;
+                popup.mask = 3;
+                popup.H = 1;
+                popup.divClass = "";
+                popup.W = w;
+                popup.dockObj = document.getElementById("txtEmail");
+                popup.dockTop = 2;
+
+                //popup.dockLeft = obj.offsetLeft;
+                popup.bodyHtml = '<div id="divEmail" style="width:' + w + 'px; border:solid #ccc; border-width:0 1px 1px 1px;line-height:20px; background:#fff url(/Images/BgDiv.jpg) repeat-x bottom;filter:alpha(opacity=90); opacity: 0.9; font-family:Arial"><ul id="ulEmail">' + li + '</ul></div>';
+                popup.creatDiv();
+            }
+            $("#ulEmail li").each(function () {
+                $(this).hover(
+                        function () { $("#ulEmail li").removeClass(); $(this).addClass('Over') },
+                        function () { $("#ulEmail li").removeClass(); $(this).removeClass() }
+                        ).click(function () {
+                            strDis = $(this).html().split("@");
+                            objTarget.value = strType[0] + "@" + strDis[1];
+                            CheckEmail($("#txtEmail"));
+                            if (!document.getElementById("txtPasswordNow1")) {
+                                if ($("#txtName").length == 0)
+                                    document.getElementById("txtPassword").focus();
+                            }
+                            popup.ibClose();
+                        });
+            });
+        }
+        else {
+            popup.ibClose();
+        }
+        if (strType[1]) {
+            popup.ibClose();
+        }
+        switch (event.keyCode) {
+            case 38:
+                if (iKey <= 0) { iKey = 8 } else { iKey-- };
+                $("#ulEmail li").removeClass();
+                $("#ulEmail li:eq(" + iKey + ")").addClass("Over");
+                break;
+            case 40:
+                if (iKey >= 8) { iKey = 0 } else { iKey++ };
+                $("#ulEmail li").removeClass();
+                $("#ulEmail li:eq(" + iKey + ")").addClass("Over");
+                break;
+        }
+        $(objTarget).unbind("keydown");
+        $(objTarget).keydown(function (e) {
+            switch (e.keyCode) {
+                case 13:
+                    if ($(".Over").html() > "") {
+                        var strDis = $(".Over").html().split("@");
+                        $(objTarget).val(strType[0] + "@" + strDis[1]);
+                    }
+                    i = -1;
+                    return false;
+            }
+        });
+    }
+
+    var EmailAjax = new Array();
+    var EmailAjaxNo = new Array();
+    var spEmailText = "";
+    function CheckEmail(obj) {
+        $("#spEmail").show();
+        var No = jQuery.inArray($(obj).val(), EmailAjax);
+        if (No != -1) {
+            var data = EmailAjaxNo[No];
+            ShowAjaxEmailTips(data);
+        }
+        else {
+            if (!$(obj).val()) {
+                if (!document.getElementById("txtPasswordNow1")) {
+                    if ($("#txtName").length == 0)
+                        $("#spEmail").html("邮箱是您在网站中的唯一身份标识，请正确填写。").show();
+                    else
+                        $("#spEmail").html("").hide();
+                }
+                else {
+                    $("#spEmail").html("新的用户名与您的电子邮箱绑定，修改用户名的同时也修改了您的电子邮箱").show();
+                }
+                $(obj).addClass("required");
+            }
+            else {
+
+                if (!CheckRule("email", $(obj).val())) {
+                    $("#spEmail").html('邮箱格式错误').show();
+                    $("#spEmail").attr("class", "TipsError Error");
+                }
+                else {
+                    HasEmail($(obj).val());
+                }
+            }
+        }
+    }
+    function HasEmail(email) {
+        $("#spEmail").html(strWaiting).show();
+        $.post("/Personal/sys/AjaxEmailExist", { Email: email }, function (data) {
+            ShowAjaxEmailTips(data);
+            AddEmailArray(email, data);
+        });
+    }
+    function AddEmailArray(email, data) {
+        var len = EmailAjax.length;
+        EmailAjax[len] = email;
+        EmailAjaxNo[len] = data;
+    }
+
+    function ShowAjaxEmailTips(data) {
+        var email = document.getElementById('txtEmail').value;
+        if (data == 1) {
+            $("#spEmail").html('您输入的电子邮箱已经存在，请重新输入<br /><a href="http://www.shoudurc.com/Personal/sys/login?un=' + email + '">点此登录</a> 或 <a href="http://www.shoudurc.com/Personal/sys/GetPassword?un=' + email + '">取回密码</a>').show();
+            $("#spEmail").removeClass('Right');
+        }
+        else {
+            $("#spEmail").html('').addClass('Right').show();
+        }
+    }
+
+    var tips; var theTop = 100/*这是默认高度*/; var old = theTop;
+    function initFloatTips() {
+        tips = document.getElementById('ContentList');
+        if (tips)
+            moveTips();
+    };
+
+    function moveTips() {
+        if (!tips) return;
+        var tt = 50;
+        tips.style.left = 'auto';
+        var clientLeft = 820;
+        if (document.documentElement.clientWidth <= 1324) {
+            //clientLeft = 820;
+            $(tips).remove();
+        }
+        tips.style.left = tips.offsetLeft + clientLeft + 'px';
+        if (window.innerHeight) {
+            pos = window.pageYOffset
+        }
+        else if (document.documentElement && document.documentElement.scrollTop) {
+            pos = document.documentElement.scrollTop
+        }
+        else if (document.body) {
+            pos = document.body.scrollTop;
+        }
+        pos = pos - tips.offsetTop + theTop;
+        pos = tips.offsetTop + pos / 10;
+        if (pos < theTop) pos = theTop;
+        if (pos != old) {
+            tips.style.top = pos + "px";
+            tt = 10;
+        }
+        old = pos;
+        setTimeout(moveTips, tt);
+    }
+
+    //兼容IE6 7 Resize函数多次执行的问题
+    function debounce(callback, delay, context) {
+        if (typeof (callback) !== "function") {
+            return;
+        }
+        delay = delay || 150;
+        context = context || null;
+        var timeout;
+        var runIt = function () {
+            callback.apply(context);
+
+
+        };
+        return (function () {
+            window.clearTimeout(timeout);
+            timeout = window.setTimeout(runIt, delay);
+        });
+    }
+    //页面变化大小后重新定位浮动的地址
+    var winResizeHandler = function (event) {
+        if (!tips) return;
+        tips.style.left = 'auto';
+        var clientLeft = 1000;
+        if (document.documentElement.clientWidth <= 1324) {
+            //clientLeft = 1040;
+            $(tips).remove();
+        }
+        tips.style.left = tips.offsetLeft + clientLeft + 'px';
+    };
+
+    window.onresize = debounce(winResizeHandler, 300);
+
+    function DelPhoto() {
+        if (!confirm("确定要删除照片吗？")) return;
+        $.post("/personal/sys/AjaxDeletePhoto", {}, function () {
+            window.location.reload();
+        });
+    }
+    /*********简历标签*********/
+    function AddCvTags() {
+        $("#btnAddCvTags").hide();
+        $(".divCvTagsEditArea").show();
+        $("#btnEscCvTags").show();
+        $(".EditMain").show();
+        $(".divPushTags").show();
+        $("#txtTagsEdit").show();
+        CheckTagCount();
+        GetPushTags();
+    }
+
+    var arrPushTags;
+    var intTagPageNo;
+
+    function GetPushTags() {
+        var dcJobTypeID = $("#idJobType").val().replace(/ /g, ",");
+        $.post("/Personal/Cv/AjaxGetTagsByDcJobTypeID",
+            { dcJobTypeID: dcJobTypeID },
+            function (data) {
+                if (data.length > 0) {
+                    arrPushTags = data.split('@');
+                    intTagPageNo = 0;
+                    ChangePushTags();
+                }
+            });
+    }
+
+    function ChangePushTags() {
+        var strHtml = '<span class="spPushTagsNotice">您可以能感兴趣的技能：</span>';
+        var arrTags = new Array();
+        if (intTagPageNo * 8 > arrPushTags.length) {
+            intTagPageNo = 0;
+        }
+        for (var i = intTagPageNo * 8; i < Math.min((intTagPageNo + 1) * 8, arrPushTags.length); i++) {
+            arrTags.push(arrPushTags[i]);
+        }
+        for (var i = 0; i < arrTags.length; i++) {
+            strHtml += '<div class="divOneTag"><div class="divTagMain"><span class="spTagText">' + arrTags[i] + '</span><span class="spCondition"></span></div></div>';
+        }
+        strHtml += '<a href="javascript:void(0)" class="spModify" id="spPushTagsModify">换一批</a>';
+        $(".divPushTags").html(strHtml);
+        $(".divPushTags .divOneTag").click(
+        function () {
+            if (!CheckTagCount()) {
+                alert("最多只能选择10个标签！");
+                return;
+            }
+            if ($(this).hasClass("Selected")) {
+                return;
+            }
+            $(".EditMain .EditTag").append($(this).clone());
+            $("#txtTagsEdit").val("");
+            SetPushTagUnSelect();
+            CheckTagCount();
+            SetEditAreaTagClick();
+        }
+      );
+        $("#spPushTagsModify").unbind("click").click(
+        function () {
+            ChangePushTags();
+        }
+      );
+        SetPushTagUnSelect();
+        intTagPageNo++;
+    }
+
+    function SetEditAreaTagClick() {
+        $(".EditTag .divOneTag").unbind("click").click(
+        function () {
+            $(this).remove();
+            CheckTagCount();
+            SetPushTagUnSelect();
+        }
+      );
+    }
+
+    function SetPushTagUnSelect() {
+        $(".divPushTags .divOneTag").each(
+        function () {
+            var TagsTemp = $(this).find(".spTagText").html();
+            var objTemp = $(this);
+            $(this).removeClass("Selected");
+            $(".EditTag .divOneTag").each(
+            function () {
+                if ($(this).find(".spTagText").html().toLowerCase() == TagsTemp.toLowerCase()) {
+                    objTemp.addClass("Selected");
+                }
+            }
+          );
+        }
+      );
+    }
+
+    function GetTagsByKeyWords() {
+        var strKeyWord = $("#txtTagsEdit").val();
+        if ($.trim(strKeyWord).length > 0) {
+            $.post("/Personal/Cv/AjaxGetTagsByKeyWords", {
+                KeyWord: strKeyWord
+            }, function (data) {
+                if (data.length > 0) {
+                    var strHtmlTemp = "";
+                    var arrTags = data.split('@');
+                    for (var i = 0; i < arrTags.length; i++) {
+                        strHtmlTemp += '<span>' + arrTags[i] + '</span>';
+                    }
+                    $("#divMoreTag .TagList").html(strHtmlTemp);
+                    $("#divMoreTag").css("left", $("#txtTagsEdit").position().left);
+                    $("#divMoreTag").css("top", $("#txtTagsEdit").position().top + 25);
+                    $("#divMoreTag .TagList span").click(
+              function (event) {
+                  var inputText = $(this).html();
+                  var isContinue = true;
+                  $("#txtTagsEdit").val("");
+                  $(".EditTag .divOneTag").each(
+                  function () {
+                      if ($(this).find(".spTagText").html().toLowerCase() == inputText.toLowerCase()) {
+                          alert("请不要输入重复标签！");
+                          isContinue = false;
+                      }
+                  }
+                );
+                  if (!isContinue) {
+                      return;
+                  }
+                  var strHtml = '<div class="divOneTag"><div class="divTagMain"><span class="spTagText">'
+                  strHtml += $(this).html();
+                  strHtml += '</span><span class="spCondition"></span></div></div>';
+                  $(".EditMain .EditTag").append(strHtml);
+                  CheckTagCount();
+                  SetEditAreaTagClick();
+                  SetPushTagUnSelect();
+                  $("#divMoreTag").hide();
+                  event.stopPropagation();
+              }
+            );
+                    $("#divMoreTag").show();
+                } else {
+                    $("#divMoreTag").hide();
+                }
+            });
+        } else {
+            $("#divMoreTag").hide();
+        }
+    }
+
+    function CheckTagCount() {
+        if ($(".EditTag .divOneTag").length >= 10) {
+            $("#txtTagsEdit").hide();
+            return false;
+        } else {
+            $("#txtTagsEdit").show();
+            return true;
+        }
+    }
+
+    function SaveTags() {
+        var strTags = "";
+        $(".EditTag .divOneTag").each(
+        function () {
+            strTags += $(this).find(".spTagText").html().replace(/@/g, " ") + "@";
+        }
+      );
+        if (strTags.length > 0) {
+            strTags = strTags.substring(0, strTags.length - 1);
+        }
+        $.post("/Personal/Cv/AjaxUpdateCvTags", {
+            Tags: strTags,
+            CvMainID: $("#hidcvMainID").val()
+        }, function (data) {
+            if (data > 0) {
+                $(".divCvTagsList").html($(".EditTag").html());
+                SetTagShowDefault();
+            } else {
+                alert("参数错误，请刷新后重试！");
+            }
+        });
+    }
+
+    function CancelTags() {
+        SetTagShowDefault();
+    }
+
+    function EditCvTags() {
+        $(".pCvTagsNotice").show();
+        $(".divCvTagsList").hide();
+        $("#btnAddCvTags").hide();
+        $(".divCvTagsEditArea").show();
+        $("#btnEscCvTags").show();
+        $(".EditMain").show();
+        $(".divPushTags").show();
+        $("#txtTagsEdit").show();
+        $("#pCvTagsNotice").show();
+        $("#divCvTags .btnModify").hide();
+        SetEditAreaTagClick();
+        CheckTagCount();
+        GetPushTags();
+    }
+
+    function SetTagShowDefault() {
+        if ($(".divCvTagsList .divOneTag").length > 0) {
+            $("#pCvTagsNotice").hide();
+            $(".divCvTagsList").show();
+            $(".divCvTagsEditArea").hide();
+            $(".divCvTagsEditArea .EditTag").html($(".divCvTagsList").html());
+            $("#btnAddCvTags").hide();
+            $("#divCvTags .btnModify").show();
+        } else {
+            $("#pCvTagsNotice").show();
+            $(".divCvTagsList").hide();
+            $(".divCvTagsEditArea").hide();
+            $(".divCvTagsEditArea .EditTag").html($(".divCvTagsList").html());
+            $("#btnAddCvTags").show();
+            $("#divCvTags .btnModify").hide();
+        }
+    }
+
+    function AddTagsToEdit(Tags) {
+        if ($.trim(Tags).length == 0 || typeof (Tags) == "undefined") {
+            return;
+        }
+        var isContinue = true;
+        $(".EditTag .divOneTag").each(
+        function () {
+            if ($(this).find(".spTagText").html().toLowerCase() == Tags.toLowerCase()) {
+                alert("请不要输入重复标签！");
+                isContinue = false;
+            }
+        }
+      );
+        if (!isContinue) {
+            return;
+        }
+        var strHtml = '<div class="divOneTag"><div class="divTagMain"><span class="spTagText">'
+        strHtml += $.trim(Tags);
+        strHtml += '</span><span class="spCondition"></span></div></div>';
+        $(".EditMain .EditTag").append(strHtml);
+        CheckTagCount();
+        SetEditAreaTagClick();
+        SetPushTagUnSelect();
+        $("#divMoreTag").hide();
+        $("#txtTagsEdit").val("");
+        $("#txtTagsEdit").focus();
+    }
+
+    function initCvTagsInfo() {
+        $("#txtTagsEdit").focus(
+        function () {
+            if ($(this).val() == "点击空白处自定义标签回车完成") {
+                $(this).val("");
+            }
+        }
+      ).blur(
+        function () {
+            if ($(this).val() == "点击空白处自定义标签回车完成") {
+                $(this).val("");
+            }
+            if ($.trim($(this).val()) == "") {
+                $(this).val("点击空白处自定义标签回车完成");
+            }
+        }
+      ).keyup(
+        function (e) {
+            if (e.which == 13) {
+                var inputText = $.trim($(this).val());
+                AddTagsToEdit(inputText);
+            } else {
+                GetTagsByKeyWords();
+            }
+        }
+      );
+        $(".EditMain").click(
+        function (event) {
+            $("#txtTagsEdit").focus();
+            event.stopPropagation();
+        }
+      );
+        $("#spPushTagsModify").unbind("click").click(
+        function () {
+            ChangePushTags();
+        }
+      );
+        $("body").click(
+        function () {
+            if ($("#txtTagsEdit").val() == "点击空白处自定义标签回车完成") {
+
+            } else {
+                AddTagsToEdit($("#txtTagsEdit").val());
+                $("#txtTagsEdit").val("");
+            }
+            $("#divMoreTag").hide();
+        }
+      );
+    }
+
+    //-----------------------------------------------------------------------------------------
+
+
+    function cvShowMapPlace(obj, W, HeaderTitle) {
+
+        if (!_("divMapPlace").innerHTML) {
+
+            if (_("idLivePlace").value.length == 2) {
+                alert("请选择城市！");
+            }
+            else {
+                alert("该地区没有热门地标信息，请使用画圈模式查询职位");
+            }
+            return;
+        }
+
+
+        cvfillMapPlace(obj, W, HeaderTitle);
+
+    }
+
+    function cvSubmitPos(pos, name, id) {
+
+        $("#txtPlace").val(name);
+        $("#idPlace").val(id);
+
+        cvhideLineDiv();
+        popup.ibClose();
+
+    }
+    function cvhideLineDiv() {
+        var _Divsub = _("divLine");
+        _Divsub.style.display = "none";
+    }
+
+    function cvfillMapPlace(obj, W, HeaderTitle) {
+        var regionid = _("idLivePlace").value;
+        //$.ajaxSettings.async = false;
+        $.getJSON("/personal/js/MapPlaceJson?radom=" + new Date(), { RegionID: regionid }, function (json) {
+            if (json.status == "0") {
+                _("divMapPlace").innerHTML = "";
+                return;
+            }
+            var strBody = "";
+            strBody += "<div class=\"popHotPlace\">\n";
+            strBody += "  <ul>\n";
+            for (var i = 0; i < json.mapplace.length; i++) {
+                if (json.mapplace[i].place.trim() != "") {
+                    strBody += "  <li style=\"cursor:pointer\" onMouseOver=\"this.style.backgroundColor=\'#01C758\';this.style.color=\'#fff\'\" onMouseOut=\"this.style.backgroundColor=\'\';this.style.color=\'#222\'\" onclick=\"cvSubmitPos('" + json.mapplace[i].location + "','" + json.mapplace[i].place + "','" + json.mapplace[i].id + "')\">" + json.mapplace[i].place + "</li>\n";
+                }
+
+            }
+            strBody += "    <div style=\"clear:both\"></div>\n";
+            strBody += "  </ul>\n";
+            strBody += "</div>\n";
+            var arrLine = mapline[regionid];
+            var arrLineID = maplineid[regionid];
+            if (arrLine) {
+                strBody += "<div class=\"popHotPlace\">\n";
+                strBody += "  <h1><img src=\"../js/images/imagesmap_15.gif\"/*tpa=http://www.shoudurc.com/content/personal/js/images/imagesmap_15.gif*/>地铁沿线</h1>\n";
+                strBody += "  <ul>\n";
+                for (var i = 0; i < arrLine.length; i++) {
+                    strBody += "  <li style=\"cursor:pointer\" onMouseOver=\"this.style.backgroundColor=\'#FFCC00\';ShowLine('" + arrLineID[i] + "',this,event)\" onMouseOut=\"this.style.backgroundColor=\'\'\">" + arrLine[i] + "</li>\n";
+                }
+                strBody += "    <div style=\"clear:both\"></div>\n";
+                strBody += "  </ul>\n";
+                strBody += "</div>\n";
+            }
+            _("divMapPlace").innerHTML = strBody;
+
+            popup.clearData()
+            popup.drag = 1;
+            popup.mask = 3;
+            popup.H = 1;
+            popup.W = W;
+            popup.dockObj = obj;
+            popup.headerTitle = HeaderTitle;
+            popup.isHeader = 1;
+            popup.bodyHtml = strBody;
+            popup.creatDiv();
+            //WriteHotPlace(json)
+        });
+    }
+	
+
+    //-----------------------------------------------------------------------------------------
+
+    /*********简历修改页面修改手机号添加认证功能开始*********/
+
+    function SendVerifyCodeResumeModify() {
+        var second = 180;
+        var mobile = document.getElementById("txtMobile").value;
+        $.post("/personal2018/sys/ajaxGetMobileRegCode", {
+          mobile : mobile,
+          verifycode : $("#txtVerifyCode").val()
+        },function (data) {
+          if (isNaN(data)) {
+            alert(data);
+          }
+          else {
+            if (data == 200) {
+              second = 179;
+            }
+            else {
+              second = data;
+            }
+            document.getElementById("btnSendCode").disabled = true;
+            funcInterval = window.setInterval(ResumeModifyCountdown, 1000);
+          }
+                });
+
+    }
+
+    function showVerifyCode(obj) {
+        if (document.getElementById("txtMobile").value == "") {
+            alert("请输入手机号");
+            document.getElementById("txtMobile").focus();
+            return;
+        }
+
+        if (!CheckRule("mobile", document.getElementById("txtMobile").value)) {
+            alert("请输入正确的手机号");
+            return;
+        }
+      
+        if ($("#Mobile").text().length > 0 && $("#Mobile").text().indexOf("不用了") == -1) {
+          return;
+        }
+        var str = '<p style="text-align:center; padding:16px 0;">';
+        str = str + '   输入右侧图片中的数字：';
+        str = str + '    <input type="text" id="txtVerifyCode" maxlength="4" style="width:80px;    vertical-align: middle;"  /> <img style="vertical-align: middle;" src="/Common/VerifyCode?time=' + (new Date()).getTime() + '" id="valiCode">';
+        str = str + '  </p>';
+        str = str + '  <p class="popupfooter">';
+        str = str + '     <input type="button" value="确 认" onClick="SendVerifyCodeResumeModify()" class="popupBtn" />';
+        str = str + '  </p>';
+        popup.clearData();
+        popup.isHeader = 1;
+        popup.isMessageTip = 0;
+        popup.drag = 1;
+        popup.mask = 2;
+        popup.headerTitle = "输入右侧图片中的数字";
+        popup.W = 320;
+        popup.H = 1;
+        popup.isFilter = 1;
+        popup.dockObj = obj;
+        popup.dockLeft = 0;
+        popup.dockTop = -130;
+        popup.bodyHtml = str;
+        popup.creatDiv();
+        $(function () {
+            $("#valiCode").bind("click",
+    function () {
+        this.src = "/Common/VerifyCode?time=" + (new Date()).getTime();
+    });
+        });
+}
+
+function CheckVerifyCode() {
+    $.post("/personal/sys/AjaxCheckVerifyCode?t=" + new Date().getTime(), {
+        code: document.getElementById("txtVerifyCode").value,
+        mobile: document.getElementById("txtMobile").value
+    }, function (data) {
+        if (data = "1") {
+            popup.ibClose();
+            SendVerifyCodeResumeModify();
+        } else {
+            alert("输入错误，请重新输入右边图片中的数字");
+            document.getElementById("txtVerifyCode").focus();
+        }
+    });
+}
+    
+    function ResumeModifyCountdown() {
+        document.getElementById("btnSendCode").value = second + "秒";
+        if (second == 0) {
+            document.getElementById("btnSendCode").value = "获取短信验证码";
+            //CheckMobile(document.getElementById("txtUsername"));
+            document.getElementById("spVerifyCodeTip").innerHTML = '短信有可能延迟，请耐心等待，如果您一直没有收到短信，建议您使用<a href="javascript:" onclick="$(\'.TabSwitcher div\').eq(0).click()">邮箱注册</a>';
+            $("#spVerifyCodeTip").removeClass("Error");
+            window.clearInterval(funcInterval);
+        }
+        second--;
+    }
+
+    function VerifyImgClick() {
+        $("#valiCode").attr("src", "/personal/sys/VerifyCode?time=" + (new Date()).getTime());
+    }
+    /*********简历修改页面修改手机号添加认证功能结束*********/
+
+function MobileRecord(){
+			
+	if($("#txtMobile").val().length==0){
+		return false;
+	}
+	if (!CheckRule("mobile", $("#txtMobile").val())) {
+		return false;
+	}
+	//如果手机号符合规则进行记录
+	$.post('/personal/sys/AjaxMobileRecord',{Mobile:$("#txtMobile").val()},function(data){
+				
+	})
+}
+
+function VeriyCodeCheck(obj){
+	if ($(obj).val().length == 0) {
+            $("#spVerifyCodeTip").html("请输入验证码！").show();
+
+        }
+        else {
+            $.post("/personal/sys/AjaxVerifyCodeCheck", { Mobile: $("#txtMobile").val(),VerifyCode:$(obj).val() }, function (data) {
+                //alert(data)
+				if(data==-1){
+					$("#spVerifyCodeTip").html("请先填入手机号再获取验证码！").show();
+				}else if(data==-5){
+					$("#spVerifyCodeTip").html("验证码错误！").show();
+				}
+            })
+        }
+}

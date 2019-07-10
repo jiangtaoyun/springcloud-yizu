@@ -1,0 +1,296 @@
+var JobTypeSelect = {
+    IsMulti: 0,
+    newSelect: function (isMulti) {
+        IsMulti = isMulti;
+        var jobTypeSelect = {};
+        jobTypeSelect._arrID = "jsJobTypeL1ID";
+        jobTypeSelect._aNa = "jsJobTypeL1";
+        var aId = jsJobTypeL1ID;
+        var aNa = jsJobTypeL1;
+        jobTypeSelect.GenBodyHtml = function () {
+            var objId = BodyClass.objId;
+            var bh = '';
+            var arrPos = [6, 10, 14, 18, 22, 26, 31, 33, 37, 40, 45, 48, 100];
+            bh = '<div class="DivShow"><div class="DivShowB">';
+            if (isMulti == 1) {
+                bh += BodyClass.MutiHeadHtml(objId, 1);
+            }
+            for (var j = 0; j < arrPos.length - 1; j++) {
+                var sPos = 0;
+                if (j > 0) {
+                    sPos = arrPos[j - 1]
+                };
+                var ePos = arrPos[j];
+                bh += '<div class="NDivCl" style="';
+                if ((ePos - sPos) < 5) {
+                    bh += 'height:30px; line-height:30px;';
+                }
+                else if ((ePos - sPos) < 8) {
+                    bh += 'height:56px; line-height:56px;';
+                }
+                else {
+                    bh += 'height:82px; line-height:82px;';
+                }
+                if (j % 2 == 1)
+                    bh += 'background-color:#fff;';
+                var moveColor = "ffe9d3", borderColor = "";
+                if (location.pathname.indexOf("/Company") == 0) {
+                    moveColor = "d3e9ff";
+                    borderColor = "";
+                }
+                bh += '"><div class="NDivClBig">' + SubIds[j] + '</div>';
+                bh += '<div class="NDivClSmall" style="';
+                if ((ePos - sPos) < 4) {
+                    bh += 'padding-top:2px;';
+                }
+                else if ((ePos - sPos) < 7) {
+                    bh += 'padding-top:5px;';
+                }
+                else {
+                    bh += 'padding-top:7px;';
+                }
+                bh += '"><ul id="jobtypeSelLi">';
+                for (i = sPos; i < ePos; i++) {
+                    var _LiIdNi = objId + i;
+                    if (isMulti == 0) {
+                        if (aNa[i] == "其他" || aNa[i] == "Specialists") {
+                            bh += '<li style="width:140px;cursor:pointer; color:#1c4dcd;" id="' + _LiIdNi + '" name="' + aId[i] + '" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\';" onMouseOut="this.style.backgroundColor=\'\';"  onMouseOut="BodyClass.hideSub(\'' + objId + '\');" onClick="BodyClass.saveInt(\'56\',\'其他\',\'dcJobTypeID\');">' + aNa[i] + '</li>';
+                        }
+                        else {
+							if(aId[i]!=undefined){
+                            bh += '<li style="width:140px; cursor:pointer; color:#1c4dcd;" id="' + _LiIdNi + '" name="' + aId[i] + '"  onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\';" onMouseOut="this.style.backgroundColor=\'\';" onClick="JobTypeSelect.showSubArea(event,this,\'' + i + '\', \'' + objId + '\' ,\'' + isMulti + '\');" onMouseOut="BodyClass.hideSub(\'' + objId + '\');" >' + aNa[i] + '<span class="popupDivArrowDown"></span></li>';
+							}
+                        }
+                    }
+                    else {
+                        if (aNa[i] == "其他" || aNa[i] == "Specialists") {
+                            bh += '<li id="' + _LiIdNi + '" style="width:140px;cursor:pointer;" name="' + aId[i] + '" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\';" onMouseOut="this.style.backgroundColor=\'\';"  onMouseOut="BodyClass.hideSub(\'' + objId + '\');" ><span onclick="BodyClass.bcb(this, \'' + objId + '\', \'jsJobTypeL2ID\', \'jsJobTypeL2\',' + i + ');BodyClass.cancelEvent();"><input onclick="this.checked=!this.checked;" type="checkbox" name="' + aId[i] + '" /></span>' + aNa[i] + '</li>';
+                        }
+                        else {
+                            bh += '<li id="' + _LiIdNi + '" style="width:140px;cursor:pointer;" name="' + aId[i] + '" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\';" onMouseOut="this.style.backgroundColor=\'\';" onClick="JobTypeSelect.showSubArea(event,this, \'' + i + '\', \'' + objId + '\' ,\'' + isMulti + '\')" onMouseOut="BodyClass.hideSub(\'' + objId + '\');" ><span onclick="BodyClass.bcb(this, \'' + objId + '\', \'jsJobTypeL2ID\', \'jsJobTypeL2\',' + i + ');BodyClass.cancelEvent();"><input onclick="this.checked=!this.checked;" type="checkbox" name="' + aId[i] + '" /></span>' + aNa[i] + '<span class="popupDivArrowDown"></span></li>';
+                        }
+                    }
+                }
+                if (isMulti == 1) {
+                    bh += '<input type="hidden" id="' + objId + 'ProvisionalData">';
+                }
+                bh += '</ul></div>';
+                bh += '</div>';
+            }
+            bh += '<div style="clear:both;"></div></div></div>';
+            bh += '<div id="SelectedDiv"><div class="showDivsub" id="popDivSub" onMouseOut="BodyClass.HideSub(event,this)" style="float:left;position:absolute;"></div></div>'
+            return bh;
+        };
+        return jobTypeSelect;
+    },
+    showSubArea: function (event, SubId, Arrayb, objId, isMulti) {
+        event = event ? event : window.event
+        var tarObj = event.srcElement ? event.srcElement : event.target
+        var subareaids = jsJobTypeL2ID[Arrayb];
+        var subareanames = jsJobTypeL2[Arrayb];
+        var _Divsub = _("popDivSub");
+        var jobItemWidth = (isMulti == 1) ? 143 : 140;
+        var ulWidth = jobItemWidth + 6;
+        ulWidth = jobItemWidth * 2 + 12;
+        _Divsub.style.width = '0px';
+        var moveColor = "ffe9d3", borderColor = "";
+        if (location.pathname.indexOf("/Company") == 0) {
+            moveColor = "d3e9ff";
+            borderColor = "";
+        }
+        hDiv = '';
+        if (isMulti == 1) {
+            hDiv += '<p style="color:#1c4dcd; width:' + (jobItemWidth) + 'px;overflow:hidden;float:left" id="subpTop' + jsJobTypeL1[Arrayb] + '" onMouseOver="this.style.background=\'#' + moveColor + '\';" onMouseOut="this.style.background=\'#fff\';" onClick="BodyClass.bcb(this, \'' + objId + '\', \'jsJobTypeL2ID\', \'jsJobTypeL2\',' + Arrayb + ');"><input name="' + jsJobTypeL1ID[Arrayb] + '" value="' + jsJobTypeL1[Arrayb] + '" type="checkbox" onclick="this.checked=!this.checked;" />' + jsJobTypeL1[Arrayb] + '<span class="popupDivArrowUpaaaaaaaaaaaa" onclick="BodyClass.hideSub();BodyClass.cancelEvent()"></span></p>';
+        }
+        else {
+            hDiv += '<p style="color:#1c4dcd; width:' + (jobItemWidth) + 'px;overflow:hidden;float:left" id="subpTop' + jsJobTypeL1[Arrayb] + '" onMouseOver="this.style.background=\'#' + moveColor + '\';" onMouseOut="this.style.background=\'#fff\';" onclick="BodyClass.hideSub();BodyClass.cancelEvent()">' + jsJobTypeL1[Arrayb] + '<span class="popupDivArrowUpbbbbbbbbbbbbbbbbbbb"></span></p>';
+        }
+        hDiv += '<ul style="width:' + ulWidth + 'px">';
+
+        for (var m = 0; m < subareaids.length; m++) {
+            if (isMulti == 0) {
+                hDiv += '<li style="color:#1c4dcd;cursor:pointer;width:' + jobItemWidth + 'px" onMouseOver="this.style.backgroundColor=\'#' + moveColor + '\';"';
+                hDiv += ' onMouseOut="this.style.backgroundColor=\'\';" onClick="BodyClass.saveInt(\'' + subareaids[m] + '\',\'' + subareanames[m] + '\',\'' + objId + '\');">' + subareanames[m];
+                hDiv += '</li>';
+            }
+            else {
+                hDiv += '<li style="color:#1c4dcd;cursor:pointer; width:' + jobItemWidth + 'px;"  onMouseOver="this.style.background=\'#' + moveColor + '\';" onMouseOut="this.style.background=\'\';" onClick="BodyClass.bcb(this, \'' + objId + '\', \'jsJobTypeL2ID\', \'jsJobTypeL2\',' + Arrayb + ');"><input name="' + subareaids[m] + '" value="' + subareanames[m] + '" type="checkbox" onclick="this.checked=!this.checked;" />' + subareanames[m] + '</li>';
+            }
+        }
+        hDiv += '<div style="clear:both"></div>';
+        hDiv += '</ul>';
+        if (isMulti == 1) {
+            hDiv += '<p style="color:#1c4dcd; display:none; width:' + (jobItemWidth) + 'px;overflow:hidden;float:left" id="subpBottom' + jsJobTypeL1[Arrayb] + '"  onMouseOver="this.style.background=\'#' + moveColor + '\';" onMouseOut="this.style.background=\'#fff\';" onClick="BodyClass.bcb(this, \'' + objId + '\', \'jsJobTypeL2ID\', \'jsJobTypeL2\',' + Arrayb + ');"><input name="' + jsJobTypeL1ID[Arrayb] + '" value="' + jsJobTypeL1[Arrayb] + '" type="checkbox" onclick="this.checked=!this.checked;" />' + jsJobTypeL1[Arrayb] + '<span class="popupDivArrowUpcccccccccccccccc" onclick="BodyClass.hideSub();BodyClass.cancelEvent()"></span></p>';
+        }
+        else {
+            hDiv += '<p style="color:#1c4dcd; display:none; width:' + (jobItemWidth) + 'px;overflow:hidden;float:left" id="subpBottom' + jsJobTypeL1[Arrayb] + '"  onMouseOver="this.style.background=\'#' + moveColor + '\';" onMouseOut="this.style.background=\'#fff\';" onclick="BodyClass.hideSub();BodyClass.cancelEvent()">' + jsJobTypeL1[Arrayb] + '<span class="popupDivArrowUpdddddddddddddddd"></span></p>';
+        }
+
+        _Divsub.innerHTML = hDiv;
+        _Divsub.style.display = "block";
+        var _DivsubTop = BodyClass.gaot(SubId) - BodyClass.gaot(_("msg1"));
+        var _DivsubLeft = BodyClass.gaol(SubId) - BodyClass.gaol(_("msg1"));
+        var parentObj = tarObj;
+        var parentOffTop = tarObj.offsetTop;
+        while (parentObj = parentObj.offsetParent) {
+            parentOffTop += parentObj.offsetTop;
+        }
+        var IsOver = 0;
+        if (parentOffTop - Math.max(document.documentElement.scrollTop, document.body.scrollTop) + Math.ceil(subareaids.length / 2) * 20 + 20 > document.documentElement.clientHeight) {
+            _Divsub.style.top = (_DivsubTop - Math.ceil(subareaids.length / 2) * 20 + 2) + "px";
+            IsOver = 1
+        }
+        else {
+            _Divsub.style.top = _DivsubTop + "px";
+        }
+        if (isMulti == 1) {
+            BodyClass.changeChecked(objId);
+        }
+        if (navigator.userAgent.indexOf("MSIE") > 0) {
+            _Divsub.style.left = _DivsubLeft + 1 + "px";
+        }
+        else {
+            _Divsub.style.left = _DivsubLeft + 5 + "px";
+        }
+        if (IsOver == 0) {
+            if (_('subpTop' + jsJobTypeL1[Arrayb])) {
+                _('subpTop' + jsJobTypeL1[Arrayb]).style.display = '';
+                _('subpBottom' + jsJobTypeL1[Arrayb]).style.display = 'none';
+            }
+        }
+        else {
+            if (_('subpTop' + jsJobTypeL1[Arrayb])) {
+                _('subpTop' + jsJobTypeL1[Arrayb]).style.display = 'none';
+                _('subpBottom' + jsJobTypeL1[Arrayb]).style.display = '';
+                if (location.pathname.indexOf("/Company") == 0)
+                    _('subpBottom' + jsJobTypeL1[Arrayb]).style.borderBottom = "2px solid #0095d7";
+                else
+                    _('subpBottom' + jsJobTypeL1[Arrayb]).style.borderBottom = "2px solid #c8c8c8";
+                _('subpBottom' + jsJobTypeL1[Arrayb]).style.borderTop = "none"
+                _('subpBottom' + jsJobTypeL1[Arrayb]).style.marginTop = "-2px"
+            }
+        }
+
+        if ((this.GetLeft(_Divsub) + ulWidth) > (this.GetLeft(_("msg1")) + _("msg1").offsetWidth)) {
+            var arrSubP = _("popDivSub").getElementsByTagName("p");
+            if (arrSubP.length > 0) {
+                arrSubP[IsOver].style.marginLeft = "147px"
+                arrSubP[IsOver].style.paddingRight = "4px"
+            }
+            var arrSubLi = _Divsub.getElementsByTagName("li");
+            if (arrSubLi.length > 0) {
+                arrSubLi[0].style.height = "20px";
+                arrSubLi[0].style.marginTop = "0px";
+                if (IsOver == 1) { }
+                else {
+                    arrSubLi[1].style.height = "22px";
+                    if (isMulti == 1) {
+                        arrSubLi[1].style.marginTop = "-2px";
+                    }
+                }
+                if (navigator.userAgent.indexOf("MSIE") > 0) {
+                    _Divsub.style.left = _DivsubLeft - 148 + "px";
+                }
+                else {
+                    _Divsub.style.left = _DivsubLeft - 144 + "px";
+                }
+            }
+        }
+    },
+    GetLeft: function (obj) {
+        var l = obj.offsetLeft;
+        while (obj = obj.offsetParent) {
+            l += obj.offsetLeft;
+        }
+        return l;
+    },
+    GetSearchItems: function (obj) {
+        var keyword = obj.value;
+        if (keyword.length == 0) {
+            _("popDivSearch").style.display = "none";
+            return;
+        }
+        var parm = "keyword=" + escape(keyword.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g, ''));
+        this.InnerAjax("post", "/common/GetJobTypeByKeyword", parm, GenJobTypeList, false);
+        function GenJobTypeList(obj) {
+            var jsonList = obj.responseText;
+            if (jsonList.length > 0) {
+                var strList = '<ul>';
+                jsonList = eval('(' + jsonList + ')');
+                var itemNum = 0;
+                for (var i = 0; i < jsonList.JobTypeList.length; i++) {
+                    if (this.IsMulti == 0) {
+                        if (jsonList.JobTypeList[i].ID.length == 2) {
+                            continue;
+                        }
+                        strList += '<li onMouseOver="this.style.backgroundColor=\'#ffe9d3\';" onMouseOut="this.style.backgroundColor=\'\';" onClick="BodyClass.saveInt(\'' + jsonList.JobTypeList[i].ID + '\',\'' + jsonList.JobTypeList[i].Name + '\',\'' + BodyClass.objId + '\');">' + jsonList.JobTypeList[i].Name + '</li>';
+                    }
+                    else {
+                        strList += '<li onMouseOver="this.style.background=\'#ffe9d3\';" onMouseOut="this.style.background=\'\';" onClick="BodyClass.bcb(this, \'' + BodyClass.objId + '\', \'jsJobTypeL2ID\', \'jsJobTypeL2\',' + 0 + ');"><input name="' + jsonList.JobTypeList[i].ID + '" value="' + jsonList.JobTypeList[i].Name + '" type="checkbox" onclick="this.checked=!this.checked;" />' + jsonList.JobTypeList[i].Name + '</li>';
+                    }
+                    itemNum++;
+                    if (itemNum == 9) break;
+                }
+                strList += '<li style="color:#999; list-style:none;"><span style="float:left">' + (this.IsMulti == 0 ? '选择合适的职位类别' : '最多选择5项') + '</span><span style="float:right"><img style="margin-top:8px" src="../content/Homepage/NewIndex/PopupNew/p6.gif"/*tpa=http://www.shoudurc.com/content/Homepage/NewIndex/PopupNew/p6.gif*/ onclick="_(\'popDivSearch\').style.display = \'none\';" /></span></li></ul>';
+                _("popDivSearch").innerHTML = strList;
+                if (navigator.userAgent.indexOf("IE") > -1) {
+                    if (navigator.userAgent.indexOf("IE 9") > -1) {
+                        _("popDivSearch").style.marginLeft = "117px";
+                    }
+                    else {
+                        _("popDivSearch").style.marginLeft = "117px";
+                    }
+                }
+                else {
+                    _("popDivSearch").style.marginLeft = "117px";
+                }
+                _("popDivSearch").style.display = "block";
+                if (this.IsMulti == 1)
+                    BodyClass.changeChecked(BodyClass.objId);
+            }
+            else {
+				_("popDivSearch").style.marginLeft = "117px";
+                _("popDivSearch").innerHTML = '<p style="padding-left:3px; height:25px; line-height:25px; cursor:default">没有相关职位类别</p>';
+                _("popDivSearch").style.display = "block";
+            }
+        }
+    },
+    InnerAjax: function Ajax(method, url, parm, callback, bool) {
+        var xmlHttp = false;
+        if (window.ActiveXObject) {
+            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        else if (window.XMLHttpRequest) {
+            xmlHttp = new XMLHttpRequest();
+        }
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4) {
+                if (xmlHttp.status == 200) {
+                    callback(xmlHttp);
+                    xmlHttp = null;
+                }
+                else {
+                    document.write(xmlHttp.status + "：" + xmlHttp.responseText);
+                }
+            }
+        }
+        xmlHttp.open(method, url, bool);
+        xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=gb2312");
+        xmlHttp.send(parm);
+        if (navigator.userAgent.indexOf("Firefox") > 0)
+            callback(xmlHttp);
+    },
+    textBoxFocus: function (obj, strText) {
+        BodyClass.hideSub();
+        var strObjValue = obj.value;
+        if (strObjValue == strText) {
+            obj.value = "";
+        }
+    },
+    textBoxBlur: function (obj, strText) {
+        var strObjValue = obj.value;
+        if (strObjValue == "") {
+            obj.value = strText;
+        }
+    }
+};

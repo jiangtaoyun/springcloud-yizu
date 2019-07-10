@@ -1,0 +1,249 @@
+var intIndex = 0;
+var selectedIndex;
+var isAjax = true;
+var objPosition
+//Ajax查询对应类别的关键词按照点击量排序
+function checkAndShow(obj) {
+    if (typeof (isFirstKeyWords) != "undefined") {
+        if (isFirstKeyWords == 1) {
+            isFirstKeyWords = 0;
+            return;
+        }
+    }
+    if (!isAjax) {
+        return;
+    }
+    if (obj) {
+        objPosition = obj;
+    } else {
+        objPosition = _("txtKeyWord");
+    }
+    var strKey = escape(objPosition.value.replace('<', '').replace('>', ''));
+    if (objPosition.value.replace('<', '').replace('>', '') == '请填写关键词或选择职位' || objPosition.value.replace('<', '').replace('>', '') == '请填写关键词或选择职位...') {
+        objPosition.value = "";
+        return;
+    }
+    if (strKey.length > 0)
+        Ajax("post", "/personal/js/AjaxGetJobNameCopy", "key=" + strKey, GenKeyWordDiv, true);
+    else
+        popup.ibClose()
+
+}
+//接收Ajax数据，拼接HTML
+function GenKeyWordDiv(obj) {
+    selectedIndex = -1;
+    var data = unescape(obj.responseText);
+    var strKeyWord = "";
+    var strResaultNumber = "";
+    var strAttributeName = "";
+    var strAttributeValue = "";
+    var strHtml = '<div id="KeysList" style="background:#FFFFFF;border: 1px solid #CCCCCC;font-size:12px; cursor: default;"><div style="clear:both;"></div>';
+    if (data == "") {
+        popup.ibClose();
+    }
+    else {
+        //var array = data.split("}*{");
+        if (objPosition.id == "txtKeyWord") {
+            _("TempKey").value = objPosition.value;
+        } else {
+            _("TempKey2").value = objPosition.value;
+        }
+        var array = eval(data);
+        for (intTmp = 0; intTmp < array.length; intTmp++) {
+            var arrKeyAndNumber = new Array(array[intTmp].JobName, array[intTmp].JobNumber);
+            addOption(arrKeyAndNumber);
+        }
+        strHtml += "<div style=\"clear:both;\"></div></div>";
+        var popupWidth;
+        if (window.isIndex)
+            popupWidth = 277;
+        else if (window.isSearchLogin)
+            popupWidth = 322;
+        else if (window.isSearchUnLogin)
+            popupWidth = 359;
+        else if (window.isNotFound)
+            popupWidth = 292;
+        else if (document.location.href.indexOf('js') == -1)
+            popupWidth = 234;
+        else {
+            popupWidth = 307;
+        }
+        popup.clearData();
+        popup.isHeader = 0;
+        popup.drag = 0;
+        popup.mask = 3;
+        if (popupWidth) {
+            popup.W = popupWidth;
+        } else {
+            popup.W = objPosition.clientWidth;
+        }
+        popup.H = 0;
+        popup.divClass = "email"
+        popup.dockObj = objPosition;
+        if (window.isIndex)
+            popup.dockTop = 14;
+        popup.bodyHtml = strHtml;
+        popup.Overstep = 1;
+        popup.creatDiv();
+        if (objPosition.id != "txtKeyWord") {
+            divPosition();
+        }
+        //生成弹出层的HTML
+        function addOption(arrKeyAndNumber) {
+            strKeyWord = arrKeyAndNumber[0];
+            var strTempValue = "txtKeyWord";
+            if (objPosition.id != "txtKeyWord") {
+                strTempValue = "txtKeyWord2";
+            }
+            strResaultNumber = arrKeyAndNumber[1];
+            if (window.isIndex)
+                strHtml += "<div name=\"KeyWordDiv\" class=\"\" style=\"width:275px; padding-top:3px; padding-bottom:3px; float:left;\"";
+            else if (window.isSearchLogin)
+                strHtml += "<div name=\"KeyWordDiv\" class=\"\" style=\"width:320px; padding-top:3px; padding-bottom:3px; float:left;\"";
+            else if (window.isSearchUnLogin)
+                strHtml += "<div name=\"KeyWordDiv\" class=\"\" style=\"width:357px; padding-top:3px; padding-bottom:3px; float:left;\"";
+            else if (window.isNotFound)
+                strHtml += "<div name=\"KeyWordDiv\" class=\"\" style=\"width:290px; padding-top:3px; padding-bottom:3px; float:left;\"";
+            else if (document.location.href.indexOf('js') == -1)
+                strHtml += "<div name=\"KeyWordDiv\" class=\"\" style=\"width:232px; padding-top:3px; padding-bottom:3px; float:left;\"";
+            else
+                strHtml += "<div name=\"KeyWordDiv\" class=\"\" style=\"width:305px; padding-top:3px; padding-bottom:3px; float:left;\"";
+
+            strHtml += " onmouseover=\"this.className='KeywordSelected'\"";
+            strHtml += " onmouseout=\"this.className=''\" ";
+            strHtml += " onmousedown=\"isAjax = false;document.getElementById('" + strTempValue + "').value='" + strKeyWord + "'\">";
+            if (window.isIndex) {
+                strHtml += "<div style=\"float:left; padding-left:3px; margin-left:20px\">" + strKeyWord + "</div>";
+                //strHtml += "<div style=\"float:right; padding-right:30px; color:rgb(0, 128, 255)\">约" + strResaultNumber + "个结果</div>";
+            }
+            else if (window.isSearchLogin) {
+                strHtml += "<div style=\"float:left; padding-left:3px; margin-left:20px\">" + strKeyWord + "</div>";
+                //strHtml += "<div style=\"float:right; padding-right:30px; color:rgb(0, 128, 255)\">约" + strResaultNumber + "个结果</div>";
+            }
+            else if (window.isSearchUnLogin) {
+                strHtml += "<div style=\"float:left; padding-left:3px; margin-left:20px\">" + strKeyWord + "</div>";
+                //strHtml += "<div style=\"float:right; padding-right:30px; color:rgb(0, 128, 255)\">约" + strResaultNumber + "个结果</div>";
+            }
+            else if (window.isNotFound) {
+                strHtml += "<div style=\"float:left; padding-left:3px\">" + strKeyWord + "</div>";
+                //strHtml += "<div style=\"float:right; padding-right:3px; color:rgb(0, 128, 255)\">约" + strResaultNumber + "个结果</div>";
+            }
+            else if (document.location.href.indexOf('js') == -1) {
+                strHtml += "<div style=\"float:left; padding-left:3px\">" + strKeyWord + "</div>";
+                //strHtml += "<div style=\"float:right; padding-right:3px; color:rgb(0, 128, 255)\">约" + strResaultNumber + "个结果</div>";
+            }
+            else {
+                strHtml += "<div style=\"float:left; padding-left:20px\">" + strKeyWord + "</div>";
+                //strHtml += "<div style=\"float:right; padding-right:20px; color:rgb(0, 128, 255)\">约" + strResaultNumber + "个结果</div>";
+            }
+            strHtml += "</div>";
+
+        }
+    }
+
+}
+//判断按下的按键
+function checkKeyCode(evt, obj) {
+    var intTmp;
+    evt = evt || window.event;
+    var keyCode = window.event ? evt.keyCode : evt.which;
+    if (keyCode == 40 || keyCode == 38) {
+        isAjax = false;
+        //下上  
+        var isUp = false;
+        if (keyCode == 40)
+            isUp = true;
+        chageSelection(isUp, intTmp);
+    }
+    else if (keyCode == 13) {
+        isAjax = false;
+        //回车
+        if (selectedIndex != -1)
+            outSelection(selectedIndex);
+    }
+    else {
+        isAjax = true;
+        if (keyCode == 8)
+            checkAndShow();
+    }
+}
+//更改选择项
+function chageSelection(isUp, intTmp) {
+    if (isUp)
+        selectedIndex++;
+    else
+        selectedIndex--;
+    var maxIndex = _("KeysList").childNodes.length;
+    if (selectedIndex < 0)
+        selectedIndex = maxIndex - 2;
+    if (selectedIndex > maxIndex - 2 || selectedIndex == 0)
+        selectedIndex = 1;
+    for (intTmp = 1; intTmp <= maxIndex - 2; intTmp++) {
+        if (intTmp == selectedIndex) {
+            //当上下键移动时，将选中的文本写到文本框中
+            if (selectedIndex != maxIndex)
+                objPosition.value = _("KeysList").childNodes[intTmp].childNodes[0].innerHTML;
+            else {
+                if (objPosition.id == "txtKeyWord") {
+                    objPosition.value = _('TempKey').value
+                } else {
+                    objPosition.value = _('TempKey2').value
+                }
+            }
+            if (selectedIndex != maxIndex)
+                _("KeysList").childNodes[intTmp].className = "KeywordSelected";
+        }
+        else {
+            if (intTmp != maxIndex)
+                _("KeysList").childNodes[intTmp].className = "";
+        }
+    }
+}
+
+function getKeyWordsDiv() {
+    var _allDiv = document.getElementsByTagName("div");
+    var _Div = new Array();
+    var k = 0
+    for (var m = 0; m < _allDiv.length; m++) {
+        if (_allDiv[m].getAttribute("name") == "tips") {
+            _Div[k] = _allDiv[m];
+            k++;
+        }
+    }
+    return _Div;
+}
+//将选项赋值给输入框
+function outSelection(Index) {
+    objPosition.value = _("keysList").childNodes[Index].childNodes[0].innerHTML;
+    //popup.ibClose();
+}
+//重新定位
+function divPosition() {
+    changeLocation(47);
+}
+//计算弹出框位置
+function getAbsoluteHeight(ob) {
+    return ob.offsetHeight;
+}
+function getAbsoluteWidth(ob) {
+    return ob.offsetWidth;
+}
+function getAbsoluteLeft(ob) {
+    var mendingLeft = ob.offsetLeft;
+    while (ob != null && ob.offsetParent != null && ob.offsetParent.tagName != "BODY") {
+        mendingLeft += ob.offsetParent.offsetLeft;
+        mendingOb = ob.offsetParent;
+    }
+    return mendingLeft;
+}
+function getAbsoluteTop(ob) {
+    var mendingTop = ob.offsetTop;
+    while (ob != null && ob.offsetParent != null && ob.offsetParent.tagName != "BODY") {
+        mendingTop += ob.offsetParent.offsetTop;
+        ob = ob.offsetParent;
+    }
+    return mendingTop;
+}
+Number.prototype.NaN0 = function () {
+    return isNaN(this) ? 0 : this;
+}

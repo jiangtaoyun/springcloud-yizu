@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style>
+	#cnzz_stat_icon_1261797594 {display: none;}
+</style>
+
+<title>申请职位</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+  <link type="text/css" rel="stylesheet" href="/content/personal/Style/JobApplyBatch.css" />
+  <link type="text/css" rel="stylesheet" href="/content/personal/style/LoginPop.css" />
+  <script type="text/javascript" src="/content/homepage/js/middle.js"></script>
+  <script type="text/javascript" src="/Script/validate.js"></script> 
+  <script type="text/javascript" src="/Script/ajax.js"></script>
+  <script type="text/javascript">
+      var arrAjaxValue = new Array();
+      var arrAjaxState = new Array();
+      function _(s) { return document.getElementById(s) }
+      function EmailOnClick() {
+          var txtEmail = _("txtEmail");
+          if (txtEmail.value == "电子邮箱") {
+              txtEmail.value = "";
+              txtEmail.style.color = "#000";
+          }
+      }
+      function txtEmail_blur(obj) {
+          if (!obj.value) {
+              _("spEmail").innerHTML = "";
+              obj.value = "电子邮箱";
+              obj.style.color = "#b3b4b6";
+              return;
+          }
+          if (!CheckRule("email", obj.value)) _("spEmail").innerHTML = strError + '<font>邮箱格式错误</font>';
+          else {
+              var R = AjaxExist(obj.value);
+              if (!isNaN(R)) {
+                  if (R == 0) _("spEmail").innerHTML = strSuccess;
+                  if (R == 1) _("spEmail").innerHTML = strError + '<font>邮箱已经存在，请重新输入</font>';
+              }
+              else {
+                  _("spEmail").innerHTML = strWaiting;
+                  Ajax("Post", "/personal/Sys/AjaxEmailExist", "Email=" + obj.value, SetEmail, false);
+              }
+          }
+      }
+
+      function SetEmail(obj) {
+          var data = obj.responseText;
+          if (data == 0) _("spEmail").innerHTML = strSuccess;
+          if (data == 1) _("spEmail").innerHTML = strError + "<font>邮箱已经存在，请重新输入</font>";
+          if (isNaN(data)) alert("系统错误，请刷新后重试");
+          else {
+              arrAjaxValue[arrAjaxValue.length] = _("txtEmail").value;
+              arrAjaxState[arrAjaxState.length] = data;
+          }
+      }
+
+      function AjaxExist(value) {
+          for (var i = 0; i < arrAjaxValue.length; i++)
+              if (value == arrAjaxValue[i]) return arrAjaxState[i];
+      }
+      function NameOnClick() {
+          var txtName = _("txtName");
+          if (txtName.value == "您的姓名") {
+              txtName.value = "";
+              txtName.style.color = "#000";
+          }
+      }
+      function txtName_blur(obj) {
+          if (!obj.value) {
+              _("spName").innerHTML = "";
+              obj.value = "您的姓名";
+              obj.style.color = "#b3b4b6";
+              return;
+          }
+          if (!CheckRule("chinese", obj.value)) _("spName").innerHTML = strError + '<font>请输入汉字</font>';
+          else {
+              if (obj.value.length == 1) _("spName").innerHTML = strError + '<font>请输入1个以上的汉字</font>';
+              else _("spName").innerHTML = "";
+          }
+      }
+      function AttachmentOnClick() {
+          var txtAttachment = _("txtAttachment");
+          if (txtAttachment.value == "上传附件简历") {
+              txtAttachment.value = "";
+          }
+      }
+      function AttachmentOnBlur() {
+          var txtAttachment = _("txtAttachment");
+          if (txtAttachment.value == "") {
+              txtAttachment.value = "上传附件简历";
+          }
+      }
+      function checkForm() {
+          if (!_("txtEmail").value || _("txtEmail").value == "电子邮箱") {
+              alert("请输入您的电子邮箱！");
+              _("txtEmail").focus();
+              return false;
+          }
+          if (!_("txtName").value || _("txtName").value=="您的姓名") {
+              alert("请输入您的姓名！");
+              _("txtName").focus();
+              return false;
+          }
+          if (!_("attachment").value) {
+              alert("请选择简历文档！");
+              _("attachment").focus();
+              return false;
+          }
+          var fileExt = _("attachment").value.substring(_("attachment").value.lastIndexOf(".") + 1)
+          if (fileExt.toUpperCase() != "DOC" && fileExt.toUpperCase() != "XLS" && fileExt.toUpperCase() != "DOCX" && fileExt.toUpperCase() != "XLSX") {
+              alert("请选择正确格式的简历文档")
+              return false;
+          }
+
+          if (_("spName").innerHTML) return false;
+          if (_("spEmail").innerHTML.toLowerCase().indexOf("iconf") > 0) return false;
+          var fileName = _("attachment").value.substring(_("attachment").value.lastIndexOf("\\") + 1);
+          var str;
+          str = "https://down.51rc.com/ImagesManager/JobApplyByNoLoginProcNew.asp";
+          str += "?email=" + _("txtEmail").value;
+          str += "&name=" + escape(_("txtName").value);
+          str += "&cvfileName=" + escape(fileName);
+          str += "&gender=" + _("hdnSex").value;
+          str += "&jobid=0";
+          str += "&domain=www.shoudurc.com";
+          str += "&provinceID=10";
+          _("frmWord").action = str;
+          return true;
+      }
+      function showLogin() {
+          document.getElementById('ContentLogin').style.display = "block";
+          document.getElementById('ContentDoc').style.display = "none";
+          document.getElementById('tab_Login').className = "Select";
+          document.getElementById('tab_Word').className = "UnSelect";
+      }
+      function showWord() {
+          document.getElementById('ContentLogin').style.display = "none";
+          document.getElementById('ContentDoc').style.display = "block";
+          document.getElementById('tab_Login').className = "UnSelect";
+          document.getElementById('tab_Word').className = "Select";
+      }
+      function ChangeSex(sex) {
+          if (sex == 0) {
+              _("rbMale").className = "rbChecked";
+              _("rbFemale").className = "rbUnchecked";
+              _("hdnSex").value = "0";
+          }
+          else {
+              _("rbMale").className = "rbUnchecked";
+              _("rbFemale").className = "rbChecked";
+              _("hdnSex").value = "1";
+          }
+      }
+      function TransferValue() {
+          _("txtAttachment").value = _("attachment").value;
+      }
+      function GoLoinRedirect(type) {
+          var Days = 30;
+          var exp = new Date();
+          exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+          document.cookie = "urlfile=" + escape(location.href) + ";expires=" + exp.toGMTString();
+          if (type == 1) {
+              window.parent.open("/personal/sys/QQLoginRediret");
+          }
+          else if (type == 2) {
+              window.parent.open("/personal/sys/SinaLoginRediret");
+          }
+          else if (type == 3) {
+              window.parent.open("/personal/sys/RenRenLoginRediret");
+          }
+      }
+      function getInternetExplorerVersion() {
+          var rv = -1;
+          if (navigator.appName == 'Microsoft Internet Explorer') {
+              var ua = navigator.userAgent;
+              var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+              if (re.exec(ua) != null) {
+                  rv = parseFloat(RegExp.$1);
+              }
+          }
+          return rv;
+      }
+      function checkVersion() {
+          var ver = getInternetExplorerVersion();
+          if (ver > -1) {
+              if (ver >= 7 && ver <= 10) {
+                  _("attachment").className = "file2";
+                  _("selFile").style.display = "none";
+                  if (ver >= 9) {
+                      _("fileover").className = "fileover1";
+                  }
+                  else if (ver == 7) {
+                      _("fileover").className = "fileover2";
+                  }
+              }
+          }
+      }
+      window.onload = function () {
+          checkVersion();
+      }
+</script>
+<style>
+body{background-color: #F7F7F7;padding:0;margin:0;}
+.fileover{opacity:0;display:block;height:42px;width:84px;margin-left:225px;position:absolute;z-index:2;overflow:hidden;}
+.fileover1{display:block;height:42px;width:84px;margin-left:225px;position:absolute;z-index:2;overflow:hidden;border:0;}
+.fileover2{display:block;height:42px;width:78px;margin-left:86px;position:absolute;z-index:2;border:0;}
+.file1{display:block; background:transparent;width:308px;height:42px;}
+.file2{display:block; background:transparent;width:67px;height:42px;border:1px solid #d5d5d5;}
+</style>
+
+</head>
+<body>
+<div class="SwitchTab"> 
+	<div id="tab_Login" onclick="showLogin()" class="Select" style="width:68px;">登录账号</div>
+  <div id="tab_Word" onclick="showWord()" class="UnSelect" style="width:107px;">上传Word简历</div>
+  <span class="closeWin" onclick="parent.popup.ibClose()"></span>
+</div>
+<div style="clear:both"></div>
+<div id="ContentLogin" class="ContentLogin">
+  <div style="float:left;">
+    <form action="/personal/sys/Login" method="post" name="frm" id="frm" onsubmit="return checkSubmit()" target="_self" class="ContentLoginForm" style="margin-top:5px">
+      <input type="hidden" name="parentReload" id="parentReload" value="1" />
+      <input type="hidden" name="jobIds" id="jobIds" value="&#39;   ids &#39;" />
+      <input name="UserName" id="UserName" type="text" onkeyup="CtoH(this);TrimSpace(this)" onblur="UserNameOnBlur()" onfocus="UserNameOnClick()" class="Input_login_text_unfocus" maxlength="50" value="用户名/邮箱/手机号" style="line-height:40px;" />
+      <input name="Password" id="Password" maxlength="20" type="password" onkeyup="CtoH(this);TrimSpace(this)" onblur="PasswordOnBlur()" onfocus="PasswordOnClick()" class="Input_login_password_unfocus" placeholder="请输入密码" />
+      <div class="Login_setting" style="margin-bottom:10px;">
+        <input id="AutoLogin" checked="checked" tabindex="4" value="1" type="checkbox" name="AutoLogin" class="chkAutoLogin" />
+        <span class="autoLogin" style="margin-top:2px;">自动登录</span> 
+        <a class="getPwd" style="margin-top:2px;" href="/personal/sys/getpassword/" target="_blank">忘记密码？</a>
+      </div>
+      <input class="LoginButton" tabindex="4" onclick="return ErrorsNumber(3,10)" value="登  录" type="submit" name="btnLogin" />
+    </form>
+  </div>
+  <div style="float:left;margin:15px 0 20px 35px;font-family:微软雅黑;">
+    <span style="font-size:14px;color:#888">您还没有账号？</span><br />
+    <a href="/personal/sys/register" target="_blank" style="display:inline-block;margin-top:10px;text-decoration:none;">
+      <span style="font-size:14px;color:#fd893c">立即注册</span>
+      <span class="goRegister"></span>
+    </a><br />
+    <a href="/personal/sys/oneminute" target="_blank" style="display:inline-block;margin-top:10px;text-decoration:none;">
+      <span style="font-size:14px;color:#105aa1">一分钟填写简历</span>
+      <span class="goOneMinute"></span>
+    </a><br />
+    <span style="display:inline-block;font-size:14px;color:#888;margin-top:20px;">使用以下账号直接登录：</span><br />
+      <input class="Input_Qq" type="button" onclick="GoLoinRedirect(1)" alt="QQ账号同步登录" title="QQ账号同步登录" />
+      <input class="Input_Sina" type="button" onclick="GoLoinRedirect(2)" title="新浪微博账号同步登录" alt="新浪微博账号同步登录" />
+      <input class="Input_Rr" type="button" onclick="GoLoinRedirect(3)" alt="人人网账号同步登录" title="人人网账号同步登录" />
+  </div>
+</div>
+<div id="ContentDoc" class="ContentLogin" style="display:none;font-family:微软雅黑;">
+  <div style="float:left;">
+    <form action="" method="post" enctype="multipart/form-data" name="Upload" id="frmWord" onSubmit="return checkForm()" style="border-right:1px dashed #d5d5d5;padding-right:25px;">
+      <input type="hidden" name="CopyrightInfo" value="http://www.chinaasp.com">
+      <div style="margin-top:10px;margin-left:30px;">
+        <input style="padding-left:8px;height:38px;border:1px solid #d5d5d5;width:300px;font-family:微软雅黑;color:#b3b4b6" name="txtEmail" type="text" id="txtEmail" value="电子邮箱" onKeyUp="CtoH(this)" onBlur="txtEmail_blur(this)" onfocus="EmailOnClick()" maxlength="50" /><br />
+        <span id="spEmail" class="TipsError"></span>
+      </div>
+      <div style="margin-top:10px;margin-left:30px;">
+        <input style="padding-left:8px;height:38px;border:1px solid #d5d5d5;width:180px;font-family:微软雅黑;color:#b3b4b6" type="text" name="txtName" id="txtName" value="您的姓名" size="16" maxlength="6" onBlur="txtName_blur(this)" onfocus="NameOnClick()" />
+        <span id="rbMale" class="rbChecked" onclick="ChangeSex(0)"></span>&nbsp;男&nbsp;&nbsp;
+        <span id="rbFemale" class="rbUnchecked" onclick="ChangeSex(1)"></span>&nbsp;女 <br />
+        <input type="hidden" id="hdnSex" name="sex" value="0" />
+        <span id="spName" class="TipsError"></span>
+      </div>
+      <div style="margin-top:10px;margin-left:30px;">
+        <a href="javascript:void(0)" id="fileover" class="fileover">
+          <input type="file" id="attachment" name="upfile" onchange="TransferValue()" class="file1" />
+        </a>
+        <input style="padding-left:8px;height:38px;border:1px solid #d5d5d5;width:215px;font-family:微软雅黑;color:#b3b4b6" type="text" id="txtAttachment" onblur="AttachmentOnBlur()" onclick="AttachmentOnClick()" value="上传附件简历" /><span id="selFile" class="selFile">浏 览</span><br />
+        <span style="font-size:12px;color:#888;line-height:22px;">只允许上传.DOC .XLS类型的文件</span>
+      </div>
+      <input class="LoginButton" style="margin-top:5px" value="申请职位" type="submit" name="Submit" />
+    </form>
+  </div>
+  <div style="float:right;margin:20px 35px 20px 0;width:200px;">
+    <span style="font-size:14px;line-height:22px;">如果您还不是会员，但已经有一份Word简历(不超过500K)，那就直接上传您的简历来申请职位。</span><br /><br />
+    <span style="font-size:14px;line-height:22px;color:#F56A2D">注意：如果您已经有了用户名就不建议您再上传了，否则多用户名会给管理简历带来麻烦。建议登录后使用上传附件简历功能。</span>
+  </div>
+</div></body>
+</html>

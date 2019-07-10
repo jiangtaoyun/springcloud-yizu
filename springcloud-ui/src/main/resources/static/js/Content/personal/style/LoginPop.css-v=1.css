@@ -1,0 +1,46 @@
+/*点评系统改动登录窗口*/
+.btnSubmit{ border: none;width: 109px;height: 33px;margin-right: 10px;background: url("../images/img_JobApplyUnLogin.gif")/*tpa=http://www.shoudurc.com/content/personal/images/img_JobApplyUnLogin.gif*/ -0px -96px;color: #ffffff;font-size: 14px;font-weight: bold;cursor: pointer;}
+.SwitchTab{display:inline-block;width:650px;height:37px;border-bottom:1px solid #d5d5d5;font-family:微软雅黑;}
+.SwitchTab div{cursor:pointer; font-size:16px;text-align:center;line-height:30px;float:left;position: relative; top:6px; z-index:2; margin-left:30px}
+.SwitchTab .Select{border-bottom:1px solid #f99655;}
+.SwitchTab .UnSelect{color:#a7a7a7;cursor:pointer;}
+.closeWin{display:inline-block;cursor:pointer;float:right;width:24px;height:24px;background: url("../images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ -311px 2px no-repeat; margin-top:8px;margin-right:5px;}
+.ContentLogin{width:600px;display:inline-block;border:none;float:none;padding-top:10px; height:276px;background-color:#f7f7f7;padding-top:0;}
+.ContentLoginForm{border-right:1px dashed #d5d5d5;width:350px;padding-right:25px;padding-top:10px; float:left;}
+.ContentLoginRight{float:right;margin:50px 35px 20px 0;width:200px;line-height:22px;font-family:微软雅黑;}
+.Input_login_text{width:265px;height:40px;line-height:40px;border:1px solid #fa6d11;background:#fff4ee url("../../Homepage/NewIndex/images/in_Bg01.gif")/*tpa=http://www.shoudurc.com/content/Homepage/NewIndex/images/in_Bg01.gif*/ no-repeat -3px -92px;color:#000000;padding:0 0 0 40px;margin-left:30px;font-family:微软雅黑;}
+.Input_login_text_unfocus{width:265px;height:40px;line-height:40px;border:1px solid #d5d5d5;background:#ffffff url("../../Homepage/NewIndex/images/in_Bg01.gif")/*tpa=http://www.shoudurc.com/content/Homepage/NewIndex/images/in_Bg01.gif*/ no-repeat -3px -120px;color:#b3b4b6;padding:0 0 0 40px;margin-left:30px;font-family:微软雅黑;}
+.Input_login_password{width:265px;height:40px;border:1px solid #fa6d11;background:#fff4ee url("../../Homepage/NewIndex/images/in_Bg01.gif")/*tpa=http://www.shoudurc.com/content/Homepage/NewIndex/images/in_Bg01.gif*/ no-repeat -962px -109px;color:#f35700;padding:0 0 0 40px;margin-top:20px;margin-left:30px;font-family:微软雅黑;}
+.Input_login_password_unfocus{width:265px;height:40px;border:1px solid #d5d5d5;background:#ffffff url("../../Homepage/NewIndex/images/in_Bg01.gif")/*tpa=http://www.shoudurc.com/content/Homepage/NewIndex/images/in_Bg01.gif*/ no-repeat -962px -137px;color:#b3b4b6;padding:0 0 0 40px;margin-top:20px;margin-left:30px;font-family:微软雅黑;}
+.Login_setting{margin-top:20px;float:left;width:345px;font-size:12px;font-family:微软雅黑;}
+.chkAutoLogin{float:left;margin-left:30px;width:15px;height:20px;margin-right:5px;}
+.autoLogin{float:left;line-height:20px;}
+.getPwd{float:right;color:#EC6001;text-decoration:none;line-height:20px;}
+.LoginButton{cursor:pointer;width:322px;height:47px;margin-left:30px;margin-top:10px;border:0;text-align:center;line-height: 38px;font-size:18px;color:#fff;font-family:微软雅黑;background: url("../images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ -418px -945px no-repeat;}
+.LoginButtons{cursor:pointer;width:139px;height:47px;margin-left:30px;margin-top:10px;border:0;text-align:center;line-height: 38px;font-size:18px;color:#fff;font-family:微软雅黑;background: url("../images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ -596px -413px no-repeat;}
+.unloginComment{float:right;color:#105aa1;font-size:14px;font-weight:bold;line-height:20px;margin-top:22px;margin-right:10px;}
+.pVerifyCode{height:33px;margin-top:15px;margin-left:30px;}
+.verifyCode{width:110px;padding-left:10px;margin-right:10px;border:1px solid #d5d5d5;float:left;height:37px;}
+.CpLoginButton{width:316px;height:47px;margin-left:30px;margin-top:20px;border:0;text-align:center;line-height: 38px;font-size:14px;color:#fff;background: url("../images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ -418px -1007px no-repeat;}
+.goRegister{display:inline-block;vertical-align:middle;width:21px;height:24px;background:url("../images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ -715px -136px no-repeat;}
+.goOneMinute{display:inline-block;vertical-align:middle;width:21px;height:24px;background:url("../images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ -715px -192px no-repeat;}
+.goRegisterL{display:inline-block;vertical-align:middle;width:30px;height:30px;background:url("../images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ 0 -475px no-repeat;}
+.cpRegister{display:inline-block;border-top:1px solid #d5d5d5;margin-top:10px;padding-top:10px;width:190px;text-align:center;text-decoration:none;}
+.cpRegisterText{font-size:14px;color:#fd893c;font-weight:bold;}
+.Input_Qq{display:inline-block;cursor:pointer;border:0;width:58px;height:70px;background:url("../images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ 0 -826px no-repeat;}
+.Input_Sina{display:inline-block;cursor:pointer;border:0;width:58px;height:70px;background:url("../images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ 0 -904px no-repeat;}
+.Input_Rr{display:inline-block;cursor:pointer;border:0;width:58px;height:70px;background:url("../images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ 0 -982px no-repeat;}
+#spDocName{float:none;}
+#spDocName font{line-height:normal; float:none;vertical-align: middle; font-weight:bold;font-size:12px;color:red;}
+#spDocName img{float:none;vertical-align: middle;}
+#spDocEmail{float:none;}
+#spDocEmail font{line-height:normal; float:none;vertical-align:middle;font-weight:bold;font-size:12px;color:red;}
+#spDocEmail img{float:none;vertical-align: middle;}
+.rbChecked{display:inline-block;vertical-align:middle;width:21px;height:24px;background:url("../images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ 0 -442px no-repeat;}
+.rbUnchecked{display:inline-block;vertical-align:middle;width:21px;height:24px;background:url("../images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ -67px -443px no-repeat;}
+.selFile{display:inline-block;vertical-align:top;width:84px;height:42px;border:0;text-align:center;line-height:40px;font-size:14px;background: url("../images/comment.png")/*tpa=http://www.shoudurc.com/content/personal/images/comment.png*/ -650px -693px no-repeat;}
+
+.ContentLogin .Qr{width:53px; height:53px; background: url("../Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ 0px -2295px no-repeat; float:left; border:none; cursor:pointer; position:absolute;}
+.ContentLogin .PC{background-position:0px -2362px}
+.ContentLogin p {line-height:32px;}
+.ContentLogin p.Help{background: url("../Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat 0px -625px;color:#FA6803; display:inline-block;padding-left:17px;cursor:pointer; width:52px;}

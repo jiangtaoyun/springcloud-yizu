@@ -1,0 +1,749 @@
+var hasInsertViewLog = 0;
+var strJobType = "", strRegion = "", strSalary = "", strEducation = "", strExperience = "", strEmployType = "", strCompanySizeID = "", strWelfare = "", strSFrom = "", strIsOnline = "", strIsEnvironment = "", strReplyPercent = "";
+function SetSearch() {
+    _("txtKeyWord").value = _("txtdcJobTypeID").value;
+    _("hidJobType").value = _("txtdcJobTypeID").value;
+    _("txtdcJobTypeID").value = " ";
+}
+function SetIndustrySearch() {
+    if (_("txtdcIndustryID").value.length > 14) {
+        _("txtdcIndustryID").value = _("txtdcIndustryID").value.substr(0, 13) + '...'
+    }
+}
+function SetRegionSearch() {
+    if (_("txtdcRegionID").value.length > 10) {
+        _("txtdcRegionID").value = _("txtdcRegionID").value.substr(0, 10) + '...'
+    }
+}
+
+function CheckForm() {
+    if (_("txtKeyWord").value == "会计/财务/人力/客服/设计" || _("txtKeyWord").value == "会计/财务/人力/客服/设计…") {
+        _("txtKeyWord").value = "";
+        _("txtKeyWord").value = "";
+    }
+    if (_("hidJobType")) {
+        if (_("txtKeyWord").value != _("hidJobType").value) {
+            _("iddcJobTypeID").value = "";
+        }
+        else {
+            _("txtKeyWord").value = "";
+        }
+    }
+}
+
+function RemoveFilter(Num, val) {
+    if (Num == 1) {
+        if (HasThis($("#orgdcJobTypeID").val(), val))
+            strJobType = "";
+        else if (val.length == 4) {
+            if ($("#orgdcJobTypeID").val()) {
+                var IsChild = false;
+                var arr = $("#orgdcJobTypeID").val().split(" ");
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i].length == 2 && IsChildJobType(arr[i], val)) {
+                        IsChild = true;
+                        strJobType = arr[i];
+                        break;
+                    }
+                }
+                if (IsChild == false)
+                    strJobType = val.substring(0, val.length - 2);
+            }
+            else
+                strJobType = val.substring(0, val.length - 2);
+        }
+    }
+
+    if (Num == 2)
+        strSalary = "";
+    if (Num == 3) {
+        if (val.indexOf('p') == -1) {
+            if (HasThis($("#orgdcRegionID").val(), val))
+                strRegion = "";
+            else {
+                if (val.length == 4 || val.length == 6)
+                    strRegion = val.substring(0, val.length - 2);
+            }
+        }
+        else {
+            strRegion = val.replace('p', '');
+        }
+    }
+
+
+    if (Num == 4)
+        strEducation = "";
+    if (Num == 5)
+        strExperience = "";
+    if (Num == 6)
+        strEmployType = "";
+    if (Num == 7)
+        strCompanySizeID = "";
+    if (Num == 8) {
+        if (document.getElementById('isWelfareShow')) {
+            strWelfare = "#";
+        }
+        else {
+            strWelfare = "";
+        }
+    }
+    if (Num == 9) {
+        strReplyPercent = "";
+    }
+    SearchAgain();
+}
+
+function FilterSearch(strType, strValue, obj) {
+    if (strType.toLowerCase().indexOf("jobtype") > 0)
+        strJobType = strValue;
+
+    if (!strJobType)
+        strJobType = "";
+
+    if (strType.toLowerCase().indexOf("region") > 0)
+        strRegion = strValue;
+
+    if (!strRegion)
+        strRegion = "";
+
+    if (strType.toLowerCase().indexOf("salary") > 0) {
+        strSalary = strValue;
+        if (strSalary < 100)
+            strSalary = eval(parseInt(strSalary) + 100);
+    }
+    if (!strSalary)
+        strSalary = "";
+
+    if (strType.toLowerCase().indexOf("education") > 0)
+        strEducation = strValue;
+
+    if (!strEducation)
+        strEducation = "";
+
+    if (strType.toLowerCase().indexOf("experience") > 0)
+        strExperience = strValue;
+
+    if (!strExperience)
+        strExperience = "";
+
+    if (strType.toLowerCase().indexOf("employtype") > 0)
+        strEmployType = strValue;
+
+    if (!strEmployType)
+        strEmployType = "";
+
+    if (strType.toLowerCase().indexOf("companysize") > 0)
+        strCompanySizeID = strValue;
+
+    if (!strCompanySizeID)
+        strCompanySizeID = "";
+
+    if (strType.toLowerCase().indexOf("replypercent") > -1)
+        strReplyPercent = strValue;
+
+    if (!strReplyPercent)
+        strReplyPercent = "";
+
+    if (document.getElementById('isWelfareShow')) {
+        strWelfare = "";
+        var objWelfare = document.getElementsByName("Welfare");
+        for (var i = 0; i < objWelfare.length; i++) {
+            if (objWelfare.item(i).checked) {
+                strWelfare += objWelfare.item(i).value + ",";
+            }
+        }
+        strWelfare = strWelfare.substring(0, strWelfare.length - 1);
+        //用于标示要显示福利筛选
+        strWelfare += "#";
+    }
+    if (document.getElementById("hidSFrom")) {
+        strSFrom = "";
+        var objSFrom = document.getElementById("hidSFrom");
+        strSFrom = objSFrom.value.substr(0, 3) + "1";
+        objSFrom.value = strSFrom;
+    }
+    SearchAgain();
+
+}
+
+function ChangePager(page) {
+    if (document.getElementById("hidSFrom")) {
+        strSFrom = "";
+        var objSFrom = document.getElementById("hidSFrom");
+        strSFrom = objSFrom.value.substr(0, 2) + "1" + objSFrom.value.substr(3, 1);
+        objSFrom.value = strSFrom;
+    }
+    SearchAgain("0", page);
+    return false;
+}
+
+function ChangeOnline(obj) {
+    if (obj.checked) {
+        strIsOnline = "1";
+    }
+    else {
+        strIsOnline = "0";
+    }
+    SearchAgain("0", 1);
+    return false;
+}
+
+function ChangeEnvironment(obj) {
+    if (obj.checked) {
+        strIsEnvironment = "1";
+    }
+    else {
+        strIsEnvironment = "0";
+    }
+    SearchAgain("0", 1);
+    return false;
+}
+
+function ClearFilter() {
+    strJobType = "";
+    strRegion = "";
+    strSalary = "";
+    strEducation = "";
+    strExperience = "";
+    strEmployType = "";
+    strCompanySizeID = "";
+    strReplyPercent = "";
+    if (document.getElementById('isWelfareShow')) {
+        strWelfare = "#";
+    }
+    else {
+        strWelfare = "";
+    }
+    if (document.getElementById("hidSFrom")) {
+        strSFrom = "";
+        var objSFrom = document.getElementById("hidSFrom");
+        strSFrom = objSFrom.value.substr(0, 2) + "00";
+        objSFrom.value = strSFrom;
+    }
+    SearchAgain();
+}
+
+function SearchAgain(type, page) {
+    if (!type) type = "1";
+    if (!page) page = "1";
+    $("#divAjaxMask").width($(window).width()).show();
+    $.post("/personal/js/ajaxPager",
+        {
+            iddcJobTypeID: strJobType,
+            oldJobTypeID: $("#orgdcJobTypeID").val(),
+            iddcIndustryID: $("#orgdcIndustryID").val(),
+            iddcRegionID: strRegion,
+            oldRegionID: $("#orgdcRegionID").val(),
+            txtKeyWord: escape($("#orgKeyWord").val()),
+            iddcSalaryID: strSalary,
+            idEmployType: strEmployType,
+            iddcEducationID: strEducation,
+            idMinExperience: strExperience,
+            iddcCompanySizeID: strCompanySizeID,
+            txtWelfare: strWelfare,
+            idSFrom: strSFrom,
+            type: type,
+            isonline: strIsOnline,
+            isEnvironment: strIsEnvironment,
+            page: page,
+            replyPercent: strReplyPercent
+        }
+        , function (data) {
+            $("#divAjaxMask").hide();
+            var hidExpand = $("#hidExpand").val();
+
+            if (type == 0) {
+                $("#divJobList").html(data);
+
+            }
+            else {
+                $("#divJobInfo").html(data);
+                if (document.getElementById('hidRegionUrl')) {
+                    if (document.getElementById('hidRegionUrl').value == "1") {
+                        document.getElementById('GoBack').style.display = "";
+                    }
+                }
+            }
+            $(document).scrollTop(0);
+            //window.location.href = "#";
+            if (hidExpand == "1") BreifView();
+            NormalTrHidden();
+            AddTipEvent();
+        });
+}
+function AddTipEvent() {
+    $(".icoFuliLevel").each(function (options) {
+        options = $.extend({
+            x: 10,
+            y: 10
+        }, options);
+        var $this = $(this);
+        $this.mouseover(function (e) {
+            this.myTitle = this.title;
+            this.title = "";
+            var titlehtml = "";
+            var arrtitle = this.myTitle;
+            arrtitle = arrtitle.split('、');
+            for (var i = 0, length = arrtitle.length; i < length; i++) {
+                titlehtml += "<li  style='float:left;width:83px;margin-left:17px;line-height:25px;list-style-type:none'>•" + arrtitle[i] + "</li>";
+            }
+            var tooltip = "<div  id='tooltip' style='background:#ffffe1;display:none; width:208px;border: 1px solid #ffaa00;padding-bottom:5px'><div style='clear:both'><ul style='margin:0px;padding:0px'><li style='clear:both;list-style: none;font-weight:bold; line-height:25px;margin-left:19px;margin-top:3px;width:200px;'>福利待遇：</li>" + titlehtml + "</ul></div></div>";
+            $("body").append(tooltip);
+            $("#tooltip").css({
+                "position": "absolute",
+                "top": (e.pageY + options.y) + "px",
+                "left": (e.pageX + options.x) + "px",
+                "z-index": "999"
+            }).show("fast");
+        }).mouseout(function () {
+            this.title = this.myTitle;
+            $("#tooltip").remove();
+        }).mousemove(function (e) {
+            $("#tooltip").css({
+                "position": "absolute",
+                "top": (e.pageY + options.y) + "px",
+                "left": (e.pageX + options.x) + "px",
+                "z-index": "999"
+            });
+        });
+        return this;   //方法可链接
+    });
+}
+function FilterToggle(id, obj) {
+    if ($(obj).hasClass("btnFilterMore")) {
+        $('#' + id).height("auto");
+        $(obj).removeClass("btnFilterMore").addClass("btnFilterLess");
+    }
+    else {
+        $('#' + id).height("30px");
+        $(obj).removeClass("btnFilterLess").addClass("btnFilterMore");
+    }
+}
+
+function HasThis(param, value) {
+    if (value.length == 2 && !param)
+        return true;
+
+    var arr = param.split(",");
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == value)
+            return true;
+    }
+    return false;
+}
+
+function JobApply(row) {
+    var ids = "";
+    if (row || row == 0)
+        ids = $("#JobID" + row).val();
+    else {
+        var _cb = $("[name='chkChecked']");
+        var strCpName = "";
+        var intApplyCount = 0;
+        for (i = 0; i < _cb.length; i++) {
+            intApplyCount = 0;
+            if (_cb[i].checked) {
+                var no = _cb[i].id.substr(10);
+                strCpName = $("#CpName" + no).val();
+            }
+            for (j = 0; j < _cb.length; j++) {
+                if (_cb[j].checked) {
+                    var no = _cb[j].id.substr(10);
+                    if (strCpName == $("#CpName" + no).val())
+                        intApplyCount++;
+                }
+            }
+            if (intApplyCount > 3) {
+                alert("一次申请不可以同时申请同一公司的3个以上的职位");
+                return false;
+            }
+        }
+        for (i = 0; i < _cb.length; i++) {
+            if (_cb[i].checked) {
+                var no = _cb[i].id.substr(10);
+                ids = ids + $("#JobID" + no).val() + ",";
+            }
+        }
+        if (ids)
+            ids = ids.substr(0, ids.length - 1);
+        else
+            alert("请选择您要申请的职位！");
+    }
+    //idsTemp=ids;
+    if (IsLogin.length > 0 && IsLogin != 'False') {
+        if (ids) {
+            _("jobApplyForm").action = "/personal/jm/JobApplyBatch?id=" + ids;
+            _("jobApplyForm").target = "_blank";
+            _("jobApplyForm").submit();
+        }
+    }
+    else {
+        if (ids) {
+            //infoboxs("", 650, 1, "", -100, -350, '<iframe frameborder="0" scrolling="no" id="ifmJobApplyNoLogin" style="width:650px;height:310px;background-color: #F7F7F7;padding-top:0px;" src="/personal/jv/JobApplyByNoLogin?id=' + ids + '"></iframe>', "popupJobApply");
+            showJobApplyLogin(ids);
+        }
+    }
+    //Ajax("post","/personal/jv/ajaxCheckLogin","radom=" + new Date(),JobApplySubmit,false)
+}
+
+//用于职位申请页面向您推荐的职位 2013-12-25 nick create
+function JobApplyForBatch(row) {
+    var ids = "";
+    if (row || row == 0)
+        ids = $("#JobID" + row).val();
+    else {
+        var _cb = $("[name='chkChecked']");
+        var strCpName = "";
+        var intApplyCount = 0;
+        for (i = 0; i < _cb.length; i++) {
+            intApplyCount = 0;
+            if (_cb[i].checked) {
+                var no = _cb[i].id.substr(10);
+                strCpName = $("#CpName" + no).val();
+            }
+            for (j = 0; j < _cb.length; j++) {
+                if (_cb[j].checked) {
+                    var no = _cb[j].id.substr(10);
+                    if (strCpName == $("#CpName" + no).val())
+                        intApplyCount++;
+                }
+            }
+            if (intApplyCount > 3) {
+                alert("一次申请不可以同时申请同一公司的3个以上的职位");
+                return false;
+            }
+        }
+        for (i = 0; i < _cb.length; i++) {
+            if (_cb[i].checked) {
+                var no = _cb[i].id.substr(10);
+                ids = ids + $("#JobID" + no).val() + ",";
+            }
+        }
+        if (ids)
+            ids = ids.substr(0, ids.length - 1);
+        else
+            alert("请选择您要申请的职位！");
+    }
+    //idsTemp=ids;
+    if (IsLogin.length > 0) {
+        if (ids) {
+            _("jobApplyForm").action = "/personal/jm/JobApplyBatch?ishidden=1&id=" + ids;
+            _("jobApplyForm").target = "_blank";
+            _("jobApplyForm").submit();
+        }
+    }
+    else {
+        if (ids) {
+            infoboxs("", 366, 1, "", -100, -350, '<iframe frameborder="0" scrolling="no" id="ifmJobApplyNoLogin" style="width: 365px;height: 410px;background-color: #F7F7F7;" src="/personal/jv/JobApplyByNoLogin?id=' + ids + '"></iframe>', "popupJobApply");
+            //document.getElementById("ifmJobApplyNoLogin").src= "../../../personal/jv/JobApplyByNoLogin-id=' + ids+'"/*tpa=http://www.shoudurc.com/personal/jv/JobApplyByNoLogin?id=' + ids+'*/;
+        }
+    }
+    //Ajax("post","/personal/jv/ajaxCheckLogin","radom=" + new Date(),JobApplySubmit,false)
+}
+
+
+function JobView() {
+    var _cb = $("[name='chkChecked']");
+    var ids = "";
+    var ids2 = "";
+    var names = "";
+    var cpnames = "";
+    var refreshs = "";
+    for (i = 0; i < _cb.length; i++) {
+        if (_cb[i].checked) {
+            var no = _cb[i].id.substr(10);
+            ids = ids + $("#JobHidID" + no).val() + ",";
+            ids2 = ids2 + $("#JobID" + no).val() + ",";
+            names = names + $("#JobName" + no).val() + ",";
+            cpnames = cpnames + $("#CpName" + no).val() + ",";
+            refreshs = refreshs + $("#JobRefresh" + no).val() + ",";
+        }
+    }
+
+    if (ids) {
+        ids = ids.substr(0, ids.length - 1);
+        ids2 = ids2.substr(0, ids2.length - 1);
+        names = names.substr(0, names.length - 1);
+        cpnames = cpnames.substr(0, cpnames.length - 1);
+        refreshs = refreshs.substr(0, refreshs.length - 1);
+        _("hidId").value = ids;
+        _("hidId2").value = ids2;
+        _("hidName").value = names;
+        _("hidCpName").value = cpnames;
+        _("hidRefresh").value = refreshs;
+        _("frmJob").target = "_blank";
+        _("frmJob").submit();
+    }
+    else
+        alert("请选择您要浏览的职位！");
+}
+
+function JobFavourite(obj, row) {
+    $.get("/personal/jv/ajaxCheckLogin/?radom=" + new Date(), function (data) {
+        if (data == 1) {
+            BatchFavourite(obj, row);
+        }
+        else {
+            /*
+            var strContent = '\
+            <p style="text-align:center; padding:10px 0; line-height:30px">\
+            您未登录或登录已过期，请<a href="http://www.shoudurc.com/personal/sys/login" target="_blank">重新登录</a>后再刷新此页面<br>\
+            如果您还没有注册，请<a href="http://www.shoudurc.com/personal/sys/register" target="_blank">免费注册</a>\
+            </p>';
+            infoboxs("登录提示", 320, 120, obj ? obj : "", -100, -350, strContent, "popup");
+            */
+            var ids = "";
+            if (row || row == 0) {
+                ids = $("#JobID" + row).val();
+            } else {
+                var _cb = $("[name='chkChecked']");
+                var strCpName = "";
+                var intApplyCount = 0;
+                for (i = 0; i < _cb.length; i++) {
+
+
+                    intApplyCount = 0;
+                    if (_cb[i].checked) {
+                        var no = _cb[i].id.substr(10);
+                        strCpName = $("#CpName" + no).val();
+                    }
+                    for (j = 0; j < _cb.length; j++) {
+                        if (_cb[j].checked) {
+                            var no = _cb[j].id.substr(10);
+                            if (strCpName == $("#CpName" + no).val())
+                                intApplyCount++;
+                        }
+                    }
+                }
+                for (i = 0; i < _cb.length; i++) {
+                    if (_cb[i].checked) {
+                        var no = _cb[i].id.substr(10);
+                        ids = ids + $("#JobID" + no).val() + ",";
+                    }
+                }
+                if (ids) {
+                    ids = ids.substr(0, ids.length - 1);
+                }
+                else {
+                    alert("请选择您要收藏的职位！");
+                    return;
+                }
+            }
+            showJobApplyLogin(ids, 1);
+            //infoboxs("", 650, 1, "", -100, -350, '<iframe frameborder="0" scrolling="no" id="ifmJobApplyNoLogin" style="width:650px;height:310px;background-color: #F7F7F7;padding-top:0px;" src="/personal/jv/JobApplyByNoLogin?id=' + ids + '"></iframe>', "popupJobApply");
+        }
+    }
+    );
+}
+
+function CpFavourite(obj, row) {
+    $.get("/personal/jv/ajaxCheckLogin/?radom=" + new Date(), function (data) {
+        if (data == 1) {
+            BatchFavourite(obj, row);
+        }
+        else {
+            /*
+            var strContent = '\
+            <p style="text-align:center; padding:10px 0; line-height:30px">\
+            您未登录或登录已过期，请<a href="http://www.shoudurc.com/personal/sys/login" target="_blank">重新登录</a>后再刷新此页面<br>\
+            如果您还没有注册，请<a href="http://www.shoudurc.com/personal/sys/register" target="_blank">免费注册</a>\
+            </p>';
+            infoboxs("登录提示", 320, 120, obj ? obj : "", -100, -350, strContent, "popup");
+            */
+            var ids = "";
+            if (row || row == 0) {
+                ids = $("#JobID" + row).val();
+            } else {
+                var _cb = $("[name='chkChecked']");
+                var strCpName = "";
+                var intApplyCount = 0;
+                for (i = 0; i < _cb.length; i++) {
+
+
+                    intApplyCount = 0;
+                    if (_cb[i].checked) {
+                        var no = _cb[i].id.substr(10);
+                        strCpName = $("#CpName" + no).val();
+                    }
+                    for (j = 0; j < _cb.length; j++) {
+                        if (_cb[j].checked) {
+                            var no = _cb[j].id.substr(10);
+                            if (strCpName == $("#CpName" + no).val())
+                                intApplyCount++;
+                        }
+                    }
+                }
+                for (i = 0; i < _cb.length; i++) {
+                    if (_cb[i].checked) {
+                        var no = _cb[i].id.substr(10);
+                        ids = ids + $("#JobID" + no).val() + ",";
+                    }
+                }
+                if (ids) {
+                    ids = ids.substr(0, ids.length - 1);
+                }
+                else {
+                    alert("请选择您要收藏的职位！");
+                    return;
+                }
+            }
+            showJobApplyLogin(ids, 1);
+            //infoboxs("", 650, 1, "", -100, -350, '<iframe frameborder="0" scrolling="no" id="ifmJobApplyNoLogin" style="width:650px;height:310px;background-color: #F7F7F7;padding-top:0px;" src="/personal/jv/JobApplyByNoLogin?id=' + ids + '"></iframe>', "popupJobApply");
+        }
+    }
+    );
+}
+
+function BreifView() {
+    hasInsertViewLog = 1
+    $("[class='PointerDown']").each(function () {
+        $(this).click();
+    });
+    $("#divExpand").attr("class", "ViewByContent");
+    $("#hidExpand").val("1");
+}
+
+function ListView() {
+    hasInsertViewLog = 0;
+    $("[class='PointerUp']").each(function () {
+        $(this).click();
+    });
+
+    $("#divExpand").attr("class", "ViewByList");
+    $("#hidExpand").val("0");
+}
+
+/*function TriggleDetail(obj, row) {
+$('#trDetail' + row).toggle();
+if ($('#trDetail' + row).css("display")!="none") {
+addViewLog(row);
+$(obj).attr("class", "PointerUp");
+}
+else {
+$(obj).attr("class", "PointerDown");
+}
+}
+*/
+function TriggleDetail(obj, row) {
+    /* $('#trDetail' + row).toggle();
+    if ($('#trDetail' + row).css("display")!="none") {
+    addViewLog(row);
+    $(obj).attr("class", "PointerUp");
+    }
+    else {
+    $(obj).attr("class", "PointerDown");
+    }*/
+    if ($('#trDetail' + row).css("display") == "none") {
+        addViewLog(row);
+        $(obj).attr("class", "PointerUp");
+        $('#trDetail' + row).css("display", "table-row");
+    }
+    else {
+        $(obj).attr("class", "PointerDown");
+        $('#trDetail' + row).css("display", "none");
+    }
+}
+
+function addViewLog(row) {
+    if ($("#JobID" + row).length > 0 && hasInsertViewLog == 0) {
+        var id = $("#JobID" + row).val();
+        $.post("/Personal/js/AjaxAddJobViewLog?radom=" + new Date(), {
+            JobIDs: id
+        });
+    }
+}
+
+function IsChildJobType(parent, id) {
+    if ((parent == 46 && id == 1116) || (parent == 38 && id == 1117) || (parent == 33 && id == 1118) || (parent == 31 && id == 1119) || (parent == 51 && id == 1120) || (parent == 12 && id == 1322) || (parent == 55 && id == 1617) || (parent == 39 && id == 1621) || (parent == 40 && id == 1821) || (parent == 43 && id == 1918) || (parent == 49 && id == 2211) || (parent == 21 && id == 2218) || (parent == 49 && id == 2219) || (parent == 24 && id == 2713) || (parent == 38 && id == 2723) || (parent == 49 && id == 3224) || (parent == 49 && id == 4010) || (parent == 56 && id == 4516) || (parent == 50 && id == 4713) || (parent == 49 && id == 4818) || (parent == 22 && id == 4910) || (parent == 50 && id == 4915) || (parent == 49 && id == 5014) || (parent == 55 && id == 5113)) {
+        return true;
+    }
+    else
+        return false;
+}
+
+function FilterAll(obj) {
+    if (obj.className == "FilterAllMore") {
+        document.getElementById("FilterMainTable").style.display = "block"
+        obj.className = "FilterAllLess";
+    } else {
+        document.getElementById("FilterMainTable").style.display = "none"
+        obj.className = "FilterAllMore";
+    }
+
+}
+
+function ChangeViewFilter() {
+    var trHidden = getElementsByName("tr", "trHidden");
+    if (trHidden.length > 0) {
+        var tableHidden = trHidden[0].parentNode;
+        var ChildNodes = tableHidden.getElementsByTagName("tr").length;
+        for (var i = 0; i < trHidden.length; i++) {
+            if (trHidden[i]) {
+                if (trHidden[i].style.display == "none") {
+                    trHidden[i].style.display = "table-row";
+                } else {
+                    if (i >= 3 - ChildNodes + trHidden.length)
+                        trHidden[i].style.display = "none";
+                }
+            }
+        }
+    }
+    var ViewPointer = document.getElementById("ViewPointer");
+    if (ViewPointer.className == "ViewPointerDown") {
+        ViewPointer.className = "ViewPointerUp";
+    } else {
+        ViewPointer.className = "ViewPointerDown";
+    }
+}
+
+function NormalTrHidden() {
+    var tableTemp = document.getElementById('FilterMainTable');
+    if (!tableTemp) {
+        return;
+    }
+    if (tableTemp.getElementsByTagName("tr").length <= 3) {
+        var ViewPointer = document.getElementById("ViewPointer");
+        ViewPointer.parentNode.style.display = "none";
+
+    } else {
+        var ViewPointer = document.getElementById("ViewPointer");
+        ViewPointer.parentNode.style.display = "block";
+    }
+    var trHidden = getElementsByName("tr", "trHidden");
+    if (trHidden.length > 0) {
+        var tableHidden = trHidden[0].parentNode;
+        var ChildNodes = tableHidden.getElementsByTagName("tr").length;
+        for (var i = 0; i < 3 - ChildNodes + trHidden.length; i++) {
+            if (trHidden[i]) {
+                trHidden[i].style.display = "table-row";
+            }
+        }
+    }
+
+}
+
+// 兼容IE FF的ByName方法
+var getElementsByName = function (tag, name) {
+    var returns = document.getElementsByName(name);
+    if (returns.length > 0) return returns;
+    returns = new Array();
+    var e = document.getElementsByTagName(tag);
+    for (var i = 0; i < e.length; i++) {
+        if (e[i].getAttribute("name") == name) {
+            returns[returns.length] = e[i];
+        }
+    }
+    return returns;
+}
+
+//搜索关键词增加搜索企业
+function showSearchCp(num) {
+    if ($(".searchCp").is(":visible")) {
+        $(".showCpListSpan").html(num +"个其他相关公司");
+        $(".searchCp").hide();
+    } else {
+        $(".showCpListSpan").html("收起");
+        $(".searchCp").show();
+    }
+}
+

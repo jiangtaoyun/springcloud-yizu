@@ -1,0 +1,137 @@
+var popupOnline = {
+  divClass: "popupOnline",
+  W: 0,
+  H: 0,
+  bodyHtml: "伍亿人才网！",
+  headerTitle: "",
+  dockLeft: 0,
+  dockTop: 0,
+  keepLeft: 0,
+  Overstep: 0,                   //弹出层是否可以超出屏幕下边 默认为0不可以，1 为可以，
+  construct: function (W, H, bodyHtml, headerTitle)
+  {
+    this.clearData();
+    if (bodyHtml == "undefined" || bodyHtml == "") { bodyHtml = "伍亿人才网！" }
+    if (headerTitle == "undefined" || bodyHtml == "") { headerTitle = "" }
+    this.W = W;
+    this.H = H;
+    this.bodyHtml = bodyHtml;
+    this.headerTitle = headerTitle;
+    this.creatDiv();
+  },
+  creatDiv: function ()
+  {
+    if (_("msgOnline"))
+      this.ibClose();
+    var objID = "msgOnline";
+    var obj = document.createElement("div");
+    var objHead = document.createElement("div");
+    var objBody = document.createElement("div");
+    obj.id = objID;
+    objHead.id = objID + "_head";
+    objBody.id = objID + "_body"
+    obj.className = this.divClass;
+    obj.innerHTML = this.bodyHtml;
+    document.body.appendChild(obj);
+    if (this.W == undefined || this.W < 0 || this.W == "") { this.W = obj.clientWidth; }
+    if (this.H == undefined || this.H < 0 || this.H == "") { this.H = obj.clientHeight; }
+    objBody.style.width = objHead.style.width = obj.style.width = this.W + "px";
+    if (this.H > 10) obj.style.height = this.H + "px";
+    obj.style.minHeight = 16 + "px";
+    obj.style.cssText += ";position:absolute;z-index:99;";
+    //如果没有依靠对象
+    var clientHeight = obj.style.height.replace("px", "");
+    if (clientHeight == null || clientHeight == "" || clientHeight == "undefined") { clientHeight = this.H; };
+    var relTop = (document.documentElement.clientHeight - clientHeight) / 2 > 0 ? (document.documentElement.clientHeight - clientHeight) / 4 : 0;
+    var objTop = parseInt(document.documentElement.scrollTop + document.body.scrollTop + relTop + 50) + 'px';
+    var objLeft = parseInt(document.documentElement.scrollLeft + (document.documentElement.clientWidth - this.W) / 2) + 'px';
+    obj.style.left = objLeft;
+    obj.style.top = objTop;
+    //是否创建遮罩层
+    var objMask = document.createElement("div");
+    objMask.id = "MaskOnline";
+    objMask.style.cssText = "height:100%;width:100%;left:0; top:0; background:#000;opacity:0.25;filter:alpha(opacity=5);";
+    document.body.appendChild(objMask);
+    objMask.style.cssText += ";position:absolute;z-index:1;";
+    objMask.style.height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) - 10 + "px";
+    //拖动功能	
+    var w = obj.scrollWidth, h = obj.scrollHeight;
+    var moveX = 0, moveY = 0, moveTop = 0, moveLeft = 0, moveable = false;
+    var bodyH = this.H;
+
+    obj.onmousedown = function (e)
+    {
+      e = window.event ? window.event : e;
+      var e = e ? e : event;
+      var mouseD = document.all ? 1 : 0;
+      if (e.button == mouseD)
+      {
+        oDragOnline = obj
+        oxOnline = e.clientX;
+        oyOnline = e.clientY;
+      }
+    }
+    function _(name)
+    {
+      return document.getElementById(name);
+    }
+  },
+  beforeClose: function () { },
+  ibClose: function ()
+  {
+    popupOnline.beforeClose();
+    var objMask = document.getElementById("MaskOnline");
+    if (document.getElementById("msgOnline_head"))
+    {
+        document.getElementById("msgOnline_head").onmousemove = null;
+        document.getElementById("msgOnline_head").onmousedown = null;
+        document.getElementById("msgOnline_head").onmouseup = null;
+        document.getElementById("msgOnline").removeChild(document.getElementById("msgOnline_head"));
+    }
+    if (document.getElementById("msgOnline"))
+    {
+        document.body.removeChild(document.getElementById("msgOnline"));
+    }
+    if (document.getElementById("popuponlineIframe"))
+      document.body.removeChild(document.getElementById("popuponlineIframe"));
+    if (objMask)
+      document.body.removeChild(objMask);
+    if (document.getElementById('calendar'))
+      _('calendar').style.display = 'none';
+    if (document.getElementById('calendar_year'))
+      _('calendar_year').style.display = 'none';
+    if (document.getElementById('calendar_month'))
+      _('calendar_month').style.display = 'none';
+  },
+  clearData: function ()
+  {
+    this.divClass = "popupOnline";
+    this.W = 0;
+    this.H = 0;
+    this.bodyHtml = "伍亿人才网！";
+    this.headerTitle = "";
+    this.dockLeft = 0;
+    this.dockTop = 0;
+    this.keepLeft = 0;
+    this.beforeClose = function () { }
+  }
+}
+var oDragOnline = "";
+var oxOnline, oyOnline, nxOnline, nyOnline, dyOnline, dxOnline;
+
+function dragProOnline(e)
+{
+  if (oDragOnline != "")
+  {
+    window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+    var e = e ? e : event;
+    dxOnline = parseInt(oDragOnline.style.left);
+    dyOnline = parseInt(oDragOnline.style.top);
+    nxOnline = e.clientX;
+    nyOnline = e.clientY;
+    oDragOnline.style.left = (dxOnline + (nxOnline - oxOnline)) + "px";
+    oDragOnline.style.top = (dyOnline + (nyOnline - oyOnline)) + "px";
+    oxOnline = nxOnline;
+    oyOnline = nyOnline;
+  }
+}
