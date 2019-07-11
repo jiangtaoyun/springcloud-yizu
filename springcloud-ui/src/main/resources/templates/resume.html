@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>首都人才网</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    <script type="text/javascript" src="../../Content/2018/Public/Scripts/jquery-1.12.4.min.js" tppabs="http://www.shoudurc.com/Content/2018/Public/Scripts/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../../Content/2018/Public/Scripts/validate.js-v=1" tppabs="http://www.shoudurc.com/Content/2018/Public/Scripts/validate.js?v=1"></script>
+    <link href="../../Content/2018/Personal/Styles/Account.css-v=2019-7-10 10-48-59.css" tppabs="http://www.shoudurc.com/Content/2018/Personal/Styles/Account.css?v=2019/7/10 10:48:59" rel="stylesheet" type="text/css" />
+    <link type="text/css" rel="stylesheet" href="../../Content/Personal/style/p.css" tppabs="http://www.shoudurc.com/Content/Personal/style/p.css" />
+    <script type="text/javascript" src="../../Script/validate.js" tppabs="http://www.shoudurc.com/Script/validate.js"></script>
+    <script type="text/javascript" src="../../Script/p.js" tppabs="http://www.shoudurc.com/Script/p.js"></script>
+    <script type="text/javascript" src="../../Script/Common.js" tppabs="http://www.shoudurc.com/Script/Common.js"></script>
+    <script type="text/javascript" src="../../content/homepage/js/middle.js-v=1" tppabs="http://www.shoudurc.com/content/homepage/js/middle.js?v=1"></script>
+    <script type="text/javascript" src="../../Script/Ajax.js" tppabs="http://www.shoudurc.com/Script/Ajax.js"></script>
+    <script language="javascript" type="text/javascript" src="../../content/Personal/script/cv.js-v=2019-7-10 10-48-59" tppabs="http://www.shoudurc.com/content/Personal/script/cv.js?v=2019/7/10 10:48:59"></script>
+    <script language="javascript" type="text/javascript" src="../../content/Personal/script/cvstep.js" tppabs="http://www.shoudurc.com/content/Personal/script/cvstep.js"></script>
+    <script type="text/javascript" src="../../Script/validate.js-v=1" tppabs="http://www.shoudurc.com/Script/validate.js?v=1"></script>
+    <script language="javascript" type="text/javascript" src="../../script/BodyHtmlClass.js" tppabs="http://www.shoudurc.com/script/BodyHtmlClass.js"></script>
+    <script language="javascript" type="text/javascript" src="../../script/p-1.js" tppabs="http://www.shoudurc.com/script/p.js"></script>
+    <script type="text/javascript" src="../../Personal/Script/JsVarAll" tppabs="http://www.shoudurc.com/Personal/Script/JsVarAll"></script>
+    <script type="text/javascript" src="../../Script/Region/chs10.js" tppabs="http://www.shoudurc.com/Script/Region/chs10.js"></script>
+    <script type="text/javascript" src="../../Script/varJobType.js" tppabs="http://www.shoudurc.com/Script/varJobType.js"></script>
+    <script type="text/javascript" src="../../Script/MonthSelLayer.js" tppabs="http://www.shoudurc.com/Script/MonthSelLayer.js"></script>
+    <script type="text/javascript" src="../../Script/IndustrySelect.js" tppabs="http://www.shoudurc.com/Script/IndustrySelect.js"></script>
+    <script type="text/javascript" src="../../Script/JobTypeSelect.js" tppabs="http://www.shoudurc.com/Script/JobTypeSelect.js"></script>
+    <script type="text/javascript" src="../../Script/RegionSelect.js" tppabs="http://www.shoudurc.com/Script/RegionSelect.js"></script>
+    <script type="text/javascript" src="../../Script/MajorSelect.js" tppabs="http://www.shoudurc.com/Script/MajorSelect.js"></script>
+    <script type="text/javascript" src="../../Script/CommonSelect.js" tppabs="http://www.shoudurc.com/Script/CommonSelect.js"></script>
+    <script type="text/javascript" src="../../content/Personal/script/datePicker.js" tppabs="http://www.shoudurc.com/content/Personal/script/datePicker.js"></script>
+    <script type="text/javascript" src="../../content/Personal/script/OneMinute.js-v=2019-7-10 10-48-59" tppabs="http://www.shoudurc.com/content/Personal/script/OneMinute.js?v=2019/7/10 10:48:59"></script>
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="/js/easyui1.5/jquery.min.js"></script>
+    <link rel="stylesheet" href="/js/bootstrap3/css/bootstrap.css">
+    <script src="/js/bootstrap3/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/js/bootstrap-table/bootstrap-table.css">
+    <script src="/js/bootstrap-table/bootstrap-table.js"></script>
+    <script src="/js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <link rel="stylesheet" href="/js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+    <script src="/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script src="/js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="/js/bootbox/bootbox.all.min.js"></script>
+    <script src="/js/bootstrap-fileinput/js/fileinput.js"></script>
+    <script src="/js/bootstrap-fileinput/js/locales/zh.js"></script>
+    <link rel="stylesheet" href="/js/bootstrap-fileinput/css/fileinput.css">
+    <link rel="stylesheet" href="/js/bootstrap-treeview/bootstrap-treeview.min.css">
+    <script src="/js/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <link rel="stylesheet" href="/js/bootStrap-addTabs/bootstrap.addtabs.css">
+    <script src="/js/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
+
+    <script type="text/javascript">
+        var frompage = "";
+        var funcInterval;
+        var second = 180;
+        $(function(){
+            $('#chkMobileAgree').unbind('click').click(
+                function () {
+                    if ($(this).hasClass("No")) {
+                        $(this).removeClass('No');
+                        $(this).addClass('Yes');
+                    } else {
+                        $(this).removeClass('Yes');
+                        $(this).addClass('No');
+                    }
+                }
+            );
+        })
+    </script>
+    <style type="text/css">
+        .trStyle{
+            margin-top: 20px;
+            position: relative;
+        }
+        .labelStyle{
+            font-weight: normal;
+            width: 65px;
+            text-align: right;
+            font-family: "微软雅黑";
+            font-size: 14px;
+            display: inline-block;
+        }
+        .RegisterMain .OmBody .OmMain div .txtInput{
+            padding: 0;
+            width: 233px;
+            height: 35px;
+            border: 1px #DBDBDB solid;
+            border-radius: 4px;
+            padding-left: 10px;
+            line-height: 35px;
+            background: none;
+            vertical-align: middle;
+            padding-right: 10px;
+            font-family: "微软雅黑";
+            font-size: 14px;
+        }
+        .TipsError{
+            margin-left: 10px;
+            padding-left: 20px;
+            background: url(/Content/Personal/images/ico_pub_2.png)/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat;
+            display: inline-block;
+            line-height: 16px;
+            color: #FD713E;
+            background-position: 0px -512px;
+            font-size: 12px;
+            font-family: "宋体";
+            vertical-align: middle;
+            width: 280px;
+        }
+        .RegisterMain .OmBody .OmMain div .BtnGender {
+            width: 47px;
+            height: 32px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #D9DBD8;
+            background: #FFF;
+            font-family: "微软雅黑";
+            border-radius: 2px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .RegisterMain .OmBody .OmMain div .txtInput.required {
+            border-color: red;
+            background-color: #FFFFED;
+        }
+        .RegisterMain .OmBody .OmMain div .BtnGender.Active {
+            color: #0BC10A;
+            background: url("../../content/Personal/Images/ico_pub_2.png")/*tpa=http://www.shoudurc.com/content/Personal/Images/ico_pub_2.png*/ no-repeat 0px -1276px;
+            border: none;
+            height: 31px;
+        }
+        .RegisterMain .OmBody .OmMain div .ItemSelect {
+            background: url("../../content/Personal/images/ico_jm.png")/*tpa=http://www.shoudurc.com/content/Personal/images/ico_jm.png*/ 230px -1337px no-repeat;
+            cursor: pointer;
+            font-family: "微软雅黑";
+            font-size: 14px;
+            text-align: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .RegisterMain .OmBody .OmMain div .Short.ItemSelect {
+            background-position: 119px -1337px;
+            width: 145px;
+        }
+        .RegisterMain .OmBody .OmMain div .middle.ItemSelect {
+            background-position: 154px -1337px;
+            width: 180px;
+        }
+        .RegisterMain .OmBody .OmMain div .btnSubmit {
+            margin-top: 10px;
+            width: 255px;
+            height: 38px;
+            background: #FF7A4D;
+            border: none;
+            cursor: pointer;
+            color: #FFF;
+            font-size: 18px;
+            font-family: "微软雅黑";
+            border-radius: 4px;
+            line-height: 38px;
+        }
+    </style>
+</head>
+<body>
+<div class="Header">
+    <div class="HeaderMain">
+        <div class="Logo" style="margin-top: 10px;">
+            <a style="text-decoration:none;" href="javascript:if(confirm('http://www.shoudurc.com/  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.shoudurc.com/'" tppabs="http://www.shoudurc.com/">
+                <img src="../../content/homepage/201612/images/LOGO.png" tppabs="http://www.shoudurc.com/content/homepage/201612/images/LOGO.png"/>
+
+                <img src="../../content/homepage/201612/images/logo/view_logo10.png" tppabs="http://www.shoudurc.com/content/homepage/201612/images/logo/view_logo10.png"  style="margin-left:2px;margin-top: 4px;" />
+            </a>
+        </div>
+    </div>
+</div>
+<div class="BodyMain">
+    <div class="RegisterMain" style="width: 1100px;">
+        <div style="clear:both"></div>
+        <div class="RegBody" style="margin-top: 7px">
+            <div class="OmBody">
+                <div class="OmTitle">
+                    <h1>创建简历</h1>
+                </div>
+                <div style="height: 20px">
+                    <span id="ErrorMessage" class="TipsError" style="width: 535px;line-height: 20px"></span>
+                </div>
+                <!--创建简历-->
+                <div class="container-fluid" style="margin-right: 170px">
+                    <form class="form-horizontal" id="resumeForm">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">姓名</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="username" name="username">
+                            </div>
+                            <label for="user_info_sex" class="col-sm-2 control-label">性别</label>
+                            <div class="col-sm-4">
+                                <select id="user_info_sex" class="form-control">
+                                    <option value="0">请选择</option>
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_info_time" class="col-sm-2 control-label">出生日期</label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control" id="user_info_time" name="user_info_time">
+                            </div>
+                            <label for="userphone" class="col-sm-2 control-label">手机号</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="userphone" name="userphone">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_info_byxx" class="col-sm-2 control-label">毕业学校</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="user_info_byxx" name="user_info_byxx">
+                            </div>
+                            <label for="user_info_xueli" class="col-sm-2 control-label">学历</label>
+                            <div class="col-sm-4">
+                                <select id="user_info_xueli" class="form-control">
+                                    <option value="0">请选择</option>
+                                    <option value="1">初中</option>
+                                    <option value="2">高中</option>
+                                    <option value="3">中技</option>
+                                    <option value="4">中专</option>
+                                    <option value="5">大专</option>
+                                    <option value="6">本科</option>
+                                    <option value="7">硕士</option>
+                                    <option value="8">博士</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_info_zymc" class="col-sm-2 control-label">专业名称</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="user_info_zymc" name="user_info_zymc">
+                            </div>
+                            <label for="user_info_zyeid" class="col-sm-2 control-label">专业类别</label>
+                            <div class="col-sm-4">
+                                <select id="user_info_zyeid" name="user_info_zyeid" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_info_areaid" class="col-sm-2 control-label">想在</label>
+                            <div class="col-sm-4">
+                                <select id="user_info_areaid" name="user_info_areaid" class="form-control"></select>
+                            </div>
+                            <label for="user_info_yuexin" class="col-sm-2 control-label">找月薪</label>
+                            <div class="col-sm-4">
+                                <select id="user_info_xueli" class="form-control">
+                                    <option value="0">请选择</option>
+                                    <option value="1">1000元以上</option>
+                                    <option value="2">2000元以上</option>
+                                    <option value="3">3000元以上</option>
+                                    <option value="4">4000元以上</option>
+                                    <option value="5">5000元以上</option>
+                                    <option value="6">6000元以上</option>
+                                    <option value="7">8000元以上</option>
+                                    <option value="8">10000元以上</option>
+                                    <option value="9">15000元以上</option>
+                                    <option value="10">20000元以上</option>
+                                    <option value="11">30000元以上</option>
+                                    <option value="12">50000元以上</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_info_gongzouid" class="col-sm-2 control-label">工作</label>
+                            <div class="col-sm-4">
+                                <select id="user_info_gongzouid" name="user_info_gongzouid"  class="form-control"></select>
+                            </div>
+                            <label for="user_info_qzzt" class="col-sm-2 control-label">求职状态</label>
+                            <div class="col-sm-4">
+                                <select id="user_info_qzzt" class="form-control">
+                                    <option value="0">请选择</option>
+                                    <option value="1">目前处于离职状态，可即刻上岗</option>
+                                    <option value="2">目前在职，正在寻找更好机会</option>
+                                    <option value="3">目前在职，短期内无换新工作计划</option>
+                                    <option value="4">应届毕业生</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_info_email" class="col-sm-2 control-label">邮箱</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="user_info_email" name="user_info_email">
+                            </div>
+                            <label for="userpwd" class="col-sm-2 control-label">密码</label>
+                            <div class="col-sm-4">
+                                <input type="password" class="form-control" id="userpwd" name="userpwd">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            findarea();
+            findgongzuo();
+            findzyeleibie();
+        })
+        //专业类别
+        function findzyeleibie() {
+            $.ajax({
+                url:'/findzyeleibie',
+                success:function(data){
+                    var html="<option value='-1'>请选择</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        html+="<option value='"+data[i].mid+"'>"+data[i].mname+"</option>"
+                    }
+                    $("#user_info_zyeid").html(html);
+                }
+            })
+        }
+        //地区
+        function findarea(){
+            $.ajax({
+                url:'/findarea',
+                success:function(data){
+                    var html="<option value='-1'>请选择</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        html+="<option value='"+data[i].areaid+"'>"+data[i].areaname+"</option>"
+                    }
+                    $("#user_info_areaid").html(html);
+                }
+            })
+        }
+        //工作
+        function findgongzuo() {
+            $.ajax({
+                url:'/findgongzuo',
+                success:function(data){
+                    var html="<option value='-1'>请选择</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        html+="<option value='"+data[i].tid+"'>"+data[i].tname+"</option>"
+                    }
+                    $("#user_info_gongzouid").html(html);
+                }
+            })
+        }
+        //创建简历
+        var date=new Date();
+        var expireDays=1;
+        date.setTime(date.getTime() + expireDays * 24 * 3600 * 1000);
+    </script>
+</div>
+<div class="Footer">
+    <p>
+        <a href="javascript:if(confirm('http://www.51rc.com/  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.51rc.com/'" tppabs="http://www.51rc.com/" target="_blank">伍亿人才</a>
+        <span>旗下</span>
+        <img src="../../Content/2018/Public/Images/logo_foot.png" tppabs="http://www.shoudurc.com/Content/2018/Public/Images/logo_foot.png" width="24" height="16" />
+        <span>齐鲁人才网版权所有</span>
+        <a href="javascript:if(confirm('http://www.beian.miit.gov.cn/  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.beian.miit.gov.cn/'" tppabs="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow">京ICP证050289号</a>
+        <a href="javascript:if(confirm('http://www.beian.miit.gov.cn/  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.beian.miit.gov.cn/'" tppabs="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow">ICP沪B-20110079</a>
+        <span>本网站所有招聘信息，未经书面授权不得转载 投诉电话：400-626-5151</span>
+    </p>
+</div>
+</body>
+</html>

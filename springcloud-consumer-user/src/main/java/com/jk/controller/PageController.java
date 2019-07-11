@@ -13,5 +13,14 @@ public class PageController {
     public String toshow(){
         return "show";
     }
-
+    //注册
+    @RequestMapping("toreg")
+    public String toreg(){
+        return "reg";
+    }
+    //创建简历
+    @RequestMapping("toresume")
+    private String toresume(){
+        return "resume";
+    }
 }

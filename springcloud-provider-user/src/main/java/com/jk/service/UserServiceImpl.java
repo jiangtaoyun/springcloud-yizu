@@ -1,7 +1,11 @@
 package com.jk.service;
 
 import com.jk.mapper.UserMapper;
+import com.jk.model.AreaModel;
+import com.jk.model.GongzuoModel;
 import com.jk.model.UserModel;
+import com.jk.model.ZyeleibieModel;
+import com.jk.util.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,5 +24,25 @@ private UserMapper userMapper;
     @Override
     public List<UserModel> findmysql() {
         return userMapper.findmysql();
+    }
+
+    @Override
+    public void findreg(UserModel userModel) {
+          userMapper.findreg(userModel);
+    }
+
+    @Override
+    public List<AreaModel> findarea() {
+        return userMapper.findarea();
+    }
+
+    @Override
+    public List<GongzuoModel> findgongzuo() {
+        return userMapper.findgongzuo();
+    }
+
+    @Override
+    public List<ZyeleibieModel> findzyeleibie() {
+        return userMapper.findzyeleibie();
     }
 }
