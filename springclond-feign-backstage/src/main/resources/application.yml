@@ -1,0 +1,17 @@
+server:
+  port: 8094
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+spring:
+  application:
+    name: springcloud-feign-backstage
+
+thymeleaf:
+  encoding: UTF-8
+  prefix:
+  classpath: templates
+  servlet:
+    content-type: text/html
