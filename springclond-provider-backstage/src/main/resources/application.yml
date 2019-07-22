@@ -1,0 +1,20 @@
+server:
+  port: 8093
+
+spring:
+  application:
+    name: springcloud-provider-backstage
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password: 980917
+    url: jdbc:mysql://192.168.1.140:3306/zhaopin?setUnicode=true&characterEncoding=utf8
+    username: root
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+mybatis:
+  config-locations: classpath:mybatis/confg.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.jk.model
