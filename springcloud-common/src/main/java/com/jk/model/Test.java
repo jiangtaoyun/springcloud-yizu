@@ -1,5 +1,7 @@
 package com.jk.model;
 
-public class Test {
+import java.io.Serializable;
+
+public class Test implements Serializable {
     private Integer id;
 }
